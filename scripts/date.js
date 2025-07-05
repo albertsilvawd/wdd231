@@ -16,7 +16,5 @@ document.addEventListener('DOMContentLoaded', function () {
         lastModifiedElement.textContent = `Last Modified: ${lastModified}`;
     }
 
-    // Log the dates for debugging (optional)
-    console.log('Current Year:', currentYear);
-    console.log('Last Modified:', lastModified);
+    // Date functionality initialized successfully
 });

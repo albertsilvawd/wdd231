@@ -162,8 +162,5 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize the page with all courses
     filterCourses('all');
 
-    // Add some console logging for debugging
-    console.log('Total courses loaded:', courses.length);
-    console.log('Completed courses:', courses.filter(course => course.completed).length);
-    console.log('Courses array:', courses);
+    // Course functionality initialized successfully
 });
