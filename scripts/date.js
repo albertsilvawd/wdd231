@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const lastModifiedElement = document.getElementById('lastModified');
 
     if (lastModifiedElement) {
-        lastModifiedElement.textContent = `Last Modified: ${lastModified}`;
+        lastModifiedElement.textContent = 'Last Modified: ' + lastModified;
     }
-
-    // Date functionality initialized successfully
 });

@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add wayfinding - highlight current page
     const currentPath = window.location.pathname;
-    const navLinks2 = document.querySelectorAll('.navigation a');
+    const navigationLinks = document.querySelectorAll('.navigation a');
 
-    navLinks2.forEach(link => {
+    navigationLinks.forEach(link => {
         // Remove active class from all links
         link.classList.remove('active');
 

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             technology: [
                 'Python'
             ],
-            completed: true // Change this based on your completion status
+            completed: true
         },
         {
             subject: 'WDD',
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'HTML',
                 'CSS'
             ],
-            completed: true // Change this based on your completion status
+            completed: true
         },
         {
             subject: 'CSE',
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             technology: [
                 'Python'
             ],
-            completed: true // Change this based on your completion status
+            completed: true
         },
         {
             subject: 'CSE',
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             technology: [
                 'C#'
             ],
-            completed: false // Change this based on your completion status
+            completed: false
         },
         {
             subject: 'WDD',
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'CSS',
                 'JavaScript'
             ],
-            completed: true // Change this based on your completion status
+            completed: true
         },
         {
             subject: 'WDD',
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'CSS',
                 'JavaScript'
             ],
-            completed: false // Currently taking this course
+            completed: false
         }
     ];
 
@@ -93,16 +93,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function createCourseCard(course) {
         const completedClass = course.completed ? 'completed' : '';
 
-        return `
-            <div class="course-card ${completedClass}">
-                <h3>${course.subject} ${course.number}</h3>
-                <p>${course.title}</p>
-                <p><strong>Credits:</strong> <span class="course-credits">${course.credits}</span></p>
-                <p><strong>Certificate:</strong> ${course.certificate}</p>
-                <p><strong>Description:</strong> ${course.description}</p>
-                <p><strong>Technologies:</strong> ${course.technology.join(', ')}</p>
-            </div>
-        `;
+        return '<div class="course-card ' + completedClass + '">' +
+            '<h3>' + course.subject + ' ' + course.number + '</h3>' +
+            '<p>' + course.title + '</p>' +
+            '<p><strong>Credits:</strong> <span class="course-credits">' + course.credits + '</span></p>' +
+            '<p><strong>Certificate:</strong> ' + course.certificate + '</p>' +
+            '<p><strong>Description:</strong> ' + course.description + '</p>' +
+            '<p><strong>Technologies:</strong> ' + course.technology.join(', ') + '</p>' +
+            '</div>';
     }
 
     // Function to display courses
@@ -146,12 +144,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to update active filter button
     function updateActiveFilter(activeButton) {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
+        filterButtons.forEach(function (btn) {
+            btn.classList.remove('active');
+        });
         activeButton.classList.add('active');
     }
 
     // Add event listeners to filter buttons
-    filterButtons.forEach(button => {
+    filterButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             const filter = this.getAttribute('data-filter');
             filterCourses(filter);
@@ -161,6 +161,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize the page with all courses
     filterCourses('all');
-
-    // Course functionality initialized successfully
 });
