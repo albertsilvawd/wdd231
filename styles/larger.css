@@ -1,0 +1,251 @@
+/* Larger Screen Styles */
+@media (min-width: 768px) {
+
+    /* Header adjustments */
+    .hamburger {
+        display: none;
+    }
+
+    /* Navigation - Horizontal Layout */
+    .navigation {
+        display: block !important;
+        position: static;
+    }
+
+    .navigation ul {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .navigation li {
+        border-bottom: none;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .navigation li:last-child {
+        border-right: none;
+    }
+
+    .navigation a {
+        padding: 1rem 2rem;
+        position: relative;
+    }
+
+    .navigation a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-color);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .navigation a:hover::after {
+        width: 80%;
+    }
+
+    .navigation a.active::after {
+        width: 80%;
+    }
+
+    /* Main content adjustments */
+    main {
+        padding: 3rem 2rem;
+    }
+
+    main h1 {
+        font-size: 3rem;
+    }
+
+    /* Profile section - side by side layout */
+    .profile-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .profile-image {
+        flex-shrink: 0;
+        align-self: flex-start;
+    }
+
+    .profile-info {
+        flex: 1;
+    }
+
+    /* Courses grid - multiple columns */
+    .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Filter buttons - centered */
+    .filter-buttons {
+        justify-content: center;
+    }
+
+    /* Certificate section - two column layout */
+    .certificate-section .progress-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .certificate-section ul {
+        margin-top: 0;
+    }
+
+    /* Footer improvements */
+    footer {
+        padding: 3rem 2rem;
+    }
+
+    .social-links {
+        gap: 1.5rem;
+    }
+
+    .social-links a {
+        transform: scale(1);
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        transform: scale(1.1);
+    }
+}
+
+/* Extra large screens */
+@media (min-width: 1200px) {
+
+    /* Typography scaling */
+    main h1 {
+        font-size: 3.5rem;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+
+    /* Courses grid - optimal layout */
+    .courses-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Profile section - more spacing */
+    .profile-content {
+        gap: 3rem;
+    }
+
+    .profile-image {
+        width: 250px;
+        height: 250px;
+    }
+
+    /* Section spacing */
+    section {
+        padding: 3rem;
+    }
+
+    main {
+        padding: 4rem 2rem;
+    }
+}
+
+/* High resolution displays */
+@media (min-resolution: 192dpi) {
+
+    /* Ensure crisp rendering on high-DPI displays */
+    .logo {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Landscape orientation on tablets */
+@media (min-width: 768px) and (orientation: landscape) {
+    .profile-content {
+        flex-direction: row;
+    }
+
+    .courses-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Print styles */
+@media print {
+
+    header,
+    .navigation,
+    .hamburger,
+    .filter-buttons,
+    .social-links {
+        display: none;
+    }
+
+    main {
+        padding: 0;
+    }
+
+    section {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        margin-bottom: 2rem;
+        page-break-inside: avoid;
+    }
+
+    .course-card {
+        border: 1px solid #ddd;
+        margin-bottom: 1rem;
+        page-break-inside: avoid;
+    }
+
+    * {
+        color: black !important;
+        background: white !important;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #f9fafb;
+        --text-light: #d1d5db;
+        --background-color: #111827;
+        --gray-100: #374151;
+        --gray-200: #4b5563;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    section {
+        background-color: #1f2937;
+        color: var(--text-color);
+    }
+
+    .course-card {
+        background-color: var(--gray-100);
+        border-color: var(--gray-200);
+        color: var(--text-color);
+    }
+
+    .course-card.completed {
+        background-color: #064e3b;
+        border-color: var(--success-color);
+    }
+}
