@@ -1,0 +1,28 @@
+{
+    "family_name": "Silva",
+    "move_in_date": "2023-03-15",
+    "number_of_people": 4,
+    "visited_by_bishopric": true,
+    "family_members": [
+        {
+            "name": "Albert Silva",
+            "gender": "Male",
+            "birthdate": "1981-09-20"
+        },
+        {
+            "name": "Christin Silva",
+            "gender": "Female",
+            "birthdate": "1984-03-27"
+        },
+        {
+            "name": "Robert Silva",
+            "gender": "Male",
+            "birthdate": "2014-09-02"
+        },
+        {
+            "name": "Ana Silva",
+            "gender": "Female",
+            "birthdate": "2013-09-25"
+        }
+    ]
+}
