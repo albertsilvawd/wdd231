@@ -1,0 +1,282 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #374151;
+    background-color: #ffffff;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Playfair Display', serif;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    border-bottom: 3px solid #3b82f6;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #3b82f6;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1,
+header h2 {
+    color: white;
+    border: none;
+    margin: 0;
+}
+
+header h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+/* Main content */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+section {
+    margin-bottom: 3rem;
+    background: #f9fafb;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Site name section */
+.site-name h3 {
+    font-size: 1.8rem;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+}
+
+/* Color schema */
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.color-item {
+    text-align: center;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.color-box {
+    width: 100%;
+    height: 80px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+/* Typography section */
+.font-examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 1.5rem 0;
+}
+
+.font-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Scenarios */
+.scenario {
+    background: white;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-left: 4px solid #fbbf24;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.scenario h3 {
+    color: #1e3a8a;
+    margin-bottom: 0.5rem;
+}
+
+.scenario em {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+/* Wireframe section */
+.wireframe-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.wireframe-item {
+    text-align: center;
+}
+
+.wireframe-placeholder {
+    background: white;
+    border: 2px dashed #3b82f6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.desktop {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mobile {
+    height: 600px;
+    width: 250px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wireframe-header,
+.wireframe-header-mobile {
+    background: #1e3a8a;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.wireframe-hero,
+.wireframe-hero-mobile {
+    background: #fbbf24;
+    color: #1e3a8a;
+    padding: 2rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.wireframe-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.wireframe-section,
+.wireframe-section-mobile {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 1rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.wireframe-footer,
+.wireframe-footer-mobile {
+    background: #374151;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* Lists */
+ul {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+/* Links */
+a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1e3a8a;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background: #374151;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    main {
+        padding: 0 1rem;
+    }
+
+    .font-examples {
+        grid-template-columns: 1fr;
+    }
+
+    .wireframe-container {
+        grid-template-columns: 1fr;
+    }
+
+    .color-palette {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "members": [
+        {
+            "id": 1,
+            "name": "TechSolutions Buenos Aires",
+            "address": "Av. Corrientes 1234, Buenos Aires, Argentina",
+            "phone": "+54 11 4567-8900",
+            "website": "https://techsolutions-ba.com",
+            "image": "techsolutions.jpg",
+            "membershipLevel": 3,
+            "description": "Leading technology consulting firm specializing in digital transformation for businesses.",
+            "industry": "Technology"
+        },
+        {
+            "id": 2,
+            "name": "Cafe Palermo",
+            "address": "Honduras 4589, Palermo, Buenos Aires",
+            "phone": "+54 11 4832-1567",
+            "website": "https://cafepalermo.com.ar",
+            "image": "cafepalermo.jpg",
+            "membershipLevel": 1,
+            "description": "Traditional Argentine cafe serving the finest coffee and pastries since 1985.",
+            "industry": "Food & Beverage"
+        },
+        {
+            "id": 3,
+            "name": "Buenos Aires Financial Group",
+            "address": "Av. 9 de Julio 1000, Buenos Aires, Argentina",
+            "phone": "+54 11 5234-7890",
+            "website": "https://ba-financial.com",
+            "image": "bafinancial.jpg",
+            "membershipLevel": 3,
+            "description": "Premier financial services provider offering comprehensive banking and investment solutions.",
+            "industry": "Financial Services"
+        },
+        {
+            "id": 4,
+            "name": "Artisan Leather Works",
+            "address": "Defensa 856, San Telmo, Buenos Aires",
+            "phone": "+54 11 4361-2345",
+            "website": "https://artisanleather.com.ar",
+            "image": "artisanleather.jpg",
+            "membershipLevel": 2,
+            "description": "Handcrafted leather goods made by skilled artisans using traditional techniques.",
+            "industry": "Manufacturing"
+        },
+        {
+            "id": 5,
+            "name": "Green Energy Solutions",
+            "address": "Av. Santa Fe 2456, Buenos Aires, Argentina",
+            "phone": "+54 11 4785-3456",
+            "website": "https://greenenergy-ba.com",
+            "image": "greenenergy.jpg",
+            "membershipLevel": 2,
+            "description": "Renewable energy solutions and sustainable technology implementations.",
+            "industry": "Energy"
+        },
+        {
+            "id": 6,
+            "name": "Buenos Aires Tourism Services",
+            "address": "Florida 835, Buenos Aires, Argentina",
+            "phone": "+54 11 4322-9876",
+            "website": "https://ba-tourism.com",
+            "image": "batourism.jpg",
+            "membershipLevel": 2,
+            "description": "Complete tourism services including city tours, tango shows, and cultural experiences.",
+            "industry": "Tourism"
+        },
+        {
+            "id": 7,
+            "name": "Medical Center Recoleta",
+            "address": "Av. Las Heras 2578, Recoleta, Buenos Aires",
+            "phone": "+54 11 4804-5678",
+            "website": "https://medicalrecoleta.com.ar",
+            "image": "medicalcenter.jpg",
+            "membershipLevel": 3,
+            "description": "State-of-the-art medical facility providing comprehensive healthcare services.",
+            "industry": "Healthcare"
+        },
+        {
+            "id": 8,
+            "name": "La Boca Cultural Center",
+            "address": "Caminito 125, La Boca, Buenos Aires",
+            "phone": "+54 11 4301-7890",
+            "website": "https://labocacultural.org",
+            "image": "labocacultural.jpg",
+            "membershipLevel": 1,
+            "description": "Cultural center promoting local arts, tango culture, and community events.",
+            "industry": "Arts & Culture"
+        }
+    ]
+}

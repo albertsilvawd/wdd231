@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Directory - Buenos Aires Chamber of Commerce</title>
+    <meta name="description"
+        content="Explore local businesses and organizations that are members of the Buenos Aires Chamber of Commerce. Find services, contact information, and business details.">
+    <meta name="author" content="Albert Silva">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Business Directory - Buenos Aires Chamber of Commerce">
+    <meta property="og:description"
+        content="Discover local businesses and organizations in Buenos Aires. Connect with chamber members and explore our vibrant business community.">
+    <meta property="og:image" content="images/chamber-directory.jpg">
+    <meta property="og:url" content="https://albertsilva-wdd231.github.io/chamber/directory.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/directory.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">BA</div>
+                <div class="site-title">
+                    <h1>Buenos Aires</h1>
+                    <p>Chamber of Commerce</p>
+                </div>
+            </div>
+            <button class="hamburger" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="directory.html" class="active">Directory</a></li>
+            <li><a href="join.html">Join</a></li>
+            <li><a href="discover.html">Discover</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <h1>Business Directory</h1>
+            <p>Discover local businesses and organizations that are members of our chamber</p>
+        </section>
+
+        <section class="view-controls">
+            <div class="view-buttons">
+                <button id="gridViewBtn" class="view-btn active" aria-label="Grid view">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z" />
+                    </svg>
+                    Grid View
+                </button>
+                <button id="listViewBtn" class="view-btn" aria-label="List view">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M3 5h2v2H3V5zm4 0h14v2H7V5zm-4 4h2v2H3V9zm4 0h14v2H7V9zm-4 4h2v2H3v-2zm4 0h14v2H7v-2zm-4 4h2v2H3v-2zm4 0h14v2H7v-2z" />
+                    </svg>
+                    List View
+                </button>
+            </div>
+        </section>
+
+        <section class="directory-container">
+            <div id="membersContainer" class="members-grid">
+                <!-- Members will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📧 info@buenosaires-chamber.org</p>
+                <p>📞 +54 11 4567-8900</p>
+                <p>📍 Av. Corrientes 1000, Buenos Aires, Argentina</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="directory.html">Directory</a></li>
+                    <li><a href="join.html">Join Us</a></li>
+                    <li><a href="discover.html">Discover</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="LinkedIn">💼</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> Buenos Aires Chamber of Commerce</p>
+            <p>Albert Silva | WDD 231 | Last Modified: <span id="lastModified"></span></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="scripts/directory.js" defer></script>
+</body>
+
+</html>
