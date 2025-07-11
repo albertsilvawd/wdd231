@@ -43,7 +43,8 @@
                     <p>Chamber of Commerce</p>
                 </div>
             </div>
-            <button class="hamburger" aria-label="Toggle navigation menu">
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="main-navigation">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -51,10 +52,10 @@
         </div>
     </header>
 
-    <nav class="main-nav">
+    <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="directory.html" class="active">Directory</a></li>
+            <li><a href="directory.html" class="active" aria-current="page">Directory</a></li>
             <li><a href="join.html">Join</a></li>
             <li><a href="discover.html">Discover</a></li>
         </ul>

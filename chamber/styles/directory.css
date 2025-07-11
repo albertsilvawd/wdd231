@@ -433,26 +433,57 @@ footer {
 
     .main-nav {
         display: none;
-    }
-
-    .main-nav.active {
-        display: block;
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
         background: var(--white);
         box-shadow: var(--shadow);
+        z-index: 1000;
+    }
+
+    .main-nav.active {
+        display: block;
     }
 
     .main-nav ul {
         flex-direction: column;
         gap: 0;
+        padding: 0;
+    }
+
+    .main-nav li {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .main-nav li:last-child {
+        border-bottom: none;
     }
 
     .main-nav a {
-        padding: 1rem;
-        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 2rem;
+        border-bottom: none;
+        display: block;
+        width: 100%;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+        background: var(--accent2-color);
+        color: var(--primary-color);
+    }
+
+    /* Hamburger animation */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
     }
 
     .page-header h1 {
