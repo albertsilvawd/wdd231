@@ -239,12 +239,23 @@ main {
     background: #f59e0b;
 }
 
-/* Main Content Grid Layout */
+/* Content Grid Layout */
 .content-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
     margin-top: 2rem;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 /* Sections */
@@ -333,12 +344,15 @@ main {
     border: 1px solid var(--border-color);
 }
 
-#weather-icon {
+.weather-icon-placeholder {
     width: 64px;
     height: 64px;
-    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
     background: var(--white);
-    padding: 5px;
+    border-radius: 50%;
     box-shadow: var(--shadow);
 }
 
@@ -422,14 +436,17 @@ main {
     box-shadow: var(--shadow-hover);
 }
 
-.spotlight-card img {
+.spotlight-card .member-image {
     width: 80px;
     height: 80px;
-    object-fit: contain;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background: var(--white);
     border-radius: 8px;
     border: 2px solid var(--border-color);
-    background: var(--white);
 }
 
 .spotlight-card h3 {
@@ -626,6 +643,11 @@ footer {
 
     .content-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .right-column {
+        gap: 1.5rem;
     }
 
     .current-weather {
@@ -652,36 +674,5 @@ footer {
 
     .hero-content p {
         font-size: 1.4rem;
-    }
-}
-
-/* Content Grid Layout */
-.content-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.left-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.right-column {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-/* Update responsive layout for content grid */
-@media (max-width: 768px) {
-    .content-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .right-column {
-        gap: 1.5rem;
     }
 }

@@ -113,16 +113,15 @@ async function loadWeatherData() {
 function displayCurrentWeather(data) {
     const currentTemp = document.getElementById('current-temp');
     const weatherDesc = document.getElementById('weather-desc');
-    const weatherIcon = document.getElementById('weather-icon');
+    const weatherIconContainer = document.getElementById('weather-icon-container');
 
-    if (currentTemp && weatherDesc && weatherIcon) {
+    if (currentTemp && weatherDesc && weatherIconContainer) {
         currentTemp.textContent = Math.round(data.main.temp);
         weatherDesc.textContent = capitalizeWords(data.weather[0].description);
 
+        // Show weather icon from API
         const iconCode = data.weather[0].icon;
-        weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-        weatherIcon.alt = data.weather[0].description;
-        weatherIcon.loading = 'lazy';
+        weatherIconContainer.innerHTML = `<img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${data.weather[0].description}" style="width: 64px; height: 64px;">`;
     }
 }
 
