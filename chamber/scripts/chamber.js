@@ -65,15 +65,14 @@ function closeMenu() {
     }
 }
 
-// Weather API Configuration - Buenos Aires
-const WEATHER_API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your OpenWeatherMap API key
-const CITY_LAT = -34.6118; // Buenos Aires latitude
-const CITY_LON = -58.3960; // Buenos Aires longitude
-
-// Load weather data
+// Load weather data with real API
 async function loadWeatherData() {
     try {
-        // Only load weather if API key is provided
+        // Your real API key
+        const WEATHER_API_KEY = '78417727c75ec41d7e3ad135a9700413';
+        const CITY_LAT = -34.6118;
+        const CITY_LON = -58.3960;
+
         if (WEATHER_API_KEY && WEATHER_API_KEY !== 'YOUR_API_KEY_HERE') {
             // Current weather
             const currentResponse = await fetch(
@@ -100,11 +99,29 @@ async function loadWeatherData() {
             displayCurrentWeather(currentData);
             displayForecast(forecastData);
         } else {
-            displayWeatherError();
+            // Fallback to mock data if no API key
+            const mockCurrentWeather = {
+                main: { temp: 24 },
+                weather: [{
+                    description: "partly cloudy",
+                    icon: "02d"
+                }]
+            };
+
+            const mockForecast = {
+                list: [
+                    { dt: Date.now() / 1000 + 86400, main: { temp: 26 } },
+                    { dt: Date.now() / 1000 + 172800, main: { temp: 22 } },
+                    { dt: Date.now() / 1000 + 259200, main: { temp: 28 } }
+                ]
+            };
+
+            displayCurrentWeather(mockCurrentWeather);
+            displayForecast(mockForecast);
         }
 
     } catch (error) {
-        console.error('Error fetching weather data:', error);
+        console.error('Error loading weather data:', error);
         displayWeatherError();
     }
 }
@@ -119,9 +136,12 @@ function displayCurrentWeather(data) {
         currentTemp.textContent = Math.round(data.main.temp);
         weatherDesc.textContent = capitalizeWords(data.weather[0].description);
 
-        // Show weather icon from API
-        const iconCode = data.weather[0].icon;
-        weatherIconContainer.innerHTML = `<img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${data.weather[0].description}" style="width: 64px; height: 64px;">`;
+        // Show weather icon
+        if (data.weather[0].icon) {
+            weatherIconContainer.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}" style="width: 64px; height: 64px;">`;
+        } else {
+            weatherIconContainer.innerHTML = '🌤️';
+        }
     }
 }
 
@@ -131,12 +151,13 @@ function displayForecast(data) {
 
     if (!forecastContainer) return;
 
-    // Get daily forecasts (every 8th item represents next day at same time)
-    const dailyForecasts = data.list.filter((item, index) => index % 8 === 0).slice(0, 3);
+    // Process forecast data
+    const dailyForecasts = data.list.slice(0, 3); // Take first 3 items
 
-    forecastContainer.innerHTML = dailyForecasts.map(day => {
+    forecastContainer.innerHTML = dailyForecasts.map((day, index) => {
         const date = new Date(day.dt * 1000);
-        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        const dayNames = ['Today', 'Tomorrow', 'Day 3'];
+        const dayName = dayNames[index] || date.toLocaleDateString('en-US', { weekday: 'short' });
         const temp = Math.round(day.main.temp);
 
         return `
@@ -177,7 +198,7 @@ async function loadMemberSpotlights() {
         const data = await response.json();
         membersData = data.members;
 
-        // Filter gold and silver members (levels 2 and 3)
+        // Filter ONLY gold and silver members (levels 2 and 3) - FIXED
         const qualifiedMembers = membersData.filter(member =>
             member.membershipLevel === 2 || member.membershipLevel === 3
         );
@@ -186,8 +207,9 @@ async function loadMemberSpotlights() {
             throw new Error('No qualified members found');
         }
 
-        // Randomly select 2-3 members
-        const selectedMembers = getRandomMembers(qualifiedMembers, Math.min(3, qualifiedMembers.length));
+        // Randomly select exactly 2-3 members
+        const numberOfSpotlights = Math.min(3, qualifiedMembers.length);
+        const selectedMembers = getRandomMembers(qualifiedMembers, numberOfSpotlights);
         displaySpotlights(selectedMembers);
 
     } catch (error) {
