@@ -45,6 +45,26 @@ body::before {
     /* Não interfere com cliques */
 }
 
+/* Background pattern geométrico sutil */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.02;
+    /* Muito sutil */
+    background-image:
+        radial-gradient(circle at 25px 25px, var(--primary-color) 1px, transparent 1px),
+        radial-gradient(circle at 75px 75px, var(--secondary-color) 0.5px, transparent 0.5px);
+    background-size: 100px 100px;
+    background-position: 0 0, 50px 50px;
+    pointer-events: none;
+    /* Não interfere com cliques */
+}
+
 /* Typography */
 h1,
 h2,
@@ -457,8 +477,8 @@ main {
 }
 
 .spotlight-card .member-image {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 120px;
     margin: 0 auto 1rem;
     display: flex;
     align-items: center;
@@ -467,6 +487,32 @@ main {
     background: var(--white);
     border-radius: 8px;
     border: 2px solid var(--border-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.spotlight-card .member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+}
+
+.spotlight-card .fallback-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: var(--primary-color);
+    background: var(--accent2-color);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
 }
 
 .spotlight-card h3 {

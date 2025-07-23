@@ -237,7 +237,12 @@ function displaySpotlights(members) {
         return `
             <div class="spotlight-card">
                 <div class="membership-level ${membershipClass}">${membershipText}</div>
-                <div class="member-image">🏢</div>
+                <div class="member-image">
+                    <img src="images/${member.image}" alt="${member.name} logo" loading="lazy"
+                         onload="this.nextElementSibling.style.display='none'" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="fallback-icon">🏢</div>
+                </div>
                 <div class="member-info">
                     <h3>${member.name}</h3>
                     <p><strong>Industry:</strong> ${member.industry}</p>

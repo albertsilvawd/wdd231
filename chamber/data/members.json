@@ -6,7 +6,7 @@
             "address": "Av. Corrientes 1234, Buenos Aires, Argentina",
             "phone": "+54 11 4567-8900",
             "website": "https://techsolutions-ba.com",
-            "image": "techsolutions.jpg",
+            "image": "techsolutions.webp",
             "membershipLevel": 3,
             "description": "Leading technology consulting firm specializing in digital transformation for businesses.",
             "industry": "Technology"
@@ -17,7 +17,7 @@
             "address": "Honduras 4589, Palermo, Buenos Aires",
             "phone": "+54 11 4832-1567",
             "website": "https://cafepalermo.com.ar",
-            "image": "cafepalermo.jpg",
+            "image": "cafepalermo.webp",
             "membershipLevel": 1,
             "description": "Traditional Argentine cafe serving the finest coffee and pastries since 1985.",
             "industry": "Food & Beverage"
@@ -28,7 +28,7 @@
             "address": "Av. 9 de Julio 1000, Buenos Aires, Argentina",
             "phone": "+54 11 5234-7890",
             "website": "https://ba-financial.com",
-            "image": "bafinancial.jpg",
+            "image": "bafinancial.webp",
             "membershipLevel": 3,
             "description": "Premier financial services provider offering comprehensive banking and investment solutions.",
             "industry": "Financial Services"
@@ -39,7 +39,7 @@
             "address": "Defensa 856, San Telmo, Buenos Aires",
             "phone": "+54 11 4361-2345",
             "website": "https://artisanleather.com.ar",
-            "image": "artisanleather.jpg",
+            "image": "artisanleather.webp",
             "membershipLevel": 2,
             "description": "Handcrafted leather goods made by skilled artisans using traditional techniques.",
             "industry": "Manufacturing"
@@ -50,7 +50,7 @@
             "address": "Av. Santa Fe 2456, Buenos Aires, Argentina",
             "phone": "+54 11 4785-3456",
             "website": "https://greenenergy-ba.com",
-            "image": "greenenergy.jpg",
+            "image": "greenenergy.webp",
             "membershipLevel": 2,
             "description": "Renewable energy solutions and sustainable technology implementations.",
             "industry": "Energy"
@@ -61,7 +61,7 @@
             "address": "Florida 835, Buenos Aires, Argentina",
             "phone": "+54 11 4322-9876",
             "website": "https://ba-tourism.com",
-            "image": "batourism.jpg",
+            "image": "batourism.webp",
             "membershipLevel": 2,
             "description": "Complete tourism services including city tours, tango shows, and cultural experiences.",
             "industry": "Tourism"
@@ -72,7 +72,7 @@
             "address": "Av. Las Heras 2578, Recoleta, Buenos Aires",
             "phone": "+54 11 4804-5678",
             "website": "https://medicalrecoleta.com.ar",
-            "image": "medicalcenter.jpg",
+            "image": "medicalcenter.webp",
             "membershipLevel": 3,
             "description": "State-of-the-art medical facility providing comprehensive healthcare services.",
             "industry": "Healthcare"
@@ -83,7 +83,7 @@
             "address": "Caminito 125, La Boca, Buenos Aires",
             "phone": "+54 11 4301-7890",
             "website": "https://labocacultural.org",
-            "image": "labocacultural.jpg",
+            "image": "labocacultural.webp",
             "membershipLevel": 1,
             "description": "Cultural center promoting local arts, tango culture, and community events.",
             "industry": "Arts & Culture"
