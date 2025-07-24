@@ -1,4 +1,4 @@
-/* CSS Variables */
+/* CSS Variables - EXACT match with Home */
 :root {
     --primary-color: #1e3a8a;
     --secondary-color: #3b82f6;
@@ -8,7 +8,7 @@
     --white: #ffffff;
     --border-color: #e5e7eb;
     --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Base styles */
@@ -25,6 +25,24 @@ body {
     padding: 0;
 }
 
+/* Background pattern geométrico sutil - igual ao Home */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.02;
+    background-image:
+        radial-gradient(circle at 25px 25px, var(--primary-color) 1px, transparent 1px),
+        radial-gradient(circle at 75px 75px, var(--secondary-color) 0.5px, transparent 0.5px);
+    background-size: 100px 100px;
+    background-position: 0 0, 50px 50px;
+    pointer-events: none;
+}
+
 /* Typography */
 h1,
 h2,
@@ -33,50 +51,19 @@ h4,
 h5,
 h6 {
     font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    line-height: 1.2;
+    color: var(--primary-color);
     margin: 0 0 1rem 0;
 }
 
-h1 {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-}
-
-h2 {
-    font-size: 2rem;
-    color: var(--primary-color);
-}
-
-h3 {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
-p {
-    margin: 0 0 1rem 0;
-}
-
-a {
-    color: var(--secondary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
-}
-
-/* Header */
+/* Header - EXACT match with Home */
 header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: var(--white);
     padding: 1rem 0;
-    box-shadow: var(--shadow);
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: var(--shadow);
 }
 
 .header-container {
@@ -122,78 +109,71 @@ header {
     font-size: 0.9rem;
 }
 
-/* Navigation - MOVED OUTSIDE blue header */
-.main-nav {
-    background: var(--white);
-    padding: 0;
-    box-shadow: var(--shadow);
-    position: sticky;
-    top: 90px;
-    /* Adjust based on header height */
-    z-index: 99;
-}
-
-.main-nav ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.main-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 500;
-    padding: 1rem 2rem;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s ease;
-    position: relative;
-    display: block;
-}
-
-.main-nav a:hover {
-    color: var(--primary-color);
-    background: var(--accent2-color);
-}
-
-.main-nav a.active {
-    color: var(--primary-color);
-    border-bottom-color: var(--accent1-color);
-    background: var(--accent2-color);
-}
-
-/* Hamburger Menu */
+/* Hamburger menu - igual ao Home */
 .hamburger {
-    display: none;
-    flex-direction: column;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
 }
 
 .hamburger span {
     width: 25px;
     height: 3px;
     background: var(--white);
-    margin: 3px 0;
-    transition: 0.3s;
     border-radius: 2px;
+    transition: 0.3s;
 }
 
-.hamburger.active span:nth-child(1) {
-    transform: rotate(-45deg) translate(-5px, 6px);
+/* Navigation - EXACT match with Home */
+.main-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 82px;
+    z-index: 99;
 }
 
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
+.main-nav ul {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    list-style: none;
+    gap: 2rem;
 }
 
-.hamburger.active span:nth-child(3) {
-    transform: rotate(45deg) translate(-5px, -6px);
+.main-nav li {
+    margin: 0;
+}
+
+.main-nav a {
+    display: block;
+    padding: 1rem 0;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--accent1-color);
+}
+
+/* Hide main H1 visually but keep for accessibility */
+main>h1 {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }
 
 /* Main content */
@@ -203,15 +183,16 @@ main {
     padding: 2rem 1rem;
 }
 
-main h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
 .page-header {
     text-align: center;
     margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-weight: 700;
 }
 
 .page-header p {
@@ -242,6 +223,7 @@ main h1 {
     font-weight: 500;
     color: var(--text-color);
     font-size: 1rem;
+    text-decoration: none;
 }
 
 .view-btn:hover {
@@ -285,7 +267,7 @@ main h1 {
     box-shadow: var(--shadow-hover);
 }
 
-/* FIXED: Member Image Container */
+/* Member Image Container */
 .member-image {
     width: 100%;
     height: 200px;
@@ -300,19 +282,19 @@ main h1 {
     overflow: hidden;
 }
 
-/* FIXED: Member Image - ensure it fills container */
+/* Member Image - ensure it fills container */
 .member-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    border-radius: 0 !important;
 }
 
-/* FIXED: Fallback icon positioning */
+/* Fallback icon positioning */
 .member-image .fallback-icon {
     position: absolute;
     top: 50%;
@@ -329,40 +311,40 @@ main h1 {
     justify-content: center;
 }
 
-/* FIXED: Membership badge */
+/* Membership badge */
 .membership-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    z-index: 10;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    padding: 4px 8px !important;
+    border-radius: 12px !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    z-index: 10 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* FIXED: Badge colors - Member */
+/* Badge colors - Member (Level 1) */
 .membership-badge.level-1 {
-    background: #ffffff;
-    color: #374151;
-    border: 1px solid #e5e7eb;
+    background: #ffffff !important;
+    color: #374151 !important;
+    border: 1px solid #e5e7eb !important;
 }
 
-/* FIXED: Badge colors - Silver */
+/* Badge colors - Silver (Level 2) */
 .membership-badge.level-2 {
-    background: #e5e7eb;
-    color: #374151;
-    border: 1px solid #d1d5db;
+    background: #e5e7eb !important;
+    color: #374151 !important;
+    border: 1px solid #d1d5db !important;
 }
 
-/* FIXED: Badge colors - Gold */
+/* Badge colors - Gold (Level 3) */
 .membership-badge.level-3 {
-    background: #fbbf24;
-    color: #1e3a8a;
-    border: 1px solid #f59e0b;
+    background: #fbbf24 !important;
+    color: #1e3a8a !important;
+    border: 1px solid #f59e0b !important;
 }
 
 /* Member Info */
@@ -383,6 +365,17 @@ main h1 {
 
 .member-details strong {
     color: var(--primary-color);
+}
+
+.member-details a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.member-details a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
 }
 
 /* List View Styles */
@@ -417,39 +410,15 @@ main h1 {
     white-space: nowrap;
 }
 
-/* FIXED: Ensure badges work in list view too */
+/* Ensure badges work in list view too */
 .member-card.list-view .membership-badge {
-    top: 4px;
-    right: 4px;
-    padding: 2px 6px;
-    font-size: 0.7rem;
+    top: 4px !important;
+    right: 4px !important;
+    padding: 2px 6px !important;
+    font-size: 0.7rem !important;
 }
 
-/* Membership Level Styling */
-.membership-level {
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.membership-level.level-1 {
-    background: var(--accent2-color);
-    color: var(--text-color);
-}
-
-.membership-level.level-2 {
-    background: #e5e7eb;
-    color: #374151;
-}
-
-.membership-level.level-3 {
-    background: var(--accent1-color);
-    color: var(--primary-color);
-}
-
-/* Footer */
+/* Footer - EXACT match with Home */
 footer {
     background: var(--primary-color);
     color: var(--white);
@@ -540,7 +509,7 @@ footer {
     color: var(--accent2-color);
 }
 
-/* Responsive Design */
+/* Mobile Navigation - EXACT match with Home */
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
@@ -548,43 +517,57 @@ footer {
 
     .main-nav {
         display: none;
-        position: fixed;
-        top: 0;
+        position: absolute;
+        top: 100%;
         left: 0;
         right: 0;
-        bottom: 0;
-        background: rgba(30, 58, 138, 0.95);
-        backdrop-filter: blur(10px);
+        background: var(--white);
+        box-shadow: var(--shadow);
         z-index: 1000;
-        padding: 2rem 0;
     }
 
     .main-nav.active {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: block;
     }
 
     .main-nav ul {
         flex-direction: column;
-        align-items: center;
-        gap: 2rem;
+        gap: 0;
         padding: 0;
     }
 
-    .main-nav a {
-        color: var(--white);
-        font-size: 1.5rem;
-        padding: 1rem 2rem;
-        border-radius: 8px;
+    .main-nav li {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .main-nav li:last-child {
         border-bottom: none;
-        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .main-nav a {
+        padding: 1rem 2rem;
+        border-bottom: none;
+        display: block;
+        width: 100%;
     }
 
     .main-nav a:hover,
     .main-nav a.active {
-        background: var(--accent1-color);
+        background: var(--accent2-color);
         color: var(--primary-color);
+    }
+
+    /* Hamburger animation */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
     }
 
     .members-grid {
@@ -614,9 +597,12 @@ footer {
         gap: 0.5rem;
     }
 
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+    main {
+        padding: 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
     }
 }
 
@@ -641,11 +627,16 @@ footer {
         padding: 1rem 0.5rem;
     }
 
-    main h1 {
-        font-size: 2rem;
+    .page-header h1 {
+        font-size: 1.8rem;
     }
 
     .member-card {
         margin: 0 0.5rem;
+    }
+
+    .view-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
 }

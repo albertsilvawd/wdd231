@@ -34,33 +34,13 @@ body::before {
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.02; /* Muito sutil */
-    background-image: 
-        radial-gradient(circle at 25px 25px, var(--primary-color) 1px, transparent 1px),
-        radial-gradient(circle at 75px 75px, var(--secondary-color) 0.5px, transparent 0.5px);
-    background-size: 100px 100px;
-    background-position: 0 0, 50px 50px;
-    pointer-events: none; /* Não interfere com cliques */
-}
-
-/* Background pattern geométrico sutil */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     opacity: 0.02;
-    /* Muito sutil */
     background-image:
         radial-gradient(circle at 25px 25px, var(--primary-color) 1px, transparent 1px),
         radial-gradient(circle at 75px 75px, var(--secondary-color) 0.5px, transparent 0.5px);
     background-size: 100px 100px;
     background-position: 0 0, 50px 50px;
     pointer-events: none;
-    /* Não interfere com cliques */
 }
 
 /* Typography */
@@ -571,69 +551,118 @@ main {
     background: #cd7f32;
 }
 
-/* Footer */
+/* Footer - CORRIGIDO PARA ESTRUTURA HTML ATUAL */
 footer {
     background: var(--primary-color);
     color: var(--white);
     padding: 3rem 0 1rem;
-    margin-top: 4rem;
+    margin-top: 3rem;
 }
 
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    display: flex !important;
+    /* APLICAR FLEX DIRETAMENTE NO CONTAINER */
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 2rem !important;
+    margin-bottom: 2rem;
+}
+
+.footer-section {
+    flex: 1 !important;
+    /* CADA SEÇÃO OCUPA 1/3 DO ESPAÇO */
+    min-width: 250px !important;
+    max-width: 350px !important;
 }
 
 .footer-section h3 {
     color: var(--accent1-color);
+    /* Dourado */
     margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--accent1-color);
+    /* LINHA AMARELA MENOR */
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+    max-width: fit-content;
+    /* LINHA SÓ EMBAIXO DO TEXTO */
+}
+
+.footer-section p,
+.footer-section a {
+    color: var(--accent2-color);
+    /* Texto claro */
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.footer-section a:hover {
+    color: var(--white);
 }
 
 .footer-section ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .footer-section ul li {
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
 }
 
-.footer-section a {
-    color: var(--white);
+.footer-section ul li a {
+    color: var(--accent2-color);
     text-decoration: none;
     transition: color 0.3s ease;
+    display: block;
+    padding: 0.25rem 0;
 }
 
-.footer-section a:hover {
-    color: var(--accent1-color);
+.footer-section ul li a:hover {
+    color: var(--white);
 }
 
 .social-links {
     display: flex;
     gap: 1rem;
+    margin-top: 1rem;
+    justify-content: flex-start;
+    /* ALINHAR À ESQUERDA */
 }
 
 .social-links a {
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
+    width: 40px;
+    height: 40px;
+    background: var(--secondary-color);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
 }
 
 .social-links a:hover {
-    transform: scale(1.2);
+    background: var(--accent1-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
 .footer-bottom {
-    max-width: 1200px;
-    margin: 2rem auto 0;
-    padding: 1rem;
-    border-top: 1px solid #4b5563;
+    border-top: 1px solid var(--secondary-color);
+    /* LINHA AZUL SUTIL */
+    padding-top: 1rem;
     text-align: center;
-    color: var(--accent2-color);
     font-size: 0.9rem;
+    color: var(--accent2-color);
+    margin-top: 2rem;
+    /* ESPAÇO ACIMA DA LINHA */
 }
 
 /* Responsive design */
@@ -728,6 +757,12 @@ footer {
     .hero {
         height: 50vh;
         min-height: 300px;
+    }
+
+    /* Footer responsivo - SOMENTE para mobile muito pequeno */
+    .social-links {
+        justify-content: center;
+        /* Centralizar no mobile */
     }
 }
 
