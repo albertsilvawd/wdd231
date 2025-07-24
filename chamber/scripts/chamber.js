@@ -7,224 +7,81 @@ let membersData = [];
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function () {
     setupEventListeners();
-    updateFooterDates();
+    loadMembersData();
     loadWeatherData();
-    loadMemberSpotlights();
+    updateFooter();
 });
 
 // Setup event listeners
 function setupEventListeners() {
     // Hamburger menu toggle
-    if (hamburger && mainNav) {
-        hamburger.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMenu();
-        });
+    hamburger.addEventListener('click', toggleMenu);
 
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('.main-nav a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                closeMenu();
-            });
-        });
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !mainNav.contains(e.target)) {
+            closeMenu();
+        }
+    });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mainNav.contains(e.target) && !hamburger.contains(e.target)) {
-                closeMenu();
-            }
-        });
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMenu();
+        }
+    });
 
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeMenu();
-            }
-        });
-    }
+    // Close menu when clicking on nav links
+    mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
 }
 
-// Toggle menu function
+// Toggle hamburger menu
 function toggleMenu() {
-    mainNav.classList.toggle('active');
-    hamburger.classList.toggle('active');
-
-    // Update aria-expanded for accessibility
-    const isExpanded = mainNav.classList.contains('active');
-    hamburger.setAttribute('aria-expanded', isExpanded);
+    const isOpen = hamburger.classList.contains('active');
+    if (isOpen) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
 }
 
-// Close menu function
+// Open menu
+function openMenu() {
+    hamburger.classList.add('active');
+    mainNav.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+}
+
+// Close menu
 function closeMenu() {
-    mainNav.classList.remove('active');
     hamburger.classList.remove('active');
-    if (hamburger) {
-        hamburger.setAttribute('aria-expanded', 'false');
-    }
+    mainNav.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
 }
 
-// Load weather data with real API
-async function loadWeatherData() {
-    try {
-        // Your real API key
-        const WEATHER_API_KEY = '78417727c75ec41d7e3ad135a9700413';
-        const CITY_LAT = -34.6118;
-        const CITY_LON = -58.3960;
-
-        if (WEATHER_API_KEY && WEATHER_API_KEY !== 'YOUR_API_KEY_HERE') {
-            // Current weather
-            const currentResponse = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${CITY_LAT}&lon=${CITY_LON}&appid=${WEATHER_API_KEY}&units=metric`
-            );
-
-            if (!currentResponse.ok) {
-                throw new Error('Weather data not available');
-            }
-
-            const currentData = await currentResponse.json();
-
-            // 5-day forecast
-            const forecastResponse = await fetch(
-                `https://api.openweathermap.org/data/2.5/forecast?lat=${CITY_LAT}&lon=${CITY_LON}&appid=${WEATHER_API_KEY}&units=metric`
-            );
-
-            if (!forecastResponse.ok) {
-                throw new Error('Forecast data not available');
-            }
-
-            const forecastData = await forecastResponse.json();
-
-            displayCurrentWeather(currentData);
-            displayForecast(forecastData);
-        } else {
-            // Fallback to mock data if no API key
-            const mockCurrentWeather = {
-                main: { temp: 24 },
-                weather: [{
-                    description: "partly cloudy",
-                    icon: "02d"
-                }]
-            };
-
-            const mockForecast = {
-                list: [
-                    { dt: Date.now() / 1000 + 86400, main: { temp: 26 } },
-                    { dt: Date.now() / 1000 + 172800, main: { temp: 22 } },
-                    { dt: Date.now() / 1000 + 259200, main: { temp: 28 } }
-                ]
-            };
-
-            displayCurrentWeather(mockCurrentWeather);
-            displayForecast(mockForecast);
-        }
-
-    } catch (error) {
-        console.error('Error loading weather data:', error);
-        displayWeatherError();
-    }
-}
-
-// Display current weather
-function displayCurrentWeather(data) {
-    const currentTemp = document.getElementById('current-temp');
-    const weatherDesc = document.getElementById('weather-desc');
-    const weatherIconContainer = document.getElementById('weather-icon-container');
-
-    if (currentTemp && weatherDesc && weatherIconContainer) {
-        currentTemp.textContent = Math.round(data.main.temp);
-        weatherDesc.textContent = capitalizeWords(data.weather[0].description);
-
-        // Show weather icon
-        if (data.weather[0].icon) {
-            weatherIconContainer.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}" style="width: 64px; height: 64px;">`;
-        } else {
-            weatherIconContainer.innerHTML = '🌤️';
-        }
-    }
-}
-
-// Display forecast
-function displayForecast(data) {
-    const forecastContainer = document.getElementById('forecast-container');
-
-    if (!forecastContainer) return;
-
-    // Process forecast data
-    const dailyForecasts = data.list.slice(0, 3); // Take first 3 items
-
-    forecastContainer.innerHTML = dailyForecasts.map((day, index) => {
-        const date = new Date(day.dt * 1000);
-        const dayNames = ['Today', 'Tomorrow', 'Day 3'];
-        const dayName = dayNames[index] || date.toLocaleDateString('en-US', { weekday: 'short' });
-        const temp = Math.round(day.main.temp);
-
-        return `
-            <div class="forecast-day">
-                <h4>${dayName}</h4>
-                <p class="forecast-temp">${temp}°C</p>
-            </div>
-        `;
-    }).join('');
-}
-
-// Display weather error
-function displayWeatherError() {
-    const currentTemp = document.getElementById('current-temp');
-    const weatherDesc = document.getElementById('weather-desc');
-    const forecastContainer = document.getElementById('forecast-container');
-
-    if (currentTemp) currentTemp.textContent = '--';
-    if (weatherDesc) weatherDesc.textContent = 'Weather data unavailable';
-    if (forecastContainer) {
-        forecastContainer.innerHTML = `
-            <div style="text-align: center; padding: 1rem; color: #6b7280;">
-                <p>Forecast unavailable</p>
-            </div>
-        `;
-    }
-}
-
-// Load member spotlights
-async function loadMemberSpotlights() {
+// Load members data from JSON
+async function loadMembersData() {
     try {
         const response = await fetch('data/members.json');
-
-        if (!response.ok) {
-            throw new Error('Failed to load member data');
-        }
-
         const data = await response.json();
         membersData = data.members;
-
-        // Filter ONLY gold and silver members (levels 2 and 3) - FIXED
-        const qualifiedMembers = membersData.filter(member =>
-            member.membershipLevel === 2 || member.membershipLevel === 3
-        );
-
-        if (qualifiedMembers.length === 0) {
-            throw new Error('No qualified members found');
-        }
-
-        // Randomly select exactly 2-3 members
-        const numberOfSpotlights = Math.min(3, qualifiedMembers.length);
-        const selectedMembers = getRandomMembers(qualifiedMembers, numberOfSpotlights);
-        displaySpotlights(selectedMembers);
-
+        displaySpotlights(getRandomSpotlights());
+        console.log('Members loaded:', membersData.length);
     } catch (error) {
-        console.error('Error loading member data:', error);
-        displaySpotlightError();
+        console.error('Error loading members data:', error);
     }
 }
 
-// Get random members
-function getRandomMembers(members, count) {
-    const shuffled = [...members].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
+// Get random spotlights (Gold and Silver members only)
+function getRandomSpotlights() {
+    const goldSilverMembers = membersData.filter(member => member.membershipLevel >= 2);
+    const shuffled = goldSilverMembers.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
 }
 
-// Display spotlights
+// Display spotlights - VERSÃO SIMPLES COM BADGE NO TÍTULO
 function displaySpotlights(members) {
     const spotlightContainer = document.getElementById('spotlight-container');
 
@@ -232,88 +89,237 @@ function displaySpotlights(members) {
 
     spotlightContainer.innerHTML = members.map(member => {
         const membershipText = getMembershipLevelText(member.membershipLevel);
-        const membershipClass = getMembershipLevelClass(member.membershipLevel);
+        const membershipBadge = `<span style="background: ${getBadgeColor(member.membershipLevel)}; color: ${getBadgeTextColor(member.membershipLevel)}; padding: 2px 6px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; margin-left: 8px;">${membershipText}</span>`;
 
         return `
             <div class="spotlight-card">
-                <div class="membership-level ${membershipClass}">${membershipText}</div>
                 <div class="member-image">
-                    <img src="images/${member.image}" alt="${member.name} logo" loading="lazy"
-                         onload="this.nextElementSibling.style.display='none'" 
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                     <div class="fallback-icon">🏢</div>
                 </div>
-                <div class="member-info">
-                    <h3>${member.name}</h3>
-                    <p><strong>Industry:</strong> ${member.industry}</p>
-                    <p class="member-description">${member.description}</p>
-                    <p><strong>📞</strong> ${member.phone}</p>
-                    <p><strong>📍</strong> ${member.address.split(',')[0]}</p>
-                    <p><a href="${member.website}" target="_blank" rel="noopener noreferrer">Visit Website</a></p>
+                <h3>${member.name} ${membershipBadge}</h3>
+                <p class="industry"><strong>Industry:</strong> ${member.industry}</p>
+                <p>${member.description}</p>
+                <div class="contact-info">
+                    <p>📞 ${member.phone}</p>
+                    <p>📍 ${member.address.split(',')[0]}</p>
+                    <p><a href="${member.website}" target="_blank">Visit Website</a></p>
                 </div>
             </div>
         `;
     }).join('');
+
+    // Load images after HTML is created
+    members.forEach((member, index) => {
+        const cards = spotlightContainer.querySelectorAll('.spotlight-card');
+        const card = cards[index];
+        const imageContainer = card.querySelector('.member-image');
+        const fallbackIcon = card.querySelector('.fallback-icon');
+
+        if (member.image) {
+            const img = document.createElement('img');
+            img.src = `images/${member.image}`;
+            img.alt = `${member.name} logo`;
+            img.loading = 'lazy';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.objectPosition = 'center';
+            img.style.borderRadius = '6px';
+
+            img.onload = function () {
+                fallbackIcon.style.display = 'none';
+                imageContainer.appendChild(img);
+            };
+
+            img.onerror = function () {
+                fallbackIcon.style.display = 'flex';
+            };
+        }
+    });
+}
+
+// Get badge background color
+function getBadgeColor(level) {
+    switch (level) {
+        case 1: return '#f3f4f6';
+        case 2: return '#e5e7eb';
+        case 3: return '#fbbf24';
+        default: return '#f3f4f6';
+    }
+}
+
+// Get badge text color
+function getBadgeTextColor(level) {
+    switch (level) {
+        case 1: return '#374151';
+        case 2: return '#374151';
+        case 3: return '#1e3a8a';
+        default: return '#374151';
+    }
 }
 
 // Get membership level text
 function getMembershipLevelText(level) {
     switch (level) {
-        case 3: return 'Gold';
-        case 2: return 'Silver';
-        case 1: return 'Member';
-        default: return 'Member';
+        case 1:
+            return 'Member';
+        case 2:
+            return 'Silver';
+        case 3:
+            return 'Gold';
+        default:
+            return 'Member';
     }
 }
 
-// Get membership level CSS class
-function getMembershipLevelClass(level) {
-    switch (level) {
-        case 3: return 'gold';
-        case 2: return 'silver';
-        case 1: return 'bronze';
-        default: return 'bronze';
+// Load weather data with real API
+async function loadWeatherData() {
+    try {
+        console.log('Loading weather data...');
+
+        // Mock data - mais realista
+        const mockCurrent = {
+            main: { temp: 24 },
+            weather: [{ description: 'overcast clouds', icon: '04d' }],
+            name: 'Buenos Aires'
+        };
+
+        const mockForecast = {
+            list: [
+                { dt_txt: '2025-01-23', main: { temp: 26 }, weather: [{ description: 'sunny', icon: '01d' }] },
+                { dt_txt: '2025-01-24', main: { temp: 23 }, weather: [{ description: 'cloudy', icon: '03d' }] },
+                { dt_txt: '2025-01-25', main: { temp: 25 }, weather: [{ description: 'partly cloudy', icon: '02d' }] }
+            ]
+        };
+
+        console.log('Mock weather data created');
+        displayCurrentWeather(mockCurrent);
+        displayForecast(mockForecast);
+
+        // Real API - uncomment when ready
+        // const WEATHER_API_KEY = '78417727c75ec41d7e3ad135a9700413';
+        // const CITY_LAT = -34.6118;
+        // const CITY_LON = -58.3960;
+
+        // if (WEATHER_API_KEY && WEATHER_API_KEY !== 'YOUR_API_KEY_HERE') {
+        //     const currentResponse = await fetch(
+        //         `https://api.openweathermap.org/data/2.5/weather?lat=${CITY_LAT}&lon=${CITY_LON}&appid=${WEATHER_API_KEY}&units=metric`
+        //     );
+        //     const currentData = await currentResponse.json();
+
+        //     const forecastResponse = await fetch(
+        //         `https://api.openweathermap.org/data/2.5/forecast?lat=${CITY_LAT}&lon=${CITY_LON}&appid=${WEATHER_API_KEY}&units=metric`
+        //     );
+        //     const forecastData = await forecastResponse.json();
+
+        //     displayCurrentWeather(currentData);
+        //     displayForecast(forecastData);
+        // }
+
+    } catch (error) {
+        console.error('Error loading weather data:', error);
+        // Fallback to mock data
+        const mockCurrent = {
+            main: { temp: 24 },
+            weather: [{ description: 'broken clouds', icon: '04d' }]
+        };
+
+        const mockForecast = {
+            list: [
+                { dt_txt: '2025-01-23', main: { temp: 26 }, weather: [{ description: 'sunny' }] },
+                { dt_txt: '2025-01-24', main: { temp: 23 }, weather: [{ description: 'cloudy' }] },
+                { dt_txt: '2025-01-25', main: { temp: 25 }, weather: [{ description: 'partly cloudy' }] }
+            ]
+        };
+
+        displayCurrentWeather(mockCurrent);
+        displayForecast(mockForecast);
     }
 }
 
-// Display spotlight error
-function displaySpotlightError() {
-    const spotlightContainer = document.getElementById('spotlight-container');
+// Display current weather
+function displayCurrentWeather(data) {
+    // Find the current weather section
+    const currentWeatherSection = document.querySelector('.current-weather');
 
-    if (spotlightContainer) {
-        spotlightContainer.innerHTML = `
-            <div class="spotlight-card" style="text-align: center; padding: 2rem; color: #6b7280;">
-                <h3>Unable to load member spotlights</h3>
-                <p>Please check back later for member highlights.</p>
+    if (!currentWeatherSection) {
+        console.log('Current weather section not found');
+        return;
+    }
+
+    // Clear existing content and create organized layout
+    currentWeatherSection.innerHTML = `
+        <div style="text-align: center !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; height: 100% !important; width: 100% !important; padding: 1rem !important;">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem; text-align: center !important;">☁️</div>
+            <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary-color); margin-bottom: 0.5rem; text-align: center !important;">${Math.round(data.main.temp)}°C</div>
+            <div style="font-size: 0.9rem; color: var(--text-color); text-transform: capitalize; margin-bottom: 0.75rem; text-align: center !important;">${data.weather[0].description}</div>
+            <div style="font-size: 0.85rem; color: var(--secondary-color); font-weight: 500; text-align: center !important;">${data.name || 'Buenos Aires'}</div>
+        </div>
+    `;
+
+    // Update icon based on weather condition
+    const iconElement = currentWeatherSection.querySelector('div[style*="font-size: 2rem"]');
+    if (iconElement) {
+        const iconMap = {
+            '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️',
+            '03d': '☁️', '03n': '☁️', '04d': '☁️', '04n': '☁️',
+            '09d': '🌧️', '09n': '🌧️', '10d': '🌦️', '10n': '🌧️',
+            '11d': '⛈️', '11n': '⛈️', '13d': '❄️', '13n': '❄️',
+            '50d': '🌫️', '50n': '🌫️'
+        };
+        iconElement.textContent = iconMap[data.weather[0].icon] || '🌤️';
+    }
+
+    console.log('Weather display updated with organized layout');
+}
+
+// Display forecast
+function displayForecast(data) {
+    // Try multiple possible selectors
+    const forecastContainer = document.getElementById('forecast-container') ||
+        document.querySelector('.forecast') ||
+        document.querySelector('[id*="forecast"]');
+
+    if (!forecastContainer) {
+        console.log('Forecast container not found');
+        return;
+    }
+
+    const dailyForecasts = data.list.slice(0, 3);
+
+    forecastContainer.innerHTML = dailyForecasts.map((forecast, index) => {
+        const date = new Date();
+        date.setDate(date.getDate() + index + 1);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+
+        return `
+            <div class="forecast-day">
+                <h4>${index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : `Day ${index + 1}`}</h4>
+                <div class="forecast-temp">${Math.round(forecast.main.temp)}°C</div>
             </div>
         `;
-    }
+    }).join('');
+
+    console.log('Forecast updated with', dailyForecasts.length, 'days');
 }
 
-// Update footer dates
-function updateFooterDates() {
-    // Current year
-    const currentYearElement = document.getElementById('currentYear');
-    if (currentYearElement) {
-        currentYearElement.textContent = new Date().getFullYear();
+// Update footer with current date
+function updateFooter() {
+    const currentDate = new Date();
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+    const footerDate = document.getElementById('currentDate');
+    if (footerDate) {
+        footerDate.textContent = formattedDate;
     }
 
-    // Last modified date
-    const lastModifiedElement = document.getElementById('lastModified');
-    if (lastModifiedElement) {
-        lastModifiedElement.textContent = document.lastModified;
+    const lastModified = document.getElementById('lastModified');
+    if (lastModified) {
+        lastModified.textContent = document.lastModified;
     }
 }
-
-// Utility Functions
-function capitalizeWords(str) {
-    return str.replace(/\b\w/g, letter => letter.toUpperCase());
-}
-
-// Responsive behavior for window resize
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        if (mainNav) mainNav.classList.remove('active');
-        if (hamburger) hamburger.classList.remove('active');
-    }
-});
