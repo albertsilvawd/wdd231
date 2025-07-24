@@ -11,11 +11,68 @@ const CITY_LON = -58.3960;
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('🚀 Chamber page initializing...');
+
     setupEventListeners();
     loadMembersData();
     loadWeatherData();
     updateFooter();
 });
+
+// Preload images to ensure they're available
+async function preloadImages() {
+    const imageList = [
+        'techsolutions.webp',
+        'cafepalermo.webp',
+        'bafinancial.webp',
+        'artisanleather.webp',
+        'greenenergy.webp',
+        'batourism.webp',
+        'medicalcenter.webp',
+        'labocacultural.webp'
+    ];
+
+    const preloadPromises = imageList.map(imageName => {
+        return new Promise((resolve) => {
+            const img = new Image();
+
+            // Try multiple paths
+            const paths = [
+                `images/${imageName}`,
+                `chamber/images/${imageName}`,
+                `./images/${imageName}`,
+                `./chamber/images/${imageName}`
+            ];
+
+            let pathIndex = 0;
+
+            const tryNextPath = () => {
+                if (pathIndex >= paths.length) {
+                    console.warn(`⚠️ Could not preload: ${imageName}`);
+                    resolve(); // Resolve anyway to not block loading
+                    return;
+                }
+
+                img.src = paths[pathIndex];
+                pathIndex++;
+            };
+
+            img.onload = () => {
+                console.log(`✅ Preloaded: ${imageName}`);
+                resolve();
+            };
+
+            img.onerror = () => {
+                tryNextPath();
+            };
+
+            tryNextPath();
+        });
+    });
+
+    // Wait for all images to preload (or timeout)
+    return Promise.allSettled(preloadPromises);
+}
 
 // Setup event listeners
 function setupEventListeners() {
@@ -72,7 +129,7 @@ function closeMenu() {
     }
 }
 
-// Load members data from JSON
+// Load members data from JSON - simplified version
 async function loadMembersData() {
     try {
         const response = await fetch('data/members.json');
@@ -82,13 +139,19 @@ async function loadMembersData() {
         const data = await response.json();
         membersData = data.members;
         displaySpotlights(getRandomSpotlights());
-        console.log('Members loaded successfully:', membersData.length);
+        console.log('✅ Members loaded successfully:', membersData.length);
     } catch (error) {
-        console.error('Error loading members data:', error);
+        console.error('❌ Error loading members data:', error);
+
         // Display fallback message
         const spotlightContainer = document.getElementById('spotlight-container');
         if (spotlightContainer) {
-            spotlightContainer.innerHTML = '<p>Unable to load member spotlights at this time.</p>';
+            spotlightContainer.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: var(--text-color);">
+                    <p>Unable to load member spotlights at this time.</p>
+                    <p><small>Please refresh the page or try again later.</small></p>
+                </div>
+            `;
         }
     }
 }
@@ -151,7 +214,7 @@ function displaySpotlights(members) {
     console.log(`Displayed ${members.length} spotlights (Gold/Silver members only)`);
 }
 
-// Load images for spotlight cards
+// Load images for spotlight cards - simplified and reliable
 function loadSpotlightImages(members) {
     const spotlightContainer = document.getElementById('spotlight-container');
     if (!spotlightContainer) return;
@@ -168,17 +231,17 @@ function loadSpotlightImages(members) {
             const img = document.createElement('img');
             img.src = `images/${member.image}`;
             img.alt = `${member.name} logo`;
-            img.loading = 'lazy';
+            img.loading = 'eager'; // Force immediate loading
             img.style.cssText = 'width: 100%; height: 100%; object-fit: cover; object-position: center; border-radius: 6px; display: none;';
 
             img.onload = function () {
                 fallbackIcon.style.display = 'none';
                 img.style.display = 'block';
-                console.log(`Image loaded for ${member.name}`);
+                console.log(`✅ Image loaded: ${member.name}`);
             };
 
             img.onerror = function () {
-                console.warn(`Failed to load image for ${member.name}: ${member.image}`);
+                console.warn(`❌ Failed to load image: ${member.image}`);
                 fallbackIcon.style.display = 'flex';
             };
 

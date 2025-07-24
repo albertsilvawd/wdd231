@@ -9,6 +9,7 @@ let membersData = [];
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('🚀 Directory page initializing...');
     setupEventListeners();
     loadMembersData();
 });
@@ -16,22 +17,26 @@ document.addEventListener('DOMContentLoaded', function () {
 // Setup event listeners
 function setupEventListeners() {
     // View toggle buttons
-    gridViewBtn.addEventListener('click', () => {
-        setActiveView('grid');
-        displayMembers(membersData, 'grid');
-    });
+    if (gridViewBtn && listViewBtn) {
+        gridViewBtn.addEventListener('click', () => {
+            setActiveView('grid');
+            displayMembers(membersData, 'grid');
+        });
 
-    listViewBtn.addEventListener('click', () => {
-        setActiveView('list');
-        displayMembers(membersData, 'list');
-    });
+        listViewBtn.addEventListener('click', () => {
+            setActiveView('list');
+            displayMembers(membersData, 'list');
+        });
+    }
 
     // Hamburger menu toggle
-    hamburger.addEventListener('click', toggleMenu);
+    if (hamburger) {
+        hamburger.addEventListener('click', toggleMenu);
+    }
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !mainNav.contains(e.target)) {
+        if (hamburger && mainNav && !hamburger.contains(e.target) && !mainNav.contains(e.target)) {
             closeMenu();
         }
     });
@@ -44,9 +49,11 @@ function setupEventListeners() {
     });
 
     // Close menu when clicking on nav links
-    mainNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
+    if (mainNav) {
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    }
 }
 
 // Toggle hamburger menu
@@ -68,27 +75,41 @@ function openMenu() {
 
 // Close menu
 function closeMenu() {
-    hamburger.classList.remove('active');
-    mainNav.classList.remove('active');
-    hamburger.setAttribute('aria-expanded', 'false');
+    if (hamburger && mainNav) {
+        hamburger.classList.remove('active');
+        mainNav.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
 }
 
-// Load members data from JSON
+// Load members data from JSON - simplified
 async function loadMembersData() {
     try {
+        console.log('Loading members data...');
         const response = await fetch('data/members.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         membersData = data.members;
         displayMembers(membersData, 'grid');
-        console.log('Members loaded:', membersData.length);
+        console.log('✅ Members loaded successfully:', membersData.length);
     } catch (error) {
-        console.error('Error loading members data:', error);
-        membersContainer.innerHTML = '<p>Error loading member data. Please try again later.</p>';
+        console.error('❌ Error loading members data:', error);
+        if (membersContainer) {
+            membersContainer.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: var(--text-color);">
+                    <p>Error loading member data. Please try again later.</p>
+                </div>
+            `;
+        }
     }
 }
 
 // Display members in the specified view
 function displayMembers(members, viewType) {
+    if (!membersContainer) return;
+
     membersContainer.innerHTML = '';
 
     // Update container class
@@ -102,9 +123,11 @@ function displayMembers(members, viewType) {
         const memberCard = createMemberCard(member, viewType);
         membersContainer.appendChild(memberCard);
     });
+
+    console.log(`Displayed ${members.length} members in ${viewType} view`);
 }
 
-// Create a member card element - VERSÃO CORRIGIDA
+// Create a member card element - igual ao Home
 function createMemberCard(member, viewType) {
     const card = document.createElement('div');
     card.className = `member-card ${viewType === 'list' ? 'list-view' : ''}`;
@@ -113,9 +136,10 @@ function createMemberCard(member, viewType) {
 
     console.log(`Creating card for: ${member.name}, Image: ${member.image}`);
 
-    // Create the basic card structure
+    // Create the basic card structure with badge ONLY in image (like Home)
     card.innerHTML = `
         <div class="member-image">
+            <div class="membership-badge level-${member.membershipLevel}">${membershipLevelText}</div>
             <div class="fallback-icon">🏢</div>
         </div>
         <div class="member-info">
@@ -123,29 +147,24 @@ function createMemberCard(member, viewType) {
             <div class="member-details">
                 <p><strong>Address:</strong> ${member.address}</p>
                 <p><strong>Phone:</strong> ${member.phone}</p>
-                <p><strong>Website:</strong> <a href="${member.website}" target="_blank">${member.website}</a></p>
-                <p><strong>Membership:</strong> <span class="membership-level level-${member.membershipLevel}">${membershipLevelText}</span></p>
+                <p><strong>Website:</strong> <a href="${member.website}" target="_blank" rel="noopener">${member.website}</a></p>
+                <p><strong>Industry:</strong> ${member.industry || 'Business'}</p>
             </div>
         </div>
     `;
 
-    // Handle image loading - MÉTODO SIMPLIFICADO
+    // Handle image loading - improved approach
     const imageContainer = card.querySelector('.member-image');
     const fallbackIcon = card.querySelector('.fallback-icon');
 
-    if (member.image) {
+    if (member.image && imageContainer && fallbackIcon) {
         const img = document.createElement('img');
         img.src = `images/${member.image}`;
         img.alt = `${member.name} logo`;
-        img.loading = 'lazy';
+        img.loading = 'eager';
 
-        // Adicionar estilos diretamente na imagem
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'cover';
-        img.style.objectPosition = 'center';
-        img.style.borderRadius = '6px';
-        img.style.display = 'none'; // Inicialmente escondida
+        // Remove inline styles - let CSS handle it
+        img.className = 'member-card-image';
 
         img.onload = function () {
             console.log(`✅ Image loaded successfully: ${member.image}`);
@@ -155,16 +174,17 @@ function createMemberCard(member, viewType) {
 
         img.onerror = function () {
             console.error(`❌ Failed to load image: ${member.image}`);
-            console.log(`Full path attempted: images/${member.image}`);
             fallbackIcon.style.display = 'flex';
             img.style.display = 'none';
         };
 
-        // Adicionar a imagem ao container
+        // Add the image to container
         imageContainer.appendChild(img);
 
-        // Debug adicional
-        console.log(`Image src set to: images/${member.image}`);
+        // Ensure image loads properly
+        if (img.complete && img.naturalHeight !== 0) {
+            img.onload();
+        }
     }
 
     return card;
@@ -186,36 +206,53 @@ function getMembershipLevelText(level) {
 
 // Set active view button
 function setActiveView(viewType) {
-    gridViewBtn.classList.remove('active');
-    listViewBtn.classList.remove('active');
+    if (gridViewBtn && listViewBtn) {
+        gridViewBtn.classList.remove('active');
+        listViewBtn.classList.remove('active');
 
-    if (viewType === 'grid') {
-        gridViewBtn.classList.add('active');
-    } else {
-        listViewBtn.classList.add('active');
+        if (viewType === 'grid') {
+            gridViewBtn.classList.add('active');
+        } else {
+            listViewBtn.classList.add('active');
+        }
     }
 }
 
 // Update footer with current date
 function updateFooter() {
-    const currentDate = new Date();
-    const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    };
-    const formattedDate = currentDate.toLocaleDateString('en-US', options);
+    try {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
 
-    const footerDate = document.getElementById('currentDate');
-    if (footerDate) {
-        footerDate.textContent = formattedDate;
-    }
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        const formattedDate = currentDate.toLocaleDateString('en-US', options);
 
-    const lastModified = document.getElementById('lastModified');
-    if (lastModified) {
-        lastModified.textContent = document.lastModified;
+        const currentYearElement = document.getElementById('currentYear');
+        if (currentYearElement) {
+            currentYearElement.textContent = currentYear;
+        }
+
+        const footerDate = document.getElementById('currentDate');
+        if (footerDate) {
+            footerDate.textContent = formattedDate;
+        }
+
+        const lastModified = document.getElementById('lastModified');
+        if (lastModified) {
+            lastModified.textContent = document.lastModified;
+        }
+
+        console.log('Footer updated with current date');
+    } catch (error) {
+        console.error('Error updating footer:', error);
     }
 }
 
 // Initialize footer
 updateFooter();
+
+console.log('Directory page script loaded successfully');
