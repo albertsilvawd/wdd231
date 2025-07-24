@@ -1,4 +1,4 @@
-/* CSS Variables - EXACT match with Home */
+/* CSS Variables */
 :root {
     --primary-color: #1e3a8a;
     --secondary-color: #3b82f6;
@@ -25,7 +25,7 @@ body {
     padding: 0;
 }
 
-/* Background pattern geométrico sutil - igual ao Home */
+/* Background pattern */
 body::before {
     content: '';
     position: fixed;
@@ -418,7 +418,7 @@ main {
     font-size: 0.7rem !important;
 }
 
-/* Footer - EXACT match with Home */
+/* Footer */
 footer {
     background: var(--primary-color);
     color: var(--white);
@@ -509,7 +509,7 @@ footer {
     color: var(--accent2-color);
 }
 
-/* Mobile Navigation - EXACT match with Home */
+/* Mobile Navigation - */
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
