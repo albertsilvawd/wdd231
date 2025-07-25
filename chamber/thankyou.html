@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Submitted - Buenos Aires Chamber of Commerce</title>
+    <meta name="description"
+        content="Thank you for your membership application to the Buenos Aires Chamber of Commerce. Your application has been received.">
+    <meta name="author" content="Albert Silva">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Application Submitted - Buenos Aires Chamber of Commerce">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/chamber/images/buenos-aires-chamber.jpg">
+    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/chamber/thankyou.html">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/chamber.css">
+    <link rel="stylesheet" href="styles/thankyou.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="background-pattern"></div>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">BA</div>
+                <div class="site-title">
+                    <h2>Buenos Aires Chamber</h2>
+                    <p>Connecting Business & Community</p>
+                </div>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="directory.html">Directory</a></li>
+            <li><a href="join.html">Join</a></li>
+            <li><a href="discover.html">Discovery</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="page-container">
+            <!-- Success Message -->
+            <section class="success-message">
+                <h1>Application Successfully Submitted!</h1>
+                <p>Thank you for your interest in joining the Buenos Aires Chamber of Commerce. Your membership
+                    application has been received and is being processed.</p>
+            </section>
+
+            <!-- Application Details -->
+            <section class="application-details">
+                <h2>Application Summary</h2>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <strong>First Name:</strong>
+                        <span id="display-first-name">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Last Name:</strong>
+                        <span id="display-last-name">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Email:</strong>
+                        <span id="display-email">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Mobile Phone:</strong>
+                        <span id="display-phone">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Business/Organization:</strong>
+                        <span id="display-business">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Membership Level:</strong>
+                        <span id="display-membership">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Application Date:</strong>
+                        <span id="display-timestamp">-</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section class="next-steps">
+                <h2>What Happens Next?</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Review Process</h3>
+                            <p>Our membership committee will review your application within 3-5 business days.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Confirmation Email</h3>
+                            <p>You'll receive an email confirmation with payment instructions and membership details.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Welcome Package</h3>
+                            <p>Upon approval, you'll receive your welcome package with member benefits and networking
+                                information.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Information -->
+            <section class="contact-info">
+                <h2>Questions?</h2>
+                <p>If you have any questions about your application or membership, please don't hesitate to contact us:
+                </p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <strong>Email:</strong> membership@buenosaireschamber.org
+                    </div>
+                    <div class="contact-item">
+                        <strong>Phone:</strong> +54 11 1234-5678
+                    </div>
+                    <div class="contact-item">
+                        <strong>Office Hours:</strong> Monday - Friday, 9:00 AM - 6:00 PM
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <section class="action-buttons">
+                <a href="index.html" class="btn btn-primary">Return to Home</a>
+                <a href="directory.html" class="btn btn-secondary">View Member Directory</a>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <div class="yellow-line"></div>
+                <p>1234 Commerce Street<br>Buenos Aires, Argentina C1005<br>Phone: +54 11 1234-5678<br>Email:
+                    info@buenosaireschamber.org</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="yellow-line"></div>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="directory.html">Member Directory</a></li>
+                    <li><a href="join.html">Join Us</a></li>
+                    <li><a href="discover.html">Discover</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="yellow-line"></div>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="LinkedIn">💼</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> Buenos Aires Chamber of Commerce | Albert Silva | WDD 231 Project |
+                Last Modification: <span id="lastModified"></span></p>
+        </div>
+    </footer>
+
+    <script src="scripts/thankyou.js"></script>
+</body>
+
+</html>
