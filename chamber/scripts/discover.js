@@ -116,7 +116,6 @@ async function loadAttractions() {
     const attractionsGrid = document.getElementById('attractionsGrid');
     if (!attractionsGrid) {
         console.warn('Attractions grid container not found');
-        showFallbackAttractions();
         return;
     }
 
@@ -124,7 +123,7 @@ async function loadAttractions() {
         // Show loading state
         attractionsGrid.innerHTML = '<div class="loading">Loading Buenos Aires attractions...</div>';
 
-        console.log('📡 Attempting to load attractions data...');
+        console.log('📡 Loading attractions from JSON...');
 
         const response = await fetch('data/attractions.json');
 
@@ -133,14 +132,14 @@ async function loadAttractions() {
         }
 
         const data = await response.json();
-        console.log('📊 Attractions data loaded successfully');
+        console.log('📊 Attractions data loaded successfully from JSON');
 
         if (!data.attractions || !Array.isArray(data.attractions)) {
             throw new Error('Invalid attractions data format');
         }
 
         const attractions = data.attractions;
-        console.log(`📍 Found ${attractions.length} attractions`);
+        console.log(`📍 Found ${attractions.length} attractions from JSON file`);
 
         // Clear loading state
         attractionsGrid.innerHTML = '';
@@ -152,10 +151,10 @@ async function loadAttractions() {
             attractionsGrid.appendChild(card);
         });
 
-        console.log('✅ All attraction cards created successfully');
+        console.log('✅ All attraction cards created successfully from JSON data');
 
     } catch (error) {
-        console.error('❌ Error loading attractions:', error);
+        console.error('❌ Error loading attractions from JSON:', error);
         showFallbackAttractions();
     }
 }
@@ -251,15 +250,18 @@ function createAttractionCard(attraction) {
     // Get category class for badge
     const categoryClass = category.toLowerCase().replace(/\s+/g, '-');
 
-    // Use hero image as fallback - always exists in your project
-    const imagePath = 'images/hero-large.webp';
+    // Use proper WebP image path or fallback to hero image
+    const imagePath = attraction.image && attraction.image.includes('.webp')
+        ? `images/attractions/${attraction.image}`
+        : 'images/hero-large.webp';
 
     card.innerHTML = `
         <h2>${name}</h2>
         <figure>
             <img src="${imagePath}" 
                  alt="${name}" 
-                 loading="lazy">
+                 loading="lazy"
+                 onerror="this.src='images/hero-large.webp'; console.warn('WebP image not found, using fallback:', '${imagePath}');">
             <div class="category-badge ${categoryClass}">${category}</div>
         </figure>
         <address>${address}</address>
