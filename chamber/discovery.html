@@ -4,19 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Directory - Buenos Aires Chamber of Commerce</title>
+    <title>Discover Buenos Aires - Buenos Aires Chamber of Commerce</title>
     <meta name="description"
-        content="Explore local businesses and organizations that are members of Buenos Aires Chamber of Commerce. Connect with chamber members and discover services.">
+        content="Discover the best of Buenos Aires - attractions, culture, business opportunities and hidden gems in Argentina's vibrant capital city">
     <meta name="author" content="Albert Silva">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Business Directory - Buenos Aires Chamber of Commerce">
-    <meta property="og:description"
-        content="Discover local businesses and organizations in Buenos Aires. Connect with chamber members and explore their services.">
+    <meta property="og:title" content="Discover Buenos Aires - Buenos Aires Chamber of Commerce">
+    <meta property="og:description" content="Explore Buenos Aires attractions, culture, and business opportunities">
     <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/chamber/images/hero-large.webp">
-    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/chamber/directory.html">
+    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/chamber/discover.html">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
 
     <!-- Favicon -->
     <link rel="icon" href="images/chamber-favicon.ico">
@@ -30,11 +28,12 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/directory.css">
+    <link rel="stylesheet" href="styles/chamber.css">
+    <link rel="stylesheet" href="styles/discover.css">
 </head>
 
 <body>
-    <!-- Header with logo only (like Home) -->
+    <!-- Header with logo (like other pages) -->
     <header>
         <div class="header-container">
             <div class="logo-section">
@@ -54,40 +53,38 @@
         </div>
     </header>
 
-    <!-- Navigation outside header (like Home) -->
-    <nav class="main-nav" id="main-navigation">
+    <!-- Navigation (like other pages) -->
+    <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="directory.html">Directory</a></li>
             <li><a href="join.html">Join</a></li>
-            <li><a href="discover.html">Discover</a></li>
+            <li><a href="discover.html" class="active" aria-current="page">Discover</a></li>
         </ul>
     </nav>
 
     <main>
-        <h1>Business Directory</h1>
+        <h1>Discover Buenos Aires</h1>
 
+        <!-- Page Header -->
         <section class="page-header">
-            <p>Discover local businesses and organizations that are members of our chamber</p>
+            <h2>Explore Argentina's Vibrant Capital</h2>
+            <p>Discover the rich culture, stunning architecture, and business opportunities that make Buenos Aires a
+                world-class destination</p>
         </section>
 
-        <!-- View Controls - side by side buttons -->
-        <section class="view-controls">
-            <button id="gridViewBtn" class="view-btn active" aria-label="Grid view">
-                <span>📊</span> Grid View
-            </button>
-            <button id="listViewBtn" class="view-btn" aria-label="List view">
-                <span>📋</span> List View
-            </button>
+        <!-- Visit Message Area -->
+        <section class="visit-message" id="visitMessage">
+            <!-- Message will be populated by JavaScript -->
         </section>
 
-        <!-- Members Container -->
-        <section id="membersContainer" class="members-grid">
-            <!-- Member cards will be inserted here by JavaScript -->
+        <!-- Attractions Grid -->
+        <section class="attractions-grid" id="attractionsGrid">
+            <!-- Cards will be populated by JavaScript -->
         </section>
     </main>
 
-    <!-- Same footer as Home -->
+    <!-- Footer (same as other pages) -->
     <footer>
         <div class="footer-container">
             <div class="footer-content">
@@ -127,7 +124,8 @@
         </div>
     </footer>
 
-    <script src="scripts/directory.js"></script>
+    <script src="scripts/chamber.js"></script>
+    <script src="scripts/discover.js"></script>
 </body>
 
 </html>

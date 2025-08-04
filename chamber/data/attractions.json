@@ -1,0 +1,68 @@
+{
+    "attractions": [
+        {
+            "id": 1,
+            "name": "Teatro Colón",
+            "address": "Cerrito 628, C1010AAR CABA, Argentina",
+            "description": "World-renowned opera house and concert hall, considered one of the finest in the world for its exceptional acoustics and stunning architecture. A must-visit cultural landmark.",
+            "image": "teatro-colon.webp",
+            "category": "Culture"
+        },
+        {
+            "id": 2,
+            "name": "La Boca & Caminito",
+            "address": "Caminito, La Boca, Buenos Aires, Argentina",
+            "description": "Colorful neighborhood famous for its vibrant street art, tango performances, and the iconic Boca Juniors football stadium. A bohemian cultural hub.",
+            "image": "la-boca-caminito.webp",
+            "category": "Culture"
+        },
+        {
+            "id": 3,
+            "name": "Puerto Madero",
+            "address": "Puerto Madero, Buenos Aires, Argentina",
+            "description": "Modern waterfront district featuring upscale restaurants, corporate offices, and luxury apartments. Perfect for business meetings and elegant dining.",
+            "image": "puerto-madero.webp",
+            "category": "Business"
+        },
+        {
+            "id": 4,
+            "name": "Recoleta Cemetery",
+            "address": "Junín 1760, C1113 CABA, Argentina",
+            "description": "Historic cemetery where Eva Perón rests, featuring elaborate mausoleums and sculptures. A unique blend of history, art, and Argentine heritage.",
+            "image": "recoleta-cemetery.webp",
+            "category": "History"
+        },
+        {
+            "id": 5,
+            "name": "San Telmo Market",
+            "address": "Defensa 963, C1065AAM CABA, Argentina",
+            "description": "Traditional Sunday market featuring antiques, local crafts, and street tango performances. Experience authentic Argentine culture and find unique treasures.",
+            "image": "san-telmo-market.webp",
+            "category": "Shopping"
+        },
+        {
+            "id": 6,
+            "name": "Palermo Parks",
+            "address": "Palermo, Buenos Aires, Argentina",
+            "description": "Vast green spaces including Rose Garden and Japanese Garden. Ideal for business retreats, outdoor meetings, and recreational activities.",
+            "image": "palermo-parks.webp",
+            "category": "Nature"
+        },
+        {
+            "id": 7,
+            "name": "Microcentro Financial District",
+            "address": "Microcentro, Buenos Aires, Argentina",
+            "description": "Heart of Buenos Aires' financial sector, home to banks, government buildings, and corporate headquarters. The business pulse of Argentina.",
+            "image": "microcentro.webp",
+            "category": "Business"
+        },
+        {
+            "id": 8,
+            "name": "Tigre Delta",
+            "address": "Tigre, Buenos Aires Province, Argentina",
+            "description": "Unique river delta system accessible by boat or train from Buenos Aires. Perfect for corporate retreats and exploring Argentina's natural waterways.",
+            "image": "tigre-delta.webp",
+            "category": "Nature"
+        }
+    ]
+}

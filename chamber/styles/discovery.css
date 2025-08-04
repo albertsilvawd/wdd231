@@ -1,0 +1,366 @@
+/* Discover Page Specific Styles */
+
+/* Page Header */
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border-radius: 12px;
+}
+
+.page-header h2 {
+    color: var(--white);
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* Visit Message */
+.visit-message {
+    background: var(--accent1-color);
+    color: var(--primary-color);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: var(--shadow);
+}
+
+.visit-message.first-visit {
+    background: var(--explorer-green);
+    color: var(--white);
+}
+
+.visit-message.recent-visit {
+    background: var(--secondary-color);
+    color: var(--white);
+}
+
+/* Grid Layout for Attractions */
+.attractions-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Mobile (320px to 640px) - Single column */
+@media (max-width: 640px) {
+    .attractions-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "card1"
+            "card2"
+            "card3"
+            "card4"
+            "card5"
+            "card6"
+            "card7"
+            "card8";
+    }
+
+    .attraction-card:nth-child(1) {
+        grid-area: card1;
+    }
+
+    .attraction-card:nth-child(2) {
+        grid-area: card2;
+    }
+
+    .attraction-card:nth-child(3) {
+        grid-area: card3;
+    }
+
+    .attraction-card:nth-child(4) {
+        grid-area: card4;
+    }
+
+    .attraction-card:nth-child(5) {
+        grid-area: card5;
+    }
+
+    .attraction-card:nth-child(6) {
+        grid-area: card6;
+    }
+
+    .attraction-card:nth-child(7) {
+        grid-area: card7;
+    }
+
+    .attraction-card:nth-child(8) {
+        grid-area: card8;
+    }
+}
+
+/* Medium (641px to 1024px) - Two columns */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .attractions-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "card1 card2"
+            "card3 card4"
+            "card5 card6"
+            "card7 card8";
+    }
+
+    .attraction-card:nth-child(1) {
+        grid-area: card1;
+    }
+
+    .attraction-card:nth-child(2) {
+        grid-area: card2;
+    }
+
+    .attraction-card:nth-child(3) {
+        grid-area: card3;
+    }
+
+    .attraction-card:nth-child(4) {
+        grid-area: card4;
+    }
+
+    .attraction-card:nth-child(5) {
+        grid-area: card5;
+    }
+
+    .attraction-card:nth-child(6) {
+        grid-area: card6;
+    }
+
+    .attraction-card:nth-child(7) {
+        grid-area: card7;
+    }
+
+    .attraction-card:nth-child(8) {
+        grid-area: card8;
+    }
+}
+
+/* Large (1025px and above) - Three columns with custom layout */
+@media (min-width: 1025px) {
+    .attractions-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "card1 card2 card3"
+            "card4 card5 card6"
+            "card7 card8 card8";
+    }
+
+    .attraction-card:nth-child(1) {
+        grid-area: card1;
+    }
+
+    .attraction-card:nth-child(2) {
+        grid-area: card2;
+    }
+
+    .attraction-card:nth-child(3) {
+        grid-area: card3;
+    }
+
+    .attraction-card:nth-child(4) {
+        grid-area: card4;
+    }
+
+    .attraction-card:nth-child(5) {
+        grid-area: card5;
+    }
+
+    .attraction-card:nth-child(6) {
+        grid-area: card6;
+    }
+
+    .attraction-card:nth-child(7) {
+        grid-area: card7;
+    }
+
+    .attraction-card:nth-child(8) {
+        grid-area: card8;
+    }
+}
+
+/* Attraction Card Styles */
+.attraction-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.attraction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.attraction-card h2 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin: 0 0 1rem 0;
+    padding: 1.5rem 1.5rem 0;
+}
+
+.attraction-card figure {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.attraction-card figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+/* Hover effect for images (not on mobile) */
+@media (min-width: 641px) {
+    .attraction-card figure img:hover {
+        transform: scale(1.1);
+        filter: brightness(1.1) saturate(1.2);
+        opacity: 0.9;
+    }
+}
+
+.attraction-card address {
+    font-style: normal;
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin: 0 1.5rem 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.attraction-card address::before {
+    content: "📍";
+    font-size: 1rem;
+}
+
+.attraction-card p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0 1.5rem 1.5rem;
+    font-size: 0.95rem;
+}
+
+.attraction-card button {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    margin: 0 1.5rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.attraction-card button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.attraction-card button:active {
+    transform: translateY(0);
+}
+
+/* Category badges */
+.category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(30, 58, 138, 0.9);
+    color: var(--white);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.category-badge.culture {
+    background: rgba(251, 191, 36, 0.9);
+    color: var(--primary-color);
+}
+
+.category-badge.business {
+    background: rgba(30, 58, 138, 0.9);
+}
+
+.category-badge.history {
+    background: rgba(139, 69, 19, 0.9);
+}
+
+.category-badge.shopping {
+    background: rgba(220, 38, 127, 0.9);
+}
+
+.category-badge.nature {
+    background: rgba(5, 150, 105, 0.9);
+}
+
+/* Loading states */
+.loading {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-color);
+}
+
+.loading::after {
+    content: "Loading attractions...";
+    font-style: italic;
+}
+
+/* Error states */
+.error {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .page-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .page-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .attraction-card h2 {
+        font-size: 1.2rem;
+        padding: 1rem 1rem 0;
+    }
+
+    .attraction-card address,
+    .attraction-card p {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .attraction-card button {
+        margin: 0 1rem 1rem;
+        width: calc(100% - 2rem);
+    }
+}
