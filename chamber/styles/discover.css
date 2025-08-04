@@ -45,7 +45,7 @@
     color: var(--white);
 }
 
-/* Grid Layout for Attractions */
+/* Grid Layout for Attractions - Using Named Grid Areas */
 .attractions-grid {
     display: grid;
     gap: 1.5rem;
@@ -57,46 +57,46 @@
     .attractions-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
-            "card1"
-            "card2"
-            "card3"
-            "card4"
-            "card5"
-            "card6"
-            "card7"
-            "card8";
+            "attraction1"
+            "attraction2"
+            "attraction3"
+            "attraction4"
+            "attraction5"
+            "attraction6"
+            "attraction7"
+            "attraction8";
     }
 
     .attraction-card:nth-child(1) {
-        grid-area: card1;
+        grid-area: attraction1;
     }
 
     .attraction-card:nth-child(2) {
-        grid-area: card2;
+        grid-area: attraction2;
     }
 
     .attraction-card:nth-child(3) {
-        grid-area: card3;
+        grid-area: attraction3;
     }
 
     .attraction-card:nth-child(4) {
-        grid-area: card4;
+        grid-area: attraction4;
     }
 
     .attraction-card:nth-child(5) {
-        grid-area: card5;
+        grid-area: attraction5;
     }
 
     .attraction-card:nth-child(6) {
-        grid-area: card6;
+        grid-area: attraction6;
     }
 
     .attraction-card:nth-child(7) {
-        grid-area: card7;
+        grid-area: attraction7;
     }
 
     .attraction-card:nth-child(8) {
-        grid-area: card8;
+        grid-area: attraction8;
     }
 }
 
@@ -105,42 +105,42 @@
     .attractions-grid {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
-            "card1 card2"
-            "card3 card4"
-            "card5 card6"
-            "card7 card8";
+            "attraction1 attraction2"
+            "attraction3 attraction4"
+            "attraction5 attraction6"
+            "attraction7 attraction8";
     }
 
     .attraction-card:nth-child(1) {
-        grid-area: card1;
+        grid-area: attraction1;
     }
 
     .attraction-card:nth-child(2) {
-        grid-area: card2;
+        grid-area: attraction2;
     }
 
     .attraction-card:nth-child(3) {
-        grid-area: card3;
+        grid-area: attraction3;
     }
 
     .attraction-card:nth-child(4) {
-        grid-area: card4;
+        grid-area: attraction4;
     }
 
     .attraction-card:nth-child(5) {
-        grid-area: card5;
+        grid-area: attraction5;
     }
 
     .attraction-card:nth-child(6) {
-        grid-area: card6;
+        grid-area: attraction6;
     }
 
     .attraction-card:nth-child(7) {
-        grid-area: card7;
+        grid-area: attraction7;
     }
 
     .attraction-card:nth-child(8) {
-        grid-area: card8;
+        grid-area: attraction8;
     }
 }
 
@@ -149,41 +149,41 @@
     .attractions-grid {
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-areas:
-            "card1 card2 card3"
-            "card4 card5 card6"
-            "card7 card8 card8";
+            "attraction1 attraction2 attraction3"
+            "attraction4 attraction5 attraction6"
+            "attraction7 attraction8 attraction8";
     }
 
     .attraction-card:nth-child(1) {
-        grid-area: card1;
+        grid-area: attraction1;
     }
 
     .attraction-card:nth-child(2) {
-        grid-area: card2;
+        grid-area: attraction2;
     }
 
     .attraction-card:nth-child(3) {
-        grid-area: card3;
+        grid-area: attraction3;
     }
 
     .attraction-card:nth-child(4) {
-        grid-area: card4;
+        grid-area: attraction4;
     }
 
     .attraction-card:nth-child(5) {
-        grid-area: card5;
+        grid-area: attraction5;
     }
 
     .attraction-card:nth-child(6) {
-        grid-area: card6;
+        grid-area: attraction6;
     }
 
     .attraction-card:nth-child(7) {
-        grid-area: card7;
+        grid-area: attraction7;
     }
 
     .attraction-card:nth-child(8) {
-        grid-area: card8;
+        grid-area: attraction8;
     }
 }
 
