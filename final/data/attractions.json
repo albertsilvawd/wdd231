@@ -4,485 +4,289 @@
             "id": 1,
             "name": "Secret Rooftop Garden",
             "category": "Nature",
-            "description": "Hidden oasis above the city with panoramic views and exotic plants. A peaceful escape featuring rare botanical specimens and stunning sunset vistas over Buenos Aires.",
-            "location": "Microcentro, above Galería Güemes",
+            "description": "Hidden oasis above the city with panoramic views and exotic plants. A peaceful escape featuring rare botanical specimens and stunning sunset views.",
+            "location": "Palermo, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Limited Access",
+            "accessibility": "Medium",
+            "image": "images/attractions/secret-rooftop-garden.webp",
             "rating": 4.8,
-            "difficulty": "Easy",
-            "bestTime": "Golden hour (5-7 PM)",
-            "tips": "Enter through the old Galería building, take elevator to top floor",
-            "coordinates": [
-                -34.6037,
-                -58.3816
-            ],
+            "isLocal": true,
             "tags": [
-                "photography",
-                "peaceful",
+                "garden",
                 "views",
-                "plants",
-                "sunset"
-            ],
-            "historicalInfo": "Created in 1987 by local artist Maria Santos as a community green space.",
-            "image": "ancient-trees.webp"
+                "peaceful",
+                "botanical"
+            ]
         },
         {
             "id": 2,
             "name": "Underground Art Gallery",
             "category": "Culture",
             "description": "Former subway tunnel transformed into a vibrant underground art space showcasing local street artists and experimental installations.",
-            "location": "Barracas, near Parque Lezama",
+            "location": "San Telmo, Buenos Aires",
             "cost": "Low",
-            "accessibility": "Partially Accessible",
+            "accessibility": "High",
+            "image": "images/attractions/underground-art-gallery.webp",
             "rating": 4.6,
-            "difficulty": "Easy",
-            "bestTime": "Weekday afternoons",
-            "tips": "Look for the metal door with graffiti murals, open Tuesday-Sunday",
-            "coordinates": [
-                -34.6298,
-                -58.3713
-            ],
+            "isLocal": false,
             "tags": [
                 "art",
-                "unique",
                 "underground",
-                "local artists",
-                "murals"
-            ],
-            "historicalInfo": "Abandoned subway tunnel from 1920s, converted to art space in 2015.",
-            "image": "graffiti-hall.webp"
+                "street art",
+                "exhibitions"
+            ]
         },
         {
             "id": 3,
             "name": "Historic Clock Tower",
             "category": "Architecture",
-            "description": "19th-century clock tower with original mechanisms still functioning. Offers guided tours and incredible city views from the observation deck.",
-            "location": "San Telmo, Plaza Dorrego area",
-            "cost": "Low",
-            "accessibility": "Limited Access",
-            "rating": 4.9,
-            "difficulty": "Moderate",
-            "bestTime": "Morning tours (10 AM)",
-            "tips": "Book tours in advance, wear comfortable shoes for climbing",
-            "coordinates": [
-                -34.6214,
-                -58.3731
-            ],
+            "description": "19th-century clock tower with original mechanisms still functioning. Offers guided tours and incredible city views.",
+            "location": "Monserrat, Buenos Aires",
+            "cost": "Medium",
+            "accessibility": "Medium",
+            "image": "images/attractions/historic-clock-tower.webp",
+            "rating": 4.5,
+            "isLocal": true,
             "tags": [
                 "history",
                 "architecture",
-                "views",
-                "guided tours",
-                "vintage"
-            ],
-            "historicalInfo": "Built in 1889, served as the city's main timekeeper for over 80 years.",
-            "image": "clock-tower.webp"
+                "tower",
+                "guided tours"
+            ]
         },
         {
             "id": 4,
             "name": "Hidden Waterfall Trail",
             "category": "Nature",
-            "description": "Short hiking trail leading to a secluded waterfall in the heart of the urban area. Perfect for nature photography and quiet reflection.",
-            "location": "Costanera Sur Ecological Reserve",
+            "description": "Short hiking trail leading to a secluded waterfall in the heart of the urban area. Features rare birds and stunning forest views.",
+            "location": "Belgrano, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Limited Access",
+            "accessibility": "Low",
+            "image": "images/attractions/hidden-waterfall-trail.webp",
             "rating": 4.7,
-            "difficulty": "Moderate",
-            "bestTime": "Early morning (7-9 AM)",
-            "tips": "Bring mosquito repellent and water, trail can be muddy after rain",
-            "coordinates": [
-                -34.6132,
-                -58.3548
-            ],
+            "isLocal": true,
             "tags": [
                 "hiking",
                 "waterfall",
-                "photography",
                 "nature",
-                "wildlife"
-            ],
-            "historicalInfo": "Natural spring discovered by early settlers in 1800s.",
-            "image": "waterfall-trail.webp"
+                "birds"
+            ]
         },
         {
             "id": 5,
             "name": "Vintage Record Shop Basement",
             "category": "Entertainment",
-            "description": "Hidden basement venue beneath a record shop hosting intimate acoustic performances and open mic nights. Features rare vinyl collection.",
-            "location": "Villa Crespo, near Scalabrini Ortiz",
+            "description": "Hidden basement venue beneath a record shop where local musicians perform intimate acoustic concerts.",
+            "location": "Villa Crespo, Buenos Aires",
             "cost": "Medium",
-            "accessibility": "Limited Access",
-            "rating": 4.5,
-            "difficulty": "Easy",
-            "bestTime": "Friday nights (8-11 PM)",
-            "tips": "Entry through record shop, check social media for event schedule",
-            "coordinates": [
-                -34.5919,
-                -58.4387
-            ],
+            "accessibility": "Medium",
+            "image": "images/attractions/vintage-record-shop-basement.webp",
+            "rating": 4.4,
+            "isLocal": false,
             "tags": [
                 "music",
-                "vinyl",
-                "live shows",
-                "intimate",
-                "nightlife"
-            ],
-            "historicalInfo": "Operating since 1975, discovered many now-famous local musicians.",
-            "image": "record-basement.webp"
+                "vintage",
+                "concerts",
+                "underground"
+            ]
         },
         {
             "id": 6,
             "name": "Forgotten Cemetery Garden",
             "category": "History",
-            "description": "Small 18th-century cemetery with beautiful old headstones and peaceful garden setting. Rich in local genealogy and historical stories.",
-            "location": "Chacarita, behind main cemetery",
+            "description": "Small 18th-century cemetery with beautiful sculptures, peaceful gardens, and rich historical stories.",
+            "location": "Recoleta, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Partially Accessible",
-            "rating": 4.4,
-            "difficulty": "Easy",
-            "bestTime": "Afternoon (2-5 PM)",
-            "tips": "Respectful behavior required, great for historical research",
-            "coordinates": [
-                -34.5792,
-                -58.4534
-            ],
+            "accessibility": "High",
+            "image": "images/attractions/forgotten-cemetery-garden.webp",
+            "rating": 4.3,
+            "isLocal": true,
             "tags": [
+                "cemetery",
                 "history",
-                "peaceful",
-                "genealogy",
-                "old",
-                "heritage"
-            ],
-            "historicalInfo": "Established in 1750, contains graves of city founders.",
-            "image": "cemetery-garden.webp"
+                "sculptures",
+                "peaceful"
+            ]
         },
         {
             "id": 7,
             "name": "Artisan Workshop Alley",
             "category": "Culture",
-            "description": "Narrow alley lined with traditional craftspeople's workshops. Watch glassblowing, pottery, and woodworking demonstrations.",
-            "location": "La Boca, near Caminito",
+            "description": "Narrow alley filled with traditional craftspeople's workshops. Watch pottery, jewelry, and woodworking demonstrations.",
+            "location": "San Telmo, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Limited Access",
+            "accessibility": "Medium",
+            "image": "images/attractions/artisan-workshop-alley.webp",
             "rating": 4.6,
-            "difficulty": "Easy",
-            "bestTime": "Mid-morning (10 AM-12 PM)",
-            "tips": "Narrow passages, watch for working artists, purchases welcome",
-            "coordinates": [
-                -34.6345,
-                -58.3632
-            ],
+            "isLocal": false,
             "tags": [
+                "artisan",
                 "crafts",
                 "workshops",
-                "artisans",
-                "demonstrations",
                 "traditional"
-            ],
-            "historicalInfo": "Traditional craftspeople have worked here for over 100 years.",
-            "image": "workshop-alley.webp"
+            ]
         },
         {
             "id": 8,
-            "name": "Secret Beach Cove",
-            "category": "Nature",
-            "description": "Small hidden beach accessible through rocky outcrop. Perfect for sunrise photography and peaceful meditation away from crowds.",
-            "location": "Costanera Norte, near Jorge Newbery Field",
-            "cost": "Free",
-            "accessibility": "Limited Access",
+            "name": "Secret Speakeasy Cave",
+            "category": "Entertainment",
+            "description": "Hidden speakeasy located in underground caves with craft cocktails and live jazz music in an intimate setting.",
+            "location": "Palermo, Buenos Aires",
+            "cost": "High",
+            "accessibility": "Low",
+            "image": "images/attractions/secret-speakeasy-cave.webp",
             "rating": 4.9,
-            "difficulty": "Challenging",
-            "bestTime": "Sunrise (6-8 AM)",
-            "tips": "Careful climbing required, bring flashlight for early morning visits",
-            "coordinates": [
-                -34.5576,
-                -58.4176
-            ],
+            "isLocal": true,
             "tags": [
-                "beach",
-                "sunrise",
-                "secluded",
-                "photography",
-                "meditation"
-            ],
-            "historicalInfo": "Hidden cove used by fishermen since early 1900s.",
-            "image": "secret-beach.webp"
+                "speakeasy",
+                "cocktails",
+                "jazz",
+                "cave"
+            ]
         },
         {
             "id": 9,
-            "name": "Abandoned Theater Ruins",
-            "category": "Architecture",
-            "description": "Remnants of a grand 1920s theater with stunning architectural details still visible. Now serves as an outdoor performance space.",
-            "location": "Barracas, near Puente Transbordador",
-            "cost": "Free",
-            "accessibility": "Limited Access",
-            "rating": 4.3,
-            "difficulty": "Easy",
-            "bestTime": "Late afternoon (4-6 PM)",
-            "tips": "Watch for uneven surfaces, sometimes hosts pop-up performances",
-            "coordinates": [
-                -34.6390,
-                -58.3645
-            ],
+            "name": "Rooftop Beehive Gardens",
+            "category": "Nature",
+            "description": "Urban beekeeping project with guided tours about bee conservation, honey tasting, and rooftop gardening.",
+            "location": "Caballito, Buenos Aires",
+            "cost": "Low",
+            "accessibility": "Medium",
+            "image": "images/attractions/rooftop-beehive-gardens.webp",
+            "rating": 4.5,
+            "isLocal": true,
             "tags": [
-                "architecture",
-                "history",
-                "photography",
-                "ruins",
-                "theater"
-            ],
-            "historicalInfo": "Grand Palace Theater operated 1923-1978, damaged by fire.",
-            "image": "theater-ruins.webp"
+                "bees",
+                "honey",
+                "conservation",
+                "rooftop"
+            ]
         },
         {
             "id": 10,
-            "name": "Rooftop Beehive Garden",
-            "category": "Nature",
-            "description": "Urban beekeeping project with observation hives and honey tastings. Educational tours about urban agriculture and bee conservation.",
-            "location": "Palermo Soho, above design studio",
+            "name": "Hidden Speakeasy Love",
+            "category": "Entertainment",
+            "description": "Secret hidden bar with a speakeasy theme, rocky seating, perfect for romantic photography and peaceful conversation.",
+            "location": "Puerto Madero, Buenos Aires",
             "cost": "Medium",
-            "accessibility": "Fully Accessible",
+            "accessibility": "High",
+            "image": "images/attractions/hidden-speakeasy-love.webp",
             "rating": 4.7,
-            "difficulty": "Easy",
-            "bestTime": "Mid-day (11 AM-2 PM)",
-            "tips": "Book tours online, suitable for families, honey available for purchase",
-            "coordinates": [
-                -34.5834,
-                -58.4234
-            ],
+            "isLocal": false,
             "tags": [
-                "bees",
-                "education",
-                "urban farming",
-                "honey",
-                "sustainable"
-            ],
-            "historicalInfo": "Started in 2018 as part of urban sustainability initiative.",
-            "image": "beehive-garden.webp"
+                "speakeasy",
+                "romantic",
+                "photography",
+                "conversation"
+            ]
         },
         {
             "id": 11,
-            "name": "Hidden Speakeasy Cave",
-            "category": "Entertainment",
-            "description": "Original Prohibition-era speakeasy preserved underground. Now serves craft cocktails in authentic 1920s atmosphere with live jazz.",
-            "location": "Retiro, beneath historic hotel",
-            "cost": "High",
-            "accessibility": "Limited Access",
-            "rating": 4.8,
-            "difficulty": "Easy",
-            "bestTime": "Thursday nights (9 PM-1 AM)",
-            "tips": "Password required (changes weekly), dress code enforced",
-            "coordinates": [
-                -34.5905,
-                -58.3854
-            ],
+            "name": "Abandoned Theater Ruins",
+            "category": "Architecture",
+            "description": "Stunning architectural details and ruins of a former opera house. Ideal venue for creative architectural tours.",
+            "location": "Barracas, Buenos Aires",
+            "cost": "Free",
+            "accessibility": "Low",
+            "image": "images/attractions/abandoned-theater-ruins.webp",
+            "rating": 4.2,
+            "isLocal": true,
             "tags": [
-                "history",
-                "cocktails",
-                "jazz",
-                "prohibition",
-                "speakeasy"
-            ],
-            "historicalInfo": "Operating speakeasy from 1923-1933, rediscovered in 1995.",
-            "image": "speakeasy-cave.webp"
+                "theater",
+                "ruins",
+                "architecture",
+                "opera"
+            ]
         },
         {
             "id": 12,
-            "name": "Miniature Fairy Door Trail",
+            "name": "Rooftop Bookstore Gardens",
             "category": "Culture",
-            "description": "Whimsical trail featuring tiny fairy doors hidden in trees and rocks throughout the park. Great for families with children.",
-            "location": "Parque Tres de Febrero, hidden paths",
+            "description": "Urban bookstore project with outdoor garden, reading areas, and book exchange programs for the community.",
+            "location": "Villa Crespo, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Fully Accessible",
-            "rating": 4.5,
-            "difficulty": "Easy",
-            "bestTime": "Any time with good weather",
-            "tips": "Bring camera, look carefully at tree bases and rock formations",
-            "coordinates": [
-                -34.5743,
-                -58.4198
-            ],
+            "accessibility": "High",
+            "image": "images/attractions/rooftop-bookstore-gardens.webp",
+            "rating": 4.8,
+            "isLocal": false,
             "tags": [
-                "family",
-                "whimsical",
-                "children",
-                "trail",
-                "fairy doors"
-            ],
-            "historicalInfo": "Created by local artist collective in 2020 during pandemic.",
-            "image": "fairy-doors.webp"
+                "books",
+                "reading",
+                "garden",
+                "community"
+            ]
         },
         {
             "id": 13,
             "name": "Telescope Observatory Deck",
             "category": "Entertainment",
-            "description": "Community-run telescope facility offering stargazing sessions and astronomy education. Features both historical and modern equipment.",
-            "location": "Belgrano, atop university building",
+            "description": "Community-run telescope facility offering stargazing sessions with knowledgeable volunteers and modern equipment.",
+            "location": "Núñez, Buenos Aires",
             "cost": "Low",
-            "accessibility": "Fully Accessible",
+            "accessibility": "Medium",
+            "image": "images/attractions/telescope-observatory-deck.webp",
             "rating": 4.6,
-            "difficulty": "Easy",
-            "bestTime": "Clear nights (8-11 PM)",
-            "tips": "Check weather forecast, warm clothes recommended for night viewing",
-            "coordinates": [
-                -34.5643,
-                -58.4532
-            ],
+            "isLocal": true,
             "tags": [
-                "astronomy",
-                "science",
-                "education",
+                "telescope",
                 "stargazing",
-                "telescope"
-            ],
-            "historicalInfo": "Amateur astronomy club established in 1962.",
-            "image": "observatory-deck.webp"
+                "astronomy",
+                "education"
+            ]
         },
         {
             "id": 14,
             "name": "Ancient Tree Grove",
             "category": "Nature",
-            "description": "Collection of 300+ year old trees in urban setting. Some of the oldest living things in the city with informational plaques.",
-            "location": "Recoleta, behind cultural center",
+            "description": "Collection of 200+ year old trees in an urban setting. Features educational signage about urban forest conservation.",
+            "location": "Parque Chacabuco, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Fully Accessible",
+            "accessibility": "High",
+            "image": "images/attractions/ancient-tree-grove.webp",
             "rating": 4.4,
-            "difficulty": "Easy",
-            "bestTime": "Fall foliage season (March-May)",
-            "tips": "Peaceful spot for reading, benches available, guided tours on weekends",
-            "coordinates": [
-                -34.5856,
-                -58.3934
-            ],
+            "isLocal": true,
             "tags": [
                 "trees",
-                "nature",
-                "history",
-                "peaceful",
-                "ancient"
-            ],
-            "historicalInfo": "Trees planted by original city planners in 1700s.",
-            "image": "ancient-trees.webp"
+                "ancient",
+                "conservation",
+                "education"
+            ]
         },
         {
             "id": 15,
             "name": "Graffiti Hall of Fame",
             "category": "Culture",
-            "description": "Legal graffiti wall showcasing rotating street art from local and visiting artists. Features a museum of hip-hop culture.",
-            "location": "Villa Urquiza, former railway station",
+            "description": "Legal graffiti wall showcasing rotating collection of local and international street artists' work.",
+            "location": "La Boca, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Fully Accessible",
-            "rating": 4.7,
-            "difficulty": "Easy",
-            "bestTime": "Weekend afternoons (2-6 PM)",
-            "tips": "Artists often work on-site, photography encouraged, respect the art",
-            "coordinates": [
-                -34.5445,
-                -58.4912
-            ],
+            "accessibility": "High",
+            "image": "images/attractions/graffiti-hall-of-fame.webp",
+            "rating": 4.5,
+            "isLocal": false,
             "tags": [
-                "street art",
                 "graffiti",
-                "hip-hop",
-                "culture",
-                "legal wall"
-            ],
-            "historicalInfo": "Established in 1986 as legal space for street artists.",
-            "image": "graffiti-hall.webp"
+                "street art",
+                "legal wall",
+                "artists"
+            ]
         },
         {
             "id": 16,
             "name": "Meditation Labyrinth",
             "category": "Nature",
-            "description": "Stone labyrinth for walking meditation in quiet garden setting. Includes benches and reflection areas for peaceful contemplation.",
-            "location": "Belgrano R, within community garden",
+            "description": "Stone labyrinth for walking meditation in quiet garden setting. Includes benches and information about mindfulness practices.",
+            "location": "Belgrano, Buenos Aires",
             "cost": "Free",
-            "accessibility": "Partially Accessible",
-            "rating": 4.5,
-            "difficulty": "Easy",
-            "bestTime": "Early morning (7-9 AM)",
-            "tips": "Maintain silence, remove shoes if comfortable, donations welcome",
-            "coordinates": [
-                -34.5689,
-                -58.4598
-            ],
+            "accessibility": "High",
+            "image": "images/attractions/meditation-labyrinth.webp",
+            "rating": 4.3,
+            "isLocal": true,
             "tags": [
                 "meditation",
-                "peaceful",
-                "wellness",
-                "spiritual",
-                "labyrinth"
-            ],
-            "historicalInfo": "Built by interfaith community in 2010.",
-            "image": "meditation-labyrinth.webp"
+                "labyrinth",
+                "mindfulness",
+                "peaceful"
+            ]
         }
-    ],
-    "categories": [
-        {
-            "name": "Nature",
-            "icon": "🌿",
-            "count": 5,
-            "description": "Natural escapes and outdoor experiences"
-        },
-        {
-            "name": "Culture",
-            "icon": "🎨",
-            "count": 4,
-            "description": "Art, crafts, and cultural experiences"
-        },
-        {
-            "name": "Architecture",
-            "icon": "🏛️",
-            "count": 2,
-            "description": "Historic buildings and architectural marvels"
-        },
-        {
-            "name": "History",
-            "icon": "📜",
-            "count": 1,
-            "description": "Historical sites and heritage locations"
-        },
-        {
-            "name": "Entertainment",
-            "icon": "🎭",
-            "count": 3,
-            "description": "Music, performances, and nightlife"
-        },
-        {
-            "name": "Food",
-            "icon": "🍽️",
-            "count": 0,
-            "description": "Culinary gems and food experiences"
-        },
-        {
-            "name": "Shopping",
-            "icon": "🛍️",
-            "count": 0,
-            "description": "Unique shopping and market experiences"
-        }
-    ],
-    "stats": {
-        "totalAttractions": 16,
-        "totalCategories": 7,
-        "freeAttractions": 9,
-        "accessibleAttractions": 5,
-        "averageRating": 4.6,
-        "lastUpdated": "2024-12-19T00:00:00.000Z",
-        "version": "1.0"
-    },
-    "metadata": {
-        "city": "Buenos Aires",
-        "country": "Argentina",
-        "language": "en",
-        "currency": "ARS",
-        "timezone": "America/Argentina/Buenos_Aires",
-        "coordinates": [
-            -34.6118,
-            -58.3960
-        ],
-        "website": "https://albertsilvawd.github.io/wdd231/final/",
-        "author": "Albert Silva",
-        "project": "WDD 231 Final Project - Hidden Gems Explorer",
-        "description": "Curated collection of hidden gems and secret attractions in Buenos Aires, Argentina"
-    }
+    ]
 }
