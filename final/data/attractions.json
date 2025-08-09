@@ -24,7 +24,7 @@
                 "sunset"
             ],
             "historicalInfo": "Created in 1987 by local artist Maria Santos as a community green space.",
-            "image": "secret-garden.webp"
+            "image": "ancient-trees.webp"
         },
         {
             "id": 2,
@@ -50,7 +50,7 @@
                 "murals"
             ],
             "historicalInfo": "Abandoned subway tunnel from 1920s, converted to art space in 2015.",
-            "image": "underground-art.webp"
+            "image": "graffiti-hall.webp"
         },
         {
             "id": 3,
@@ -466,6 +466,23 @@
         "totalCategories": 7,
         "freeAttractions": 9,
         "accessibleAttractions": 5,
-        "averageRating": 4.6
+        "averageRating": 4.6,
+        "lastUpdated": "2024-12-19T00:00:00.000Z",
+        "version": "1.0"
+    },
+    "metadata": {
+        "city": "Buenos Aires",
+        "country": "Argentina",
+        "language": "en",
+        "currency": "ARS",
+        "timezone": "America/Argentina/Buenos_Aires",
+        "coordinates": [
+            -34.6118,
+            -58.3960
+        ],
+        "website": "https://albertsilvawd.github.io/wdd231/final/",
+        "author": "Albert Silva",
+        "project": "WDD 231 Final Project - Hidden Gems Explorer",
+        "description": "Curated collection of hidden gems and secret attractions in Buenos Aires, Argentina"
     }
 }

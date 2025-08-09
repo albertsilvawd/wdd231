@@ -1,28 +1,47 @@
 // Hidden Gems Explorer - Storage Services Module
 // Albert Silva - WDD 231 Final Project
 
-// Storage Service Class - Manages local storage with error handling and data validation
+// Storage Service Class - Manages local storage with comprehensive error handling and data validation
 class StorageService {
     constructor(namespace = 'hiddenGems') {
         this.namespace = namespace;
         this.storageAvailable = this.checkStorageAvailability();
         this.memoryStore = new Map(); // Fallback for when localStorage isn't available
+        this.maxStorageSize = 5 * 1024 * 1024; // 5MB estimate
+        this.version = '1.0';
 
         if (!this.storageAvailable) {
-            console.warn('localStorage not available, using memory storage');
+            console.warn('⚠️ localStorage not available, using memory storage fallback');
+        } else {
+            console.log('✅ localStorage available and ready');
         }
+
+        // Initialize cleanup
+        this.initCleanup();
     }
 
-    // Check if localStorage is available
+    // Check if localStorage is available and functional
     checkStorageAvailability() {
         try {
             const test = '__storage_test__';
             localStorage.setItem(test, test);
             localStorage.removeItem(test);
             return true;
-        } catch (e) {
+        } catch (error) {
+            console.error('localStorage availability check failed:', error);
             return false;
         }
+    }
+
+    // Initialize periodic cleanup
+    initCleanup() {
+        // Clean up expired entries on initialization
+        this.cleanupExpiredEntries();
+
+        // Set up periodic cleanup (every 10 minutes)
+        setInterval(() => {
+            this.cleanupExpiredEntries();
+        }, 10 * 60 * 1000);
     }
 
     // Generate namespaced key
@@ -30,56 +49,93 @@ class StorageService {
         return `${this.namespace}_${key}`;
     }
 
-    // Set item in storage with error handling
-    setItem(key, value) {
+    // Set item in storage with comprehensive error handling
+    setItem(key, value, expirationHours = null) {
         const namespacedKey = this.getNamespacedKey(key);
 
         try {
-            const serializedValue = JSON.stringify({
+            const storageData = {
                 data: value,
                 timestamp: Date.now(),
-                version: '1.0'
-            });
+                version: this.version,
+                type: typeof value,
+                expires: expirationHours ? Date.now() + (expirationHours * 60 * 60 * 1000) : null
+            };
+
+            const serializedValue = JSON.stringify(storageData);
+
+            // Check size before storing
+            if (serializedValue.length > 1024 * 1024) { // 1MB per item limit
+                console.warn(`⚠️ Large data size for key ${key}: ${(serializedValue.length / 1024).toFixed(2)}KB`);
+            }
 
             if (this.storageAvailable) {
+                // Check available space
+                if (this.getStorageUsage().percentage > 80) {
+                    console.warn('⚠️ Storage usage high, cleaning up...');
+                    this.cleanupExpiredEntries();
+                    this.cleanupOldEntries();
+                }
+
                 localStorage.setItem(namespacedKey, serializedValue);
             } else {
                 this.memoryStore.set(namespacedKey, serializedValue);
             }
 
-            console.log(`Stored item: ${key}`);
+            console.log(`✅ Stored item: ${key} (${(serializedValue.length / 1024).toFixed(2)}KB)`);
             return true;
-        } catch (error) {
-            console.error(`Error storing item ${key}:`, error);
 
-            // Try to clear some space and retry
-            if (error.name === 'QuotaExceededError') {
-                this.clearOldEntries();
+        } catch (error) {
+            console.error(`❌ Error storing item ${key}:`, error);
+
+            // Handle quota exceeded error
+            if (error.name === 'QuotaExceededError' || error.code === 22) {
+                console.warn('💾 Storage quota exceeded, attempting cleanup...');
+
                 try {
+                    this.cleanupExpiredEntries();
+                    this.cleanupOldEntries();
+
+                    // Retry after cleanup
+                    const storageData = {
+                        data: value,
+                        timestamp: Date.now(),
+                        version: this.version,
+                        type: typeof value,
+                        expires: expirationHours ? Date.now() + (expirationHours * 60 * 60 * 1000) : null
+                    };
+
+                    const serializedValue = JSON.stringify(storageData);
+
                     if (this.storageAvailable) {
-                        localStorage.setItem(namespacedKey, JSON.stringify({
-                            data: value,
-                            timestamp: Date.now(),
-                            version: '1.0'
-                        }));
+                        localStorage.setItem(namespacedKey, serializedValue);
                     } else {
-                        this.memoryStore.set(namespacedKey, JSON.stringify({
-                            data: value,
-                            timestamp: Date.now(),
-                            version: '1.0'
-                        }));
+                        this.memoryStore.set(namespacedKey, serializedValue);
                     }
+
+                    console.log(`✅ Stored item after cleanup: ${key}`);
                     return true;
+
                 } catch (retryError) {
-                    console.error(`Retry failed for ${key}:`, retryError);
-                    return false;
+                    console.error(`❌ Retry failed for ${key}:`, retryError);
+
+                    // Last resort: try to store in memory
+                    try {
+                        this.memoryStore.set(namespacedKey, JSON.stringify(storageData));
+                        console.log(`💾 Stored in memory fallback: ${key}`);
+                        return true;
+                    } catch (memoryError) {
+                        console.error(`❌ Memory fallback failed for ${key}:`, memoryError);
+                        return false;
+                    }
                 }
             }
+
             return false;
         }
     }
 
-    // Get item from storage with error handling
+    // Get item from storage with comprehensive error handling
     getItem(key, defaultValue = null) {
         const namespacedKey = this.getNamespacedKey(key);
 
@@ -100,19 +156,36 @@ class StorageService {
 
             // Validate stored data structure
             if (!parsed || typeof parsed !== 'object' || !parsed.hasOwnProperty('data')) {
-                console.warn(`Invalid stored data for key: ${key}`);
+                console.warn(`⚠️ Invalid stored data structure for key: ${key}, returning default`);
+                this.removeItem(key); // Clean up invalid data
                 return defaultValue;
             }
 
-            // Check data freshness (optional expiration)
-            if (parsed.timestamp && this.isExpired(parsed.timestamp, key)) {
+            // Check if data has expired
+            if (parsed.expires && Date.now() > parsed.expires) {
+                console.log(`⏰ Data expired for key: ${key}, removing`);
                 this.removeItem(key);
                 return defaultValue;
             }
 
+            // Version compatibility check
+            if (parsed.version && parsed.version !== this.version) {
+                console.warn(`⚠️ Version mismatch for key: ${key} (stored: ${parsed.version}, current: ${this.version})`);
+                // Could add migration logic here if needed
+            }
+
             return parsed.data;
+
         } catch (error) {
-            console.error(`Error retrieving item ${key}:`, error);
+            console.error(`❌ Error retrieving item ${key}:`, error);
+
+            // Try to clean up corrupted data
+            try {
+                this.removeItem(key);
+            } catch (cleanupError) {
+                console.error(`❌ Failed to clean up corrupted data for ${key}:`, cleanupError);
+            }
+
             return defaultValue;
         }
     }
@@ -127,10 +200,12 @@ class StorageService {
             } else {
                 this.memoryStore.delete(namespacedKey);
             }
-            console.log(`Removed item: ${key}`);
+
+            console.log(`🗑️ Removed item: ${key}`);
             return true;
+
         } catch (error) {
-            console.error(`Error removing item ${key}:`, error);
+            console.error(`❌ Error removing item ${key}:`, error);
             return false;
         }
     }
@@ -138,11 +213,14 @@ class StorageService {
     // Clear all namespaced items
     clear() {
         try {
+            let removedCount = 0;
+
             if (this.storageAvailable) {
                 const keys = Object.keys(localStorage);
                 keys.forEach(key => {
                     if (key.startsWith(this.namespace)) {
                         localStorage.removeItem(key);
+                        removedCount++;
                     }
                 });
             } else {
@@ -150,14 +228,16 @@ class StorageService {
                 for (const key of this.memoryStore.keys()) {
                     if (key.startsWith(this.namespace)) {
                         this.memoryStore.delete(key);
+                        removedCount++;
                     }
                 }
             }
 
-            console.log('Storage cleared');
+            console.log(`🧹 Cleared ${removedCount} items from storage`);
             return true;
+
         } catch (error) {
-            console.error('Error clearing storage:', error);
+            console.error('❌ Error clearing storage:', error);
             return false;
         }
     }
@@ -183,53 +263,28 @@ class StorageService {
             }
 
             return keys;
+
         } catch (error) {
-            console.error('Error getting all keys:', error);
+            console.error('❌ Error getting all keys:', error);
             return [];
         }
     }
 
-    // Check if data is expired (default: 7 days)
-    isExpired(timestamp, key, maxAge = 7 * 24 * 60 * 60 * 1000) {
-        // Some data types don't expire
-        const nonExpiringKeys = ['userPreferences', 'favorites', 'theme'];
-        if (nonExpiringKeys.includes(key)) {
-            return false;
-        }
-
-        return (Date.now() - timestamp) > maxAge;
-    }
-
-    // Clear old entries to free up space
-    clearOldEntries() {
-        try {
-            const keys = this.getAllKeys();
-            const now = Date.now();
-            const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000);
-
-            keys.forEach(key => {
-                const data = this.getItem(key);
-                if (data && data.timestamp && data.timestamp < oneWeekAgo) {
-                    this.removeItem(key);
-                }
-            });
-
-            console.log('Old entries cleared');
-        } catch (error) {
-            console.error('Error clearing old entries:', error);
-        }
-    }
-
     // Get storage usage information
-    getStorageInfo() {
+    getStorageUsage() {
         try {
             if (!this.storageAvailable) {
+                const memorySize = Array.from(this.memoryStore.values())
+                    .reduce((total, value) => total + value.length, 0);
+
                 return {
                     available: false,
                     type: 'memory',
                     items: this.memoryStore.size,
-                    totalSize: 0,
-                    remainingSpace: 'unlimited'
+                    usedBytes: memorySize,
+                    usedKB: Math.round(memorySize / 1024),
+                    percentage: 0,
+                    remainingBytes: 'unlimited'
                 };
             }
 
@@ -245,19 +300,24 @@ class StorageService {
                 }
             }
 
-            // Estimate remaining space (localStorage limit is usually 5-10MB)
-            const estimatedLimit = 5 * 1024 * 1024; // 5MB
-            const remainingSpace = Math.max(0, estimatedLimit - totalSize);
+            const percentage = (totalSize / this.maxStorageSize) * 100;
+            const remainingBytes = Math.max(0, this.maxStorageSize - totalSize);
 
             return {
                 available: true,
                 type: 'localStorage',
                 items: itemCount,
-                totalSize: this.formatBytes(totalSize),
-                remainingSpace: this.formatBytes(remainingSpace)
+                usedBytes: totalSize,
+                usedKB: Math.round(totalSize / 1024),
+                usedMB: Math.round(totalSize / (1024 * 1024)),
+                percentage: Math.round(percentage),
+                remainingBytes,
+                remainingKB: Math.round(remainingBytes / 1024),
+                remainingMB: Math.round(remainingBytes / (1024 * 1024))
             };
+
         } catch (error) {
-            console.error('Error getting storage info:', error);
+            console.error('❌ Error getting storage usage:', error);
             return {
                 available: false,
                 error: error.message
@@ -265,15 +325,98 @@ class StorageService {
         }
     }
 
-    // Format bytes for display
-    formatBytes(bytes) {
-        if (bytes === 0) return '0 Bytes';
+    // Clean up expired entries
+    cleanupExpiredEntries() {
+        try {
+            const keys = this.getAllKeys();
+            let expiredCount = 0;
+            const now = Date.now();
 
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
+            keys.forEach(key => {
+                try {
+                    const namespacedKey = this.getNamespacedKey(key);
+                    let stored;
 
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                    if (this.storageAvailable) {
+                        stored = localStorage.getItem(namespacedKey);
+                    } else {
+                        stored = this.memoryStore.get(namespacedKey);
+                    }
+
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        if (parsed.expires && now > parsed.expires) {
+                            this.removeItem(key);
+                            expiredCount++;
+                        }
+                    }
+                } catch (error) {
+                    // If parsing fails, consider it corrupted and remove it
+                    console.warn(`⚠️ Removing corrupted data for key: ${key}`);
+                    this.removeItem(key);
+                    expiredCount++;
+                }
+            });
+
+            if (expiredCount > 0) {
+                console.log(`🧹 Cleaned up ${expiredCount} expired entries`);
+            }
+
+            return expiredCount;
+
+        } catch (error) {
+            console.error('❌ Error cleaning expired entries:', error);
+            return 0;
+        }
+    }
+
+    // Clean up old entries based on age
+    cleanupOldEntries(maxAgeHours = 168) { // Default: 1 week
+        try {
+            const keys = this.getAllKeys();
+            let removedCount = 0;
+            const cutoffTime = Date.now() - (maxAgeHours * 60 * 60 * 1000);
+
+            // Non-expiring keys that should be preserved
+            const preserveKeys = ['favorites', 'userPreferences', 'theme', 'settings'];
+
+            keys.forEach(key => {
+                if (preserveKeys.includes(key)) return;
+
+                try {
+                    const namespacedKey = this.getNamespacedKey(key);
+                    let stored;
+
+                    if (this.storageAvailable) {
+                        stored = localStorage.getItem(namespacedKey);
+                    } else {
+                        stored = this.memoryStore.get(namespacedKey);
+                    }
+
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        if (parsed.timestamp && parsed.timestamp < cutoffTime) {
+                            this.removeItem(key);
+                            removedCount++;
+                        }
+                    }
+                } catch (error) {
+                    console.warn(`⚠️ Error processing old entry ${key}, removing:`, error);
+                    this.removeItem(key);
+                    removedCount++;
+                }
+            });
+
+            if (removedCount > 0) {
+                console.log(`🧹 Cleaned up ${removedCount} old entries`);
+            }
+
+            return removedCount;
+
+        } catch (error) {
+            console.error('❌ Error cleaning old entries:', error);
+            return 0;
+        }
     }
 
     // Export data for backup
@@ -281,19 +424,33 @@ class StorageService {
         try {
             const data = {};
             const keys = this.getAllKeys();
+            let exportedCount = 0;
 
             keys.forEach(key => {
-                data[key] = this.getItem(key);
+                try {
+                    const value = this.getItem(key);
+                    if (value !== null) {
+                        data[key] = value;
+                        exportedCount++;
+                    }
+                } catch (error) {
+                    console.warn(`⚠️ Failed to export key ${key}:`, error);
+                }
             });
 
-            return {
+            const exportData = {
                 namespace: this.namespace,
                 exportDate: new Date().toISOString(),
-                version: '1.0',
+                version: this.version,
+                itemCount: exportedCount,
                 data
             };
+
+            console.log(`📤 Exported ${exportedCount} items`);
+            return exportData;
+
         } catch (error) {
-            console.error('Error exporting data:', error);
+            console.error('❌ Error exporting data:', error);
             return null;
         }
     }
@@ -321,11 +478,11 @@ class StorageService {
                 } catch (error) {
                     imported[key] = false;
                     errorCount++;
-                    console.error(`Error importing ${key}:`, error);
+                    console.error(`❌ Error importing ${key}:`, error);
                 }
             });
 
-            console.log(`Import complete: ${successCount} successful, ${errorCount} failed`);
+            console.log(`📥 Import complete: ${successCount} successful, ${errorCount} failed`);
 
             return {
                 success: true,
@@ -333,20 +490,312 @@ class StorageService {
                 failed: errorCount,
                 details: imported
             };
+
         } catch (error) {
-            console.error('Error importing data:', error);
+            console.error('❌ Error importing data:', error);
             return {
                 success: false,
                 error: error.message
             };
         }
     }
+
+    // Get detailed storage statistics
+    getStorageStats() {
+        try {
+            const keys = this.getAllKeys();
+            const stats = {
+                total: keys.length,
+                byType: {},
+                byAge: { hour: 0, day: 0, week: 0, month: 0, older: 0 },
+                bySize: { small: 0, medium: 0, large: 0 },
+                expired: 0,
+                corrupted: 0
+            };
+
+            const now = Date.now();
+            const hour = 60 * 60 * 1000;
+            const day = 24 * hour;
+            const week = 7 * day;
+            const month = 30 * day;
+
+            keys.forEach(key => {
+                try {
+                    const namespacedKey = this.getNamespacedKey(key);
+                    let stored;
+
+                    if (this.storageAvailable) {
+                        stored = localStorage.getItem(namespacedKey);
+                    } else {
+                        stored = this.memoryStore.get(namespacedKey);
+                    }
+
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+
+                        // Type statistics
+                        const type = parsed.type || 'unknown';
+                        stats.byType[type] = (stats.byType[type] || 0) + 1;
+
+                        // Age statistics
+                        const age = now - (parsed.timestamp || now);
+                        if (age < hour) stats.byAge.hour++;
+                        else if (age < day) stats.byAge.day++;
+                        else if (age < week) stats.byAge.week++;
+                        else if (age < month) stats.byAge.month++;
+                        else stats.byAge.older++;
+
+                        // Size statistics
+                        const size = stored.length;
+                        if (size < 1024) stats.bySize.small++;
+                        else if (size < 10240) stats.bySize.medium++;
+                        else stats.bySize.large++;
+
+                        // Expiration check
+                        if (parsed.expires && now > parsed.expires) {
+                            stats.expired++;
+                        }
+                    }
+                } catch (error) {
+                    stats.corrupted++;
+                }
+            });
+
+            return stats;
+
+        } catch (error) {
+            console.error('❌ Error getting storage stats:', error);
+            return null;
+        }
+    }
 }
 
-// Specialized storage services for different data types
+// Specialized Favorites Service
+class FavoritesService extends StorageService {
+    constructor() {
+        super('hiddenGems_favorites');
+        this.favoritesKey = 'favoritesList';
+    }
+
+    getFavorites() {
+        const favorites = this.getItem(this.favoritesKey, []);
+        return Array.isArray(favorites) ? favorites : [];
+    }
+
+    addFavorite(attractionId) {
+        try {
+            const favorites = this.getFavorites();
+            const idString = attractionId.toString();
+
+            if (!favorites.includes(idString)) {
+                favorites.push(idString);
+                const success = this.setItem(this.favoritesKey, favorites);
+
+                if (success) {
+                    console.log(`❤️ Added to favorites: ${attractionId}`);
+                    return true;
+                }
+            } else {
+                console.log(`ℹ️ Already in favorites: ${attractionId}`);
+                return true;
+            }
+
+            return false;
+        } catch (error) {
+            console.error(`❌ Error adding favorite ${attractionId}:`, error);
+            return false;
+        }
+    }
+
+    removeFavorite(attractionId) {
+        try {
+            const favorites = this.getFavorites();
+            const idString = attractionId.toString();
+            const index = favorites.indexOf(idString);
+
+            if (index > -1) {
+                favorites.splice(index, 1);
+                const success = this.setItem(this.favoritesKey, favorites);
+
+                if (success) {
+                    console.log(`💔 Removed from favorites: ${attractionId}`);
+                    return true;
+                }
+            } else {
+                console.log(`ℹ️ Not in favorites: ${attractionId}`);
+                return true;
+            }
+
+            return false;
+        } catch (error) {
+            console.error(`❌ Error removing favorite ${attractionId}:`, error);
+            return false;
+        }
+    }
+
+    isFavorite(attractionId) {
+        try {
+            const favorites = this.getFavorites();
+            return favorites.includes(attractionId.toString());
+        } catch (error) {
+            console.error(`❌ Error checking favorite ${attractionId}:`, error);
+            return false;
+        }
+    }
+
+    toggleFavorite(attractionId) {
+        return this.isFavorite(attractionId)
+            ? this.removeFavorite(attractionId)
+            : this.addFavorite(attractionId);
+    }
+
+    clearFavorites() {
+        try {
+            const success = this.setItem(this.favoritesKey, []);
+            if (success) {
+                console.log('🧹 Cleared all favorites');
+            }
+            return success;
+        } catch (error) {
+            console.error('❌ Error clearing favorites:', error);
+            return false;
+        }
+    }
+
+    getFavoritesCount() {
+        return this.getFavorites().length;
+    }
+
+    getFavoritesStats() {
+        try {
+            const favorites = this.getFavorites();
+            return {
+                total: favorites.length,
+                addedToday: 0, // Would need timestamp tracking for this
+                mostRecent: favorites.length > 0 ? favorites[favorites.length - 1] : null
+            };
+        } catch (error) {
+            console.error('❌ Error getting favorites stats:', error);
+            return { total: 0, addedToday: 0, mostRecent: null };
+        }
+    }
+}
+
+// Visit History Service
+class VisitHistoryService extends StorageService {
+    constructor() {
+        super('hiddenGems_history');
+        this.historyKey = 'visitHistory';
+        this.maxHistoryItems = 100;
+    }
+
+    addVisit(attractionId, attractionName = null, timestamp = Date.now()) {
+        try {
+            const history = this.getItem(this.historyKey, []);
+
+            // Remove existing entry for this attraction
+            const filtered = history.filter(item => item.attractionId !== attractionId.toString());
+
+            // Add new entry at the beginning
+            filtered.unshift({
+                attractionId: attractionId.toString(),
+                attractionName,
+                timestamp,
+                date: new Date(timestamp).toISOString(),
+                id: `visit_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+            });
+
+            // Keep only the most recent visits
+            const trimmed = filtered.slice(0, this.maxHistoryItems);
+
+            const success = this.setItem(this.historyKey, trimmed);
+            if (success) {
+                console.log(`📍 Recorded visit to: ${attractionId}`);
+            }
+            return success;
+        } catch (error) {
+            console.error(`❌ Error adding visit ${attractionId}:`, error);
+            return false;
+        }
+    }
+
+    getVisitHistory() {
+        return this.getItem(this.historyKey, []);
+    }
+
+    getRecentVisits(count = 10) {
+        const history = this.getVisitHistory();
+        return history.slice(0, count);
+    }
+
+    hasVisited(attractionId) {
+        try {
+            const history = this.getVisitHistory();
+            return history.some(item => item.attractionId === attractionId.toString());
+        } catch (error) {
+            console.error(`❌ Error checking visit ${attractionId}:`, error);
+            return false;
+        }
+    }
+
+    getVisitCount(attractionId) {
+        try {
+            const history = this.getVisitHistory();
+            return history.filter(item => item.attractionId === attractionId.toString()).length;
+        } catch (error) {
+            console.error(`❌ Error getting visit count ${attractionId}:`, error);
+            return 0;
+        }
+    }
+
+    clearHistory() {
+        try {
+            const success = this.setItem(this.historyKey, []);
+            if (success) {
+                console.log('🧹 Cleared visit history');
+            }
+            return success;
+        } catch (error) {
+            console.error('❌ Error clearing history:', error);
+            return false;
+        }
+    }
+
+    getVisitStats() {
+        try {
+            const history = this.getVisitHistory();
+            const uniqueAttractions = new Set(history.map(item => item.attractionId));
+
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const thisWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+            const thisMonth = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+
+            const visitsToday = history.filter(visit => new Date(visit.timestamp) >= today).length;
+            const visitsThisWeek = history.filter(visit => new Date(visit.timestamp) >= thisWeek).length;
+            const visitsThisMonth = history.filter(visit => new Date(visit.timestamp) >= thisMonth).length;
+
+            return {
+                totalVisits: history.length,
+                uniqueAttractions: uniqueAttractions.size,
+                visitsToday,
+                visitsThisWeek,
+                visitsThisMonth,
+                firstVisit: history.length > 0 ? history[history.length - 1].date : null,
+                lastVisit: history.length > 0 ? history[0].date : null
+            };
+        } catch (error) {
+            console.error('❌ Error getting visit stats:', error);
+            return null;
+        }
+    }
+}
+
+// User Preferences Service
 class UserPreferencesService extends StorageService {
     constructor() {
         super('hiddenGems_preferences');
+        this.preferencesKey = 'userPrefs';
         this.defaultPreferences = {
             theme: 'light',
             language: 'en',
@@ -354,26 +803,54 @@ class UserPreferencesService extends StorageService {
             autoLocation: false,
             displayMode: 'grid',
             itemsPerPage: 6,
-            defaultSort: 'name',
-            defaultFilter: 'all'
+            defaultSort: 'rating',
+            defaultFilter: 'all',
+            showTips: true,
+            animationsEnabled: true,
+            compactMode: false
         };
     }
 
     getPreferences() {
-        return {
-            ...this.defaultPreferences,
-            ...this.getItem('userPrefs', {})
-        };
+        try {
+            const stored = this.getItem(this.preferencesKey, {});
+            return {
+                ...this.defaultPreferences,
+                ...stored
+            };
+        } catch (error) {
+            console.error('❌ Error getting preferences:', error);
+            return this.defaultPreferences;
+        }
     }
 
     setPreference(key, value) {
-        const current = this.getPreferences();
-        current[key] = value;
-        return this.setItem('userPrefs', current);
+        try {
+            const current = this.getPreferences();
+            current[key] = value;
+
+            const success = this.setItem(this.preferencesKey, current);
+            if (success) {
+                console.log(`⚙️ Updated preference ${key}: ${value}`);
+            }
+            return success;
+        } catch (error) {
+            console.error(`❌ Error setting preference ${key}:`, error);
+            return false;
+        }
     }
 
     resetPreferences() {
-        return this.setItem('userPrefs', this.defaultPreferences);
+        try {
+            const success = this.setItem(this.preferencesKey, this.defaultPreferences);
+            if (success) {
+                console.log('🔄 Reset preferences to defaults');
+            }
+            return success;
+        } catch (error) {
+            console.error('❌ Error resetting preferences:', error);
+            return false;
+        }
     }
 
     getTheme() {
@@ -383,430 +860,282 @@ class UserPreferencesService extends StorageService {
     setTheme(theme) {
         return this.setPreference('theme', theme);
     }
+
+    getDisplayMode() {
+        return this.getPreferences().displayMode;
+    }
+
+    setDisplayMode(mode) {
+        return this.setPreference('displayMode', mode);
+    }
 }
 
-class FavoritesService extends StorageService {
+// Form Data Service
+class FormDataService extends StorageService {
     constructor() {
-        super('hiddenGems_favorites');
+        super('hiddenGems_forms');
+        this.submissionsKey = 'submissions';
+        this.maxSubmissions = 50;
     }
 
-    getFavorites() {
-        return this.getItem('favoritesList', []);
-    }
+    saveFormData(formId, formData) {
+        try {
+            const submissions = this.getItem(this.submissionsKey, []);
 
-    addFavorite(attractionId) {
-        const favorites = this.getFavorites();
-        if (!favorites.includes(attractionId)) {
-            favorites.push(attractionId);
-            return this.setItem('favoritesList', favorites);
+            const submission = {
+                formId,
+                data: formData,
+                timestamp: Date.now(),
+                date: new Date().toISOString(),
+                id: `form_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+            };
+
+            submissions.unshift(submission);
+
+            // Keep only recent submissions
+            const trimmed = submissions.slice(0, this.maxSubmissions);
+
+            const success = this.setItem(this.submissionsKey, trimmed);
+            if (success) {
+                console.log(`📝 Saved form submission: ${formId}`);
+            }
+            return success;
+        } catch (error) {
+            console.error(`❌ Error saving form data ${formId}:`, error);
+            return false;
         }
-        return true;
     }
 
-    removeFavorite(attractionId) {
-        const favorites = this.getFavorites();
-        const index = favorites.indexOf(attractionId);
-        if (index > -1) {
-            favorites.splice(index, 1);
-            return this.setItem('favoritesList', favorites);
+    getFormSubmissions(formId = null) {
+        try {
+            const submissions = this.getItem(this.submissionsKey, []);
+
+            if (formId) {
+                return submissions.filter(sub => sub.formId === formId);
+            }
+
+            return submissions;
+        } catch (error) {
+            console.error('❌ Error getting form submissions:', error);
+            return [];
         }
-        return true;
     }
 
-    isFavorite(attractionId) {
-        return this.getFavorites().includes(attractionId);
-    }
-
-    clearFavorites() {
-        return this.setItem('favoritesList', []);
-    }
-
-    getFavoritesCount() {
-        return this.getFavorites().length;
-    }
-}
-
-class VisitHistoryService extends StorageService {
-    constructor() {
-        super('hiddenGems_history');
-    }
-
-    addVisit(attractionId, timestamp = Date.now()) {
-        const history = this.getItem('visitHistory', []);
-
-        // Remove existing entry for this attraction
-        const filtered = history.filter(item => item.attractionId !== attractionId);
-
-        // Add new entry at the beginning
-        filtered.unshift({
-            attractionId,
-            timestamp,
-            date: new Date(timestamp).toISOString()
-        });
-
-        // Keep only last 50 visits
-        const trimmed = filtered.slice(0, 50);
-
-        return this.setItem('visitHistory', trimmed);
-    }
-
-    getVisitHistory() {
-        return this.getItem('visitHistory', []);
-    }
-
-    getRecentVisits(count = 10) {
-        return this.getVisitHistory().slice(0, count);
-    }
-
-    hasVisited(attractionId) {
-        const history = this.getVisitHistory();
-        return history.some(item => item.attractionId === attractionId);
-    }
-
-    getVisitCount(attractionId) {
-        const history = this.getVisitHistory();
-        return history.filter(item => item.attractionId === attractionId).length;
-    }
-
-    clearHistory() {
-        return this.setItem('visitHistory', []);
-    }
-
-    getVisitStats() {
-        const history = this.getVisitHistory();
-        const uniqueAttractions = new Set(history.map(item => item.attractionId));
-
-        return {
-            totalVisits: history.length,
-            uniqueAttractions: uniqueAttractions.size,
-            firstVisit: history.length > 0 ? history[history.length - 1].date : null,
-            lastVisit: history.length > 0 ? history[0].date : null
-        };
-    }
-}
-
-class SearchHistoryService extends StorageService {
-    constructor() {
-        super('hiddenGems_search');
-    }
-
-    addSearch(query, timestamp = Date.now()) {
-        if (!query || query.trim().length < 2) return false;
-
-        const searches = this.getItem('searchHistory', []);
-        const normalizedQuery = query.trim().toLowerCase();
-
-        // Remove existing entry
-        const filtered = searches.filter(item => item.query !== normalizedQuery);
-
-        // Add new entry at the beginning
-        filtered.unshift({
-            query: normalizedQuery,
-            originalQuery: query.trim(),
-            timestamp,
-            date: new Date(timestamp).toISOString()
-        });
-
-        // Keep only last 20 searches
-        const trimmed = filtered.slice(0, 20);
-
-        return this.setItem('searchHistory', trimmed);
-    }
-
-    getSearchHistory() {
-        return this.getItem('searchHistory', []);
-    }
-
-    getRecentSearches(count = 5) {
-        return this.getSearchHistory().slice(0, count);
-    }
-
-    clearSearchHistory() {
-        return this.setItem('searchHistory', []);
-    }
-
-    getPopularSearches(count = 5) {
-        const searches = this.getSearchHistory();
-        const queryCount = {};
-
-        searches.forEach(search => {
-            queryCount[search.query] = (queryCount[search.query] || 0) + 1;
-        });
-
-        return Object.entries(queryCount)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, count)
-            .map(([query, count]) => ({ query, count }));
-    }
-}
-
-class CacheService extends StorageService {
-    constructor() {
-        super('hiddenGems_cache');
-        this.defaultCacheTime = 60 * 60 * 1000; // 1 hour
-    }
-
-    setCacheItem(key, data, customTTL = null) {
-        const ttl = customTTL || this.defaultCacheTime;
-        const cacheData = {
-            data,
-            timestamp: Date.now(),
-            ttl,
-            expires: Date.now() + ttl
-        };
-
-        return this.setItem(`cache_${key}`, cacheData);
-    }
-
-    getCacheItem(key) {
-        const cacheData = this.getItem(`cache_${key}`);
-
-        if (!cacheData) return null;
-
-        // Check if expired
-        if (Date.now() > cacheData.expires) {
-            this.removeItem(`cache_${key}`);
+    getLastSubmission() {
+        try {
+            const submissions = this.getFormSubmissions();
+            return submissions.length > 0 ? submissions[0] : null;
+        } catch (error) {
+            console.error('❌ Error getting last submission:', error);
             return null;
         }
-
-        return cacheData.data;
     }
 
-    isCacheValid(key) {
-        const cacheData = this.getItem(`cache_${key}`);
-        return cacheData && Date.now() <= cacheData.expires;
-    }
-
-    clearExpiredCache() {
-        const keys = this.getAllKeys();
-        const now = Date.now();
-        let cleared = 0;
-
-        keys.forEach(key => {
-            if (key.startsWith('cache_')) {
-                const cacheData = this.getItem(key);
-                if (cacheData && cacheData.expires && now > cacheData.expires) {
-                    this.removeItem(key);
-                    cleared++;
-                }
+    clearFormData() {
+        try {
+            const success = this.setItem(this.submissionsKey, []);
+            if (success) {
+                console.log('🧹 Cleared form submissions');
             }
-        });
-
-        console.log(`Cleared ${cleared} expired cache entries`);
-        return cleared;
+            return success;
+        } catch (error) {
+            console.error('❌ Error clearing form data:', error);
+            return false;
+        }
     }
 
-    getCacheStats() {
-        const keys = this.getAllKeys().filter(key => key.startsWith('cache_'));
-        const now = Date.now();
-        let validCount = 0;
-        let expiredCount = 0;
-        let totalSize = 0;
+    getSubmissionStats() {
+        try {
+            const submissions = this.getFormSubmissions();
+            const formTypes = {};
 
-        keys.forEach(key => {
-            const cacheData = this.getItem(key);
-            if (cacheData) {
-                totalSize += JSON.stringify(cacheData).length;
-                if (cacheData.expires && now <= cacheData.expires) {
-                    validCount++;
-                } else {
-                    expiredCount++;
-                }
-            }
-        });
+            submissions.forEach(sub => {
+                formTypes[sub.formId] = (formTypes[sub.formId] || 0) + 1;
+            });
 
-        return {
-            totalEntries: keys.length,
-            validEntries: validCount,
-            expiredEntries: expiredCount,
-            totalSize: this.formatBytes(totalSize * 2) // UTF-16 estimate
-        };
+            return {
+                totalSubmissions: submissions.length,
+                formTypes,
+                firstSubmission: submissions.length > 0 ? submissions[submissions.length - 1].date : null,
+                lastSubmission: submissions.length > 0 ? submissions[0].date : null
+            };
+        } catch (error) {
+            console.error('❌ Error getting submission stats:', error);
+            return null;
+        }
     }
 }
 
-// Analytics and usage tracking service
+// Analytics Service
 class AnalyticsService extends StorageService {
     constructor() {
         super('hiddenGems_analytics');
+        this.eventsKey = 'events';
+        this.maxEvents = 200;
     }
 
     trackEvent(eventName, eventData = {}) {
-        const events = this.getItem('events', []);
+        try {
+            const events = this.getItem(this.eventsKey, []);
 
-        const event = {
-            name: eventName,
-            data: eventData,
-            timestamp: Date.now(),
-            date: new Date().toISOString(),
-            sessionId: this.getSessionId(),
-            url: window.location.pathname
-        };
+            const event = {
+                name: eventName,
+                data: eventData,
+                timestamp: Date.now(),
+                date: new Date().toISOString(),
+                sessionId: this.getSessionId(),
+                url: window.location.pathname,
+                userAgent: navigator.userAgent.substring(0, 100),
+                id: `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+            };
 
-        events.unshift(event);
+            events.unshift(event);
 
-        // Keep only last 100 events
-        const trimmed = events.slice(0, 100);
+            // Keep only recent events
+            const trimmed = events.slice(0, this.maxEvents);
 
-        return this.setItem('events', trimmed);
+            const success = this.setItem(this.eventsKey, trimmed);
+            if (success) {
+                console.log(`📊 Tracked event: ${eventName}`);
+            }
+            return success;
+        } catch (error) {
+            console.error(`❌ Error tracking event ${eventName}:`, error);
+            return false;
+        }
     }
 
     getSessionId() {
         let sessionId = this.getItem('sessionId');
         if (!sessionId) {
-            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            this.setItem('sessionId', sessionId);
+            sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            this.setItem('sessionId', sessionId, 24); // Expire after 24 hours
         }
         return sessionId;
     }
 
     getEvents() {
-        return this.getItem('events', []);
+        return this.getItem(this.eventsKey, []);
     }
 
     getEventsByType(eventName) {
-        const events = this.getEvents();
-        return events.filter(event => event.name === eventName);
+        try {
+            const events = this.getEvents();
+            return events.filter(event => event.name === eventName);
+        } catch (error) {
+            console.error(`❌ Error getting events by type ${eventName}:`, error);
+            return [];
+        }
     }
 
     getUsageStats() {
-        const events = this.getEvents();
-        const pageViews = events.filter(e => e.name === 'page_view');
-        const interactions = events.filter(e => e.name === 'interaction');
+        try {
+            const events = this.getEvents();
+            const pageViews = events.filter(e => e.name === 'page_view');
+            const interactions = events.filter(e => e.name === 'interaction');
+            const sessions = new Set(events.map(e => e.sessionId));
 
-        return {
-            totalEvents: events.length,
-            pageViews: pageViews.length,
-            interactions: interactions.length,
-            sessionsCount: new Set(events.map(e => e.sessionId)).size,
-            firstEvent: events.length > 0 ? events[events.length - 1].date : null,
-            lastEvent: events.length > 0 ? events[0].date : null
-        };
+            return {
+                totalEvents: events.length,
+                pageViews: pageViews.length,
+                interactions: interactions.length,
+                sessionsCount: sessions.size,
+                firstEvent: events.length > 0 ? events[events.length - 1].date : null,
+                lastEvent: events.length > 0 ? events[0].date : null
+            };
+        } catch (error) {
+            console.error('❌ Error getting usage stats:', error);
+            return null;
+        }
     }
 
     clearAnalytics() {
-        this.removeItem('events');
-        this.removeItem('sessionId');
-    }
-}
-
-// Form data service for handling form submissions
-class FormDataService extends StorageService {
-    constructor() {
-        super('hiddenGems_forms');
-    }
-
-    saveFormData(formId, formData) {
-        const submissions = this.getItem('submissions', []);
-
-        const submission = {
-            formId,
-            data: formData,
-            timestamp: Date.now(),
-            date: new Date().toISOString(),
-            id: 'form_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
-        };
-
-        submissions.unshift(submission);
-
-        // Keep only last 50 submissions
-        const trimmed = submissions.slice(0, 50);
-
-        return this.setItem('submissions', trimmed);
-    }
-
-    getFormSubmissions(formId = null) {
-        const submissions = this.getItem('submissions', []);
-
-        if (formId) {
-            return submissions.filter(sub => sub.formId === formId);
+        try {
+            this.removeItem(this.eventsKey);
+            this.removeItem('sessionId');
+            console.log('🧹 Cleared analytics data');
+            return true;
+        } catch (error) {
+            console.error('❌ Error clearing analytics:', error);
+            return false;
         }
-
-        return submissions;
-    }
-
-    clearFormData() {
-        return this.setItem('submissions', []);
-    }
-
-    getSubmissionStats() {
-        const submissions = this.getFormSubmissions();
-        const formTypes = {};
-
-        submissions.forEach(sub => {
-            formTypes[sub.formId] = (formTypes[sub.formId] || 0) + 1;
-        });
-
-        return {
-            totalSubmissions: submissions.length,
-            formTypes,
-            firstSubmission: submissions.length > 0 ? submissions[submissions.length - 1].date : null,
-            lastSubmission: submissions.length > 0 ? submissions[0].date : null
-        };
     }
 }
 
 // Create service instances
 const storageService = new StorageService();
-const userPreferencesService = new UserPreferencesService();
 const favoritesService = new FavoritesService();
 const visitHistoryService = new VisitHistoryService();
-const searchHistoryService = new SearchHistoryService();
-const cacheService = new CacheService();
-const analyticsService = new AnalyticsService();
+const userPreferencesService = new UserPreferencesService();
 const formDataService = new FormDataService();
+const analyticsService = new AnalyticsService();
 
 // Storage utilities
 const storageUtils = {
     // Clear all application data
     clearAllData() {
         try {
-            storageService.clear();
-            userPreferencesService.clear();
-            favoritesService.clear();
-            visitHistoryService.clear();
-            searchHistoryService.clear();
-            cacheService.clear();
-            analyticsService.clear();
-            formDataService.clear();
+            const services = [
+                storageService,
+                favoritesService,
+                visitHistoryService,
+                userPreferencesService,
+                formDataService,
+                analyticsService
+            ];
 
-            console.log('All application data cleared');
-            return true;
+            let cleared = 0;
+            services.forEach(service => {
+                if (service.clear()) {
+                    cleared++;
+                }
+            });
+
+            console.log(`🧹 Cleared data from ${cleared} services`);
+            return cleared === services.length;
         } catch (error) {
-            console.error('Error clearing all data:', error);
+            console.error('❌ Error clearing all data:', error);
             return false;
         }
     },
 
-    // Get complete storage overview
+    // Get comprehensive storage overview
     getStorageOverview() {
-        return {
-            main: storageService.getStorageInfo(),
-            preferences: userPreferencesService.getStorageInfo(),
-            favorites: favoritesService.getStorageInfo(),
-            history: visitHistoryService.getStorageInfo(),
-            search: searchHistoryService.getStorageInfo(),
-            cache: cacheService.getStorageInfo(),
-            analytics: analyticsService.getStorageInfo(),
-            forms: formDataService.getStorageInfo()
-        };
+        try {
+            return {
+                main: storageService.getStorageUsage(),
+                favorites: favoritesService.getStorageUsage(),
+                history: visitHistoryService.getStorageUsage(),
+                preferences: userPreferencesService.getStorageUsage(),
+                forms: formDataService.getStorageUsage(),
+                analytics: analyticsService.getStorageUsage(),
+                timestamp: new Date().toISOString()
+            };
+        } catch (error) {
+            console.error('❌ Error getting storage overview:', error);
+            return { error: error.message };
+        }
     },
 
     // Export all application data
     exportAllData() {
-        return {
-            exportDate: new Date().toISOString(),
-            version: '1.0',
-            services: {
-                main: storageService.exportData(),
-                preferences: userPreferencesService.exportData(),
-                favorites: favoritesService.exportData(),
-                history: visitHistoryService.exportData(),
-                search: searchHistoryService.exportData(),
-                cache: cacheService.exportData(),
-                analytics: analyticsService.exportData(),
-                forms: formDataService.exportData()
-            }
-        };
+        try {
+            return {
+                exportDate: new Date().toISOString(),
+                version: '1.0',
+                services: {
+                    main: storageService.exportData(),
+                    favorites: favoritesService.exportData(),
+                    history: visitHistoryService.exportData(),
+                    preferences: userPreferencesService.exportData(),
+                    forms: formDataService.exportData(),
+                    analytics: analyticsService.exportData()
+                }
+            };
+        } catch (error) {
+            console.error('❌ Error exporting all data:', error);
+            return { error: error.message };
+        }
     },
 
     // Import all application data
@@ -819,13 +1148,11 @@ const storageUtils = {
             const results = {};
             const services = {
                 main: storageService,
-                preferences: userPreferencesService,
                 favorites: favoritesService,
                 history: visitHistoryService,
-                search: searchHistoryService,
-                cache: cacheService,
-                analytics: analyticsService,
-                forms: formDataService
+                preferences: userPreferencesService,
+                forms: formDataService,
+                analytics: analyticsService
             };
 
             Object.entries(exportedData.services).forEach(([serviceName, serviceData]) => {
@@ -834,12 +1161,13 @@ const storageUtils = {
                 }
             });
 
+            console.log('📥 Import completed for all services');
             return {
                 success: true,
                 results
             };
         } catch (error) {
-            console.error('Error importing all data:', error);
+            console.error('❌ Error importing all data:', error);
             return {
                 success: false,
                 error: error.message
@@ -847,70 +1175,94 @@ const storageUtils = {
         }
     },
 
-    // Check storage health
-    checkStorageHealth() {
-        const health = {
-            overall: 'good',
-            issues: [],
-            recommendations: []
-        };
-
+    // Optimize storage across all services
+    optimizeStorage() {
         try {
+            const results = {
+                expiredCleanup: 0,
+                oldEntriesCleanup: 0,
+                errors: []
+            };
+
+            const services = [
+                storageService,
+                favoritesService,
+                visitHistoryService,
+                userPreferencesService,
+                formDataService,
+                analyticsService
+            ];
+
+            services.forEach(service => {
+                try {
+                    results.expiredCleanup += service.cleanupExpiredEntries();
+                    results.oldEntriesCleanup += service.cleanupOldEntries();
+                } catch (error) {
+                    results.errors.push(`Error optimizing ${service.constructor.name}: ${error.message}`);
+                }
+            });
+
+            console.log('🔧 Storage optimization complete:', results);
+            return results;
+        } catch (error) {
+            console.error('❌ Error optimizing storage:', error);
+            return { error: error.message };
+        }
+    },
+
+    // Get storage health check
+    checkStorageHealth() {
+        try {
+            const health = {
+                overall: 'good',
+                issues: [],
+                recommendations: []
+            };
+
+            const overview = this.getStorageOverview();
+
             // Check if storage is available
             if (!storageService.storageAvailable) {
-                health.issues.push('localStorage not available');
+                health.issues.push('localStorage not available, using memory fallback');
                 health.overall = 'warning';
-            }
-
-            // Check cache size
-            const cacheStats = cacheService.getCacheStats();
-            if (cacheStats.expiredEntries > 10) {
-                health.issues.push(`${cacheStats.expiredEntries} expired cache entries`);
-                health.recommendations.push('Clear expired cache');
+                health.recommendations.push('Some data may be lost when browser is closed');
             }
 
             // Check storage usage
-            const overview = this.getStorageOverview();
+            if (overview.main.percentage > 80) {
+                health.issues.push(`High storage usage: ${overview.main.percentage}%`);
+                health.overall = 'warning';
+                health.recommendations.push('Clear old data or increase storage limits');
+            }
+
+            // Check for too many items
             const totalItems = Object.values(overview).reduce((sum, service) =>
                 sum + (service.items || 0), 0);
 
             if (totalItems > 1000) {
-                health.issues.push('High storage usage');
-                health.recommendations.push('Consider clearing old data');
-                health.overall = 'warning';
+                health.issues.push(`High item count: ${totalItems} items`);
+                health.recommendations.push('Consider archiving old data');
+            }
+
+            // Check for errors in recent operations
+            const errorLog = storageService.getItem('errorLog', []);
+            const recentErrors = errorLog.filter(error =>
+                Date.now() - new Date(error.timestamp).getTime() < 24 * 60 * 60 * 1000
+            );
+
+            if (recentErrors.length > 10) {
+                health.issues.push(`High error rate: ${recentErrors.length} errors in 24h`);
+                health.overall = 'poor';
+                health.recommendations.push('Check browser console for detailed error information');
             }
 
             return health;
         } catch (error) {
             return {
                 overall: 'error',
-                issues: ['Storage health check failed'],
+                issues: ['Health check failed'],
                 error: error.message
             };
-        }
-    },
-
-    // Optimize storage
-    optimizeStorage() {
-        try {
-            const results = {
-                clearedCache: cacheService.clearExpiredCache(),
-                clearedOldEntries: 0
-            };
-
-            // Clear old entries from various services
-            [storageService, visitHistoryService, searchHistoryService, analyticsService].forEach(service => {
-                if (service.clearOldEntries) {
-                    service.clearOldEntries();
-                    results.clearedOldEntries++;
-                }
-            });
-
-            console.log('Storage optimization complete:', results);
-            return results;
-        } catch (error) {
-            console.error('Error optimizing storage:', error);
-            return { error: error.message };
         }
     }
 };
@@ -918,20 +1270,16 @@ const storageUtils = {
 // Export all services and utilities
 export {
     StorageService,
-    UserPreferencesService,
     FavoritesService,
     VisitHistoryService,
-    SearchHistoryService,
-    CacheService,
-    AnalyticsService,
+    UserPreferencesService,
     FormDataService,
+    AnalyticsService,
     storageService,
-    userPreferencesService,
     favoritesService,
     visitHistoryService,
-    searchHistoryService,
-    cacheService,
-    analyticsService,
+    userPreferencesService,
     formDataService,
+    analyticsService,
     storageUtils
 };
