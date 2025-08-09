@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         const currentPage = getCurrentPage();
         console.log('Current page detected:', currentPage);
 
+        // Initialize common features first
+        initNavigationHighlight();
+        initResponsiveMenu();
+        updateFooterYear();
+        updateLastModified();
+
         switch (currentPage) {
             case 'index':
                 await initHomePage();
@@ -34,20 +40,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             case 'about':
                 await initAboutPage();
                 break;
+            case 'thankyou':
+                initThankYouPage();
+                break;
             default:
                 await initGeneralFeatures();
         }
 
-        initNavigationHighlight();
-        initResponsiveMenu();
-        updateFooterYear();
-
         console.log('Hidden Gems Explorer - Initialization complete!');
     } catch (error) {
         console.error('Error during initialization:', error);
-        initNavigationHighlight();
-        initResponsiveMenu();
-        updateFooterYear();
     }
 });
 
@@ -57,128 +59,58 @@ function getCurrentPage() {
     if (path.includes('attractions.html')) return 'attractions';
     if (path.includes('about.html')) return 'about';
     if (path.includes('thankyou.html')) return 'thankyou';
+    if (path.includes('index.html') || path.endsWith('/')) return 'index';
     return 'index';
 }
 
 // Initialize Home Page
 async function initHomePage() {
     console.log('Initializing Home Page...');
+
+    // Load data
     await loadWeatherData();
     await loadFeaturedAttractions();
-    initNewsletterForm();
+    await loadCategories();
+    await loadCountryStats();
+
+    // Initialize search functionality
+    initHomeSearch();
+
+    // Update stats counters
+    updateHomeStats();
 }
 
-// Initialize Attractions Page  
-async function initAttractionsPage() {
-    console.log('Initializing Attractions Page...');
-    await loadAttractionsData();
-    initFilters();
-    initSorting();
-    initPagination();
-    initSearch();
-    displayAttractions();
-}
+// Initialize Home Search
+function initHomeSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
 
-// Initialize About Page
-async function initAboutPage() {
-    console.log('Initializing About Page...');
-    await loadCountryInfo();
-    initContactForm();
-}
-
-// Get demo attractions data
-function getDemoAttractionsData() {
-    return {
-        attractions: [
-            {
-                id: 1,
-                name: "Secret Rooftop Garden",
-                category: "Nature",
-                description: "Hidden oasis above the city with panoramic views and exotic plants.",
-                image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop",
-                rating: 4.8,
-                difficulty: "Easy",
-                location: "Palermo, Buenos Aires",
-                coordinates: "-34.5731,-58.4264",
-                tags: ["peaceful", "photography", "sunset", "garden"],
-                bestTime: "Late afternoon for best lighting"
-            },
-            {
-                id: 2,
-                name: "Underground Art Gallery",
-                category: "Culture",
-                description: "Subterranean art space showcasing local artists in converted subway tunnels.",
-                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=300&fit=crop",
-                rating: 4.6,
-                difficulty: "Medium",
-                location: "San Telmo, Buenos Aires",
-                coordinates: "-34.6158,-58.3731",
-                tags: ["art", "underground", "local", "creative"],
-                bestTime: "Weekday evenings when less crowded"
-            },
-            {
-                id: 3,
-                name: "Vintage Bookstore Café",
-                category: "Culture",
-                description: "Charming bookstore with hidden reading nooks and artisanal coffee.",
-                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=300&fit=crop",
-                rating: 4.7,
-                difficulty: "Easy",
-                location: "Recoleta, Buenos Aires",
-                coordinates: "-34.5875,-58.3974",
-                tags: ["books", "coffee", "cozy", "literary"],
-                bestTime: "Morning hours for quiet reading"
-            },
-            {
-                id: 4,
-                name: "Hidden Tango Milonga",
-                category: "Entertainment",
-                description: "Secret tango venue where locals dance authentic Argentine tango.",
-                image: "https://images.unsplash.com/photo-1551794144-7f4fcaf3a4c8?w=500&h=300&fit=crop",
-                rating: 4.9,
-                difficulty: "Medium",
-                location: "La Boca, Buenos Aires",
-                coordinates: "-34.6345,-58.3645",
-                tags: ["tango", "music", "dance", "authentic"],
-                bestTime: "Friday and Saturday nights"
-            },
-            {
-                id: 5,
-                name: "Artisan Food Market",
-                category: "Food",
-                description: "Local producers showcase organic ingredients and traditional recipes.",
-                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&h=300&fit=crop",
-                rating: 4.5,
-                difficulty: "Easy",
-                location: "Villa Crespo, Buenos Aires",
-                coordinates: "-34.5989,-58.4456",
-                tags: ["food", "local", "organic", "market"],
-                bestTime: "Saturday mornings"
-            },
-            {
-                id: 6,
-                name: "Historic Architecture Tour",
-                category: "Architecture",
-                description: "Self-guided walking tour through colonial buildings and Belle Époque mansions.",
-                image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=500&h=300&fit=crop",
-                rating: 4.4,
-                difficulty: "Medium",
-                location: "Monserrat, Buenos Aires",
-                coordinates: "-34.6118,-58.3856",
-                tags: ["architecture", "history", "walking", "colonial"],
-                bestTime: "Weekday afternoons"
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `attractions.html?search=${encodeURIComponent(query)}`;
+            } else {
+                window.location.href = 'attractions.html';
             }
-        ]
-    };
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+    }
 }
 
 // Load Weather Data
 async function loadWeatherData() {
+    const weatherWidget = document.querySelector('.weather-widget');
+    if (!weatherWidget) return;
+
     try {
         const weatherData = await apiService.getWeatherData('Buenos Aires');
-        if (weatherData) {
-            displayWeatherWidget(weatherData);
-        }
+        displayWeatherWidget(weatherData);
     } catch (error) {
         console.error('Error loading weather data:', error);
         displayWeatherError();
@@ -187,524 +119,652 @@ async function loadWeatherData() {
 
 // Display Weather Widget
 function displayWeatherWidget(weather) {
-    const weatherWidget = document.getElementById('weather-widget');
-    if (!weatherWidget) return;
+    const tempElement = document.getElementById('currentTemp');
+    const descElement = document.getElementById('weatherDesc');
+    const humidityElement = document.getElementById('humidity');
+    const windElement = document.getElementById('windSpeed');
 
-    const temperature = Math.round(weather.main.temp);
-    const description = weather.weather[0].description;
+    if (tempElement) {
+        const temperature = Math.round(weather.main.temp);
+        tempElement.textContent = `${temperature}°C`;
+    }
 
-    weatherWidget.innerHTML = `
-        <div class="weather-card">
-            <div class="weather-info">
-                <h3>Buenos Aires</h3>
-                <div class="temperature">${temperature}°C</div>
-                <div class="description">${description}</div>
-                <div class="feels-like">Feels like ${Math.round(weather.main.feels_like)}°C</div>
-            </div>
-        </div>
-    `;
+    if (descElement) {
+        descElement.textContent = weather.weather[0].description;
+    }
+
+    if (humidityElement) {
+        humidityElement.textContent = `Humidity: ${weather.main.humidity}%`;
+    }
+
+    if (windElement) {
+        const windSpeed = Math.round(weather.wind.speed * 3.6); // Convert m/s to km/h
+        windElement.textContent = `Wind: ${windSpeed} km/h`;
+    }
 }
 
 // Display Weather Error
 function displayWeatherError() {
-    const weatherWidget = document.getElementById('weather-widget');
-    if (!weatherWidget) return;
+    const tempElement = document.getElementById('currentTemp');
+    const descElement = document.getElementById('weatherDesc');
 
-    weatherWidget.innerHTML = `
-        <div class="weather-error">
-            <p>Weather data temporarily unavailable</p>
-        </div>
-    `;
+    if (tempElement) tempElement.textContent = '--°C';
+    if (descElement) descElement.textContent = 'Weather unavailable';
 }
 
 // Load Featured Attractions
 async function loadFeaturedAttractions() {
+    const container = document.getElementById('featuredGemsGrid');
+    if (!container) return;
+
     try {
-        let attractionsData;
-
-        try {
-            attractionsData = await apiService.getAttractionsData();
-        } catch (error) {
-            attractionsData = getDemoAttractionsData();
-        }
-
-        if (attractionsData && attractionsData.attractions) {
-            const featured = attractionsData.attractions.slice(0, 3);
-            displayFeaturedAttractions(featured);
-            updateStatsCounters(attractionsData.attractions);
-        }
+        const data = await apiService.getAttractionsData();
+        const featured = data.attractions.slice(0, 3);
+        displayFeaturedAttractions(featured);
     } catch (error) {
         console.error('Error loading featured attractions:', error);
-        const demoData = getDemoAttractionsData();
-        const featured = demoData.attractions.slice(0, 3);
-        displayFeaturedAttractions(featured);
-        updateStatsCounters(demoData.attractions);
+        container.innerHTML = '<p>Unable to load attractions</p>';
     }
-}
-
-// Update stats counters
-function updateStatsCounters(attractions) {
-    const hiddenGemsCounter = document.querySelector('[data-counter="hidden-gems"]');
-    if (hiddenGemsCounter) {
-        animateCounter(hiddenGemsCounter, attractions.length);
-    }
-
-    const categories = [...new Set(attractions.map(a => a.category))];
-    const categoriesCounter = document.querySelector('[data-counter="categories"]');
-    if (categoriesCounter) {
-        animateCounter(categoriesCounter, categories.length);
-    }
-
-    const favorites = storageService.getItem('favorites') || [];
-    const favoritesCounter = document.querySelector('[data-counter="favorites"]');
-    if (favoritesCounter) {
-        animateCounter(favoritesCounter, favorites.length);
-    }
-}
-
-// Animate counter
-function animateCounter(element, targetValue) {
-    let currentValue = 0;
-    const increment = targetValue / 60;
-
-    const updateCounter = () => {
-        currentValue += increment;
-        if (currentValue >= targetValue) {
-            element.textContent = targetValue;
-        } else {
-            element.textContent = Math.floor(currentValue);
-            requestAnimationFrame(updateCounter);
-        }
-    };
-
-    updateCounter();
 }
 
 // Display Featured Attractions
 function displayFeaturedAttractions(attractions) {
-    const container = document.getElementById('featured-attractions');
+    const container = document.getElementById('featuredGemsGrid');
     if (!container) return;
 
     container.innerHTML = attractions.map(attraction => `
-        <div class="featured-card">
-            <div class="featured-image">
-                <img src="${attraction.image}" alt="${attraction.name}" loading="lazy">
-                <div class="category-badge ${attraction.category.toLowerCase()}">${attraction.category}</div>
+        <div class="gem-card">
+            <div class="gem-image">
+                <span style="font-size: 3rem;">🏛️</span>
             </div>
-            <div class="featured-content">
+            <div class="gem-content">
                 <h3>${attraction.name}</h3>
-                <p>${attraction.description.substring(0, 100)}...</p>
-                <div class="featured-meta">
-                    <span class="rating">⭐ ${attraction.rating}</span>
-                    <span class="location">📍 ${attraction.location}</span>
+                <span class="gem-category">${attraction.category}</span>
+                <p class="gem-description">${attraction.description.substring(0, 100)}...</p>
+                <div class="gem-location">📍 ${attraction.location}</div>
+                <div class="gem-actions">
+                    <a href="attractions.html" class="learn-more-btn">Learn More</a>
+                    <button class="favorite-btn" data-id="${attraction.id}">❤️</button>
                 </div>
-                <a href="attractions.html" class="explore-btn">Explore More</a>
             </div>
         </div>
     `).join('');
+
+    // Initialize favorite buttons
+    container.querySelectorAll('.favorite-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleFavorite(btn.dataset.id, btn);
+        });
+    });
 }
 
-// Load Attractions Data
-async function loadAttractionsData() {
+// Load Categories
+async function loadCategories() {
+    const container = document.getElementById('categoriesGrid');
+    if (!container) return;
+
     try {
-        let data;
-        try {
-            data = await apiService.getAttractionsData();
-        } catch (error) {
-            data = getDemoAttractionsData();
+        const data = await apiService.getAttractionsData();
+        const categories = data.categories || [];
+
+        container.innerHTML = categories.map(category => `
+            <a href="attractions.html?category=${encodeURIComponent(category.name)}" class="category-card">
+                <span class="category-icon">${category.icon}</span>
+                <h3>${category.name}</h3>
+                <span class="category-count">${category.count} locations</span>
+            </a>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading categories:', error);
+    }
+}
+
+// Load Country Stats
+async function loadCountryStats() {
+    const container = document.getElementById('countryStats');
+    if (!container) return;
+
+    try {
+        const countryData = await apiService.getCountryInfo('Argentina');
+        displayCountryStats(countryData[0]);
+    } catch (error) {
+        console.error('Error loading country stats:', error);
+        container.innerHTML = '<p>Unable to load country information</p>';
+    }
+}
+
+// Display Country Stats
+function displayCountryStats(country) {
+    const container = document.getElementById('countryStats');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="stat-card">
+            <span class="stat-number">${country.capital[0]}</span>
+            <span class="stat-label">Capital City</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">${(country.population / 1000000).toFixed(1)}M</span>
+            <span class="stat-label">Population</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">${Object.values(country.languages)[0]}</span>
+            <span class="stat-label">Primary Language</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">${Object.values(country.currencies)[0].name}</span>
+            <span class="stat-label">Currency</span>
+        </div>
+    `;
+}
+
+// Update Home Stats
+function updateHomeStats() {
+    apiService.getAttractionsData().then(data => {
+        const totalGemsElement = document.getElementById('totalGems');
+        const totalCategoriesElement = document.getElementById('totalCategories');
+        const favoriteCountElement = document.getElementById('favoriteCount');
+
+        if (totalGemsElement) {
+            totalGemsElement.textContent = data.attractions.length;
         }
 
-        if (data && data.attractions) {
-            state.attractions = data.attractions;
-            state.filteredAttractions = [...state.attractions];
-            console.log(`Loaded ${state.attractions.length} attractions`);
+        if (totalCategoriesElement) {
+            totalCategoriesElement.textContent = data.categories.length;
         }
-    } catch (error) {
-        console.error('Error loading attractions data:', error);
-        const demoData = getDemoAttractionsData();
-        state.attractions = demoData.attractions;
+
+        if (favoriteCountElement) {
+            const favorites = storageService.getItem('favorites') || [];
+            favoriteCountElement.textContent = favorites.length;
+        }
+    }).catch(error => {
+        console.error('Error updating stats:', error);
+    });
+}
+
+// Initialize Attractions Page
+async function initAttractionsPage() {
+    console.log('Initializing Attractions Page...');
+
+    await loadAllAttractions();
+    initFilters();
+    initAttractionsSearch();
+    updateTotalGemsCount();
+
+    // Check for search query from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    const categoryFilter = urlParams.get('category');
+
+    if (searchQuery) {
+        const searchInput = document.getElementById('attractionSearch');
+        if (searchInput) {
+            searchInput.value = searchQuery;
+            performSearch(searchQuery);
+        }
+    } else if (categoryFilter) {
+        const categorySelect = document.getElementById('categoryFilter');
+        if (categorySelect) {
+            categorySelect.value = categoryFilter;
+            applyFilters();
+        }
+    }
+}
+
+// Load All Attractions
+async function loadAllAttractions() {
+    const container = document.getElementById('attractionsGrid');
+    if (!container) return;
+
+    container.innerHTML = '<div class="loading">Loading hidden gems...</div>';
+
+    try {
+        const data = await apiService.getAttractionsData();
+        state.attractions = data.attractions;
         state.filteredAttractions = [...state.attractions];
+        displayAttractions();
+    } catch (error) {
+        console.error('Error loading attractions:', error);
+        container.innerHTML = '<p>Unable to load attractions. Please try again later.</p>';
     }
 }
 
 // Display Attractions
 function displayAttractions() {
-    const container = document.getElementById('attractions-grid');
+    const container = document.getElementById('attractionsGrid');
     if (!container) return;
 
-    const startIndex = (state.currentPage - 1) * state.itemsPerPage;
-    const endIndex = startIndex + state.itemsPerPage;
-    const pageAttractions = state.filteredAttractions.slice(startIndex, endIndex);
-
-    if (pageAttractions.length === 0) {
+    if (state.filteredAttractions.length === 0) {
         container.innerHTML = `
             <div class="no-results">
                 <h3>No attractions found</h3>
                 <p>Try adjusting your filters or search terms</p>
             </div>
         `;
+        updateResultsCount(0);
         return;
     }
 
-    container.innerHTML = pageAttractions.map(attraction => `
-        <div class="attraction-card">
-            <div class="attraction-image">
-                <img src="${attraction.image}" alt="${attraction.name}" loading="lazy">
-                <div class="category-badge ${attraction.category.toLowerCase()}">${attraction.category}</div>
-                <button class="favorite-btn" data-id="${attraction.id}">♡</button>
+    container.innerHTML = state.filteredAttractions.map(attraction => `
+        <div class="gem-card">
+            <div class="gem-image">
+                <span style="font-size: 3rem;">🏛️</span>
+                <span class="gem-category">${attraction.category}</span>
             </div>
-            <div class="attraction-content">
+            <div class="gem-content">
                 <h3>${attraction.name}</h3>
-                <p>${attraction.description}</p>
-                <div class="attraction-meta">
-                    <span class="rating">⭐ ${attraction.rating}</span>
-                    <span class="difficulty">${attraction.difficulty || 'Easy'}</span>
+                <p class="gem-description">${attraction.description.substring(0, 150)}...</p>
+                <div class="gem-location">📍 ${attraction.location}</div>
+                <div class="gem-meta">
+                    <span>Cost: ${attraction.cost}</span>
+                    <span>⭐ ${attraction.rating}</span>
                 </div>
-                <div class="attraction-location">
-                    <span>📍 ${attraction.location}</span>
-                </div>
-                <div class="attraction-tags">
-                    ${attraction.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                </div>
-                <div class="attraction-actions">
-                    <button class="details-btn" data-id="${attraction.id}">View Details</button>
-                    <button class="directions-btn" data-coords="${attraction.coordinates}">Get Directions</button>
+                <div class="gem-actions">
+                    <button class="learn-more-btn" onclick="showAttractionDetails(${attraction.id})">View Details</button>
+                    <button class="favorite-btn" data-id="${attraction.id}" onclick="toggleFavorite('${attraction.id}', this)">❤️</button>
                 </div>
             </div>
         </div>
     `).join('');
 
-    initAttractionCards();
-    updatePaginationInfo();
+    updateResultsCount(state.filteredAttractions.length);
+    updateFavoritesDisplay();
 }
 
 // Initialize Filters
 function initFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const costFilter = document.getElementById('costFilter');
+    const accessibilityFilter = document.getElementById('accessibilityFilter');
+    const clearButton = document.getElementById('clearFilters');
 
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            filterButtons.forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', applyFilters);
+    }
 
-            const category = e.target.dataset.category;
-            applyFilter(category);
+    if (costFilter) {
+        costFilter.addEventListener('change', applyFilters);
+    }
+
+    if (accessibilityFilter) {
+        accessibilityFilter.addEventListener('change', applyFilters);
+    }
+
+    if (clearButton) {
+        clearButton.addEventListener('click', clearFilters);
+    }
+
+    // View Favorites button
+    const viewFavoritesBtn = document.getElementById('viewFavorites');
+    if (viewFavoritesBtn) {
+        viewFavoritesBtn.addEventListener('click', showFavorites);
+    }
+}
+
+// Apply Filters
+function applyFilters() {
+    const category = document.getElementById('categoryFilter').value;
+    const cost = document.getElementById('costFilter').value;
+    const accessibility = document.getElementById('accessibilityFilter').value;
+
+    state.filteredAttractions = state.attractions.filter(attraction => {
+        const categoryMatch = !category || attraction.category === category;
+        const costMatch = !cost || attraction.cost === cost;
+        const accessibilityMatch = !accessibility || attraction.accessibility === accessibility;
+
+        return categoryMatch && costMatch && accessibilityMatch;
+    });
+
+    displayAttractions();
+}
+
+// Clear Filters
+function clearFilters() {
+    document.getElementById('categoryFilter').value = '';
+    document.getElementById('costFilter').value = '';
+    document.getElementById('accessibilityFilter').value = '';
+    document.getElementById('attractionSearch').value = '';
+
+    state.filteredAttractions = [...state.attractions];
+    displayAttractions();
+}
+
+// Initialize Attractions Search
+function initAttractionsSearch() {
+    const searchInput = document.getElementById('attractionSearch');
+    const searchButton = document.getElementById('searchGemsBtn');
+
+    if (searchButton) {
+        searchButton.addEventListener('click', () => {
+            performSearch(searchInput.value);
         });
-    });
-}
-
-// Apply Filter
-function applyFilter(category) {
-    state.currentFilter = category;
-    state.currentPage = 1;
-
-    if (category === 'all') {
-        state.filteredAttractions = [...state.attractions];
-    } else {
-        state.filteredAttractions = state.attractions.filter(
-            attraction => attraction.category.toLowerCase() === category.toLowerCase()
-        );
     }
 
-    displayAttractions();
-    updatePagination();
-}
-
-// Initialize Sorting
-function initSorting() {
-    const sortSelect = document.getElementById('sort-select');
-    if (!sortSelect) return;
-
-    sortSelect.addEventListener('change', (e) => {
-        applySorting(e.target.value);
-    });
-}
-
-// Apply Sorting
-function applySorting(sortBy) {
-    state.currentSort = sortBy;
-
-    switch (sortBy) {
-        case 'name':
-            state.filteredAttractions.sort((a, b) => a.name.localeCompare(b.name));
-            break;
-        case 'rating':
-            state.filteredAttractions.sort((a, b) => b.rating - a.rating);
-            break;
-        case 'category':
-            state.filteredAttractions.sort((a, b) => a.category.localeCompare(b.category));
-            break;
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch(searchInput.value);
+            }
+        });
     }
-
-    displayAttractions();
-}
-
-// Initialize Search
-function initSearch() {
-    const searchInput = document.getElementById('search-input');
-    if (!searchInput) return;
-
-    let searchTimeout;
-
-    searchInput.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            performSearch(e.target.value);
-        }, 300);
-    });
 }
 
 // Perform Search
 function performSearch(query) {
     if (!query.trim()) {
-        applyFilter(state.currentFilter);
+        state.filteredAttractions = [...state.attractions];
+    } else {
+        const searchTerm = query.toLowerCase();
+        state.filteredAttractions = state.attractions.filter(attraction =>
+            attraction.name.toLowerCase().includes(searchTerm) ||
+            attraction.description.toLowerCase().includes(searchTerm) ||
+            attraction.location.toLowerCase().includes(searchTerm) ||
+            attraction.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+        );
+    }
+
+    displayAttractions();
+}
+
+// Show Favorites
+function showFavorites() {
+    const favorites = storageService.getItem('favorites') || [];
+
+    if (favorites.length === 0) {
+        alert('You have no favorites yet. Click the heart icon on attractions to add them to your favorites.');
         return;
     }
 
-    const searchTerm = query.toLowerCase();
     state.filteredAttractions = state.attractions.filter(attraction =>
-        attraction.name.toLowerCase().includes(searchTerm) ||
-        attraction.description.toLowerCase().includes(searchTerm) ||
-        attraction.location.toLowerCase().includes(searchTerm) ||
-        attraction.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+        favorites.includes(attraction.id.toString())
     );
 
-    state.currentPage = 1;
     displayAttractions();
-    updatePagination();
 }
 
-// Initialize Pagination
-function initPagination() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', loadMoreAttractions);
+// Update Results Count
+function updateResultsCount(count) {
+    const resultsCount = document.getElementById('resultsCount');
+    if (resultsCount) {
+        resultsCount.textContent = count;
     }
-    updatePagination();
 }
 
-// Load More Attractions
-function loadMoreAttractions() {
-    state.currentPage++;
-    displayAttractions();
-    updatePagination();
+// Update Total Gems Count
+function updateTotalGemsCount() {
+    const totalGemsCount = document.getElementById('totalGemsCount');
+    if (totalGemsCount && state.attractions.length > 0) {
+        totalGemsCount.textContent = `${state.attractions.length}+`;
+    }
 }
 
-// Update Pagination
-function updatePagination() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (!loadMoreBtn) return;
-
-    const totalPages = Math.ceil(state.filteredAttractions.length / state.itemsPerPage);
-    const hasMore = state.currentPage < totalPages;
-
-    loadMoreBtn.style.display = hasMore ? 'block' : 'none';
-    updatePaginationInfo();
-}
-
-// Update Pagination Info
-function updatePaginationInfo() {
-    const paginationInfo = document.getElementById('pagination-info');
-    if (!paginationInfo) return;
-
-    const startIndex = (state.currentPage - 1) * state.itemsPerPage + 1;
-    const endIndex = Math.min(state.currentPage * state.itemsPerPage, state.filteredAttractions.length);
-    const total = state.filteredAttractions.length;
-
-    paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${total} attractions`;
-}
-
-// Initialize Attraction Cards
-function initAttractionCards() {
-    document.querySelectorAll('.favorite-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleFavorite(btn.dataset.id, btn);
-        });
-    });
-
-    document.querySelectorAll('.details-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showAttractionDetails(btn.dataset.id);
-        });
-    });
-
-    document.querySelectorAll('.directions-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openDirections(btn.dataset.coords);
-        });
-    });
-}
-
-// Toggle Favorite
-function toggleFavorite(attractionId, button) {
+// Update Favorites Display
+function updateFavoritesDisplay() {
     const favorites = storageService.getItem('favorites') || [];
-    const isFavorite = favorites.includes(attractionId);
+    const favoritesCount = document.getElementById('favoritesCount');
 
-    if (isFavorite) {
-        const index = favorites.indexOf(attractionId);
-        favorites.splice(index, 1);
-        button.textContent = '♡';
+    if (favoritesCount) {
+        favoritesCount.textContent = favorites.length;
+    }
+
+    // Update favorite buttons state
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+        if (favorites.includes(btn.dataset.id)) {
+            btn.classList.add('active');
+            btn.textContent = '❤️';
+        } else {
+            btn.classList.remove('active');
+            btn.textContent = '🤍';
+        }
+    });
+}
+
+// Show Attraction Details (Global function)
+window.showAttractionDetails = function (attractionId) {
+    const attraction = state.attractions.find(a => a.id === attractionId);
+    if (!attraction) return;
+
+    const modal = document.getElementById('attractionModal');
+    const modalBody = document.getElementById('modalBody');
+    const modalTitle = document.getElementById('modalTitle');
+
+    if (modal && modalBody && modalTitle) {
+        modalTitle.textContent = attraction.name;
+
+        modalBody.innerHTML = `
+            <div class="modal-gem-image">
+                <span style="font-size: 4rem;">🏛️</span>
+            </div>
+            <div class="modal-gem-details">
+                <div class="modal-detail-item">
+                    <strong>Category:</strong> ${attraction.category}
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Location:</strong> ${attraction.location}
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Description:</strong> ${attraction.description}
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Cost:</strong> ${attraction.cost}
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Accessibility:</strong> ${attraction.accessibility}
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Rating:</strong> ⭐ ${attraction.rating}/5
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Best Time to Visit:</strong> ${attraction.bestTime}
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Tips:</strong> ${attraction.tips}
+                </div>
+                <div class="modal-detail-item">
+                    <strong>Historical Info:</strong> ${attraction.historicalInfo}
+                </div>
+            </div>
+        `;
+
+        modal.showModal();
+
+        // Close button functionality
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) {
+            closeBtn.onclick = () => modal.close();
+        }
+
+        // Close on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.close();
+            }
+        });
+    }
+};
+
+// Toggle Favorite (Global function)
+window.toggleFavorite = function (attractionId, button) {
+    let favorites = storageService.getItem('favorites') || [];
+    const idString = attractionId.toString();
+
+    if (favorites.includes(idString)) {
+        favorites = favorites.filter(id => id !== idString);
+        button.classList.remove('active');
+        button.textContent = '🤍';
     } else {
-        favorites.push(attractionId);
-        button.textContent = '♥';
+        favorites.push(idString);
+        button.classList.add('active');
+        button.textContent = '❤️';
     }
 
     storageService.setItem('favorites', favorites);
-}
+    updateFavoritesDisplay();
 
-// Show Attraction Details
-function showAttractionDetails(attractionId) {
-    const attraction = state.attractions.find(a => a.id == attractionId);
-    if (!attraction) return;
-
-    alert(`${attraction.name}\n\n${attraction.description}\n\nRating: ${attraction.rating}/5\nLocation: ${attraction.location}`);
-}
-
-// Open Directions
-function openDirections(coordinates) {
-    if (!coordinates) {
-        alert('Location coordinates not available');
-        return;
+    // Update home page counter if on home page
+    const favoriteCount = document.getElementById('favoriteCount');
+    if (favoriteCount) {
+        favoriteCount.textContent = favorites.length;
     }
+};
 
-    const [lat, lng] = coordinates.split(',');
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-    window.open(mapsUrl, '_blank');
+// Initialize About Page
+async function initAboutPage() {
+    console.log('Initializing About Page...');
+
+    // Update stats
+    updateAboutStats();
+
+    // Initialize contact form
+    initContactForm();
+
+    // Update visitor count
+    updateVisitorCount();
 }
 
-// Load Country Info
-async function loadCountryInfo() {
-    try {
-        const countryData = [{
-            name: { common: 'Argentina' },
-            capital: ['Buenos Aires'],
-            population: 45376763,
-            region: 'South America',
-            languages: { spa: 'Spanish' },
-            currencies: { ARS: { name: 'Argentine peso' } },
-            flags: { svg: 'https://flagcdn.com/ar.svg' }
-        }];
-
-        displayCountryInfo(countryData[0]);
-    } catch (error) {
-        console.error('Error loading country info:', error);
-    }
-}
-
-// Display Country Info
-function displayCountryInfo(country) {
-    const container = document.getElementById('country-info');
-    if (!container) return;
-
-    container.innerHTML = `
-        <div class="country-card">
-            <div class="country-flag">
-                <img src="${country.flags.svg}" alt="${country.name.common} flag" loading="lazy">
-            </div>
-            <div class="country-details">
-                <h3>${country.name.common}</h3>
-                <div class="country-stats">
-                    <div class="stat"><strong>Capital:</strong> ${country.capital[0]}</div>
-                    <div class="stat"><strong>Population:</strong> ${country.population.toLocaleString()}</div>
-                    <div class="stat"><strong>Languages:</strong> ${Object.values(country.languages).join(', ')}</div>
-                    <div class="stat"><strong>Currency:</strong> ${Object.values(country.currencies)[0].name}</div>
-                    <div class="stat"><strong>Region:</strong> ${country.region}</div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// Initialize Forms
-function initNewsletterForm() {
-    const form = document.getElementById('newsletter-form');
-    if (!form) return;
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = form.querySelector('input[type="email"]').value;
-
-        if (email && email.includes('@')) {
-            alert('Successfully subscribed to newsletter!');
-            form.reset();
-        } else {
-            alert('Please enter a valid email address');
+// Update About Stats
+function updateAboutStats() {
+    apiService.getAttractionsData().then(data => {
+        const totalGemsElement = document.getElementById('aboutTotalGems');
+        if (totalGemsElement) {
+            totalGemsElement.textContent = `${data.attractions.length}+`;
         }
+    }).catch(error => {
+        console.error('Error updating about stats:', error);
     });
 }
 
+// Update Visitor Count
+function updateVisitorCount() {
+    let visitCount = storageService.getItem('visitCount') || 0;
+    visitCount++;
+    storageService.setItem('visitCount', visitCount);
+
+    const visitorsServed = document.getElementById('visitorsServed');
+    if (visitorsServed) {
+        // Simulate a higher number for display
+        const displayCount = (visitCount * 47) + 1250;
+        visitorsServed.textContent = displayCount.toLocaleString();
+    }
+}
+
+// Initialize Contact Form
 function initContactForm() {
-    const form = document.getElementById('contact-form');
+    const form = document.getElementById('contactForm');
     if (!form) return;
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
 
-        if (data.name && data.email && data.message) {
-            window.location.href = 'thankyou.html';
-        } else {
-            alert('Please fill in all required fields');
-        }
+        // Store form data
+        storageService.setItem('lastSubmission', data);
+
+        // Redirect to thank you page
+        window.location.href = 'thankyou.html';
     });
 }
 
-// Navigation and UI
+// Initialize Thank You Page
+function initThankYouPage() {
+    const submission = storageService.getItem('lastSubmission');
+
+    if (submission) {
+        const elements = {
+            submitterName: submission.name,
+            submitterEmail: submission.email,
+            gemName: submission.gemName,
+            gemCategory: submission.category,
+            gemLocation: submission.location,
+            submissionDate: new Date().toLocaleDateString()
+        };
+
+        Object.entries(elements).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value || '-';
+            }
+        });
+    }
+}
+
+// Navigation and UI Functions
+function initResponsiveMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (hamburger && mainNav) {
+        hamburger.addEventListener('click', () => {
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+            hamburger.classList.toggle('active');
+            mainNav.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !mainNav.contains(e.target)) {
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.classList.remove('active');
+                mainNav.classList.remove('active');
+            }
+        });
+    }
+}
+
 function initNavigationHighlight() {
-    const navLinks = document.querySelectorAll('.nav-link');
     const currentPage = getCurrentPage();
+    const navLinks = document.querySelectorAll('.main-nav a');
 
     navLinks.forEach(link => {
+        link.classList.remove('active');
         const href = link.getAttribute('href');
+
         if (
-            (currentPage === 'index' && (href === 'index.html' || href === '/')) ||
+            (currentPage === 'index' && href.includes('index.html')) ||
             (currentPage === 'attractions' && href.includes('attractions.html')) ||
             (currentPage === 'about' && href.includes('about.html'))
         ) {
             link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
         }
     });
 }
 
-function initResponsiveMenu() {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
+function updateFooterYear() {
+    const yearElement = document.querySelector('.footer-bottom p');
+    if (yearElement) {
+        const year = new Date().getFullYear();
+        yearElement.innerHTML = yearElement.innerHTML.replace('2024', year);
+    }
+}
 
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-            }
+function updateLastModified() {
+    const lastModifiedElement = document.getElementById('lastModified');
+    if (lastModifiedElement) {
+        const lastModified = new Date(document.lastModified);
+        lastModifiedElement.textContent = lastModified.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
         });
     }
 }
 
 async function initGeneralFeatures() {
     console.log('Initializing general features...');
-}
 
-function updateFooterYear() {
-    const yearElement = document.getElementById('current-year');
-    if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
+    // Initialize video link
+    const videoLink = document.getElementById('videoLink');
+    if (videoLink) {
+        videoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Video demo will be available soon!');
+        });
     }
 }
-
-// Export for global access
-window.hiddenGemsApp = {
-    state,
-    loadMoreAttractions,
-    toggleFavorite,
-    showAttractionDetails,
-    openDirections
-};
