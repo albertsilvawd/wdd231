@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures</title>
+    <meta name="description"
+        content="Discover hidden gems and unique attractions in Buenos Aires off the beaten path. Find secret locations, local favorites, and extraordinary places beyond typical tourist destinations.">
+    <meta name="author" content="Albert Silva">
+    <link rel="icon" href="images/favicon.ico">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures">
+    <meta property="og:type" content="website">
+    <meta property="og:description"
+        content="Explore hidden gems and unique attractions in Buenos Aires beyond typical tourist destinations.">
+    <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
+    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">HG</div>
+                <div class="site-title">
+                    <h2>Hidden Gems Explorer</h2>
+                    <p>Discover the Extraordinary</p>
+                </div>
+            </div>
+
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+            <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+            <li><a href="attractions.html">Explore</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures</h1>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Discover Buenos Aires' Best Kept Secrets</h2>
+                <p>Explore extraordinary places beyond the typical tourist trail in Argentina's vibrant capital</p>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for hidden gems..."
+                        aria-label="Search hidden gems">
+                    <button id="searchBtn" class="cta-button">Explore Now</button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalGems">0</span>
+                    <span class="stat-label">Hidden Gems</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCategories">0</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="favoriteCount">0</span>
+                    <span class="stat-label">Your Favorites</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Widget -->
+        <section class="weather-widget">
+            <h3>Buenos Aires Weather</h3>
+            <div class="weather-info">
+                <div class="weather-current">
+                    <span class="weather-temp" id="currentTemp">--°C</span>
+                    <span class="weather-desc" id="weatherDesc">Loading...</span>
+                </div>
+                <div class="weather-details">
+                    <span id="humidity">Humidity: --%</span>
+                    <span id="windSpeed">Wind: -- km/h</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Gems -->
+        <section class="featured-gems">
+            <h2>Featured Hidden Gems</h2>
+            <p class="section-subtitle">Discover our most popular hidden treasures in Buenos Aires</p>
+            <div class="gems-grid" id="featuredGemsGrid">
+                <div class="loading">Loading featured gems...</div>
+            </div>
+            <div class="view-all-container">
+                <a href="attractions.html" class="view-all-btn">View All Hidden Gems</a>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <h2>Explore by Category</h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Quick Stats -->
+        <section class="quick-stats">
+            <h2>About Buenos Aires</h2>
+            <div class="stats-grid" id="countryStats">
+                <div class="loading">Loading country information...</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Hidden Gems Explorer</h3>
+                <p>Discover extraordinary places beyond the typical tourist destinations in Buenos Aires, Argentina.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="attractions.html">Explore Gems</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="attributions.html">Attributions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <p>Project by Albert Silva</p>
+                <p>WDD 231 Final Project</p>
+                <a href="#" id="videoLink" class="video-link">📹 View Project Demo Video</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Albert Silva | Hidden Gems Explorer | WDD 231 Final Project</p>
+            <p>Last Modified: <span id="lastModified"></span></p>
+        </div>
+    </footer>
+
+    <script type="module" src="scripts/main.js"></script>
+</body>
+
+</html>
