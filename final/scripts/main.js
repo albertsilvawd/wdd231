@@ -20,30 +20,35 @@ const state = {
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Hidden Gems Explorer - Initializing...');
 
-    // Initialize based on current page
-    const currentPage = getCurrentPage();
+    try {
+        const currentPage = getCurrentPage();
+        console.log('Current page detected:', currentPage);
 
-    switch (currentPage) {
-        case 'index':
-            await initHomePage();
-            break;
-        case 'attractions':
-            await initAttractionsPage();
-            break;
-        case 'about':
-            await initAboutPage();
-            break;
-        default:
-            console.log('Unknown page, applying general initialization');
-            await initGeneralFeatures();
+        switch (currentPage) {
+            case 'index':
+                await initHomePage();
+                break;
+            case 'attractions':
+                await initAttractionsPage();
+                break;
+            case 'about':
+                await initAboutPage();
+                break;
+            default:
+                await initGeneralFeatures();
+        }
+
+        initNavigationHighlight();
+        initResponsiveMenu();
+        updateFooterYear();
+
+        console.log('Hidden Gems Explorer - Initialization complete!');
+    } catch (error) {
+        console.error('Error during initialization:', error);
+        initNavigationHighlight();
+        initResponsiveMenu();
+        updateFooterYear();
     }
-
-    // Initialize common features for all pages
-    initNavigationHighlight();
-    initResponsiveMenu();
-    updateFooterYear();
-
-    console.log('Hidden Gems Explorer - Initialization complete!');
 });
 
 // Get current page identifier
@@ -58,71 +63,125 @@ function getCurrentPage() {
 // Initialize Home Page
 async function initHomePage() {
     console.log('Initializing Home Page...');
-
-    // Load weather data
     await loadWeatherData();
-
-    // Load featured attractions
     await loadFeaturedAttractions();
-
-    // Initialize newsletter form
     initNewsletterForm();
-
-    // Initialize hero carousel if exists
-    initHeroCarousel();
 }
 
 // Initialize Attractions Page  
 async function initAttractionsPage() {
     console.log('Initializing Attractions Page...');
-
-    // Load all attractions data
     await loadAttractionsData();
-
-    // Initialize filters and sorting
     initFilters();
     initSorting();
-
-    // Initialize pagination
     initPagination();
-
-    // Initialize search functionality
     initSearch();
-
-    // Display initial attractions
     displayAttractions();
 }
 
 // Initialize About Page
 async function initAboutPage() {
     console.log('Initializing About Page...');
-
-    // Load country information
     await loadCountryInfo();
-
-    // Initialize contact form
     initContactForm();
-
-    // Initialize team animation
-    initTeamAnimation();
 }
 
-// Load Weather Data for Home Page
+// Get demo attractions data
+function getDemoAttractionsData() {
+    return {
+        attractions: [
+            {
+                id: 1,
+                name: "Secret Rooftop Garden",
+                category: "Nature",
+                description: "Hidden oasis above the city with panoramic views and exotic plants.",
+                image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop",
+                rating: 4.8,
+                difficulty: "Easy",
+                location: "Palermo, Buenos Aires",
+                coordinates: "-34.5731,-58.4264",
+                tags: ["peaceful", "photography", "sunset", "garden"],
+                bestTime: "Late afternoon for best lighting"
+            },
+            {
+                id: 2,
+                name: "Underground Art Gallery",
+                category: "Culture",
+                description: "Subterranean art space showcasing local artists in converted subway tunnels.",
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=300&fit=crop",
+                rating: 4.6,
+                difficulty: "Medium",
+                location: "San Telmo, Buenos Aires",
+                coordinates: "-34.6158,-58.3731",
+                tags: ["art", "underground", "local", "creative"],
+                bestTime: "Weekday evenings when less crowded"
+            },
+            {
+                id: 3,
+                name: "Vintage Bookstore Café",
+                category: "Culture",
+                description: "Charming bookstore with hidden reading nooks and artisanal coffee.",
+                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=300&fit=crop",
+                rating: 4.7,
+                difficulty: "Easy",
+                location: "Recoleta, Buenos Aires",
+                coordinates: "-34.5875,-58.3974",
+                tags: ["books", "coffee", "cozy", "literary"],
+                bestTime: "Morning hours for quiet reading"
+            },
+            {
+                id: 4,
+                name: "Hidden Tango Milonga",
+                category: "Entertainment",
+                description: "Secret tango venue where locals dance authentic Argentine tango.",
+                image: "https://images.unsplash.com/photo-1551794144-7f4fcaf3a4c8?w=500&h=300&fit=crop",
+                rating: 4.9,
+                difficulty: "Medium",
+                location: "La Boca, Buenos Aires",
+                coordinates: "-34.6345,-58.3645",
+                tags: ["tango", "music", "dance", "authentic"],
+                bestTime: "Friday and Saturday nights"
+            },
+            {
+                id: 5,
+                name: "Artisan Food Market",
+                category: "Food",
+                description: "Local producers showcase organic ingredients and traditional recipes.",
+                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&h=300&fit=crop",
+                rating: 4.5,
+                difficulty: "Easy",
+                location: "Villa Crespo, Buenos Aires",
+                coordinates: "-34.5989,-58.4456",
+                tags: ["food", "local", "organic", "market"],
+                bestTime: "Saturday mornings"
+            },
+            {
+                id: 6,
+                name: "Historic Architecture Tour",
+                category: "Architecture",
+                description: "Self-guided walking tour through colonial buildings and Belle Époque mansions.",
+                image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=500&h=300&fit=crop",
+                rating: 4.4,
+                difficulty: "Medium",
+                location: "Monserrat, Buenos Aires",
+                coordinates: "-34.6118,-58.3856",
+                tags: ["architecture", "history", "walking", "colonial"],
+                bestTime: "Weekday afternoons"
+            }
+        ]
+    };
+}
+
+// Load Weather Data
 async function loadWeatherData() {
     try {
-        uiHelpers.showLoader('#weather-widget');
-
         const weatherData = await apiService.getWeatherData('Buenos Aires');
-
         if (weatherData) {
             displayWeatherWidget(weatherData);
-            console.log('Weather data loaded successfully');
         }
     } catch (error) {
         console.error('Error loading weather data:', error);
         displayWeatherError();
-    } finally {
-        uiHelpers.hideLoader('#weather-widget');
     }
 }
 
@@ -133,21 +192,14 @@ function displayWeatherWidget(weather) {
 
     const temperature = Math.round(weather.main.temp);
     const description = weather.weather[0].description;
-    const icon = weather.weather[0].icon;
 
     weatherWidget.innerHTML = `
         <div class="weather-card">
-            <div class="weather-icon">
-                <img src="https://openweathermap.org/img/wn/${icon}@2x.png" 
-                     alt="${description}" loading="lazy">
-            </div>
             <div class="weather-info">
                 <h3>Buenos Aires</h3>
                 <div class="temperature">${temperature}°C</div>
                 <div class="description">${description}</div>
-                <div class="feels-like">
-                    Feels like ${Math.round(weather.main.feels_like)}°C
-                </div>
+                <div class="feels-like">Feels like ${Math.round(weather.main.feels_like)}°C</div>
             </div>
         </div>
     `;
@@ -161,27 +213,71 @@ function displayWeatherError() {
     weatherWidget.innerHTML = `
         <div class="weather-error">
             <p>Weather data temporarily unavailable</p>
-            <small>Please check back later</small>
         </div>
     `;
 }
 
-// Load Featured Attractions for Home Page
+// Load Featured Attractions
 async function loadFeaturedAttractions() {
     try {
-        const attractionsData = await apiService.getAttractionsData();
+        let attractionsData;
+
+        try {
+            attractionsData = await apiService.getAttractionsData();
+        } catch (error) {
+            attractionsData = getDemoAttractionsData();
+        }
 
         if (attractionsData && attractionsData.attractions) {
-            // Get 3 random featured attractions
-            const featured = attractionsData.attractions
-                .sort(() => 0.5 - Math.random())
-                .slice(0, 3);
-
+            const featured = attractionsData.attractions.slice(0, 3);
             displayFeaturedAttractions(featured);
+            updateStatsCounters(attractionsData.attractions);
         }
     } catch (error) {
         console.error('Error loading featured attractions:', error);
+        const demoData = getDemoAttractionsData();
+        const featured = demoData.attractions.slice(0, 3);
+        displayFeaturedAttractions(featured);
+        updateStatsCounters(demoData.attractions);
     }
+}
+
+// Update stats counters
+function updateStatsCounters(attractions) {
+    const hiddenGemsCounter = document.querySelector('[data-counter="hidden-gems"]');
+    if (hiddenGemsCounter) {
+        animateCounter(hiddenGemsCounter, attractions.length);
+    }
+
+    const categories = [...new Set(attractions.map(a => a.category))];
+    const categoriesCounter = document.querySelector('[data-counter="categories"]');
+    if (categoriesCounter) {
+        animateCounter(categoriesCounter, categories.length);
+    }
+
+    const favorites = storageService.getItem('favorites') || [];
+    const favoritesCounter = document.querySelector('[data-counter="favorites"]');
+    if (favoritesCounter) {
+        animateCounter(favoritesCounter, favorites.length);
+    }
+}
+
+// Animate counter
+function animateCounter(element, targetValue) {
+    let currentValue = 0;
+    const increment = targetValue / 60;
+
+    const updateCounter = () => {
+        currentValue += increment;
+        if (currentValue >= targetValue) {
+            element.textContent = targetValue;
+        } else {
+            element.textContent = Math.floor(currentValue);
+            requestAnimationFrame(updateCounter);
+        }
+    };
+
+    updateCounter();
 }
 
 // Display Featured Attractions
@@ -190,7 +286,7 @@ function displayFeaturedAttractions(attractions) {
     if (!container) return;
 
     container.innerHTML = attractions.map(attraction => `
-        <div class="featured-card" data-aos="fade-up">
+        <div class="featured-card">
             <div class="featured-image">
                 <img src="${attraction.image}" alt="${attraction.name}" loading="lazy">
                 <div class="category-badge ${attraction.category.toLowerCase()}">${attraction.category}</div>
@@ -202,32 +298,32 @@ function displayFeaturedAttractions(attractions) {
                     <span class="rating">⭐ ${attraction.rating}</span>
                     <span class="location">📍 ${attraction.location}</span>
                 </div>
-                <a href="attractions.html#attraction-${attraction.id}" class="explore-btn">
-                    Explore More
-                </a>
+                <a href="attractions.html" class="explore-btn">Explore More</a>
             </div>
         </div>
     `).join('');
 }
 
-// Load All Attractions Data
+// Load Attractions Data
 async function loadAttractionsData() {
     try {
-        uiHelpers.showLoader('#attractions-container');
-
-        const data = await apiService.getAttractionsData();
+        let data;
+        try {
+            data = await apiService.getAttractionsData();
+        } catch (error) {
+            data = getDemoAttractionsData();
+        }
 
         if (data && data.attractions) {
             state.attractions = data.attractions;
             state.filteredAttractions = [...state.attractions];
-
             console.log(`Loaded ${state.attractions.length} attractions`);
         }
     } catch (error) {
         console.error('Error loading attractions data:', error);
-        displayAttractionsError();
-    } finally {
-        uiHelpers.hideLoader('#attractions-container');
+        const demoData = getDemoAttractionsData();
+        state.attractions = demoData.attractions;
+        state.filteredAttractions = [...state.attractions];
     }
 }
 
@@ -251,41 +347,33 @@ function displayAttractions() {
     }
 
     container.innerHTML = pageAttractions.map(attraction => `
-        <div class="attraction-card" data-category="${attraction.category.toLowerCase()}" data-aos="fade-up">
+        <div class="attraction-card">
             <div class="attraction-image">
                 <img src="${attraction.image}" alt="${attraction.name}" loading="lazy">
                 <div class="category-badge ${attraction.category.toLowerCase()}">${attraction.category}</div>
-                <button class="favorite-btn" data-id="${attraction.id}" aria-label="Add to favorites">
-                    <i class="heart-icon">♡</i>
-                </button>
+                <button class="favorite-btn" data-id="${attraction.id}">♡</button>
             </div>
             <div class="attraction-content">
                 <h3>${attraction.name}</h3>
                 <p>${attraction.description}</p>
                 <div class="attraction-meta">
                     <span class="rating">⭐ ${attraction.rating}</span>
-                    <span class="difficulty ${attraction.difficulty?.toLowerCase() || 'easy'}">
-                        ${attraction.difficulty || 'Easy'}
-                    </span>
+                    <span class="difficulty">${attraction.difficulty || 'Easy'}</span>
                 </div>
                 <div class="attraction-location">
-                    <i class="location-icon">📍</i>
-                    <span>${attraction.location}</span>
+                    <span>📍 ${attraction.location}</span>
                 </div>
                 <div class="attraction-tags">
                     ${attraction.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                 </div>
                 <div class="attraction-actions">
                     <button class="details-btn" data-id="${attraction.id}">View Details</button>
-                    <button class="directions-btn" data-coords="${attraction.coordinates}">
-                        Get Directions
-                    </button>
+                    <button class="directions-btn" data-coords="${attraction.coordinates}">Get Directions</button>
                 </div>
             </div>
         </div>
     `).join('');
 
-    // Initialize attraction card interactions
     initAttractionCards();
     updatePaginationInfo();
 }
@@ -296,11 +384,9 @@ function initFilters() {
 
     filterButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // Update active filter button
             filterButtons.forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
 
-            // Apply filter
             const category = e.target.dataset.category;
             applyFilter(category);
         });
@@ -310,7 +396,7 @@ function initFilters() {
 // Apply Filter
 function applyFilter(category) {
     state.currentFilter = category;
-    state.currentPage = 1; // Reset to first page
+    state.currentPage = 1;
 
     if (category === 'all') {
         state.filteredAttractions = [...state.attractions];
@@ -322,9 +408,6 @@ function applyFilter(category) {
 
     displayAttractions();
     updatePagination();
-
-    // Store filter preference
-    storageService.setItem('lastFilter', category);
 }
 
 // Initialize Sorting
@@ -335,9 +418,6 @@ function initSorting() {
     sortSelect.addEventListener('change', (e) => {
         applySorting(e.target.value);
     });
-
-    // Apply default sorting
-    applySorting(state.currentSort);
 }
 
 // Apply Sorting
@@ -354,18 +434,9 @@ function applySorting(sortBy) {
         case 'category':
             state.filteredAttractions.sort((a, b) => a.category.localeCompare(b.category));
             break;
-        case 'difficulty':
-            const difficultyOrder = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
-            state.filteredAttractions.sort((a, b) => {
-                const aLevel = difficultyOrder[a.difficulty] || 1;
-                const bLevel = difficultyOrder[b.difficulty] || 1;
-                return aLevel - bLevel;
-            });
-            break;
     }
 
     displayAttractions();
-    storageService.setItem('lastSort', sortBy);
 }
 
 // Initialize Search
@@ -379,14 +450,13 @@ function initSearch() {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
             performSearch(e.target.value);
-        }, 300); // Debounce search
+        }, 300);
     });
 }
 
 // Perform Search
 function performSearch(query) {
     if (!query.trim()) {
-        // Reset to current filter if search is empty
         applyFilter(state.currentFilter);
         return;
     }
@@ -410,30 +480,13 @@ function initPagination() {
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', loadMoreAttractions);
     }
-
     updatePagination();
 }
 
 // Load More Attractions
 function loadMoreAttractions() {
     state.currentPage++;
-    const container = document.getElementById('attractions-grid');
-
-    const startIndex = (state.currentPage - 1) * state.itemsPerPage;
-    const endIndex = startIndex + state.itemsPerPage;
-    const pageAttractions = state.filteredAttractions.slice(startIndex, endIndex);
-
-    if (pageAttractions.length > 0) {
-        const newCards = pageAttractions.map(attraction => `
-            <div class="attraction-card" data-category="${attraction.category.toLowerCase()}" data-aos="fade-up">
-                <!-- Same card structure as displayAttractions -->
-            </div>
-        `).join('');
-
-        container.insertAdjacentHTML('beforeend', newCards);
-        initAttractionCards(); // Re-initialize event listeners for new cards
-    }
-
+    displayAttractions();
     updatePagination();
 }
 
@@ -446,7 +499,6 @@ function updatePagination() {
     const hasMore = state.currentPage < totalPages;
 
     loadMoreBtn.style.display = hasMore ? 'block' : 'none';
-
     updatePaginationInfo();
 }
 
@@ -462,9 +514,8 @@ function updatePaginationInfo() {
     paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${total} attractions`;
 }
 
-// Initialize Attraction Card Interactions
+// Initialize Attraction Cards
 function initAttractionCards() {
-    // Favorite buttons
     document.querySelectorAll('.favorite-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -472,7 +523,6 @@ function initAttractionCards() {
         });
     });
 
-    // Details buttons
     document.querySelectorAll('.details-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -480,7 +530,6 @@ function initAttractionCards() {
         });
     });
 
-    // Directions buttons
     document.querySelectorAll('.directions-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -497,76 +546,27 @@ function toggleFavorite(attractionId, button) {
     if (isFavorite) {
         const index = favorites.indexOf(attractionId);
         favorites.splice(index, 1);
-        button.innerHTML = '<i class="heart-icon">♡</i>';
-        button.classList.remove('favorited');
+        button.textContent = '♡';
     } else {
         favorites.push(attractionId);
-        button.innerHTML = '<i class="heart-icon">♥</i>';
-        button.classList.add('favorited');
+        button.textContent = '♥';
     }
 
     storageService.setItem('favorites', favorites);
-    uiHelpers.showToast(isFavorite ? 'Removed from favorites' : 'Added to favorites');
 }
 
-// Show Attraction Details Modal
+// Show Attraction Details
 function showAttractionDetails(attractionId) {
     const attraction = state.attractions.find(a => a.id == attractionId);
     if (!attraction) return;
 
-    const modal = uiHelpers.createModal(`
-        <div class="attraction-details">
-            <div class="details-header">
-                <img src="${attraction.image}" alt="${attraction.name}" loading="lazy">
-                <div class="details-overlay">
-                    <h2>${attraction.name}</h2>
-                    <div class="category-badge ${attraction.category.toLowerCase()}">${attraction.category}</div>
-                </div>
-            </div>
-            <div class="details-content">
-                <div class="details-description">
-                    <h3>About This Place</h3>
-                    <p>${attraction.description}</p>
-                </div>
-                <div class="details-info">
-                    <div class="info-item">
-                        <strong>Rating:</strong> ⭐ ${attraction.rating}/5
-                    </div>
-                    <div class="info-item">
-                        <strong>Difficulty:</strong> ${attraction.difficulty || 'Easy'}
-                    </div>
-                    <div class="info-item">
-                        <strong>Location:</strong> ${attraction.location}
-                    </div>
-                    <div class="info-item">
-                        <strong>Best Time to Visit:</strong> ${attraction.bestTime || 'Any time'}
-                    </div>
-                </div>
-                <div class="details-tags">
-                    <h3>Tags</h3>
-                    <div class="tag-list">
-                        ${attraction.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                </div>
-                <div class="details-actions">
-                    <button class="primary-btn" onclick="openDirections('${attraction.coordinates}')">
-                        Get Directions
-                    </button>
-                    <button class="secondary-btn" onclick="shareAttraction('${attraction.id}')">
-                        Share
-                    </button>
-                </div>
-            </div>
-        </div>
-    `);
-
-    uiHelpers.showModal(modal);
+    alert(`${attraction.name}\n\n${attraction.description}\n\nRating: ${attraction.rating}/5\nLocation: ${attraction.location}`);
 }
 
 // Open Directions
 function openDirections(coordinates) {
     if (!coordinates) {
-        uiHelpers.showToast('Location coordinates not available');
+        alert('Location coordinates not available');
         return;
     }
 
@@ -575,34 +575,20 @@ function openDirections(coordinates) {
     window.open(mapsUrl, '_blank');
 }
 
-// Share Attraction
-function shareAttraction(attractionId) {
-    const attraction = state.attractions.find(a => a.id == attractionId);
-    if (!attraction) return;
-
-    if (navigator.share) {
-        navigator.share({
-            title: `Check out ${attraction.name}`,
-            text: attraction.description,
-            url: `${window.location.origin}/attractions.html#attraction-${attractionId}`
-        });
-    } else {
-        // Fallback: copy to clipboard
-        const shareUrl = `${window.location.origin}/attractions.html#attraction-${attractionId}`;
-        navigator.clipboard.writeText(shareUrl).then(() => {
-            uiHelpers.showToast('Link copied to clipboard!');
-        });
-    }
-}
-
-// Load Country Info for About Page
+// Load Country Info
 async function loadCountryInfo() {
     try {
-        const countryData = await apiService.getCountryInfo('Argentina');
+        const countryData = [{
+            name: { common: 'Argentina' },
+            capital: ['Buenos Aires'],
+            population: 45376763,
+            region: 'South America',
+            languages: { spa: 'Spanish' },
+            currencies: { ARS: { name: 'Argentine peso' } },
+            flags: { svg: 'https://flagcdn.com/ar.svg' }
+        }];
 
-        if (countryData && countryData.length > 0) {
-            displayCountryInfo(countryData[0]);
-        }
+        displayCountryInfo(countryData[0]);
     } catch (error) {
         console.error('Error loading country info:', error);
     }
@@ -614,148 +600,60 @@ function displayCountryInfo(country) {
     if (!container) return;
 
     container.innerHTML = `
-        <div class="country-card" data-aos="fade-up">
+        <div class="country-card">
             <div class="country-flag">
                 <img src="${country.flags.svg}" alt="${country.name.common} flag" loading="lazy">
             </div>
             <div class="country-details">
                 <h3>${country.name.common}</h3>
                 <div class="country-stats">
-                    <div class="stat">
-                        <strong>Capital:</strong> ${country.capital[0]}
-                    </div>
-                    <div class="stat">
-                        <strong>Population:</strong> ${country.population.toLocaleString()}
-                    </div>
-                    <div class="stat">
-                        <strong>Languages:</strong> ${Object.values(country.languages).join(', ')}
-                    </div>
-                    <div class="stat">
-                        <strong>Currency:</strong> ${Object.values(country.currencies)[0].name}
-                    </div>
-                    <div class="stat">
-                        <strong>Region:</strong> ${country.region}
-                    </div>
+                    <div class="stat"><strong>Capital:</strong> ${country.capital[0]}</div>
+                    <div class="stat"><strong>Population:</strong> ${country.population.toLocaleString()}</div>
+                    <div class="stat"><strong>Languages:</strong> ${Object.values(country.languages).join(', ')}</div>
+                    <div class="stat"><strong>Currency:</strong> ${Object.values(country.currencies)[0].name}</div>
+                    <div class="stat"><strong>Region:</strong> ${country.region}</div>
                 </div>
             </div>
         </div>
     `;
 }
 
-// Initialize Newsletter Form
+// Initialize Forms
 function initNewsletterForm() {
     const form = document.getElementById('newsletter-form');
     if (!form) return;
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-
         const email = form.querySelector('input[type="email"]').value;
 
-        if (uiHelpers.validateEmail(email)) {
-            // Store subscription
-            const subscriptions = storageService.getItem('subscriptions') || [];
-            if (!subscriptions.includes(email)) {
-                subscriptions.push(email);
-                storageService.setItem('subscriptions', subscriptions);
-            }
-
-            uiHelpers.showToast('Successfully subscribed to newsletter!');
+        if (email && email.includes('@')) {
+            alert('Successfully subscribed to newsletter!');
             form.reset();
         } else {
-            uiHelpers.showToast('Please enter a valid email address', 'error');
+            alert('Please enter a valid email address');
         }
     });
 }
 
-// Initialize Contact Form
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
 
-        // Validate form
-        if (validateContactForm(data)) {
-            // Store contact submission
-            const submissions = storageService.getItem('contactSubmissions') || [];
-            submissions.push({
-                ...data,
-                timestamp: new Date().toISOString()
-            });
-            storageService.setItem('contactSubmissions', submissions);
-
-            // Redirect to thank you page
+        if (data.name && data.email && data.message) {
             window.location.href = 'thankyou.html';
+        } else {
+            alert('Please fill in all required fields');
         }
     });
 }
 
-// Validate Contact Form
-function validateContactForm(data) {
-    const errors = [];
-
-    if (!data.name || data.name.length < 2) {
-        errors.push('Name must be at least 2 characters long');
-    }
-
-    if (!uiHelpers.validateEmail(data.email)) {
-        errors.push('Please enter a valid email address');
-    }
-
-    if (!data.message || data.message.length < 10) {
-        errors.push('Message must be at least 10 characters long');
-    }
-
-    if (errors.length > 0) {
-        uiHelpers.showToast(errors[0], 'error');
-        return false;
-    }
-
-    return true;
-}
-
-// Initialize Hero Carousel
-function initHeroCarousel() {
-    const carousel = document.querySelector('.hero-carousel');
-    if (!carousel) return;
-
-    const slides = carousel.querySelectorAll('.hero-slide');
-    let currentSlide = 0;
-
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-    }
-
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }
-
-    // Auto-advance slides
-    setInterval(nextSlide, 5000);
-
-    // Initialize first slide
-    showSlide(0);
-}
-
-// Initialize Team Animation
-function initTeamAnimation() {
-    const teamCards = document.querySelectorAll('.team-member');
-
-    teamCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.2}s`;
-        card.classList.add('animate-in');
-    });
-}
-
-// Initialize Navigation Highlight
+// Navigation and UI
 function initNavigationHighlight() {
     const navLinks = document.querySelectorAll('.nav-link');
     const currentPage = getCurrentPage();
@@ -772,7 +670,6 @@ function initNavigationHighlight() {
     });
 }
 
-// Initialize Responsive Menu
 function initResponsiveMenu() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
@@ -781,102 +678,21 @@ function initResponsiveMenu() {
         menuToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             menuToggle.classList.toggle('active');
-
-            // Toggle aria-expanded
-            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !expanded);
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
                 navMenu.classList.remove('active');
                 menuToggle.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
             }
         });
     }
 }
 
-// Initialize General Features
 async function initGeneralFeatures() {
     console.log('Initializing general features...');
-
-    // Add any features that should work on all pages
-    initScrollToTop();
-    initLazyLoading();
-    initAccessibilityFeatures();
 }
 
-// Initialize Scroll to Top
-function initScrollToTop() {
-    const scrollBtn = document.getElementById('scroll-to-top');
-    if (!scrollBtn) return;
-
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-            scrollBtn.classList.add('visible');
-        } else {
-            scrollBtn.classList.remove('visible');
-        }
-    });
-
-    scrollBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
-// Initialize Lazy Loading
-function initLazyLoading() {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.remove('lazy');
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-}
-
-// Initialize Accessibility Features
-function initAccessibilityFeatures() {
-    // Skip to main content link
-    const skipLink = document.querySelector('.skip-link');
-    if (skipLink) {
-        skipLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            const mainContent = document.getElementById('main-content');
-            if (mainContent) {
-                mainContent.focus();
-                mainContent.scrollIntoView();
-            }
-        });
-    }
-
-    // Keyboard navigation for cards
-    document.querySelectorAll('.attraction-card, .featured-card').forEach(card => {
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                const link = card.querySelector('a, button');
-                if (link) link.click();
-            }
-        });
-    });
-}
-
-// Update Footer Year
 function updateFooterYear() {
     const yearElement = document.getElementById('current-year');
     if (yearElement) {
@@ -884,26 +700,11 @@ function updateFooterYear() {
     }
 }
 
-// Error handling for attractions display
-function displayAttractionsError() {
-    const container = document.getElementById('attractions-grid');
-    if (container) {
-        container.innerHTML = `
-            <div class="error-message">
-                <h3>Unable to load attractions</h3>
-                <p>Please check your connection and try again</p>
-                <button onclick="location.reload()" class="retry-btn">Retry</button>
-            </div>
-        `;
-    }
-}
-
-// Export for global access if needed
+// Export for global access
 window.hiddenGemsApp = {
     state,
     loadMoreAttractions,
     toggleFavorite,
     showAttractionDetails,
-    openDirections,
-    shareAttraction
+    openDirections
 };
