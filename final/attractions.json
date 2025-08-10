@@ -8,7 +8,7 @@
             "location": "Palermo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "images/attractions/
+            "image": "images/attractions/secret-rooftop-garden.webp",
             "rating": 4.8,
             "isLocal": true,
             "tags": [
@@ -26,7 +26,7 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Low",
             "accessibility": "High",
-            "image": "images/attractions/under
+            "image": "images/attractions/underground-art-galery.webp",
             "rating": 4.6,
             "isLocal": false,
             "tags": [
@@ -152,7 +152,7 @@
             "location": "Caballito, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "images/attractions/rooftop-beehive-gardens.webp",
+            "image": "images/attractions/rooftop-beehive-garden.webp",
             "rating": 4.5,
             "isLocal": true,
             "tags": [
@@ -206,7 +206,7 @@
             "location": "Villa Crespo, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "images/attractions/rooftop-bookstore-gardens.webp",
+            "image": "images/attractions/vintage-record-shop-basement.webp",
             "rating": 4.8,
             "isLocal": false,
             "tags": [
