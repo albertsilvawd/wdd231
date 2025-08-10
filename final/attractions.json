@@ -8,15 +8,10 @@
             "location": "Palermo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "./images/attractions/secret-rooftop-garden.webp",
+            "image": "images/attractions/secret-rooftop-garden.webp",
             "rating": 4.8,
-            "isLocal": true,
-            "tags": [
-                "garden",
-                "views",
-                "peaceful",
-                "botanical"
-            ]
+            "neighborhood": "Palermo",
+            "openHours": "6:00 AM - 8:00 PM"
         },
         {
             "id": 2,
@@ -26,15 +21,10 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Low",
             "accessibility": "High",
-            "image": "./images/attractions/underground-art-galery.webp",
+            "image": "images/attractions/underground-art-galery.webp",
             "rating": 4.6,
-            "isLocal": false,
-            "tags": [
-                "art",
-                "underground",
-                "street art",
-                "exhibitions"
-            ]
+            "neighborhood": "San Telmo",
+            "openHours": "2:00 PM - 10:00 PM"
         },
         {
             "id": 3,
@@ -44,15 +34,10 @@
             "location": "Monserrat, Buenos Aires",
             "cost": "Medium",
             "accessibility": "Medium",
-            "image": "./images/attractions/historic-clock-tower.webp",
+            "image": "images/attractions/historic-clock-tower.webp",
             "rating": 4.5,
-            "isLocal": true,
-            "tags": [
-                "history",
-                "architecture",
-                "tower",
-                "guided tours"
-            ]
+            "neighborhood": "Monserrat",
+            "openHours": "10:00 AM - 6:00 PM"
         },
         {
             "id": 4,
@@ -62,15 +47,10 @@
             "location": "Belgrano, Buenos Aires",
             "cost": "Free",
             "accessibility": "Low",
-            "image": "./images/attractions/hidden-waterfall-trail.webp",
+            "image": "images/attractions/hidden-waterfall-trail.webp",
             "rating": 4.7,
-            "isLocal": true,
-            "tags": [
-                "hiking",
-                "waterfall",
-                "nature",
-                "birds"
-            ]
+            "neighborhood": "Belgrano",
+            "openHours": "Dawn to Dusk"
         },
         {
             "id": 5,
@@ -80,15 +60,10 @@
             "location": "Villa Crespo, Buenos Aires",
             "cost": "Medium",
             "accessibility": "Medium",
-            "image": "./images/attractions/vintage-record-shop-basement.webp",
+            "image": "images/attractions/hidden-speakeasy-cave.webp",
             "rating": 4.4,
-            "isLocal": false,
-            "tags": [
-                "music",
-                "vintage",
-                "concerts",
-                "underground"
-            ]
+            "neighborhood": "Villa Crespo",
+            "openHours": "7:00 PM - 1:00 AM"
         },
         {
             "id": 6,
@@ -98,15 +73,10 @@
             "location": "Recoleta, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/forgotten-cemetery-garden.webp",
+            "image": "images/attractions/forgotten-cemetery-garden.webp",
             "rating": 4.3,
-            "isLocal": true,
-            "tags": [
-                "cemetery",
-                "history",
-                "sculptures",
-                "peaceful"
-            ]
+            "neighborhood": "Recoleta",
+            "openHours": "8:00 AM - 6:00 PM"
         },
         {
             "id": 7,
@@ -116,15 +86,10 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "./images/attractions/artisan-workshop-alley.webp",
+            "image": "images/attractions/artisan-workshop-alley.webp",
             "rating": 4.6,
-            "isLocal": false,
-            "tags": [
-                "artisan",
-                "crafts",
-                "workshops",
-                "traditional"
-            ]
+            "neighborhood": "San Telmo",
+            "openHours": "10:00 AM - 7:00 PM"
         },
         {
             "id": 8,
@@ -134,15 +99,10 @@
             "location": "Palermo, Buenos Aires",
             "cost": "High",
             "accessibility": "Low",
-            "image": "./images/attractions/secret-speakeasy-cave.webp",
+            "image": "images/attractions/secret-speakeasy-cave.webp",
             "rating": 4.9,
-            "isLocal": true,
-            "tags": [
-                "speakeasy",
-                "cocktails",
-                "jazz",
-                "cave"
-            ]
+            "neighborhood": "Palermo",
+            "openHours": "8:00 PM - 3:00 AM"
         },
         {
             "id": 9,
@@ -152,15 +112,10 @@
             "location": "Caballito, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "./images/attractions/rooftop-beehive-garden.webp",
+            "image": "images/attractions/vintage-record-shop-basement.webp",
             "rating": 4.5,
-            "isLocal": true,
-            "tags": [
-                "bees",
-                "honey",
-                "conservation",
-                "rooftop"
-            ]
+            "neighborhood": "Caballito",
+            "openHours": "9:00 AM - 5:00 PM"
         },
         {
             "id": 10,
@@ -170,15 +125,10 @@
             "location": "Puerto Madero, Buenos Aires",
             "cost": "Medium",
             "accessibility": "High",
-            "image": "./images/attractions/hidden-speakeasy-love.webp",
+            "image": "images/attractions/hidden-speakeasy-love.webp",
             "rating": 4.7,
-            "isLocal": false,
-            "tags": [
-                "speakeasy",
-                "romantic",
-                "photography",
-                "conversation"
-            ]
+            "neighborhood": "Puerto Madero",
+            "openHours": "6:00 PM - 2:00 AM"
         },
         {
             "id": 11,
@@ -188,15 +138,10 @@
             "location": "Barracas, Buenos Aires",
             "cost": "Free",
             "accessibility": "Low",
-            "image": "./images/attractions/abandoned-theater-ruins.webp",
+            "image": "images/attractions/abandoned-theater-ruins.webp",
             "rating": 4.2,
-            "isLocal": true,
-            "tags": [
-                "theater",
-                "ruins",
-                "architecture",
-                "opera"
-            ]
+            "neighborhood": "Barracas",
+            "openHours": "10:00 AM - 4:00 PM"
         },
         {
             "id": 12,
@@ -206,15 +151,10 @@
             "location": "Villa Crespo, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/vintage-record-shop-basement.webp",
+            "image": "images/attractions/vintage-record-shop-basement.webp",
             "rating": 4.8,
-            "isLocal": false,
-            "tags": [
-                "books",
-                "reading",
-                "garden",
-                "community"
-            ]
+            "neighborhood": "Villa Crespo",
+            "openHours": "8:00 AM - 10:00 PM"
         },
         {
             "id": 13,
@@ -224,15 +164,10 @@
             "location": "Núñez, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "./images/attractions/telescope-observatory-deck.webp",
+            "image": "images/attractions/telescope-observatory-deck.webp",
             "rating": 4.6,
-            "isLocal": true,
-            "tags": [
-                "telescope",
-                "stargazing",
-                "astronomy",
-                "education"
-            ]
+            "neighborhood": "Núñez",
+            "openHours": "8:00 PM - 12:00 AM"
         },
         {
             "id": 14,
@@ -242,15 +177,10 @@
             "location": "Parque Chacabuco, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/ancient-tree-grove.webp",
+            "image": "images/attractions/ancient-tree-grove.webp",
             "rating": 4.4,
-            "isLocal": true,
-            "tags": [
-                "trees",
-                "ancient",
-                "conservation",
-                "education"
-            ]
+            "neighborhood": "Parque Chacabuco",
+            "openHours": "6:00 AM - 8:00 PM"
         },
         {
             "id": 15,
@@ -260,15 +190,10 @@
             "location": "La Boca, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/graffiti-hall-of-fame.webp",
+            "image": "images/attractions/graffiti-hall-of-fame.webp",
             "rating": 4.5,
-            "isLocal": false,
-            "tags": [
-                "graffiti",
-                "street art",
-                "legal wall",
-                "artists"
-            ]
+            "neighborhood": "La Boca",
+            "openHours": "24/7"
         },
         {
             "id": 16,
@@ -278,15 +203,10 @@
             "location": "Belgrano, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/meditation-labyrinth.webp",
+            "image": "images/attractions/meditation-labyrinth.webp",
             "rating": 4.3,
-            "isLocal": true,
-            "tags": [
-                "meditation",
-                "labyrinth",
-                "mindfulness",
-                "peaceful"
-            ]
+            "neighborhood": "Belgrano",
+            "openHours": "6:00 AM - 10:00 PM"
         }
     ]
 }

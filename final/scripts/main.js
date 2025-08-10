@@ -2,10 +2,10 @@
 // Albert Silva - WDD 231 Final Project
 
 // Global state management
-const appState = {
+window.appState = {
     attractions: [],
     filteredAttractions: [],
-    favorites: new Set(),
+    favorites: JSON.parse(localStorage.getItem('hiddenGemsFavorites') || '[]'),
     currentFilters: {
         category: 'all',
         cost: 'all',
@@ -22,6 +22,9 @@ async function initializeApp() {
     console.log('🚀 Hidden Gems Explorer initializing...');
 
     try {
+        // Remove loading messages immediately
+        removeLoadingMessages();
+
         // Initialize core functionality
         await loadAttractions();
         initializeNavigation();
@@ -40,9 +43,19 @@ async function initializeApp() {
     }
 }
 
+// Remove all loading messages
+function removeLoadingMessages() {
+    const loadingElements = document.querySelectorAll('.loading-message, [id*="loading"]');
+    loadingElements.forEach(el => {
+        if (el.textContent.includes('Loading')) {
+            el.style.display = 'none';
+        }
+    });
+}
+
 // Load attractions data
 async function loadAttractions() {
-    if (appState.attractions.length > 0) return appState.attractions;
+    if (window.appState.attractions.length > 0) return window.appState.attractions;
 
     try {
         console.log('📥 Loading attractions data...');
@@ -54,20 +67,21 @@ async function loadAttractions() {
         }
 
         const data = await response.json();
-        appState.attractions = data.attractions || [];
-        appState.filteredAttractions = [...appState.attractions];
+        window.appState.attractions = data.attractions || [];
+        window.appState.filteredAttractions = [...window.appState.attractions];
 
-        console.log(`✅ Loaded ${appState.attractions.length} attractions`);
+        console.log(`✅ Loaded ${window.appState.attractions.length} attractions`);
 
-        return appState.attractions;
+        return window.appState.attractions;
     } catch (error) {
         console.error('❌ Error loading attractions:', error);
 
         // Fallback to hardcoded data if JSON fails
-        appState.attractions = getFallbackAttractions();
-        appState.filteredAttractions = [...appState.attractions];
+        window.appState.attractions = getFallbackAttractions();
+        window.appState.filteredAttractions = [...window.appState.attractions];
 
-        return appState.attractions;
+        console.log(`✅ Using fallback data: ${window.appState.attractions.length} attractions`);
+        return window.appState.attractions;
     }
 }
 
@@ -82,10 +96,10 @@ function getFallbackAttractions() {
             location: "Palermo, Buenos Aires",
             cost: "Free",
             accessibility: "Medium",
-            image: "images/attractions/secret-rooftop-garden.webp",
+            image: "./images/attractions/secret-rooftop-garden.webp",
             rating: 4.8,
-            isLocal: true,
-            tags: ["garden", "views", "peaceful", "botanical"]
+            neighborhood: "Palermo",
+            openHours: "6:00 AM - 8:00 PM"
         },
         {
             id: 2,
@@ -95,10 +109,10 @@ function getFallbackAttractions() {
             location: "San Telmo, Buenos Aires",
             cost: "Low",
             accessibility: "High",
-            image: "images/attractions/underground-art-gallery.webp",
+            image: "./images/attractions/underground-art-galery.webp",
             rating: 4.6,
-            isLocal: false,
-            tags: ["art", "underground", "street art", "exhibitions"]
+            neighborhood: "San Telmo",
+            openHours: "2:00 PM - 10:00 PM"
         },
         {
             id: 3,
@@ -108,10 +122,10 @@ function getFallbackAttractions() {
             location: "Monserrat, Buenos Aires",
             cost: "Medium",
             accessibility: "Medium",
-            image: "images/attractions/historic-clock-tower.webp",
+            image: "./images/attractions/historic-clock-tower.webp",
             rating: 4.5,
-            isLocal: true,
-            tags: ["history", "architecture", "tower", "guided tours"]
+            neighborhood: "Monserrat",
+            openHours: "10:00 AM - 6:00 PM"
         },
         {
             id: 4,
@@ -121,10 +135,10 @@ function getFallbackAttractions() {
             location: "Belgrano, Buenos Aires",
             cost: "Free",
             accessibility: "Low",
-            image: "images/attractions/hidden-waterfall-trail.webp",
+            image: "./images/attractions/hidden-waterfall-trail.webp",
             rating: 4.7,
-            isLocal: true,
-            tags: ["hiking", "waterfall", "nature", "birds"]
+            neighborhood: "Belgrano",
+            openHours: "Dawn to Dusk"
         },
         {
             id: 5,
@@ -134,10 +148,10 @@ function getFallbackAttractions() {
             location: "Villa Crespo, Buenos Aires",
             cost: "Medium",
             accessibility: "Medium",
-            image: "images/attractions/vintage-record-shop-basement.webp",
+            image: "./images/attractions/vintage-record-shop-basement.webp",
             rating: 4.4,
-            isLocal: false,
-            tags: ["music", "vintage", "concerts", "underground"]
+            neighborhood: "Villa Crespo",
+            openHours: "7:00 PM - 1:00 AM"
         },
         {
             id: 6,
@@ -147,10 +161,10 @@ function getFallbackAttractions() {
             location: "Recoleta, Buenos Aires",
             cost: "Free",
             accessibility: "High",
-            image: "images/attractions/forgotten-cemetery-garden.webp",
+            image: "./images/attractions/forgotten-cemetery-garden.webp",
             rating: 4.3,
-            isLocal: true,
-            tags: ["cemetery", "history", "sculptures", "peaceful"]
+            neighborhood: "Recoleta",
+            openHours: "8:00 AM - 6:00 PM"
         },
         {
             id: 7,
@@ -160,10 +174,10 @@ function getFallbackAttractions() {
             location: "San Telmo, Buenos Aires",
             cost: "Free",
             accessibility: "Medium",
-            image: "images/attractions/artisan-workshop-alley.webp",
+            image: "./images/attractions/artisan-workshop-alley.webp",
             rating: 4.6,
-            isLocal: false,
-            tags: ["artisan", "crafts", "workshops", "traditional"]
+            neighborhood: "San Telmo",
+            openHours: "10:00 AM - 7:00 PM"
         },
         {
             id: 8,
@@ -173,10 +187,10 @@ function getFallbackAttractions() {
             location: "Palermo, Buenos Aires",
             cost: "High",
             accessibility: "Low",
-            image: "images/attractions/secret-speakeasy-cave.webp",
+            image: "./images/attractions/secret-speakeasy-cave.webp",
             rating: 4.9,
-            isLocal: true,
-            tags: ["speakeasy", "cocktails", "jazz", "cave"]
+            neighborhood: "Palermo",
+            openHours: "8:00 PM - 3:00 AM"
         },
         {
             id: 9,
@@ -186,10 +200,10 @@ function getFallbackAttractions() {
             location: "Caballito, Buenos Aires",
             cost: "Low",
             accessibility: "Medium",
-            image: "images/attractions/rooftop-beehive-gardens.webp",
+            image: "./images/attractions/rooftop-beehive-garden.webp",
             rating: 4.5,
-            isLocal: true,
-            tags: ["bees", "honey", "conservation", "rooftop"]
+            neighborhood: "Caballito",
+            openHours: "9:00 AM - 5:00 PM"
         },
         {
             id: 10,
@@ -199,10 +213,10 @@ function getFallbackAttractions() {
             location: "Puerto Madero, Buenos Aires",
             cost: "Medium",
             accessibility: "High",
-            image: "images/attractions/hidden-speakeasy-love.webp",
+            image: "./images/attractions/hidden-speakeasy-love.webp",
             rating: 4.7,
-            isLocal: false,
-            tags: ["speakeasy", "romantic", "photography", "conversation"]
+            neighborhood: "Puerto Madero",
+            openHours: "6:00 PM - 2:00 AM"
         },
         {
             id: 11,
@@ -212,10 +226,10 @@ function getFallbackAttractions() {
             location: "Barracas, Buenos Aires",
             cost: "Free",
             accessibility: "Low",
-            image: "images/attractions/abandoned-theater-ruins.webp",
+            image: "./images/attractions/abandoned-theater-ruins.webp",
             rating: 4.2,
-            isLocal: true,
-            tags: ["theater", "ruins", "architecture", "opera"]
+            neighborhood: "Barracas",
+            openHours: "10:00 AM - 4:00 PM"
         },
         {
             id: 12,
@@ -225,10 +239,10 @@ function getFallbackAttractions() {
             location: "Villa Crespo, Buenos Aires",
             cost: "Free",
             accessibility: "High",
-            image: "images/attractions/rooftop-bookstore-gardens.webp",
+            image: "./images/attractions/vintage-record-shop-basement.webp",
             rating: 4.8,
-            isLocal: false,
-            tags: ["books", "reading", "garden", "community"]
+            neighborhood: "Villa Crespo",
+            openHours: "8:00 AM - 10:00 PM"
         },
         {
             id: 13,
@@ -238,10 +252,10 @@ function getFallbackAttractions() {
             location: "Núñez, Buenos Aires",
             cost: "Low",
             accessibility: "Medium",
-            image: "images/attractions/telescope-observatory-deck.webp",
+            image: "./images/attractions/telescope-observatory-deck.webp",
             rating: 4.6,
-            isLocal: true,
-            tags: ["telescope", "stargazing", "astronomy", "education"]
+            neighborhood: "Núñez",
+            openHours: "8:00 PM - 12:00 AM"
         },
         {
             id: 14,
@@ -251,10 +265,10 @@ function getFallbackAttractions() {
             location: "Parque Chacabuco, Buenos Aires",
             cost: "Free",
             accessibility: "High",
-            image: "images/attractions/ancient-tree-grove.webp",
+            image: "./images/attractions/ancient-tree-grove.webp",
             rating: 4.4,
-            isLocal: true,
-            tags: ["trees", "ancient", "conservation", "education"]
+            neighborhood: "Parque Chacabuco",
+            openHours: "6:00 AM - 8:00 PM"
         },
         {
             id: 15,
@@ -264,10 +278,10 @@ function getFallbackAttractions() {
             location: "La Boca, Buenos Aires",
             cost: "Free",
             accessibility: "High",
-            image: "images/attractions/graffiti-hall-of-fame.webp",
+            image: "./images/attractions/graffiti-hall-of-fame.webp",
             rating: 4.5,
-            isLocal: false,
-            tags: ["graffiti", "street art", "legal wall", "artists"]
+            neighborhood: "La Boca",
+            openHours: "24/7"
         },
         {
             id: 16,
@@ -277,10 +291,10 @@ function getFallbackAttractions() {
             location: "Belgrano, Buenos Aires",
             cost: "Free",
             accessibility: "High",
-            image: "images/attractions/meditation-labyrinth.webp",
+            image: "./images/attractions/meditation-labyrinth.webp",
             rating: 4.3,
-            isLocal: true,
-            tags: ["meditation", "labyrinth", "mindfulness", "peaceful"]
+            neighborhood: "Belgrano",
+            openHours: "6:00 AM - 10:00 PM"
         }
     ];
 }
@@ -330,7 +344,7 @@ async function initializeHomePage() {
         displayCategories();
 
         // Load country information
-        await loadCountryInfo();
+        displayCountryInfo();
 
     } catch (error) {
         console.error('❌ Error initializing home page:', error);
@@ -346,7 +360,7 @@ async function displayFeaturedAttractions() {
         console.log('🌟 Loading featured attractions...');
 
         // Get top 3 rated attractions
-        const featured = appState.attractions
+        const featured = window.appState.attractions
             .sort((a, b) => (b.rating || 0) - (a.rating || 0))
             .slice(0, 3);
 
@@ -374,7 +388,7 @@ async function initializeAttractionsPage() {
         initializeFilters();
 
         // Display all attractions
-        await displayAttractions(appState.attractions);
+        await displayAttractions(window.appState.attractions);
 
         // Initialize search
         initializeSearch();
@@ -388,7 +402,7 @@ async function initializeAttractionsPage() {
 }
 
 // Display attractions
-async function displayAttractions(attractions = appState.filteredAttractions) {
+async function displayAttractions(attractions = window.appState.filteredAttractions) {
     const container = document.getElementById('attractionsGrid');
     if (!container) return;
 
@@ -414,37 +428,45 @@ async function displayAttractions(attractions = appState.filteredAttractions) {
     }
 }
 
-// Create attraction HTML
+// Create attraction HTML with corrected image handling
 function createAttractionHTML(attraction) {
-    const imageSrc = attraction.image || getPlaceholderUrl(attraction.name, attraction.category);
+    const isFavorite = window.appState.favorites.includes(attraction.id);
+
+    // Create image with proper error handling
+    const imageUrl = attraction.image || '';
+    const placeholderUrl = createPlaceholderImage(attraction.name, attraction.category);
 
     return `
         <div class="attraction-card" data-id="${attraction.id}">
-            <div class="card-image">
-                <img src="${imageSrc}" 
+            <div class="attraction-image">
+                <img src="${imageUrl}" 
                      alt="${attraction.name}"
                      loading="lazy"
-                     onerror="this.src='${getPlaceholderUrl(attraction.name, attraction.category)}'">
+                     onerror="this.onerror=null; this.src='${placeholderUrl}';"
+                     onload="this.style.opacity='1';"
+                     style="opacity: 0; transition: opacity 0.3s ease;">
                 <div class="category-badge category-${attraction.category.toLowerCase()}">
                     ${attraction.category}
                 </div>
+                <button class="favorite-btn ${isFavorite ? 'active' : ''}" 
+                        onclick="toggleFavorite(${attraction.id})"
+                        data-id="${attraction.id}"
+                        aria-label="Add to favorites">
+                    ${isFavorite ? '❤️' : '🤍'}
+                </button>
             </div>
-            <div class="card-content">
+            <div class="attraction-content">
                 <h3>${attraction.name}</h3>
-                <p class="card-description">${attraction.description}</p>
-                <div class="card-meta">
-                    <span class="location">📍 ${attraction.location}</span>
+                <p class="attraction-description">${attraction.description}</p>
+                <div class="attraction-meta">
+                    <span class="location">📍 ${attraction.location || attraction.neighborhood}</span>
                     <span class="cost">💰 ${attraction.cost}</span>
                     <span class="accessibility">♿ ${attraction.accessibility}</span>
                     <span class="rating">⭐ ${attraction.rating || 4.5}</span>
                 </div>
-                <div class="card-actions">
-                    <button class="btn btn-primary" onclick="openAttractionModal(${attraction.id})">
+                <div class="attraction-actions">
+                    <button class="btn btn-primary details-btn" onclick="openModal(${attraction.id})">
                         View Details
-                    </button>
-                    <button class="btn btn-outline favorite-btn" onclick="toggleFavorite(${attraction.id})" 
-                            data-id="${attraction.id}">
-                        ${appState.favorites.has(attraction.id) ? '❤️' : '🤍'}
                     </button>
                 </div>
             </div>
@@ -452,8 +474,8 @@ function createAttractionHTML(attraction) {
     `;
 }
 
-// Get placeholder URL
-function getPlaceholderUrl(attractionName, category) {
+// Create placeholder image URL
+function createPlaceholderImage(attractionName, category) {
     const colors = {
         'Nature': '#10B981',
         'Culture': '#8B5CF6',
@@ -464,7 +486,7 @@ function getPlaceholderUrl(attractionName, category) {
         'Shopping': '#06B6D4'
     };
 
-    const bgColor = colors[category] || '#6B7280';
+    const bgColor = encodeURIComponent(colors[category] || '#6B7280');
     const initials = attractionName.split(' ').map(word => word[0]).join('').substring(0, 2);
 
     return `data:image/svg+xml;charset=UTF-8,%3csvg width='400' height='200' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='400' height='200' fill='${bgColor}' opacity='0.1'/%3e%3ctext x='200' y='100' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='48' font-weight='bold' fill='${bgColor}' opacity='0.8'%3e${initials}%3c/text%3e%3c/svg%3e`;
@@ -502,32 +524,33 @@ function applyFilters() {
     const accessibilityFilter = document.getElementById('accessibilityFilter');
     const searchInput = document.getElementById('searchInput');
 
-    appState.currentFilters = {
+    window.appState.currentFilters = {
         category: categoryFilter?.value || 'all',
         cost: costFilter?.value || 'all',
         accessibility: accessibilityFilter?.value || 'all',
         search: searchInput?.value.toLowerCase() || ''
     };
 
-    appState.filteredAttractions = appState.attractions.filter(attraction => {
-        const matchesCategory = appState.currentFilters.category === 'all' ||
-            attraction.category.toLowerCase() === appState.currentFilters.category.toLowerCase();
+    window.appState.filteredAttractions = window.appState.attractions.filter(attraction => {
+        const matchesCategory = window.appState.currentFilters.category === 'all' ||
+            attraction.category.toLowerCase() === window.appState.currentFilters.category.toLowerCase();
 
-        const matchesCost = appState.currentFilters.cost === 'all' ||
-            attraction.cost.toLowerCase() === appState.currentFilters.cost.toLowerCase();
+        const matchesCost = window.appState.currentFilters.cost === 'all' ||
+            attraction.cost.toLowerCase() === window.appState.currentFilters.cost.toLowerCase();
 
-        const matchesAccessibility = appState.currentFilters.accessibility === 'all' ||
-            attraction.accessibility.toLowerCase() === appState.currentFilters.accessibility.toLowerCase();
+        const matchesAccessibility = window.appState.currentFilters.accessibility === 'all' ||
+            attraction.accessibility.toLowerCase() === window.appState.currentFilters.accessibility.toLowerCase();
 
-        const matchesSearch = appState.currentFilters.search === '' ||
-            attraction.name.toLowerCase().includes(appState.currentFilters.search) ||
-            attraction.description.toLowerCase().includes(appState.currentFilters.search) ||
-            attraction.location.toLowerCase().includes(appState.currentFilters.search);
+        const matchesSearch = window.appState.currentFilters.search === '' ||
+            attraction.name.toLowerCase().includes(window.appState.currentFilters.search) ||
+            attraction.description.toLowerCase().includes(window.appState.currentFilters.search) ||
+            (attraction.location && attraction.location.toLowerCase().includes(window.appState.currentFilters.search)) ||
+            (attraction.neighborhood && attraction.neighborhood.toLowerCase().includes(window.appState.currentFilters.search));
 
         return matchesCategory && matchesCost && matchesAccessibility && matchesSearch;
     });
 
-    displayAttractions(appState.filteredAttractions);
+    displayAttractions(window.appState.filteredAttractions);
     updateResultsCount();
 }
 
@@ -543,15 +566,15 @@ function clearAllFilters() {
     if (accessibilityFilter) accessibilityFilter.value = 'all';
     if (searchInput) searchInput.value = '';
 
-    appState.currentFilters = {
+    window.appState.currentFilters = {
         category: 'all',
         cost: 'all',
         accessibility: 'all',
         search: ''
     };
 
-    appState.filteredAttractions = [...appState.attractions];
-    displayAttractions(appState.filteredAttractions);
+    window.appState.filteredAttractions = [...window.appState.attractions];
+    displayAttractions(window.appState.filteredAttractions);
     updateResultsCount();
 }
 
@@ -559,7 +582,7 @@ function clearAllFilters() {
 function updateResultsCount() {
     const countElement = document.getElementById('resultsCount');
     if (countElement) {
-        const count = appState.filteredAttractions.length;
+        const count = window.appState.filteredAttractions.length;
         countElement.textContent = `${count} hidden gems found`;
     }
 }
@@ -567,9 +590,9 @@ function updateResultsCount() {
 // Update statistics
 function updateStatistics() {
     const stats = {
-        totalGems: appState.attractions.length,
-        categories: [...new Set(appState.attractions.map(a => a.category))].length,
-        favorites: appState.favorites.size
+        totalGems: window.appState.attractions.length,
+        categories: [...new Set(window.appState.attractions.map(a => a.category))].length,
+        favorites: window.appState.favorites.length
     };
 
     const statElements = {
@@ -617,28 +640,21 @@ function initializeNavigation() {
 }
 
 // Initialize weather widget
-async function initializeWeatherWidget() {
+function initializeWeatherWidget() {
     const weatherWidget = document.getElementById('weatherWidget');
     if (!weatherWidget) return;
 
     try {
-        const weatherData = {
-            temperature: 22,
-            condition: 'Partly Cloudy',
-            humidity: 65,
-            windSpeed: 13
-        };
-
         weatherWidget.innerHTML = `
             <h3>Buenos Aires Weather</h3>
             <div class="weather-info">
                 <div class="weather-current">
-                    <span class="weather-temp">${weatherData.temperature}°C</span>
-                    <span class="weather-desc">${weatherData.condition}</span>
+                    <span class="weather-temp">22°C</span>
+                    <span class="weather-desc">Partly Cloudy</span>
                 </div>
                 <div class="weather-details">
-                    <span>Humidity: ${weatherData.humidity}%</span>
-                    <span>Wind: ${weatherData.windSpeed} km/h</span>
+                    <span>Humidity: 65%</span>
+                    <span>Wind: 13 km/h</span>
                 </div>
             </div>
         `;
@@ -653,24 +669,26 @@ function initializeFavorites() {
     try {
         const saved = localStorage.getItem('hiddenGemsFavorites');
         if (saved) {
-            appState.favorites = new Set(JSON.parse(saved));
+            window.appState.favorites = JSON.parse(saved);
         }
     } catch (error) {
         console.error('Error loading favorites:', error);
-        appState.favorites = new Set();
+        window.appState.favorites = [];
     }
 }
 
 // Toggle favorite
 function toggleFavorite(attractionId) {
-    if (appState.favorites.has(attractionId)) {
-        appState.favorites.delete(attractionId);
+    const index = window.appState.favorites.indexOf(attractionId);
+
+    if (index > -1) {
+        window.appState.favorites.splice(index, 1);
     } else {
-        appState.favorites.add(attractionId);
+        window.appState.favorites.push(attractionId);
     }
 
     try {
-        localStorage.setItem('hiddenGemsFavorites', JSON.stringify([...appState.favorites]));
+        localStorage.setItem('hiddenGemsFavorites', JSON.stringify(window.appState.favorites));
     } catch (error) {
         console.error('Error saving favorites:', error);
     }
@@ -683,18 +701,21 @@ function toggleFavorite(attractionId) {
 function updateFavoriteButtons() {
     document.querySelectorAll('.favorite-btn').forEach(btn => {
         const id = parseInt(btn.dataset.id);
-        btn.innerHTML = appState.favorites.has(id) ? '❤️' : '🤍';
+        const isActive = window.appState.favorites.includes(id);
+        btn.classList.toggle('active', isActive);
+        btn.innerHTML = isActive ? '❤️' : '🤍';
     });
+
+    // Update view favorites button
+    const viewFavoritesBtn = document.getElementById('viewFavorites');
+    if (viewFavoritesBtn) {
+        viewFavoritesBtn.innerHTML = `View Favorites (${window.appState.favorites.length})`;
+    }
 }
 
 // Initialize modal
 function initializeModal() {
     const modal = document.getElementById('attractionModal');
-    const closeBtn = document.querySelector('.modal-close');
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeModal);
-    }
 
     if (modal) {
         modal.addEventListener('click', (e) => {
@@ -712,8 +733,8 @@ function initializeModal() {
 }
 
 // Open attraction modal
-function openAttractionModal(attractionId) {
-    const attraction = appState.attractions.find(a => a.id === attractionId);
+function openModal(attractionId) {
+    const attraction = window.appState.attractions.find(a => a.id === attractionId);
     if (!attraction) return;
 
     const modal = document.getElementById('attractionModal');
@@ -721,53 +742,43 @@ function openAttractionModal(attractionId) {
 
     if (!modal || !modalContent) return;
 
+    const isFavorite = window.appState.favorites.includes(attractionId);
+    const imageUrl = attraction.image || createPlaceholderImage(attraction.name, attraction.category);
+
     modalContent.innerHTML = `
-        <button class="modal-close">&times;</button>
-        <div class="modal-image">
-            <img src="${attraction.image || getPlaceholderUrl(attraction.name, attraction.category)}" 
-                 alt="${attraction.name}"
-                 onerror="this.src='${getPlaceholderUrl(attraction.name, attraction.category)}'">
-        </div>
-        <div class="modal-info">
-            <h2>${attraction.name}</h2>
-            <div class="modal-meta">
-                <span class="category-badge category-${attraction.category.toLowerCase()}">${attraction.category}</span>
-                <span class="rating">⭐ ${attraction.rating || 4.5}</span>
-            </div>
-            <p class="modal-description">${attraction.description}</p>
-            <div class="modal-details">
-                <div class="detail-item">
-                    <strong>📍 Location:</strong> ${attraction.location}
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-body">
+            <img src="${imageUrl}" 
+                 alt="${attraction.name}" 
+                 class="modal-image"
+                 onerror="this.onerror=null; this.src='${createPlaceholderImage(attraction.name, attraction.category)}';">
+            <div class="modal-info">
+                <h2>${attraction.name}</h2>
+                <p class="modal-category">${attraction.category}</p>
+                <p class="modal-description">${attraction.description}</p>
+                <div class="modal-details">
+                    <p><strong>📍 Location:</strong> ${attraction.location || attraction.neighborhood}</p>
+                    <p><strong>💰 Cost:</strong> ${attraction.cost}</p>
+                    <p><strong>♿ Accessibility:</strong> ${attraction.accessibility}</p>
+                    <p><strong>🕒 Hours:</strong> ${attraction.openHours || 'Varies'}</p>
+                    <p><strong>⭐ Rating:</strong> ${attraction.rating || 4.5}/5</p>
                 </div>
-                <div class="detail-item">
-                    <strong>💰 Cost:</strong> ${attraction.cost}
-                </div>
-                <div class="detail-item">
-                    <strong>♿ Accessibility:</strong> ${attraction.accessibility}
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-primary" onclick="toggleFavorite(${attraction.id}); updateModalFavoriteBtn(${attraction.id})">
-                    ${appState.favorites.has(attraction.id) ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}
+                <button class="favorite-btn-modal ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(${attraction.id}); updateModalFavoriteBtn(${attraction.id})">
+                    ${isFavorite ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}
                 </button>
             </div>
         </div>
     `;
 
-    modal.classList.add('active');
+    modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
-
-    const newCloseBtn = modalContent.querySelector('.modal-close');
-    if (newCloseBtn) {
-        newCloseBtn.addEventListener('click', closeModal);
-    }
 }
 
 // Close modal
 function closeModal() {
     const modal = document.getElementById('attractionModal');
     if (modal) {
-        modal.classList.remove('active');
+        modal.style.display = 'none';
         document.body.style.overflow = '';
     }
 }
@@ -775,10 +786,11 @@ function closeModal() {
 // Update modal favorite button
 function updateModalFavoriteBtn(attractionId) {
     const modalContent = document.getElementById('modalContent');
-    const favoriteBtn = modalContent?.querySelector('.btn-primary');
+    const favoriteBtn = modalContent?.querySelector('.favorite-btn-modal');
     if (favoriteBtn) {
-        favoriteBtn.innerHTML = appState.favorites.has(attractionId) ?
-            '❤️ Remove from Favorites' : '🤍 Add to Favorites';
+        const isActive = window.appState.favorites.includes(attractionId);
+        favoriteBtn.classList.toggle('active', isActive);
+        favoriteBtn.innerHTML = isActive ? '❤️ Remove from Favorites' : '🤍 Add to Favorites';
     }
     updateFavoriteButtons();
 }
@@ -806,10 +818,10 @@ function initializeSearch() {
 // Display categories
 function displayCategories() {
     const container = document.getElementById('categoriesGrid');
-    if (!container || appState.attractions.length === 0) return;
+    if (!container || window.appState.attractions.length === 0) return;
 
     const categories = {};
-    appState.attractions.forEach(attraction => {
+    window.appState.attractions.forEach(attraction => {
         categories[attraction.category] = (categories[attraction.category] || 0) + 1;
     });
 
@@ -846,34 +858,27 @@ function filterByCategory(category) {
 }
 
 // Load country information
-async function loadCountryInfo() {
+function displayCountryInfo() {
     const container = document.getElementById('countryInfo');
     if (!container) return;
 
     try {
-        const countryData = {
-            name: 'Buenos Aires',
-            population: '45.4M',
-            language: 'Guaraní',
-            currency: 'Argentine peso'
-        };
-
         container.innerHTML = `
-            <div class="country-stat">
-                <h3>${countryData.name}</h3>
-                <p>Capital City</p>
+            <div class="info-card">
+                <h4>🗺️ Geography</h4>
+                <p>Located in South America, Buenos Aires is the capital of Argentina.</p>
             </div>
-            <div class="country-stat">
-                <h3>${countryData.population}</h3>
-                <p>Population</p>
+            <div class="info-card">
+                <h4>🕒 Timezone</h4>
+                <p>GMT-3 (Argentina Time)</p>
             </div>
-            <div class="country-stat">
-                <h3>${countryData.language}</h3>
-                <p>Primary Language</p>
+            <div class="info-card">
+                <h4>💰 Currency</h4>
+                <p>Argentine Peso (ARS)</p>
             </div>
-            <div class="country-stat">
-                <h3>${countryData.currency}</h3>
-                <p>Currency</p>
+            <div class="info-card">
+                <h4>🗣️ Language</h4>
+                <p>Spanish</p>
             </div>
         `;
     } catch (error) {
@@ -904,6 +909,7 @@ function handleFormSubmission(e) {
         location: formData.get('location'),
         description: formData.get('description'),
         accessibility: formData.get('accessibility'),
+        cost: formData.get('cost'),
         visitorTips: formData.get('visitorTips'),
         submissionDate: new Date().toISOString()
     };
@@ -941,10 +947,12 @@ function displaySubmittedData(data) {
             <h3>Your Submitted Hidden Gem</h3>
             <div class="gem-info">
                 <p><strong>Name:</strong> ${data.gemName || 'N/A'}</p>
+                <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
                 <p><strong>Category:</strong> ${data.category || 'N/A'}</p>
                 <p><strong>Location:</strong> ${data.location || 'N/A'}</p>
                 <p><strong>Description:</strong> ${data.description || 'N/A'}</p>
                 <p><strong>Accessibility:</strong> ${data.accessibility || 'N/A'}</p>
+                <p><strong>Cost:</strong> ${data.cost || 'N/A'}</p>
                 <p><strong>Visitor Tips:</strong> ${data.visitorTips || 'N/A'}</p>
                 <p><strong>Submitted:</strong> ${new Date(data.submissionDate).toLocaleDateString()}</p>
             </div>
@@ -954,16 +962,16 @@ function displaySubmittedData(data) {
 
 // View favorites functionality
 function viewFavorites() {
-    if (appState.favorites.size === 0) {
+    if (window.appState.favorites.length === 0) {
         alert('You have no favorite attractions yet. Add some by clicking the heart icon on any attraction!');
         return;
     }
 
-    const favoriteAttractions = appState.attractions.filter(attraction =>
-        appState.favorites.has(attraction.id)
+    const favoriteAttractions = window.appState.attractions.filter(attraction =>
+        window.appState.favorites.includes(attraction.id)
     );
 
-    appState.filteredAttractions = favoriteAttractions;
+    window.appState.filteredAttractions = favoriteAttractions;
     displayAttractions(favoriteAttractions);
     updateResultsCount();
 }
@@ -982,16 +990,16 @@ function quickFilter(type) {
     // Apply specific filter
     switch (type) {
         case 'free':
-            if (costFilter) costFilter.value = 'free';
+            if (costFilter) costFilter.value = 'Free';
             break;
         case 'accessible':
-            if (accessibilityFilter) accessibilityFilter.value = 'high';
+            if (accessibilityFilter) accessibilityFilter.value = 'High';
             break;
         case 'nature':
-            if (categoryFilter) categoryFilter.value = 'nature';
+            if (categoryFilter) categoryFilter.value = 'Nature';
             break;
         case 'culture':
-            if (categoryFilter) categoryFilter.value = 'culture';
+            if (categoryFilter) categoryFilter.value = 'Culture';
             break;
     }
 
@@ -1092,7 +1100,7 @@ function updateLastModified() {
 
 // Export functions for global access
 window.toggleFavorite = toggleFavorite;
-window.openAttractionModal = openAttractionModal;
+window.openModal = openModal;
 window.closeModal = closeModal;
 window.updateModalFavoriteBtn = updateModalFavoriteBtn;
 window.clearAllFilters = clearAllFilters;
