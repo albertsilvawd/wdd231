@@ -46,7 +46,6 @@ async function loadAttractions() {
 
     try {
         console.log('📥 Loading attractions data...');
-        showLoadingState(true);
 
         // Try to load from local JSON file
         const response = await fetch('./attractions.json');
@@ -59,12 +58,10 @@ async function loadAttractions() {
         appState.filteredAttractions = [...appState.attractions];
 
         console.log(`✅ Loaded ${appState.attractions.length} attractions`);
-        showLoadingState(false);
 
         return appState.attractions;
     } catch (error) {
         console.error('❌ Error loading attractions:', error);
-        showLoadingState(false);
 
         // Fallback to hardcoded data if JSON fails
         appState.attractions = getFallbackAttractions();
@@ -74,46 +71,217 @@ async function loadAttractions() {
     }
 }
 
-// Fallback attractions data
+// Fallback attractions data - ALL 16 ITEMS
 function getFallbackAttractions() {
     return [
         {
             id: 1,
             name: "Secret Rooftop Garden",
             category: "Nature",
-            description: "Hidden oasis above the city with panoramic views and exotic plants.",
+            description: "Hidden oasis above the city with panoramic views and exotic plants. A peaceful escape featuring rare botanical specimens and stunning sunset views.",
             location: "Palermo, Buenos Aires",
             cost: "Free",
             accessibility: "Medium",
             image: "images/attractions/secret-rooftop-garden.webp",
             rating: 4.8,
-            isLocal: true
+            isLocal: true,
+            tags: ["garden", "views", "peaceful", "botanical"]
         },
         {
             id: 2,
             name: "Underground Art Gallery",
             category: "Culture",
-            description: "Former subway tunnel transformed into a vibrant underground art space.",
+            description: "Former subway tunnel transformed into a vibrant underground art space showcasing local street artists and experimental installations.",
             location: "San Telmo, Buenos Aires",
             cost: "Low",
             accessibility: "High",
             image: "images/attractions/underground-art-gallery.webp",
             rating: 4.6,
-            isLocal: false
+            isLocal: false,
+            tags: ["art", "underground", "street art", "exhibitions"]
         },
         {
             id: 3,
             name: "Historic Clock Tower",
             category: "Architecture",
-            description: "19th-century clock tower with original mechanisms still functioning.",
+            description: "19th-century clock tower with original mechanisms still functioning. Offers guided tours and incredible city views.",
             location: "Monserrat, Buenos Aires",
             cost: "Medium",
             accessibility: "Medium",
             image: "images/attractions/historic-clock-tower.webp",
             rating: 4.5,
-            isLocal: true
+            isLocal: true,
+            tags: ["history", "architecture", "tower", "guided tours"]
+        },
+        {
+            id: 4,
+            name: "Hidden Waterfall Trail",
+            category: "Nature",
+            description: "Short hiking trail leading to a secluded waterfall in the heart of the urban area. Features rare birds and stunning forest views.",
+            location: "Belgrano, Buenos Aires",
+            cost: "Free",
+            accessibility: "Low",
+            image: "images/attractions/hidden-waterfall-trail.webp",
+            rating: 4.7,
+            isLocal: true,
+            tags: ["hiking", "waterfall", "nature", "birds"]
+        },
+        {
+            id: 5,
+            name: "Vintage Record Shop Basement",
+            category: "Entertainment",
+            description: "Hidden basement venue beneath a record shop where local musicians perform intimate acoustic concerts.",
+            location: "Villa Crespo, Buenos Aires",
+            cost: "Medium",
+            accessibility: "Medium",
+            image: "images/attractions/vintage-record-shop-basement.webp",
+            rating: 4.4,
+            isLocal: false,
+            tags: ["music", "vintage", "concerts", "underground"]
+        },
+        {
+            id: 6,
+            name: "Forgotten Cemetery Garden",
+            category: "History",
+            description: "Small 18th-century cemetery with beautiful sculptures, peaceful gardens, and rich historical stories.",
+            location: "Recoleta, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/forgotten-cemetery-garden.webp",
+            rating: 4.3,
+            isLocal: true,
+            tags: ["cemetery", "history", "sculptures", "peaceful"]
+        },
+        {
+            id: 7,
+            name: "Artisan Workshop Alley",
+            category: "Culture",
+            description: "Narrow alley filled with traditional craftspeople's workshops. Watch pottery, jewelry, and woodworking demonstrations.",
+            location: "San Telmo, Buenos Aires",
+            cost: "Free",
+            accessibility: "Medium",
+            image: "images/attractions/artisan-workshop-alley.webp",
+            rating: 4.6,
+            isLocal: false,
+            tags: ["artisan", "crafts", "workshops", "traditional"]
+        },
+        {
+            id: 8,
+            name: "Secret Speakeasy Cave",
+            category: "Entertainment",
+            description: "Hidden speakeasy located in underground caves with craft cocktails and live jazz music in an intimate setting.",
+            location: "Palermo, Buenos Aires",
+            cost: "High",
+            accessibility: "Low",
+            image: "images/attractions/secret-speakeasy-cave.webp",
+            rating: 4.9,
+            isLocal: true,
+            tags: ["speakeasy", "cocktails", "jazz", "cave"]
+        },
+        {
+            id: 9,
+            name: "Rooftop Beehive Gardens",
+            category: "Nature",
+            description: "Urban beekeeping project with guided tours about bee conservation, honey tasting, and rooftop gardening.",
+            location: "Caballito, Buenos Aires",
+            cost: "Low",
+            accessibility: "Medium",
+            image: "images/attractions/rooftop-beehive-gardens.webp",
+            rating: 4.5,
+            isLocal: true,
+            tags: ["bees", "honey", "conservation", "rooftop"]
+        },
+        {
+            id: 10,
+            name: "Hidden Speakeasy Love",
+            category: "Entertainment",
+            description: "Secret hidden bar with a speakeasy theme, rocky seating, perfect for romantic photography and peaceful conversation.",
+            location: "Puerto Madero, Buenos Aires",
+            cost: "Medium",
+            accessibility: "High",
+            image: "images/attractions/hidden-speakeasy-love.webp",
+            rating: 4.7,
+            isLocal: false,
+            tags: ["speakeasy", "romantic", "photography", "conversation"]
+        },
+        {
+            id: 11,
+            name: "Abandoned Theater Ruins",
+            category: "Architecture",
+            description: "Stunning architectural details and ruins of a former opera house. Ideal venue for creative architectural tours.",
+            location: "Barracas, Buenos Aires",
+            cost: "Free",
+            accessibility: "Low",
+            image: "images/attractions/abandoned-theater-ruins.webp",
+            rating: 4.2,
+            isLocal: true,
+            tags: ["theater", "ruins", "architecture", "opera"]
+        },
+        {
+            id: 12,
+            name: "Rooftop Bookstore Gardens",
+            category: "Culture",
+            description: "Urban bookstore project with outdoor garden, reading areas, and book exchange programs for the community.",
+            location: "Villa Crespo, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/rooftop-bookstore-gardens.webp",
+            rating: 4.8,
+            isLocal: false,
+            tags: ["books", "reading", "garden", "community"]
+        },
+        {
+            id: 13,
+            name: "Telescope Observatory Deck",
+            category: "Entertainment",
+            description: "Community-run telescope facility offering stargazing sessions with knowledgeable volunteers and modern equipment.",
+            location: "Núñez, Buenos Aires",
+            cost: "Low",
+            accessibility: "Medium",
+            image: "images/attractions/telescope-observatory-deck.webp",
+            rating: 4.6,
+            isLocal: true,
+            tags: ["telescope", "stargazing", "astronomy", "education"]
+        },
+        {
+            id: 14,
+            name: "Ancient Tree Grove",
+            category: "Nature",
+            description: "Collection of 200+ year old trees in an urban setting. Features educational signage about urban forest conservation.",
+            location: "Parque Chacabuco, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/ancient-tree-grove.webp",
+            rating: 4.4,
+            isLocal: true,
+            tags: ["trees", "ancient", "conservation", "education"]
+        },
+        {
+            id: 15,
+            name: "Graffiti Hall of Fame",
+            category: "Culture",
+            description: "Legal graffiti wall showcasing rotating collection of local and international street artists' work.",
+            location: "La Boca, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/graffiti-hall-of-fame.webp",
+            rating: 4.5,
+            isLocal: false,
+            tags: ["graffiti", "street art", "legal wall", "artists"]
+        },
+        {
+            id: 16,
+            name: "Meditation Labyrinth",
+            category: "Nature",
+            description: "Stone labyrinth for walking meditation in quiet garden setting. Includes benches and information about mindfulness practices.",
+            location: "Belgrano, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/meditation-labyrinth.webp",
+            rating: 4.3,
+            isLocal: true,
+            tags: ["meditation", "labyrinth", "mindfulness", "peaceful"]
         }
-        // Add more fallback data as needed
     ];
 }
 
@@ -187,36 +355,7 @@ async function displayFeaturedAttractions() {
             return;
         }
 
-        container.innerHTML = featured.map(attraction => `
-            <div class="attraction-card" data-id="${attraction.id}">
-                <div class="card-image">
-                    <img src="${attraction.image}" 
-                         alt="${attraction.name}"
-                         loading="lazy"
-                         onerror="this.src='images/placeholder.webp'">
-                    <div class="category-badge category-${attraction.category.toLowerCase()}">
-                        ${attraction.category}
-                    </div>
-                </div>
-                <div class="card-content">
-                    <h3>${attraction.name}</h3>
-                    <p class="card-description">${attraction.description}</p>
-                    <div class="card-meta">
-                        <span class="location">📍 ${attraction.location}</span>
-                        <span class="rating">⭐ ${attraction.rating || 4.5}</span>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-primary" onclick="openAttractionModal(${attraction.id})">
-                            Learn More
-                        </button>
-                        <button class="btn btn-outline favorite-btn" onclick="toggleFavorite(${attraction.id})" 
-                                data-id="${attraction.id}">
-                            ${appState.favorites.has(attraction.id) ? '❤️' : '🤍'}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+        container.innerHTML = featured.map(attraction => createAttractionHTML(attraction)).join('');
 
         console.log('✅ Featured attractions displayed');
 
@@ -265,38 +404,7 @@ async function displayAttractions(attractions = appState.filteredAttractions) {
             return;
         }
 
-        container.innerHTML = attractions.map(attraction => `
-            <div class="attraction-card" data-id="${attraction.id}">
-                <div class="card-image">
-                    <img src="${attraction.image}" 
-                         alt="${attraction.name}"
-                         loading="lazy"
-                         onerror="this.src='images/placeholder.webp'">
-                    <div class="category-badge category-${attraction.category.toLowerCase()}">
-                        ${attraction.category}
-                    </div>
-                </div>
-                <div class="card-content">
-                    <h3>${attraction.name}</h3>
-                    <p class="card-description">${attraction.description}</p>
-                    <div class="card-meta">
-                        <span class="location">📍 ${attraction.location}</span>
-                        <span class="cost">💰 ${attraction.cost}</span>
-                        <span class="accessibility">♿ ${attraction.accessibility}</span>
-                        <span class="rating">⭐ ${attraction.rating || 4.5}</span>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-primary" onclick="openAttractionModal(${attraction.id})">
-                            View Details
-                        </button>
-                        <button class="btn btn-outline favorite-btn" onclick="toggleFavorite(${attraction.id})" 
-                                data-id="${attraction.id}">
-                            ${appState.favorites.has(attraction.id) ? '❤️' : '🤍'}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+        container.innerHTML = attractions.map(attraction => createAttractionHTML(attraction)).join('');
 
         console.log(`✅ Displayed ${attractions.length} attractions`);
 
@@ -304,6 +412,62 @@ async function displayAttractions(attractions = appState.filteredAttractions) {
         console.error('❌ Error displaying attractions:', error);
         container.innerHTML = '<p class="error-message">Failed to load attractions.</p>';
     }
+}
+
+// Create attraction HTML
+function createAttractionHTML(attraction) {
+    const imageSrc = attraction.image || getPlaceholderUrl(attraction.name, attraction.category);
+
+    return `
+        <div class="attraction-card" data-id="${attraction.id}">
+            <div class="card-image">
+                <img src="${imageSrc}" 
+                     alt="${attraction.name}"
+                     loading="lazy"
+                     onerror="this.src='${getPlaceholderUrl(attraction.name, attraction.category)}'">
+                <div class="category-badge category-${attraction.category.toLowerCase()}">
+                    ${attraction.category}
+                </div>
+            </div>
+            <div class="card-content">
+                <h3>${attraction.name}</h3>
+                <p class="card-description">${attraction.description}</p>
+                <div class="card-meta">
+                    <span class="location">📍 ${attraction.location}</span>
+                    <span class="cost">💰 ${attraction.cost}</span>
+                    <span class="accessibility">♿ ${attraction.accessibility}</span>
+                    <span class="rating">⭐ ${attraction.rating || 4.5}</span>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="openAttractionModal(${attraction.id})">
+                        View Details
+                    </button>
+                    <button class="btn btn-outline favorite-btn" onclick="toggleFavorite(${attraction.id})" 
+                            data-id="${attraction.id}">
+                        ${appState.favorites.has(attraction.id) ? '❤️' : '🤍'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Get placeholder URL
+function getPlaceholderUrl(attractionName, category) {
+    const colors = {
+        'Nature': '#10B981',
+        'Culture': '#8B5CF6',
+        'Architecture': '#F59E0B',
+        'History': '#EF4444',
+        'Entertainment': '#EC4899',
+        'Food': '#F97316',
+        'Shopping': '#06B6D4'
+    };
+
+    const bgColor = colors[category] || '#6B7280';
+    const initials = attractionName.split(' ').map(word => word[0]).join('').substring(0, 2);
+
+    return `data:image/svg+xml;charset=UTF-8,%3csvg width='400' height='200' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='400' height='200' fill='${bgColor}' opacity='0.1'/%3e%3ctext x='200' y='100' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='48' font-weight='bold' fill='${bgColor}' opacity='0.8'%3e${initials}%3c/text%3e%3c/svg%3e`;
 }
 
 // Initialize filters
@@ -314,7 +478,6 @@ function initializeFilters() {
     const searchInput = document.getElementById('searchInput');
     const clearFiltersBtn = document.getElementById('clearFilters');
 
-    // Add event listeners
     if (categoryFilter) {
         categoryFilter.addEventListener('change', applyFilters);
     }
@@ -339,7 +502,6 @@ function applyFilters() {
     const accessibilityFilter = document.getElementById('accessibilityFilter');
     const searchInput = document.getElementById('searchInput');
 
-    // Update current filters
     appState.currentFilters = {
         category: categoryFilter?.value || 'all',
         cost: costFilter?.value || 'all',
@@ -347,7 +509,6 @@ function applyFilters() {
         search: searchInput?.value.toLowerCase() || ''
     };
 
-    // Filter attractions
     appState.filteredAttractions = appState.attractions.filter(attraction => {
         const matchesCategory = appState.currentFilters.category === 'all' ||
             attraction.category.toLowerCase() === appState.currentFilters.category.toLowerCase();
@@ -366,7 +527,6 @@ function applyFilters() {
         return matchesCategory && matchesCost && matchesAccessibility && matchesSearch;
     });
 
-    // Update display
     displayAttractions(appState.filteredAttractions);
     updateResultsCount();
 }
@@ -412,7 +572,6 @@ function updateStatistics() {
         favorites: appState.favorites.size
     };
 
-    // Update stat displays
     const statElements = {
         gems: document.getElementById('totalGems'),
         categories: document.getElementById('totalCategories'),
@@ -422,22 +581,6 @@ function updateStatistics() {
     if (statElements.gems) statElements.gems.textContent = stats.totalGems;
     if (statElements.categories) statElements.categories.textContent = stats.categories;
     if (statElements.favorites) statElements.favorites.textContent = stats.favorites;
-}
-
-// Show loading state
-function showLoadingState(show) {
-    const loadingElements = document.querySelectorAll('.loading-spinner, .loading-message');
-    const contentElements = document.querySelectorAll('.main-content');
-
-    loadingElements.forEach(el => {
-        el.style.display = show ? 'block' : 'none';
-    });
-
-    contentElements.forEach(el => {
-        el.style.display = show ? 'none' : 'block';
-    });
-
-    appState.isLoading = show;
 }
 
 // Utility function for debouncing
@@ -456,7 +599,7 @@ function debounce(func, wait) {
 // Initialize navigation
 function initializeNavigation() {
     const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
+    const navMenu = document.querySelector('.main-nav');
 
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
@@ -464,8 +607,7 @@ function initializeNavigation() {
             navMenu.classList.toggle('active');
         });
 
-        // Close menu when clicking on a link
-        document.querySelectorAll('.nav-link').forEach(link => {
+        document.querySelectorAll('.main-nav a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
@@ -480,7 +622,6 @@ async function initializeWeatherWidget() {
     if (!weatherWidget) return;
 
     try {
-        // Mock weather data for Buenos Aires
         const weatherData = {
             temperature: 22,
             condition: 'Partly Cloudy',
@@ -489,9 +630,12 @@ async function initializeWeatherWidget() {
         };
 
         weatherWidget.innerHTML = `
+            <h3>Buenos Aires Weather</h3>
             <div class="weather-info">
-                <div class="weather-temp">${weatherData.temperature}°C</div>
-                <div class="weather-condition">${weatherData.condition}</div>
+                <div class="weather-current">
+                    <span class="weather-temp">${weatherData.temperature}°C</span>
+                    <span class="weather-desc">${weatherData.condition}</span>
+                </div>
                 <div class="weather-details">
                     <span>Humidity: ${weatherData.humidity}%</span>
                     <span>Wind: ${weatherData.windSpeed} km/h</span>
@@ -525,14 +669,12 @@ function toggleFavorite(attractionId) {
         appState.favorites.add(attractionId);
     }
 
-    // Save to localStorage
     try {
         localStorage.setItem('hiddenGemsFavorites', JSON.stringify([...appState.favorites]));
     } catch (error) {
         console.error('Error saving favorites:', error);
     }
 
-    // Update UI
     updateFavoriteButtons();
     updateStatistics();
 }
@@ -562,7 +704,6 @@ function initializeModal() {
         });
     }
 
-    // ESC key to close modal
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeModal();
@@ -581,8 +722,11 @@ function openAttractionModal(attractionId) {
     if (!modal || !modalContent) return;
 
     modalContent.innerHTML = `
+        <button class="modal-close">&times;</button>
         <div class="modal-image">
-            <img src="${attraction.image}" alt="${attraction.name}" onerror="this.src='images/placeholder.webp'">
+            <img src="${attraction.image || getPlaceholderUrl(attraction.name, attraction.category)}" 
+                 alt="${attraction.name}"
+                 onerror="this.src='${getPlaceholderUrl(attraction.name, attraction.category)}'">
         </div>
         <div class="modal-info">
             <h2>${attraction.name}</h2>
@@ -612,6 +756,11 @@ function openAttractionModal(attractionId) {
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    const newCloseBtn = modalContent.querySelector('.modal-close');
+    if (newCloseBtn) {
+        newCloseBtn.addEventListener('click', closeModal);
+    }
 }
 
 // Close modal
@@ -626,17 +775,17 @@ function closeModal() {
 // Update modal favorite button
 function updateModalFavoriteBtn(attractionId) {
     const modalContent = document.getElementById('modalContent');
-    const favoriteBtn = modalContent.querySelector('.btn-primary');
+    const favoriteBtn = modalContent?.querySelector('.btn-primary');
     if (favoriteBtn) {
         favoriteBtn.innerHTML = appState.favorites.has(attractionId) ?
             '❤️ Remove from Favorites' : '🤍 Add to Favorites';
     }
+    updateFavoriteButtons();
 }
 
 // Show error message
 function showErrorMessage(message) {
     console.error('Error:', message);
-    // You can implement a toast notification here
 }
 
 // Initialize search
@@ -736,14 +885,42 @@ async function loadCountryInfo() {
 // Initialize about page
 function initializeAboutPage() {
     console.log('ℹ️ Initializing about page...');
-    // About page specific functionality can go here
+
+    const form = document.getElementById('gemSubmissionForm');
+    if (form) {
+        form.addEventListener('submit', handleFormSubmission);
+    }
+}
+
+// Handle form submission
+function handleFormSubmission(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const gemData = {
+        gemName: formData.get('gemName'),
+        email: formData.get('email'),
+        category: formData.get('category'),
+        location: formData.get('location'),
+        description: formData.get('description'),
+        accessibility: formData.get('accessibility'),
+        visitorTips: formData.get('visitorTips'),
+        submissionDate: new Date().toISOString()
+    };
+
+    try {
+        localStorage.setItem('submittedGemData', JSON.stringify(gemData));
+    } catch (error) {
+        console.error('Error saving form data:', error);
+    }
+
+    window.location.href = 'thankyou.html';
 }
 
 // Initialize thank you page
 function initializeThankYouPage() {
     console.log('🙏 Initializing thank you page...');
 
-    // Display submitted form data if available
     try {
         const formData = JSON.parse(localStorage.getItem('submittedGemData') || '{}');
         if (Object.keys(formData).length > 0) {
@@ -769,9 +946,148 @@ function displaySubmittedData(data) {
                 <p><strong>Description:</strong> ${data.description || 'N/A'}</p>
                 <p><strong>Accessibility:</strong> ${data.accessibility || 'N/A'}</p>
                 <p><strong>Visitor Tips:</strong> ${data.visitorTips || 'N/A'}</p>
+                <p><strong>Submitted:</strong> ${new Date(data.submissionDate).toLocaleDateString()}</p>
             </div>
         </div>
     `;
+}
+
+// View favorites functionality
+function viewFavorites() {
+    if (appState.favorites.size === 0) {
+        alert('You have no favorite attractions yet. Add some by clicking the heart icon on any attraction!');
+        return;
+    }
+
+    const favoriteAttractions = appState.attractions.filter(attraction =>
+        appState.favorites.has(attraction.id)
+    );
+
+    appState.filteredAttractions = favoriteAttractions;
+    displayAttractions(favoriteAttractions);
+    updateResultsCount();
+}
+
+// Quick filter functionality
+function quickFilter(type) {
+    const categoryFilter = document.getElementById('categoryFilter');
+    const costFilter = document.getElementById('costFilter');
+    const accessibilityFilter = document.getElementById('accessibilityFilter');
+
+    // Reset all filters first
+    if (categoryFilter) categoryFilter.value = 'all';
+    if (costFilter) costFilter.value = 'all';
+    if (accessibilityFilter) accessibilityFilter.value = 'all';
+
+    // Apply specific filter
+    switch (type) {
+        case 'free':
+            if (costFilter) costFilter.value = 'free';
+            break;
+        case 'accessible':
+            if (accessibilityFilter) accessibilityFilter.value = 'high';
+            break;
+        case 'nature':
+            if (categoryFilter) categoryFilter.value = 'nature';
+            break;
+        case 'culture':
+            if (categoryFilter) categoryFilter.value = 'culture';
+            break;
+    }
+
+    applyFilters();
+}
+
+// Initialize URL parameters
+function initializeURLParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    const categoryParam = urlParams.get('category');
+
+    if (searchParam) {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.value = searchParam;
+            applyFilters();
+        }
+    }
+
+    if (categoryParam) {
+        const categoryFilter = document.getElementById('categoryFilter');
+        if (categoryFilter) {
+            categoryFilter.value = categoryParam;
+            applyFilters();
+        }
+    }
+}
+
+// Feedback functionality for thank you page
+function submitFeedback(rating) {
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    if (feedbackMessage) {
+        feedbackMessage.style.display = 'block';
+        setTimeout(() => {
+            feedbackMessage.style.display = 'none';
+        }, 3000);
+    }
+
+    console.log(`User feedback: ${rating}`);
+}
+
+// Share functionality for thank you page
+function shareOn(platform) {
+    const url = window.location.origin + window.location.pathname.replace('thankyou.html', 'index.html');
+    const text = 'Check out Hidden Gems Explorer - discover amazing secret places in Buenos Aires!';
+
+    switch (platform) {
+        case 'facebook':
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            break;
+        case 'twitter':
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+            break;
+        case 'email':
+            window.location.href = `mailto:?subject=${encodeURIComponent('Hidden Gems Explorer')}&body=${encodeURIComponent(text + ' ' + url)}`;
+            break;
+    }
+}
+
+// Copy link functionality
+function copyLink() {
+    const url = window.location.origin + window.location.pathname.replace('thankyou.html', 'index.html');
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Link copied to clipboard!');
+        }).catch(() => {
+            fallbackCopyText(url);
+        });
+    } else {
+        fallbackCopyText(url);
+    }
+}
+
+// Fallback copy function
+function fallbackCopyText(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        alert('Link copied to clipboard!');
+    } catch (err) {
+        alert('Could not copy link. Please copy manually: ' + text);
+    }
+    document.body.removeChild(textArea);
+}
+
+// Update last modified date
+function updateLastModified() {
+    const lastModifiedElement = document.getElementById('lastModified');
+    if (lastModifiedElement) {
+        lastModifiedElement.textContent = new Date().toLocaleDateString();
+    }
 }
 
 // Export functions for global access
@@ -781,3 +1097,18 @@ window.closeModal = closeModal;
 window.updateModalFavoriteBtn = updateModalFavoriteBtn;
 window.clearAllFilters = clearAllFilters;
 window.filterByCategory = filterByCategory;
+window.viewFavorites = viewFavorites;
+window.quickFilter = quickFilter;
+window.submitFeedback = submitFeedback;
+window.shareOn = shareOn;
+window.copyLink = copyLink;
+
+// Initialize URL params and last modified on attractions page
+if (getCurrentPage() === 'attractions') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initializeURLParams, 100);
+    });
+}
+
+// Update last modified on all pages
+document.addEventListener('DOMContentLoaded', updateLastModified);

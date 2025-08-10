@@ -6,9 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank You - Hidden Gem Submitted Successfully</title>
     <meta name="description"
-        content="Thank you for submitting your hidden gem to Hidden Gems Explorer. We appreciate your contribution to help others discover amazing places in Buenos Aires.">
+        content="Thank you for submitting your hidden gem to Hidden Gems Explorer. Your contribution helps others discover extraordinary places in Buenos Aires.">
     <meta name="author" content="Albert Silva">
     <link rel="icon" href="images/favicon.ico">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Thank You - Hidden Gem Submitted Successfully">
+    <meta property="og:type" content="website">
+    <meta property="og:description"
+        content="Thank you for contributing to our hidden gems collection for Buenos Aires.">
+    <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
+    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/thankyou.html">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,80 +64,75 @@
             <div class="thank-you-content">
                 <div class="success-icon">✨</div>
                 <h2>Thank You for Your Submission!</h2>
-                <p>We're excited to learn about your hidden gem and appreciate you taking the time to share it with our
-                    community of explorers.</p>
-            </div>
-        </section>
+                <p>We appreciate you sharing your hidden gem discovery with our community. Your contribution helps
+                    fellow explorers discover the extraordinary places that make Buenos Aires special.</p>
 
-        <!-- Submission Details -->
-        <section class="submission-details">
-            <h3>Submission Summary</h3>
-            <div class="details-grid">
-                <div class="detail-item">
-                    <strong>Name:</strong>
-                    <span id="submitterName">-</span>
-                </div>
-                <div class="detail-item">
-                    <strong>Email:</strong>
-                    <span id="submitterEmail">-</span>
-                </div>
-                <div class="detail-item">
-                    <strong>Hidden Gem Name:</strong>
-                    <span id="gemName">-</span>
-                </div>
-                <div class="detail-item">
-                    <strong>Category:</strong>
-                    <span id="gemCategory">-</span>
-                </div>
-                <div class="detail-item">
-                    <strong>Location:</strong>
-                    <span id="gemLocation">-</span>
-                </div>
-                <div class="detail-item">
-                    <strong>Submitted:</strong>
-                    <span id="submissionDate">-</span>
+                <div class="next-steps">
+                    <h3>What happens next?</h3>
+                    <ul>
+                        <li>Our team will review your submission within 3-5 business days</li>
+                        <li>We may contact you for additional details or clarification</li>
+                        <li>If approved, your hidden gem will be featured on our website</li>
+                        <li>You'll receive an email notification when it goes live</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Next Steps -->
-        <section class="next-steps">
-            <h3>What Happens Next?</h3>
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>Review Process</h4>
-                        <p>Our team will carefully review your submission to ensure it meets our quality standards for
-                            hidden gems.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>Site Visit</h4>
-                        <p>We'll visit the location personally to verify details and capture authentic information about
-                            the hidden gem.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>Publication</h4>
-                        <p>If approved, your hidden gem will be featured on our site with full credit to you as the
-                            contributor.</p>
-                    </div>
-                </div>
+        <!-- Submitted Data Display -->
+        <section class="submission-summary">
+            <h2>Your Submission Summary</h2>
+            <div id="submittedData" class="submitted-data-container">
+                <!-- Submitted form data will be displayed here by JavaScript -->
             </div>
         </section>
 
-        <!-- Continue Exploring -->
+        <!-- Continue Exploring Section -->
         <section class="continue-exploring">
-            <h3>Continue Your Adventure</h3>
-            <p>While we review your submission, why not explore more hidden gems?</p>
+            <h2>Continue Exploring</h2>
+            <p>While we review your submission, why not discover more hidden gems in Buenos Aires?</p>
+
             <div class="action-buttons">
-                <a href="attractions.html" class="primary-btn">Explore More Gems</a>
-                <a href="index.html" class="secondary-btn">Return Home</a>
+                <a href="attractions.html" class="btn btn-primary">Explore All Gems</a>
+                <a href="about.html" class="btn btn-outline">Submit Another Gem</a>
+                <a href="index.html" class="btn btn-outline">Back to Home</a>
+            </div>
+        </section>
+
+        <!-- Feedback Section -->
+        <section class="feedback-section">
+            <h2>Help Us Improve</h2>
+            <div class="feedback-container">
+                <p>How was your experience submitting a hidden gem?</p>
+                <div class="feedback-buttons">
+                    <button class="feedback-btn" onclick="submitFeedback('excellent')">😍 Excellent</button>
+                    <button class="feedback-btn" onclick="submitFeedback('good')">😊 Good</button>
+                    <button class="feedback-btn" onclick="submitFeedback('okay')">😐 Okay</button>
+                    <button class="feedback-btn" onclick="submitFeedback('poor')">😞 Poor</button>
+                </div>
+                <div id="feedbackMessage" class="feedback-message" style="display: none;">
+                    <p>Thank you for your feedback! It helps us improve the submission experience.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Share Section -->
+        <section class="share-section">
+            <h2>Share Hidden Gems Explorer</h2>
+            <p>Help others discover Buenos Aires' best kept secrets</p>
+            <div class="share-buttons">
+                <button class="share-btn facebook" onclick="shareOn('facebook')">
+                    📘 Share on Facebook
+                </button>
+                <button class="share-btn twitter" onclick="shareOn('twitter')">
+                    🐦 Share on Twitter
+                </button>
+                <button class="share-btn email" onclick="shareOn('email')">
+                    📧 Share via Email
+                </button>
+                <button class="share-btn copy" onclick="copyLink()">
+                    🔗 Copy Link
+                </button>
             </div>
         </section>
     </main>
@@ -152,8 +156,8 @@
                 <h3>Connect</h3>
                 <p>Project by Albert Silva</p>
                 <p>WDD 231 Final Project</p>
-                <a href="https://youtu.be/demo-video-id" target="_blank" id="videoLink" class="video-link">📹 View
-                    Project Demo Video</a>
+                <a href="https://youtu.be/demo-video-id" target="_blank" class="video-link">📹 View Project Demo
+                    Video</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -162,7 +166,7 @@
         </div>
     </footer>
 
-    <script type="module" src="scripts/thankyou.js"></script>
+    <script type="module" src="scripts/main.js"></script>
 </body>
 
 </html>

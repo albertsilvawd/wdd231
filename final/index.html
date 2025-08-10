@@ -67,7 +67,7 @@
                 <div class="search-container">
                     <input type="text" id="searchInput" placeholder="Search for hidden gems..."
                         aria-label="Search hidden gems">
-                    <button id="searchBtn" class="cta-button">Explore Now</button>
+                    <button id="exploreBtn" class="cta-button">Explore Now</button>
                 </div>
             </div>
             <div class="hero-stats">
@@ -80,23 +80,25 @@
                     <span class="stat-label">Categories</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number" id="favoriteCount">0</span>
+                    <span class="stat-number" id="totalFavorites">0</span>
                     <span class="stat-label">Your Favorites</span>
                 </div>
             </div>
         </section>
 
         <!-- Weather Widget -->
-        <section class="weather-widget">
-            <h3>Buenos Aires Weather</h3>
-            <div class="weather-info">
-                <div class="weather-current">
-                    <span class="weather-temp" id="currentTemp">22°C</span>
-                    <span class="weather-desc" id="weatherDesc">Partly Cloudy</span>
-                </div>
-                <div class="weather-details">
-                    <span id="humidity">Humidity: 65%</span>
-                    <span id="windSpeed">Wind: 13 km/h</span>
+        <section class="weather-section">
+            <div class="weather-widget" id="weatherWidget">
+                <h3>Buenos Aires Weather</h3>
+                <div class="weather-info">
+                    <div class="weather-current">
+                        <span class="weather-temp">22°C</span>
+                        <span class="weather-desc">Partly Cloudy</span>
+                    </div>
+                    <div class="weather-details">
+                        <span>Humidity: 65%</span>
+                        <span>Wind: 13 km/h</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -105,8 +107,8 @@
         <section class="featured-gems">
             <h2>Featured Hidden Gems</h2>
             <p class="section-subtitle">Discover our most popular hidden treasures in Buenos Aires</p>
-            <div class="gems-grid" id="featuredGemsGrid">
-                <div class="loading">Loading featured gems...</div>
+            <div class="featured-grid" id="featuredAttractions">
+                <div class="loading-message">Loading featured gems...</div>
             </div>
             <div class="view-all-container">
                 <a href="attractions.html" class="view-all-btn">View All Hidden Gems</a>
@@ -121,11 +123,11 @@
             </div>
         </section>
 
-        <!-- Quick Stats -->
-        <section class="quick-stats">
+        <!-- Country Info Section -->
+        <section class="country-section">
             <h2>About Buenos Aires</h2>
-            <div class="stats-grid" id="countryStats">
-                <div class="loading">Loading country information...</div>
+            <div class="country-info-grid" id="countryInfo">
+                <div class="loading-message">Loading country information...</div>
             </div>
         </section>
     </main>
@@ -158,6 +160,13 @@
             <p>Last Modified: <span id="lastModified"></span></p>
         </div>
     </footer>
+
+    <!-- Modal for Attraction Details -->
+    <div class="modal" id="attractionModal">
+        <div class="modal-content" id="modalContent">
+            <!-- Modal content will be populated by JavaScript -->
+        </div>
+    </div>
 
     <script type="module" src="scripts/main.js"></script>
 </body>

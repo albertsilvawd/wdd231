@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore Hidden Gems - Buenos Aires Secret Attractions</title>
     <meta name="description"
-        content="Browse and explore all hidden gems in Buenos Aires. Filter by category, view detailed information, and add your favorites to discover amazing secret locations.">
+        content="Browse all hidden gems and secret attractions in Buenos Aires. Filter by category, cost, and accessibility to find your perfect hidden destination.">
     <meta name="author" content="Albert Silva">
     <link rel="icon" href="images/favicon.ico">
 
@@ -14,9 +14,10 @@
     <meta property="og:title" content="Explore Hidden Gems - Buenos Aires Secret Attractions">
     <meta property="og:type" content="website">
     <meta property="og:description"
-        content="Browse all hidden gems in Buenos Aires with detailed information and filtering options.">
+        content="Browse all hidden gems and secret attractions in Buenos Aires with filters and detailed information.">
     <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
     <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/attractions.html">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,97 +57,78 @@
     </nav>
 
     <main id="main-content">
-        <h1>Explore Hidden Gems - Buenos Aires Secret Attractions</h1>
+        <h1>Explore All Hidden Gems</h1>
 
         <!-- Page Header -->
         <section class="page-header">
-            <h2>Explore All Hidden Gems</h2>
-            <p>Discover <span id="totalGemsCount">16</span> amazing hidden locations throughout Buenos Aires</p>
-        </section>
-
-        <!-- Filter Section -->
-        <section class="filter-section">
-            <div class="filter-container">
-                <div class="search-filter">
-                    <input type="text" id="attractionSearch" placeholder="Search attractions..."
-                        aria-label="Search attractions">
-                    <button id="searchGemsBtn" class="search-btn">Search</button>
-                </div>
-
-                <div class="filter-controls">
-                    <div class="filter-group">
-                        <label for="categoryFilter">Category:</label>
-                        <select id="categoryFilter" aria-label="Filter by category">
-                            <option value="">All Categories</option>
-                            <option value="Nature">Nature</option>
-                            <option value="Culture">Culture</option>
-                            <option value="Architecture">Architecture</option>
-                            <option value="History">History</option>
-                            <option value="Food">Food</option>
-                            <option value="Shopping">Shopping</option>
-                            <option value="Entertainment">Entertainment</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="costFilter">Cost:</label>
-                        <select id="costFilter" aria-label="Filter by cost">
-                            <option value="">All Prices</option>
-                            <option value="Free">Free</option>
-                            <option value="Low">Low Cost</option>
-                            <option value="Medium">Medium Cost</option>
-                            <option value="High">High Cost</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="accessibilityFilter">Accessibility:</label>
-                        <select id="accessibilityFilter" aria-label="Filter by accessibility">
-                            <option value="">All Levels</option>
-                            <option value="Fully Accessible">Fully Accessible</option>
-                            <option value="Partially Accessible">Partially Accessible</option>
-                            <option value="Limited Access">Limited Access</option>
-                        </select>
-                    </div>
-
-                    <button id="clearFilters" class="clear-btn">Clear Filters</button>
-                </div>
+            <div class="page-header-content">
+                <h2>Explore All Hidden Gems</h2>
+                <p>Discover 16 amazing hidden locations throughout Buenos Aires</p>
             </div>
         </section>
 
-        <!-- Results Info -->
-        <section class="results-info">
-            <p><span id="resultsCount">16</span> hidden gems found</p>
-            <div class="view-controls">
-                <button id="viewFavorites" class="favorites-btn">
-                    ❤️ View Favorites (<span id="favoritesCount">0</span>)
+        <!-- Search and Filter Section -->
+        <section class="search-filter">
+            <div class="filter-row">
+                <div class="search-input-group">
+                    <input type="text" id="searchInput" placeholder="Search attractions..."
+                        aria-label="Search attractions">
+                    <button class="search-btn" id="searchBtn">Search</button>
+                </div>
+                <select id="categoryFilter" aria-label="Filter by category">
+                    <option value="all">All Categories</option>
+                    <option value="nature">Nature</option>
+                    <option value="culture">Culture</option>
+                    <option value="architecture">Architecture</option>
+                    <option value="history">History</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="food">Food</option>
+                    <option value="shopping">Shopping</option>
+                </select>
+                <select id="costFilter" aria-label="Filter by cost">
+                    <option value="all">All Prices</option>
+                    <option value="free">Free</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <select id="accessibilityFilter" aria-label="Filter by accessibility">
+                    <option value="all">All Levels</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+
+            <!-- Quick Filters -->
+            <div class="quick-filters">
+                <span class="quick-filter-label">Quick Filters:</span>
+                <button class="quick-filter-btn" onclick="quickFilter('free')">Free Only</button>
+                <button class="quick-filter-btn" onclick="quickFilter('accessible')">Accessible</button>
+                <button class="quick-filter-btn" onclick="quickFilter('nature')">Nature</button>
+                <button class="quick-filter-btn" onclick="quickFilter('culture')">Cultural</button>
+            </div>
+
+            <button class="clear-filters-btn" id="clearFilters">Clear Filters</button>
+        </section>
+
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+            <div class="results-count" id="resultsCount">16 hidden gems found</div>
+            <div class="filter-actions">
+                <button class="view-favorites-btn" id="viewFavorites" onclick="viewFavorites()">
+                    View Favorites <span class="count" id="favoritesCount">(0)</span>
                 </button>
             </div>
-        </section>
+        </div>
 
         <!-- Attractions Grid -->
-        <section class="attractions-grid" id="attractionsGrid">
-            <div class="loading">Loading hidden gems...</div>
+        <section class="attractions-section">
+            <div class="attractions-grid" id="attractionsGrid">
+                <div class="loading-message">Loading hidden gems...</div>
+            </div>
         </section>
-
-        <!-- Load More Button -->
-        <div class="load-more-container">
-            <button id="loadMoreBtn" class="load-more-btn" style="display: none;">Load More Gems</button>
-        </div>
     </main>
-
-    <!-- Modal for Attraction Details -->
-    <dialog id="attractionModal" class="attraction-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Attraction Details</h3>
-                <button class="modal-close" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Content will be populated by JavaScript -->
-            </div>
-        </div>
-    </dialog>
 
     <footer>
         <div class="footer-container">
@@ -167,8 +149,8 @@
                 <h3>Connect</h3>
                 <p>Project by Albert Silva</p>
                 <p>WDD 231 Final Project</p>
-                <a href="https://youtu.be/demo-video-id" target="_blank" id="videoLink" class="video-link">📹 View
-                    Project Demo Video</a>
+                <a href="https://youtu.be/demo-video-id" target="_blank" class="video-link">📹 View Project Demo
+                    Video</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -177,7 +159,14 @@
         </div>
     </footer>
 
-    <script type="module" src="scripts/attractions.js"></script>
+    <!-- Modal for Attraction Details -->
+    <div class="modal" id="attractionModal">
+        <div class="modal-content" id="modalContent">
+            <!-- Modal content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script type="module" src="scripts/main.js"></script>
 </body>
 
 </html>

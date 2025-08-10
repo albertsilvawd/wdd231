@@ -8,7 +8,7 @@
             "location": "Palermo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "images/attractions/secret-rooftop-garden.webp",
+            "image": "images/attractions/
             "rating": 4.8,
             "isLocal": true,
             "tags": [
@@ -26,7 +26,7 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Low",
             "accessibility": "High",
-            "image": "images/attractions/underground-art-gallery.webp",
+            "image": "images/attractions/under
             "rating": 4.6,
             "isLocal": false,
             "tags": [
