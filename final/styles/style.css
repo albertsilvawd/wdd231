@@ -2697,3 +2697,211 @@ button:active:not(:disabled),
         height: 45px;
     }
 }
+/* CORREÇÕES ESSENCIAIS PARA AS IMAGENS */
+/* Adicione este CSS ao final do seu style.css */
+
+/* Correção para imagens das atrações - TAMANHO FIXO */
+.gem-image,
+.attraction-image {
+    width: 100%;
+    height: 200px;
+    /* Altura fixa para uniformidade */
+    background: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-small) var(--border-radius-small) 0 0;
+}
+
+.gem-image img,
+.attraction-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Importante: mantém proporção mas preenche toda área */
+    object-position: center;
+    transition: var(--transition);
+    display: block;
+}
+
+.gem-image img:hover,
+.attraction-image img:hover {
+    transform: scale(1.05);
+}
+
+/* Correção para o hero background - IMPORTANTE */
+.hero {
+    background: linear-gradient(135deg,
+            rgba(37, 99, 235, 0.9),
+            rgba(5, 150, 105, 0.9)),
+        url('./images/hero-background.jpg') center/cover;
+    color: var(--white);
+    padding: 4rem 2rem;
+    border-radius: var(--border-radius-large);
+    margin-bottom: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+/* Fallback se a imagem hero não carregar */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+            var(--primary-blue),
+            var(--explorer-green));
+    z-index: -1;
+}
+
+/* Correção para cards de atração uniformes */
+.attraction-card,
+.gem-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    border: 1px solid var(--border-gray);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    /* Permite altura automática */
+    min-height: 400px;
+    /* Altura mínima para consistência */
+}
+
+.attraction-card:hover,
+.gem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Área de conteúdo flexível */
+.attraction-content,
+.gem-content {
+    padding: 1.5rem;
+    flex: 1;
+    /* Ocupa espaço restante */
+    display: flex;
+    flex-direction: column;
+}
+
+.attraction-actions,
+.gem-actions {
+    margin-top: auto;
+    /* Empurra ações para baixo */
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Correção para placeholder de imagens que não carregam */
+.image-fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--primary-blue);
+    background: linear-gradient(135deg, var(--light-gray), #e2e8f0);
+    font-size: 3rem;
+}
+
+/* Badge de categoria consistente */
+.gem-category,
+.category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--explorer-green);
+    color: var(--white);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+}
+
+/* Meta informações organizadas */
+.attraction-meta,
+.gem-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+
+.attraction-meta span,
+.gem-meta span {
+    background: var(--light-gray);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-small);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Descrição com altura limitada */
+.attraction-description,
+.gem-description {
+    color: var(--neutral-gray);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Limita a 3 linhas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+    /* Ocupa espaço disponível */
+}
+
+/* Grid responsivo melhorado */
+.attractions-grid,
+.gems-grid,
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 768px) {
+
+    .attractions-grid,
+    .gems-grid,
+    .featured-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .attraction-card,
+    .gem-card {
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .gem-image,
+    .attraction-image {
+        height: 180px;
+        /* Altura menor para mobile */
+    }
+
+    .attraction-content,
+    .gem-content {
+        padding: 1rem;
+    }
+}
