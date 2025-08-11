@@ -2697,3 +2697,427 @@ button:active:not(:disabled),
         height: 45px;
     }
 }
+
+.attraction-image {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    /* Altura fixa padronizada */
+    overflow: hidden;
+    border-radius: var(--border-radius-small) var(--border-radius-small) 0 0;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+.attraction-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Mantém proporção e corta se necessário */
+    object-position: center;
+    /* Centraliza a imagem */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: block;
+}
+
+.attraction-image img:hover {
+    transform: scale(1.05);
+}
+
+/* Featured Attractions - Mesmo padrão */
+.featured-grid .attraction-image {
+    height: 200px;
+    /* Altura específica para featured */
+}
+
+/* Cards de Atração - Layout Padronizado */
+.attraction-card {
+    background: var(--white);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-gray);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.attraction-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-blue);
+}
+
+/* Conteúdo do Card - Altura Uniforme */
+.attraction-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.attraction-content h3 {
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    min-height: 2.6rem;
+    /* Altura mínima para títulos */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.attraction-description {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Máximo 3 linhas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+    min-height: 4.05rem;
+    /* 3 linhas x 1.35rem */
+}
+
+/* Meta informações - Layout uniforme */
+.attraction-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.attraction-meta span {
+    background: var(--bg-light);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    color: var(--text-gray);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Ações do Card - Sempre no final */
+.attraction-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.attraction-actions .btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Category Badge - Posição padronizada */
+.category-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Favorite Button - Posição padronizada */
+.favorite-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 1);
+}
+
+.favorite-btn.active {
+    border-color: var(--discovery-red);
+    background: rgba(220, 38, 38, 0.1);
+}
+
+/* Grid Layouts - Responsivo e Uniforme */
+.attractions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+    align-items: start;
+    /* Alinha cards no topo */
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    align-items: start;
+}
+
+/* Modal Image - Padronizada */
+.modal-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+    background: var(--bg-light);
+}
+
+.modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Weather Widget - Imagem de fundo opcional */
+.weather-widget {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--explorer-green) 100%);
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.weather-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(37, 99, 235, 0.8);
+    z-index: 1;
+}
+
+.weather-widget>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* Country Info Cards - Melhoradas */
+.info-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    border: 1px solid var(--border-gray);
+    transition: all 0.3s ease;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.info-card h4 {
+    color: var(--primary-blue);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Loading States - Melhorados */
+.loading-message {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-gray);
+    font-style: italic;
+    background: var(--bg-light);
+    border-radius: var(--border-radius-medium);
+    margin: 2rem 0;
+    border: 2px dashed var(--border-gray);
+    grid-column: 1 / -1;
+    /* Ocupa toda a largura do grid */
+}
+
+/* No Results State */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--white);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-light);
+    grid-column: 1 / -1;
+    border: 2px dashed var(--border-gray);
+}
+
+.no-results h3 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.no-results p {
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+}
+
+/* Placeholder Images - Melhorados */
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg-light) 0%, #e2e8f0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design - Melhorado */
+@media (max-width: 768px) {
+    .attractions-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0.5rem 0;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .attraction-image {
+        height: 200px;
+    }
+
+    .featured-grid .attraction-image {
+        height: 180px;
+    }
+
+    .attraction-meta {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    .attraction-actions {
+        flex-direction: column;
+    }
+
+    .attraction-actions .btn {
+        width: 100%;
+    }
+
+    .favorite-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    .category-badge {
+        top: 0.5rem;
+        left: 0.5rem;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .attraction-image {
+        height: 180px;
+    }
+
+    .attraction-content {
+        padding: 1rem;
+    }
+
+    .attraction-content h3 {
+        font-size: 1.1rem;
+        min-height: 2.2rem;
+    }
+
+    .attraction-description {
+        font-size: 0.85rem;
+        -webkit-line-clamp: 2;
+        min-height: 2.55rem;
+    }
+}
+
+/* Animações para carregamento de imagens */
+@keyframes imageLoad {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.attraction-image img[style*="opacity: 1"] {
+    animation: imageLoad 0.3s ease;
+}
+
+/* Melhorias de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+
+    .attraction-image img,
+    .attraction-card,
+    .info-card {
+        transition: none;
+    }
+
+    .attraction-image img:hover {
+        transform: none;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+
+    .attraction-card,
+    .info-card {
+        border: 2px solid var(--text-dark);
+    }
+
+    .category-badge,
+    .favorite-btn {
+        border: 1px solid var(--text-dark);
+    }
+}
