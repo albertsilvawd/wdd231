@@ -375,16 +375,14 @@ main {
 /* CARDS & GRIDS - UNIFIED SYSTEM                */
 /* =============================================== */
 
-/* Grid Layout - FIXED: Standardized card widths */
+/* Grid Layout */
 .attractions-grid,
 .gems-grid,
 .featured-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 350px));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
-    justify-content: center;
-    /* Centers the grid when there's extra space */
 }
 
 /* Card Base Style */
@@ -428,12 +426,8 @@ main {
 .card-image img,
 .gem-image img,
 .attraction-image img {
-    width: 100% !important;
-    /* FORCE WIDTH TO 100% - OVERRIDES INLINE STYLES */
-    height: 100% !important;
-    /* FORCE HEIGHT TO 100% - OVERRIDES INLINE STYLES */
-    max-width: none !important;
-    /* REMOVE MAX-WIDTH CONSTRAINTS */
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     /* MAINTAINS ASPECT RATIO WHILE FILLING CONTAINER */
     object-position: center;
@@ -759,12 +753,10 @@ img[loading="lazy"].loaded {
 /* =============================================== */
 /* CATEGORIES GRID                                */
 /* =============================================== */
-/* Categories Grid - FIXED: Standardized card widths */
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
-    justify-content: center;
 }
 
 .category-card {
@@ -810,12 +802,10 @@ img[loading="lazy"].loaded {
 /* =============================================== */
 /* STATS GRID                                     */
 /* =============================================== */
-/* Stats Grid - FIXED: Standardized card widths */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
-    justify-content: center;
 }
 
 .stat-card {
@@ -1140,22 +1130,12 @@ footer {
         gap: 1rem;
     }
 
-    /* MOBILE: Single column for all grids */
     .attractions-grid,
     .gems-grid,
-    .featured-grid {
-        grid-template-columns: 1fr;
-        justify-content: stretch;
-    }
-
-    .categories-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        justify-content: stretch;
-    }
-
+    .featured-grid,
+    .categories-grid,
     .stats-grid {
         grid-template-columns: 1fr;
-        justify-content: stretch;
     }
 
     .filter-controls {
