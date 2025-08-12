@@ -1,5 +1,6 @@
 // Hidden Gems Explorer - Main JavaScript Module
 // Albert Silva - WDD 231 Final Project
+// PRODUCTION VERSION - NO CONSOLE LOGS
 
 // Global state management
 window.appState = {
@@ -19,31 +20,21 @@ window.appState = {
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 async function initializeApp() {
-    console.log('🚀 Hidden Gems Explorer initializing...');
-
     try {
-        // Remove loading messages immediately
         removeLoadingMessages();
-
-        // Initialize core functionality
         await loadAttractions();
         initializeNavigation();
         initializeWeatherWidget();
         initializeFavorites();
         initializeModal();
 
-        // Page-specific initialization
         const currentPage = getCurrentPage();
         await initializePage(currentPage);
-
-        console.log('✅ App initialized successfully');
     } catch (error) {
-        console.error('❌ Error initializing app:', error);
         showErrorMessage('Failed to initialize the application. Please refresh the page.');
     }
 }
 
-// Remove all loading messages
 function removeLoadingMessages() {
     const loadingElements = document.querySelectorAll('.loading-message, [id*="loading"]');
     loadingElements.forEach(el => {
@@ -53,14 +44,10 @@ function removeLoadingMessages() {
     });
 }
 
-// Load attractions data
 async function loadAttractions() {
     if (window.appState.attractions.length > 0) return window.appState.attractions;
 
     try {
-        console.log('📥 Loading attractions data...');
-
-        // Try to load from local JSON file
         const response = await fetch('./attractions.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -70,22 +57,14 @@ async function loadAttractions() {
         window.appState.attractions = data.attractions || [];
         window.appState.filteredAttractions = [...window.appState.attractions];
 
-        console.log(`✅ Loaded ${window.appState.attractions.length} attractions`);
-
         return window.appState.attractions;
     } catch (error) {
-        console.error('❌ Error loading attractions:', error);
-
-        // Fallback to hardcoded data if JSON fails
         window.appState.attractions = getFallbackAttractions();
         window.appState.filteredAttractions = [...window.appState.attractions];
-
-        console.log(`✅ Using fallback data: ${window.appState.attractions.length} attractions`);
         return window.appState.attractions;
     }
 }
 
-// Fallback attractions data - ALL 16 ITEMS
 function getFallbackAttractions() {
     return [
         {
@@ -299,7 +278,6 @@ function getFallbackAttractions() {
     ];
 }
 
-// Get current page
 function getCurrentPage() {
     const path = window.location.pathname;
     if (path.includes('attractions.html')) return 'attractions';
@@ -308,7 +286,6 @@ function getCurrentPage() {
     return 'home';
 }
 
-// Initialize page-specific functionality
 async function initializePage(page) {
     switch (page) {
         case 'home':
@@ -326,46 +303,25 @@ async function initializePage(page) {
     }
 }
 
-// Initialize home page - ENHANCED
 async function initializeHomePage() {
-    console.log('🏠 Initializing home page...');
-
     try {
-        // Update statistics
         updateStatistics();
-
-        // Preload critical images
         preloadCriticalImages();
-
-        // Load featured attractions
         await displayFeaturedAttractions();
-
-        // Initialize search functionality
         initializeSearch();
-
-        // Load categories
         displayCategories();
-
-        // Load country information
         displayCountryInfo();
-
-        // Initialize lazy loading
         initializeLazyLoading();
-
     } catch (error) {
-        console.error('❌ Error initializing home page:', error);
+        showErrorMessage('Error initializing home page');
     }
 }
 
-// Display featured attractions
 async function displayFeaturedAttractions() {
     const container = document.getElementById('featuredAttractions');
     if (!container) return;
 
     try {
-        console.log('🌟 Loading featured attractions...');
-
-        // Get top 3 rated attractions
         const featured = window.appState.attractions
             .sort((a, b) => (b.rating || 0) - (a.rating || 0))
             .slice(0, 3);
@@ -375,39 +331,23 @@ async function displayFeaturedAttractions() {
             return;
         }
 
-        container.innerHTML = featured.map(attraction => createAttractionHTML(attraction)).join('');
-
-        console.log('✅ Featured attractions displayed');
-
+        container.innerHTML = featured.map(attraction => createAttractionHTML(attraction, false)).join('');
     } catch (error) {
-        console.error('❌ Error displaying featured attractions:', error);
         container.innerHTML = '<p class="error-message">Failed to load featured attractions.</p>';
     }
 }
 
-// Initialize attractions page
 async function initializeAttractionsPage() {
-    console.log('🗺️ Initializing attractions page...');
-
     try {
-        // Initialize filters
         initializeFilters();
-
-        // Display all attractions
         await displayAttractions(window.appState.attractions);
-
-        // Initialize search
         initializeSearch();
-
-        // Update results count
         updateResultsCount();
-
     } catch (error) {
-        console.error('❌ Error initializing attractions page:', error);
+        showErrorMessage('Error initializing attractions page');
     }
 }
 
-// Display attractions
 async function displayAttractions(attractions = window.appState.filteredAttractions) {
     const container = document.getElementById('attractionsGrid');
     if (!container) return;
@@ -424,28 +364,23 @@ async function displayAttractions(attractions = window.appState.filteredAttracti
             return;
         }
 
-        container.innerHTML = attractions.map(attraction => createAttractionHTML(attraction)).join('');
-
-        console.log(`✅ Displayed ${attractions.length} attractions`);
-
+        container.innerHTML = attractions.map((attraction, index) => createAttractionHTML(attraction, index > 2)).join('');
     } catch (error) {
-        console.error('❌ Error displaying attractions:', error);
         container.innerHTML = '<p class="error-message">Failed to load attractions.</p>';
     }
 }
 
-// Create attraction HTML with enhanced image handling - CORRECTED
-function createAttractionHTML(attraction) {
+function createAttractionHTML(attraction, useLazyLoading = true) {
     const isFavorite = window.appState.favorites.includes(attraction.id);
     const imageUrl = attraction.image || '';
-    const placeholderUrl = createPlaceholderImage(attraction.name, attraction.category);
+    const lazyAttribute = useLazyLoading ? 'loading="lazy"' : '';
 
     return `
         <div class="attraction-card" data-id="${attraction.id}">
             <div class="attraction-image">
                 <img src="${imageUrl}" 
                      alt="${attraction.name}"
-                     loading="lazy"
+                     ${lazyAttribute}
                      onerror="handleImageError(this, '${attraction.name}', '${attraction.category}')"
                      onload="handleImageLoad(this)"
                      style="opacity: 0; transition: opacity 0.3s ease;">
@@ -478,7 +413,6 @@ function createAttractionHTML(attraction) {
     `;
 }
 
-// Enhanced placeholder image creation - CORRECTED
 function createPlaceholderImage(attractionName, category) {
     const colors = {
         'Nature': '#10B981',
@@ -494,26 +428,20 @@ function createPlaceholderImage(attractionName, category) {
     const lightColor = adjustColorBrightness(bgColor, 40);
     const initials = attractionName.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
 
-    // SVG placeholder with sophisticated gradient
     return `data:image/svg+xml;charset=UTF-8,%3csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3clinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:${encodeURIComponent(lightColor)};stop-opacity:0.8' /%3e%3cstop offset='100%25' style='stop-color:${encodeURIComponent(bgColor)};stop-opacity:0.6' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='400' height='300' fill='url(%23grad)' /%3e%3ccircle cx='200' cy='120' r='40' fill='${encodeURIComponent(bgColor)}' opacity='0.3'/%3e%3ctext x='200' y='130' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='${encodeURIComponent(bgColor)}' opacity='0.9'%3e${initials}%3c/text%3e%3ctext x='200' y='200' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='14' font-weight='500' fill='${encodeURIComponent(bgColor)}' opacity='0.7'%3e${encodeURIComponent(category)}%3c/text%3e%3c/svg%3e`;
 }
 
-// Helper function to adjust color brightness
 function adjustColorBrightness(hex, percent) {
-    // Remove # if present
     hex = hex.replace('#', '');
 
-    // Convert to RGB
     const r = parseInt(hex.substr(0, 2), 16);
     const g = parseInt(hex.substr(2, 2), 16);
     const b = parseInt(hex.substr(4, 2), 16);
 
-    // Adjust brightness
     const newR = Math.min(255, Math.max(0, r + (r * percent / 100)));
     const newG = Math.min(255, Math.max(0, g + (g * percent / 100)));
     const newB = Math.min(255, Math.max(0, b + (b * percent / 100)));
 
-    // Convert back to hex
     const toHex = (c) => {
         const hex = Math.round(c).toString(16);
         return hex.length === 1 ? '0' + hex : hex;
@@ -522,35 +450,23 @@ function adjustColorBrightness(hex, percent) {
     return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}`;
 }
 
-// Handle successful image loading
 function handleImageLoad(img) {
     img.style.opacity = '1';
     img.classList.add('loaded');
 
-    // Remove loading class if exists
     const card = img.closest('.attraction-card');
     if (card) {
         card.classList.remove('card-loading');
     }
-
-    console.log('✅ Image loaded successfully:', img.alt);
 }
 
-// Handle image loading error with robust fallback
 function handleImageError(img, attractionName, category) {
-    img.onerror = null; // Prevent infinite loop
-
-    console.log('⚠️ Image failed to load, using placeholder for:', attractionName);
-
-    // Set placeholder as fallback
+    img.onerror = null;
     img.src = createPlaceholderImage(attractionName, category);
     img.alt = `${attractionName} - Image not available`;
     img.style.opacity = '1';
-
-    // Add class for specific styling
     img.classList.add('placeholder-image');
 
-    // Remove loading class
     const card = img.closest('.attraction-card');
     if (card) {
         card.classList.remove('card-loading');
@@ -558,7 +474,6 @@ function handleImageError(img, attractionName, category) {
     }
 }
 
-// Preload critical images for better performance
 function preloadCriticalImages() {
     const featuredAttractions = window.appState.attractions
         .sort((a, b) => (b.rating || 0) - (a.rating || 0))
@@ -567,14 +482,11 @@ function preloadCriticalImages() {
     featuredAttractions.forEach(attraction => {
         if (attraction.image) {
             const img = new Image();
-            img.onload = () => console.log('✅ Preloaded:', attraction.name);
-            img.onerror = () => console.log('⚠️ Failed to preload:', attraction.name);
             img.src = attraction.image;
         }
     });
 }
 
-// Initialize optimized lazy loading
 function initializeLazyLoading() {
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -597,7 +509,6 @@ function initializeLazyLoading() {
     }
 }
 
-// Initialize filters
 function initializeFilters() {
     const categoryFilter = document.getElementById('categoryFilter');
     const costFilter = document.getElementById('costFilter');
@@ -605,24 +516,13 @@ function initializeFilters() {
     const searchInput = document.getElementById('searchInput');
     const clearFiltersBtn = document.getElementById('clearFilters');
 
-    if (categoryFilter) {
-        categoryFilter.addEventListener('change', applyFilters);
-    }
-    if (costFilter) {
-        costFilter.addEventListener('change', applyFilters);
-    }
-    if (accessibilityFilter) {
-        accessibilityFilter.addEventListener('change', applyFilters);
-    }
-    if (searchInput) {
-        searchInput.addEventListener('input', debounce(applyFilters, 300));
-    }
-    if (clearFiltersBtn) {
-        clearFiltersBtn.addEventListener('click', clearAllFilters);
-    }
+    if (categoryFilter) categoryFilter.addEventListener('change', applyFilters);
+    if (costFilter) costFilter.addEventListener('change', applyFilters);
+    if (accessibilityFilter) accessibilityFilter.addEventListener('change', applyFilters);
+    if (searchInput) searchInput.addEventListener('input', debounce(applyFilters, 300));
+    if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearAllFilters);
 }
 
-// Apply filters
 function applyFilters() {
     const categoryFilter = document.getElementById('categoryFilter');
     const costFilter = document.getElementById('costFilter');
@@ -659,7 +559,6 @@ function applyFilters() {
     updateResultsCount();
 }
 
-// Clear all filters
 function clearAllFilters() {
     const categoryFilter = document.getElementById('categoryFilter');
     const costFilter = document.getElementById('costFilter');
@@ -683,7 +582,6 @@ function clearAllFilters() {
     updateResultsCount();
 }
 
-// Update results count
 function updateResultsCount() {
     const countElement = document.getElementById('resultsCount');
     if (countElement) {
@@ -692,7 +590,6 @@ function updateResultsCount() {
     }
 }
 
-// Update statistics
 function updateStatistics() {
     const stats = {
         totalGems: window.appState.attractions.length,
@@ -711,7 +608,6 @@ function updateStatistics() {
     if (statElements.favorites) statElements.favorites.textContent = stats.favorites;
 }
 
-// Utility function for debouncing
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -724,7 +620,6 @@ function debounce(func, wait) {
     };
 }
 
-// Initialize navigation
 function initializeNavigation() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.main-nav');
@@ -744,7 +639,6 @@ function initializeNavigation() {
     }
 }
 
-// Initialize weather widget
 function initializeWeatherWidget() {
     const weatherWidget = document.getElementById('weatherWidget');
     if (!weatherWidget) return;
@@ -764,12 +658,10 @@ function initializeWeatherWidget() {
             </div>
         `;
     } catch (error) {
-        console.error('Weather widget error:', error);
         weatherWidget.innerHTML = '<p>Weather unavailable</p>';
     }
 }
 
-// Initialize favorites
 function initializeFavorites() {
     try {
         const saved = localStorage.getItem('hiddenGemsFavorites');
@@ -777,12 +669,10 @@ function initializeFavorites() {
             window.appState.favorites = JSON.parse(saved);
         }
     } catch (error) {
-        console.error('Error loading favorites:', error);
         window.appState.favorites = [];
     }
 }
 
-// Toggle favorite
 function toggleFavorite(attractionId) {
     const index = window.appState.favorites.indexOf(attractionId);
 
@@ -795,14 +685,13 @@ function toggleFavorite(attractionId) {
     try {
         localStorage.setItem('hiddenGemsFavorites', JSON.stringify(window.appState.favorites));
     } catch (error) {
-        console.error('Error saving favorites:', error);
+        // Storage failed
     }
 
     updateFavoriteButtons();
     updateStatistics();
 }
 
-// Update favorite buttons
 function updateFavoriteButtons() {
     document.querySelectorAll('.favorite-btn').forEach(btn => {
         const id = parseInt(btn.dataset.id);
@@ -812,14 +701,12 @@ function updateFavoriteButtons() {
         btn.setAttribute('aria-label', isActive ? 'Remove from favorites' : 'Add to favorites');
     });
 
-    // Update view favorites button
     const viewFavoritesBtn = document.getElementById('viewFavorites');
     if (viewFavoritesBtn) {
         viewFavoritesBtn.innerHTML = `View Favorites (${window.appState.favorites.length})`;
     }
 }
 
-// Initialize modal
 function initializeModal() {
     const modal = document.getElementById('attractionModal');
 
@@ -838,7 +725,6 @@ function initializeModal() {
     });
 }
 
-// Enhanced modal with better image handling
 function openModal(attractionId) {
     const attraction = window.appState.attractions.find(a => a.id === attractionId);
     if (!attraction) return;
@@ -898,14 +784,12 @@ function openModal(attractionId) {
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    // Focus on close button for accessibility
     setTimeout(() => {
         const closeBtn = modal.querySelector('.modal-close');
         if (closeBtn) closeBtn.focus();
     }, 100);
 }
 
-// Close modal
 function closeModal() {
     const modal = document.getElementById('attractionModal');
     if (modal) {
@@ -915,7 +799,6 @@ function closeModal() {
     }
 }
 
-// Update modal favorite button
 function updateModalFavoriteBtn(attractionId) {
     const modalContent = document.getElementById('modalContent');
     const favoriteBtn = modalContent?.querySelector('.favorite-btn-modal');
@@ -928,12 +811,10 @@ function updateModalFavoriteBtn(attractionId) {
     updateFavoriteButtons();
 }
 
-// Show error message
 function showErrorMessage(message) {
-    console.error('Error:', message);
+    // Silent error handling for production
 }
 
-// Initialize search
 function initializeSearch() {
     const searchInput = document.getElementById('searchInput');
     const exploreBtn = document.getElementById('exploreBtn');
@@ -948,7 +829,6 @@ function initializeSearch() {
     }
 }
 
-// Display categories
 function displayCategories() {
     const container = document.getElementById('categoriesGrid');
     if (!container || window.appState.attractions.length === 0) return;
@@ -977,7 +857,6 @@ function displayCategories() {
     `).join('');
 }
 
-// Filter by category
 function filterByCategory(category) {
     if (getCurrentPage() !== 'attractions') {
         window.location.href = `attractions.html?category=${encodeURIComponent(category)}`;
@@ -990,7 +869,6 @@ function filterByCategory(category) {
     }
 }
 
-// Load country information
 function displayCountryInfo() {
     const container = document.getElementById('countryInfo');
     if (!container) return;
@@ -1015,22 +893,17 @@ function displayCountryInfo() {
             </div>
         `;
     } catch (error) {
-        console.error('Country info error:', error);
         container.innerHTML = '<p>Country information unavailable</p>';
     }
 }
 
-// Initialize about page
 function initializeAboutPage() {
-    console.log('ℹ️ Initializing about page...');
-
     const form = document.getElementById('gemSubmissionForm');
     if (form) {
         form.addEventListener('submit', handleFormSubmission);
     }
 }
 
-// Handle form submission
 function handleFormSubmission(e) {
     e.preventDefault();
 
@@ -1050,27 +923,23 @@ function handleFormSubmission(e) {
     try {
         localStorage.setItem('submittedGemData', JSON.stringify(gemData));
     } catch (error) {
-        console.error('Error saving form data:', error);
+        // Storage failed
     }
 
     window.location.href = 'thankyou.html';
 }
 
-// Initialize thank you page
 function initializeThankYouPage() {
-    console.log('🙏 Initializing thank you page...');
-
     try {
         const formData = JSON.parse(localStorage.getItem('submittedGemData') || '{}');
         if (Object.keys(formData).length > 0) {
             displaySubmittedData(formData);
         }
     } catch (error) {
-        console.error('Error loading submitted data:', error);
+        // Data loading failed
     }
 }
 
-// Display submitted data
 function displaySubmittedData(data) {
     const container = document.getElementById('submittedData');
     if (!container || !data) return;
@@ -1093,7 +962,6 @@ function displaySubmittedData(data) {
     `;
 }
 
-// View favorites functionality
 function viewFavorites() {
     if (window.appState.favorites.length === 0) {
         alert('You have no favorite attractions yet. Add some by clicking the heart icon on any attraction!');
@@ -1109,18 +977,15 @@ function viewFavorites() {
     updateResultsCount();
 }
 
-// Quick filter functionality
 function quickFilter(type) {
     const categoryFilter = document.getElementById('categoryFilter');
     const costFilter = document.getElementById('costFilter');
     const accessibilityFilter = document.getElementById('accessibilityFilter');
 
-    // Reset all filters first
     if (categoryFilter) categoryFilter.value = 'all';
     if (costFilter) costFilter.value = 'all';
     if (accessibilityFilter) accessibilityFilter.value = 'all';
 
-    // Apply specific filter
     switch (type) {
         case 'free':
             if (costFilter) costFilter.value = 'Free';
@@ -1139,7 +1004,6 @@ function quickFilter(type) {
     applyFilters();
 }
 
-// Initialize URL parameters
 function initializeURLParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
@@ -1162,7 +1026,6 @@ function initializeURLParams() {
     }
 }
 
-// Feedback functionality for thank you page
 function submitFeedback(rating) {
     const feedbackMessage = document.getElementById('feedbackMessage');
     if (feedbackMessage) {
@@ -1171,11 +1034,8 @@ function submitFeedback(rating) {
             feedbackMessage.style.display = 'none';
         }, 3000);
     }
-
-    console.log(`User feedback: ${rating}`);
 }
 
-// Share functionality for thank you page
 function shareOn(platform) {
     const url = window.location.origin + window.location.pathname.replace('thankyou.html', 'index.html');
     const text = 'Check out Hidden Gems Explorer - discover amazing secret places in Buenos Aires!';
@@ -1193,7 +1053,6 @@ function shareOn(platform) {
     }
 }
 
-// Copy link functionality
 function copyLink() {
     const url = window.location.origin + window.location.pathname.replace('thankyou.html', 'index.html');
 
@@ -1208,7 +1067,6 @@ function copyLink() {
     }
 }
 
-// Fallback copy function
 function fallbackCopyText(text) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -1223,7 +1081,6 @@ function fallbackCopyText(text) {
     document.body.removeChild(textArea);
 }
 
-// Update last modified date
 function updateLastModified() {
     const lastModifiedElement = document.getElementById('lastModified');
     if (lastModifiedElement) {
