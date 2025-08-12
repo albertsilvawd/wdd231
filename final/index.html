@@ -122,7 +122,8 @@
                     <button id="exploreBtn" class="cta-button" type="button">Explore Now</button>
                 </div>
             </div>
-            <div class="hero-stats" aria-label="Site statistics">
+            <div class="hero-stats" role="region" aria-labelledby="stats-heading">
+                <h3 id="stats-heading" class="sr-only">Site Statistics</h3>
                 <div class="stat-item">
                     <span class="stat-number" id="totalGems" title="Total hidden gems">16</span>
                     <span class="stat-label">Hidden Gems</span>
@@ -210,14 +211,15 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Albert Silva | Hidden Gems Explorer | WDD 231 Final Project</p>
-            <p>Last Modified: <time id="lastModified" title="Last modification date"></></p>
+            <p>Last Modified: <time id="lastModified" title="Last modification date">2024-12-08</time></p>
         </div>
     </footer>
 
     <!-- Modal for Attraction Details -->
-    <div class="modal" id="attractionModal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+    <div class="modal" id="attractionModal" role="dialog" aria-modal="true" aria-labelledby="modal-heading"
         aria-hidden="true">
         <div class="modal-content" id="modalContent">
+            <h2 id="modal-heading" class="sr-only">Attraction Details</h2>
             <!-- Modal content will be populated by JavaScript -->
         </div>
     </div>
