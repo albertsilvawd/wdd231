@@ -13,10 +13,7 @@
     --transition: all 0.3s ease;
     --radius: 8px;
     --max-width: 1200px;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
+    --spacing: 1rem;
 }
 
 *,
@@ -46,7 +43,7 @@ h3,
 h4 {
     font-family: 'Playfair Display', serif;
     color: var(--primary);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     line-height: 1.2;
     font-weight: 600;
 }
@@ -70,14 +67,14 @@ h4 {
 }
 
 p {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     line-height: 1.7;
 }
 
 main {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: calc(var(--spacing) * 2) var(--spacing);
     min-height: calc(100vh - 280px);
 }
 
@@ -119,7 +116,7 @@ main {
 header {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: var(--white);
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing) 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -130,7 +127,7 @@ header {
 .header-container {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -139,7 +136,7 @@ header {
 .logo-section {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing);
 }
 
 .logo {
@@ -223,15 +220,15 @@ header {
 .nav ul {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing);
     display: flex;
     list-style: none;
-    gap: var(--spacing-xl);
+    gap: calc(var(--spacing) * 2);
 }
 
 .nav a {
     display: block;
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing) 0;
     text-decoration: none;
     color: var(--text);
     font-weight: 600;
@@ -265,9 +262,9 @@ header {
 .hero {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.85), rgba(5, 150, 105, 0.85)), url('../images/hero-background.jpg') center/cover no-repeat;
     color: var(--white);
-    padding: 4rem var(--spacing-xl);
+    padding: calc(var(--spacing) * 4) calc(var(--spacing) * 2);
     border-radius: var(--radius);
-    margin-bottom: 3rem;
+    margin-bottom: calc(var(--spacing) * 3);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -282,14 +279,14 @@ header {
 .hero h2 {
     color: var(--white);
     font-size: 3rem;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
     font-weight: 700;
 }
 
 .hero p {
     font-size: 1.3rem;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: calc(var(--spacing) * 2);
     opacity: 0.95;
     max-width: 600px;
     margin-left: auto;
@@ -300,13 +297,13 @@ header {
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
+    gap: calc(var(--spacing) * 2);
+    margin-top: calc(var(--spacing) * 2);
 }
 
 .stat-item {
     text-align: center;
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: calc(var(--spacing) * 1.5) var(--spacing);
     background: rgba(255, 255, 255, 0.15);
     border-radius: var(--radius);
     backdrop-filter: blur(10px);
@@ -320,7 +317,7 @@ header {
     color: var(--white);
     font-family: 'Playfair Display', serif;
     display: block;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: calc(var(--spacing) * 0.5);
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
 }
 
@@ -336,8 +333,8 @@ header {
 
 .grid {
     display: grid;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
+    gap: calc(var(--spacing) * 1.5);
+    margin-bottom: calc(var(--spacing) * 2);
     align-items: stretch;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
@@ -388,7 +385,7 @@ header {
 }
 
 .content {
-    padding: var(--spacing-lg);
+    padding: calc(var(--spacing) * 1.5);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -397,7 +394,7 @@ header {
 
 .content h3 {
     color: var(--text-dark);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     font-size: 1.25rem;
     line-height: 1.3;
     min-height: 3.2rem;
@@ -409,7 +406,7 @@ header {
 
 .description {
     color: var(--text-light);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -422,8 +419,8 @@ header {
 .meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
+    gap: calc(var(--spacing) * 0.5);
+    margin-bottom: var(--spacing);
     font-size: 0.9rem;
     min-height: 2rem;
     align-items: flex-start;
@@ -431,7 +428,7 @@ header {
 
 .meta span {
     background: var(--bg);
-    padding: 0.25rem var(--spacing-sm);
+    padding: 0.25rem calc(var(--spacing) * 0.5);
     border-radius: var(--radius);
     color: var(--text-light);
     font-weight: 500;
@@ -442,10 +439,10 @@ header {
 .actions {
     margin-top: auto;
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing);
     align-items: center;
     justify-content: space-between;
-    padding-top: var(--spacing-md);
+    padding-top: var(--spacing);
     border-top: 1px solid var(--border);
 }
 
@@ -453,7 +450,7 @@ header {
     background: var(--accent);
     color: var(--white);
     border: none;
-    padding: 0.75rem var(--spacing-lg);
+    padding: 0.75rem calc(var(--spacing) * 1.5);
     font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
@@ -476,12 +473,12 @@ header {
 
 .favorite-btn {
     position: absolute;
-    top: var(--spacing-md);
-    right: var(--spacing-md);
+    top: var(--spacing);
+    right: var(--spacing);
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid var(--accent);
     color: var(--accent);
-    padding: var(--spacing-sm);
+    padding: calc(var(--spacing) * 0.5);
     border-radius: 50%;
     cursor: pointer;
     transition: var(--transition);
@@ -506,11 +503,11 @@ header {
 
 .search-container {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing);
     max-width: 500px;
-    margin: 0 auto var(--spacing-xl);
+    margin: 0 auto calc(var(--spacing) * 2);
     background: var(--white);
-    padding: var(--spacing-sm);
+    padding: calc(var(--spacing) * 0.5);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
 }
@@ -518,7 +515,7 @@ header {
 .search-container input {
     flex: 1;
     border: none;
-    padding: var(--spacing-md);
+    padding: var(--spacing);
     font-size: 1rem;
     border-radius: var(--radius);
     color: var(--text);
@@ -532,28 +529,28 @@ header {
 
 .weather-widget {
     background: var(--white);
-    padding: var(--spacing-xl);
+    padding: calc(var(--spacing) * 2);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: calc(var(--spacing) * 2);
     text-align: center;
     border: 1px solid var(--border);
 }
 
 .weather-widget h3 {
     color: var(--primary);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-sm);
+    gap: calc(var(--spacing) * 0.5);
 }
 
 .weather-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: var(--spacing-xl);
+    gap: calc(var(--spacing) * 2);
 }
 
 .weather-current {
@@ -572,27 +569,27 @@ header {
 .weather-desc {
     font-size: 1rem;
     color: var(--text-light);
-    margin-top: var(--spacing-sm);
+    margin-top: calc(var(--spacing) * 0.5);
 }
 
 .weather-details {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: calc(var(--spacing) * 0.5);
 }
 
 .weather-details span {
     font-size: 0.9rem;
     color: var(--text);
-    padding: 0.25rem var(--spacing-sm);
+    padding: 0.25rem calc(var(--spacing) * 0.5);
     background: var(--bg);
     border-radius: var(--radius);
 }
 
 .category-badge {
     position: absolute;
-    top: var(--spacing-md);
-    left: var(--spacing-md);
+    top: var(--spacing);
+    left: var(--spacing);
     background: rgba(37, 99, 235, 0.9);
     color: white;
     padding: 0.25rem 0.75rem;
@@ -620,7 +617,7 @@ header {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    padding: var(--spacing-xl);
+    padding: calc(var(--spacing) * 2);
 }
 
 .modal.active {
@@ -647,23 +644,23 @@ header {
 footer {
     background: var(--text);
     color: var(--white);
-    padding: 3rem 0 var(--spacing-md);
-    margin-top: 4rem;
+    padding: calc(var(--spacing) * 3) 0 var(--spacing);
+    margin-top: calc(var(--spacing) * 4);
 }
 
 .footer-container {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
+    gap: calc(var(--spacing) * 2);
+    margin-bottom: calc(var(--spacing) * 2);
 }
 
 .footer-section h3 {
     color: var(--white);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     font-size: 1.2rem;
 }
 
@@ -680,7 +677,7 @@ footer {
 
 .footer-bottom {
     border-top: 1px solid #4b5563;
-    padding-top: var(--spacing-md);
+    padding-top: var(--spacing);
     text-align: center;
     font-size: 0.9rem;
     color: #d1d5db;
@@ -710,10 +707,10 @@ footer {
     background: var(--bg);
     color: var(--text);
     border: 2px dashed var(--border);
-    padding: var(--spacing-xl);
+    padding: calc(var(--spacing) * 2);
     border-radius: var(--radius);
     text-align: center;
-    margin: var(--spacing-md) 0;
+    margin: var(--spacing) 0;
 }
 
 .text-center {
@@ -724,13 +721,13 @@ footer {
     color: var(--text-light);
     font-size: 1.1rem;
     text-align: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: calc(var(--spacing) * 2);
     font-style: italic;
 }
 
 .category-icon {
     font-size: 3rem;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing);
     display: block;
 }
 
@@ -742,27 +739,27 @@ footer {
 
 .view-all-container {
     text-align: center;
-    margin-top: var(--spacing-xl);
+    margin-top: calc(var(--spacing) * 2);
 }
 
 .weather-section {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: calc(var(--spacing) * 2);
 }
 
 .loading-message {
     text-align: center;
-    padding: 3rem;
+    padding: calc(var(--spacing) * 3);
     color: var(--text);
     font-style: italic;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing);
 }
 
 .video-link {
     display: inline-block;
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing);
     color: var(--primary);
     text-decoration: none;
     font-weight: 500;
@@ -777,7 +774,7 @@ footer {
 .featured-gems,
 .categories-section,
 .country-section {
-    margin-bottom: 3rem;
+    margin-bottom: calc(var(--spacing) * 3);
 }
 
 .category-nature {
@@ -808,7 +805,7 @@ footer {
     background: rgba(6, 182, 212, 0.9) !important;
 }
 
-/* LEGACY COMPATIBILITY - Inheritance based, minimal duplication */
+/* ULTRA MINIMAL COMPATIBILITY - ONE LINE PER LEGACY CLASS */
 .main-nav {
     background: var(--white);
     border-bottom: 1px solid var(--border);
@@ -818,15 +815,15 @@ footer {
 .main-nav ul {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing);
     display: flex;
     list-style: none;
-    gap: var(--spacing-xl);
+    gap: calc(var(--spacing) * 2);
 }
 
 .main-nav a {
     display: block;
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing) 0;
     text-decoration: none;
     color: var(--text);
     font-weight: 600;
@@ -860,8 +857,8 @@ footer {
 .hero-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
+    gap: calc(var(--spacing) * 2);
+    margin-top: calc(var(--spacing) * 2);
 }
 
 .attractions-grid,
@@ -869,8 +866,8 @@ footer {
 .categories-grid,
 .country-info-grid {
     display: grid;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
+    gap: calc(var(--spacing) * 1.5);
+    margin-bottom: calc(var(--spacing) * 2);
     align-items: stretch;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
@@ -892,7 +889,7 @@ footer {
 
 .card-medium {
     min-height: 180px;
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: calc(var(--spacing) * 2) var(--spacing);
     text-align: center;
     cursor: pointer;
     text-decoration: none;
@@ -915,7 +912,7 @@ footer {
 
 .card-content,
 .attraction-content {
-    padding: var(--spacing-lg);
+    padding: calc(var(--spacing) * 1.5);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -926,8 +923,8 @@ footer {
 .attraction-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
+    gap: calc(var(--spacing) * 0.5);
+    margin-bottom: var(--spacing);
     font-size: 0.9rem;
     min-height: 2rem;
     align-items: flex-start;
@@ -937,10 +934,10 @@ footer {
 .attraction-actions {
     margin-top: auto;
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing);
     align-items: center;
     justify-content: space-between;
-    padding-top: var(--spacing-md);
+    padding-top: var(--spacing);
     border-top: 1px solid var(--border);
 }
 
@@ -950,7 +947,7 @@ footer {
     background: var(--accent);
     color: var(--white);
     border: none;
-    padding: 0.75rem var(--spacing-lg);
+    padding: 0.75rem calc(var(--spacing) * 1.5);
     font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
@@ -998,7 +995,7 @@ footer {
 
     .nav a,
     .main-nav a {
-        padding: var(--spacing-md) var(--spacing-xl);
+        padding: var(--spacing) calc(var(--spacing) * 2);
     }
 
     .nav a:hover,
@@ -1018,14 +1015,14 @@ footer {
     }
 
     .hero {
-        padding: 3rem var(--spacing-lg);
+        padding: calc(var(--spacing) * 3) calc(var(--spacing) * 1.5);
         min-height: 350px;
     }
 
     .stats,
     .hero-stats {
         grid-template-columns: 1fr;
-        gap: var(--spacing-md);
+        gap: var(--spacing);
     }
 
     .stat-number {
@@ -1034,7 +1031,7 @@ footer {
 
     .weather-info {
         flex-direction: column;
-        gap: var(--spacing-md);
+        gap: var(--spacing);
     }
 
     .grid,
@@ -1042,7 +1039,7 @@ footer {
     .featured-grid,
     .categories-grid {
         grid-template-columns: 1fr;
-        gap: var(--spacing-md);
+        gap: var(--spacing);
     }
 
     .card,
@@ -1059,7 +1056,7 @@ footer {
     .content,
     .card-content,
     .attraction-content {
-        padding: var(--spacing-md);
+        padding: var(--spacing);
         min-height: 180px;
     }
 
@@ -1070,7 +1067,7 @@ footer {
     }
 
     .modal {
-        padding: var(--spacing-md);
+        padding: var(--spacing);
     }
 
     .modal-content {
@@ -1081,7 +1078,7 @@ footer {
     .card-actions,
     .attraction-actions {
         flex-direction: column;
-        gap: var(--spacing-sm);
+        gap: calc(var(--spacing) * 0.5);
     }
 
     .btn,
@@ -1093,11 +1090,11 @@ footer {
 
 @media (max-width: 480px) {
     main {
-        padding: var(--spacing-md) var(--spacing-sm);
+        padding: var(--spacing) calc(var(--spacing) * 0.5);
     }
 
     .hero {
-        padding: var(--spacing-xl) var(--spacing-md);
+        padding: calc(var(--spacing) * 2) var(--spacing);
         min-height: 300px;
     }
 
