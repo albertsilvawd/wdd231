@@ -805,14 +805,16 @@ footer {
     background: rgba(6, 182, 212, 0.9) !important;
 }
 
-/* ULTRA MINIMAL COMPATIBILITY - ONE LINE PER LEGACY CLASS */
-.main-nav {
+/* MINIMAL COMPATIBILITY - Only essential legacy classes */
+.main-nav,
+.nav {
     background: var(--white);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow);
 }
 
-.main-nav ul {
+.main-nav ul,
+.nav ul {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 var(--spacing);
@@ -821,7 +823,8 @@ footer {
     gap: calc(var(--spacing) * 2);
 }
 
-.main-nav a {
+.main-nav a,
+.nav a {
     display: block;
     padding: var(--spacing) 0;
     text-decoration: none;
@@ -832,7 +835,8 @@ footer {
     position: relative;
 }
 
-.main-nav a::before {
+.main-nav a::before,
+.nav a::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -845,16 +849,21 @@ footer {
 }
 
 .main-nav a:hover::before,
-.main-nav a.active::before {
+.main-nav a.active::before,
+.nav a:hover::before,
+.nav a.active::before {
     transform: scaleX(1);
 }
 
 .main-nav a:hover,
-.main-nav a.active {
+.main-nav a.active,
+.nav a:hover,
+.nav a.active {
     color: var(--primary);
 }
 
-.hero-stats {
+.hero-stats,
+.stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: calc(var(--spacing) * 2);
@@ -864,7 +873,8 @@ footer {
 .attractions-grid,
 .featured-grid,
 .categories-grid,
-.country-info-grid {
+.country-info-grid,
+.grid {
     display: grid;
     gap: calc(var(--spacing) * 1.5);
     margin-bottom: calc(var(--spacing) * 2);
@@ -874,7 +884,8 @@ footer {
 
 .attraction-card,
 .category-card,
-.info-card {
+.info-card,
+.card {
     background: var(--white);
     border-radius: var(--radius);
     overflow: hidden;
@@ -898,7 +909,8 @@ footer {
 }
 
 .card-image,
-.attraction-image {
+.attraction-image,
+.image {
     width: 100%;
     height: 220px;
     background: linear-gradient(135deg, var(--bg), #e2e8f0);
@@ -911,7 +923,8 @@ footer {
 }
 
 .card-content,
-.attraction-content {
+.attraction-content,
+.content {
     padding: calc(var(--spacing) * 1.5);
     flex: 1;
     display: flex;
@@ -920,7 +933,8 @@ footer {
 }
 
 .card-meta,
-.attraction-meta {
+.attraction-meta,
+.meta {
     display: flex;
     flex-wrap: wrap;
     gap: calc(var(--spacing) * 0.5);
@@ -931,7 +945,8 @@ footer {
 }
 
 .card-actions,
-.attraction-actions {
+.attraction-actions,
+.actions {
     margin-top: auto;
     display: flex;
     gap: var(--spacing);
@@ -943,7 +958,8 @@ footer {
 
 .cta-button,
 .primary-btn,
-.view-all-btn {
+.view-all-btn,
+.btn {
     background: var(--accent);
     color: var(--white);
     border: none;
