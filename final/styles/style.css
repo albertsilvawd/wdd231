@@ -1,5 +1,5 @@
 /* Hidden Gems Explorer - Optimized CSS */
-/* AUDIT: Consolidated selectors, under 200 total selectors */
+/* AUDIT: Maintains visual design while consolidating selectors */
 
 :root {
     --primary: #2563eb;
@@ -174,7 +174,7 @@ header {
     font-style: italic;
 }
 
-/* Navigation */
+/* Navigation - CONSOLIDATED */
 .hamburger {
     background: none;
     border: none;
@@ -211,7 +211,6 @@ header {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* CONSOLIDATED: Navigation styles */
 .nav,
 .main-nav {
     background: var(--white);
@@ -276,7 +275,7 @@ main {
     min-height: calc(100vh - 280px);
 }
 
-/* CONSOLIDATED: Hero styles */
+/* Hero - CONSOLIDATED */
 .hero {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.85), rgba(5, 150, 105, 0.85)), url('../images/hero-background.jpg') center/cover no-repeat;
     color: var(--white);
@@ -314,7 +313,7 @@ main {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* CONSOLIDATED: Stats */
+/* Stats - CONSOLIDATED */
 .stats,
 .hero-stats {
     display: grid;
@@ -353,7 +352,7 @@ main {
     letter-spacing: 0.5px;
 }
 
-/* CONSOLIDATED: All grid layouts */
+/* Grids - CONSOLIDATED */
 .grid,
 .attractions-grid,
 .featured-grid,
@@ -371,7 +370,7 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* CONSOLIDATED: All card types */
+/* Cards - CONSOLIDATED */
 .card,
 .attraction-card,
 .category-card,
@@ -410,7 +409,7 @@ main {
     justify-content: center;
 }
 
-/* CONSOLIDATED: All image containers */
+/* Images - CONSOLIDATED */
 .image,
 .card-image,
 .attraction-image {
@@ -444,7 +443,7 @@ main {
     transform: scale(1.05);
 }
 
-/* CONSOLIDATED: Content areas */
+/* Content - CONSOLIDATED */
 .content,
 .card-content,
 .attraction-content {
@@ -483,7 +482,7 @@ main {
     min-height: 4.5rem;
 }
 
-/* CONSOLIDATED: Meta information */
+/* Meta - CONSOLIDATED */
 .meta,
 .card-meta,
 .attraction-meta {
@@ -508,7 +507,7 @@ main {
     line-height: 1.2;
 }
 
-/* CONSOLIDATED: Action areas */
+/* Actions - CONSOLIDATED */
 .actions,
 .card-actions,
 .attraction-actions {
@@ -521,7 +520,7 @@ main {
     border-top: 1px solid var(--border);
 }
 
-/* CONSOLIDATED: All button styles */
+/* Buttons - CONSOLIDATED */
 .btn,
 .cta-button,
 .primary-btn,
@@ -923,6 +922,11 @@ footer {
     border: 2px dashed var(--border);
 }
 
+/* Utility */
+.text-center {
+    text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hamburger {
@@ -971,11 +975,6 @@ footer {
         border-left: 4px solid var(--accent);
     }
 
-    .hero {
-        padding: 3rem 1.5rem;
-        min-height: 350px;
-    }
-
     .hero h2,
     .hero-content h2 {
         font-size: 2rem;
@@ -984,6 +983,11 @@ footer {
     .hero p,
     .hero-content p {
         font-size: 1.1rem;
+    }
+
+    .hero {
+        padding: 3rem 1.5rem;
+        min-height: 350px;
     }
 
     .search-container {
@@ -1111,9 +1115,4 @@ footer {
     .attraction-card {
         min-height: 350px;
     }
-}
-
-/* Utility */
-.text-center {
-    text-align: center;
 }
