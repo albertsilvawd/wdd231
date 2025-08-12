@@ -638,7 +638,13 @@ main {
     border-radius: var(--radius);
 }
 
-/* Sections */
+/* Sections - REQUIRED CLASSES */
+.featured-gems,
+.categories-section,
+.country-section {
+    margin-bottom: 3rem;
+}
+
 .section-subtitle {
     color: var(--text-light);
     font-size: 1.1rem;
@@ -663,7 +669,23 @@ main {
     margin-top: 2rem;
 }
 
-/* Category System */
+/* Legacy Classes for Backward Compatibility */
+.attractions-grid,
+.featured-grid,
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: stretch;
+}
+
+.country-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
 .category-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
@@ -1023,21 +1045,25 @@ footer {
     text-align: center;
 }
 
-/* Legacy Classes for Backward Compatibility */
+/* Legacy Classes for Backward Compatibility - CONSOLIDATED TO REDUCE SELECTORS */
 .attractions-grid,
 .featured-grid,
-.categories-grid {
+.categories-grid,
+.country-info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
     align-items: stretch;
 }
 
+.attractions-grid,
+.featured-grid,
+.categories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
 .country-info-grid {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
 }
 
 .attraction-card,
