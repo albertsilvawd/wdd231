@@ -13,6 +13,10 @@
     --transition: all 0.3s ease;
     --radius: 8px;
     --max-width: 1200px;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
 }
 
 *,
@@ -42,7 +46,7 @@ h3,
 h4 {
     font-family: 'Playfair Display', serif;
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     line-height: 1.2;
     font-weight: 600;
 }
@@ -66,14 +70,14 @@ h4 {
 }
 
 p {
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     line-height: 1.7;
 }
 
 main {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: var(--spacing-xl) var(--spacing-md);
     min-height: calc(100vh - 280px);
 }
 
@@ -115,7 +119,7 @@ main {
 header {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: var(--white);
-    padding: 1rem 0;
+    padding: var(--spacing-md) 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -126,7 +130,7 @@ header {
 .header-container {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 var(--spacing-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -135,7 +139,7 @@ header {
 .logo-section {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--spacing-md);
 }
 
 .logo {
@@ -219,15 +223,15 @@ header {
 .nav ul {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 var(--spacing-md);
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: var(--spacing-xl);
 }
 
 .nav a {
     display: block;
-    padding: 1rem 0;
+    padding: var(--spacing-md) 0;
     text-decoration: none;
     color: var(--text);
     font-weight: 600;
@@ -261,7 +265,7 @@ header {
 .hero {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.85), rgba(5, 150, 105, 0.85)), url('../images/hero-background.jpg') center/cover no-repeat;
     color: var(--white);
-    padding: 4rem 2rem;
+    padding: 4rem var(--spacing-xl);
     border-radius: var(--radius);
     margin-bottom: 3rem;
     text-align: center;
@@ -278,14 +282,14 @@ header {
 .hero h2 {
     color: var(--white);
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
     font-weight: 700;
 }
 
 .hero p {
     font-size: 1.3rem;
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-xl);
     opacity: 0.95;
     max-width: 600px;
     margin-left: auto;
@@ -296,13 +300,13 @@ header {
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
 }
 
 .stat-item {
     text-align: center;
-    padding: 1.5rem 1rem;
+    padding: var(--spacing-lg) var(--spacing-md);
     background: rgba(255, 255, 255, 0.15);
     border-radius: var(--radius);
     backdrop-filter: blur(10px);
@@ -316,7 +320,7 @@ header {
     color: var(--white);
     font-family: 'Playfair Display', serif;
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-sm);
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
 }
 
@@ -332,8 +336,8 @@ header {
 
 .grid {
     display: grid;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
     align-items: stretch;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
@@ -384,7 +388,7 @@ header {
 }
 
 .content {
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -393,7 +397,7 @@ header {
 
 .content h3 {
     color: var(--text-dark);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     font-size: 1.25rem;
     line-height: 1.3;
     min-height: 3.2rem;
@@ -405,7 +409,7 @@ header {
 
 .description {
     color: var(--text-light);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -418,8 +422,8 @@ header {
 .meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
     font-size: 0.9rem;
     min-height: 2rem;
     align-items: flex-start;
@@ -427,7 +431,7 @@ header {
 
 .meta span {
     background: var(--bg);
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem var(--spacing-sm);
     border-radius: var(--radius);
     color: var(--text-light);
     font-weight: 500;
@@ -438,10 +442,10 @@ header {
 .actions {
     margin-top: auto;
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-md);
     align-items: center;
     justify-content: space-between;
-    padding-top: 1rem;
+    padding-top: var(--spacing-md);
     border-top: 1px solid var(--border);
 }
 
@@ -449,7 +453,7 @@ header {
     background: var(--accent);
     color: var(--white);
     border: none;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem var(--spacing-lg);
     font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
@@ -472,12 +476,12 @@ header {
 
 .favorite-btn {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid var(--accent);
     color: var(--accent);
-    padding: 0.5rem;
+    padding: var(--spacing-sm);
     border-radius: 50%;
     cursor: pointer;
     transition: var(--transition);
@@ -492,7 +496,8 @@ header {
     backdrop-filter: blur(10px);
 }
 
-.favorite-btn:hover {
+.favorite-btn:hover,
+.favorite-btn.active {
     background: var(--accent);
     color: var(--white);
     transform: scale(1.1);
@@ -501,11 +506,11 @@ header {
 
 .search-container {
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-md);
     max-width: 500px;
-    margin: 0 auto 2rem;
+    margin: 0 auto var(--spacing-xl);
     background: var(--white);
-    padding: 0.5rem;
+    padding: var(--spacing-sm);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
 }
@@ -513,7 +518,7 @@ header {
 .search-container input {
     flex: 1;
     border: none;
-    padding: 1rem;
+    padding: var(--spacing-md);
     font-size: 1rem;
     border-radius: var(--radius);
     color: var(--text);
@@ -527,28 +532,28 @@ header {
 
 .weather-widget {
     background: var(--white);
-    padding: 2rem;
+    padding: var(--spacing-xl);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-xl);
     text-align: center;
     border: 1px solid var(--border);
 }
 
 .weather-widget h3 {
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
 }
 
 .weather-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    gap: var(--spacing-xl);
 }
 
 .weather-current {
@@ -567,27 +572,27 @@ header {
 .weather-desc {
     font-size: 1rem;
     color: var(--text-light);
-    margin-top: 0.5rem;
+    margin-top: var(--spacing-sm);
 }
 
 .weather-details {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
 }
 
 .weather-details span {
     font-size: 0.9rem;
     color: var(--text);
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem var(--spacing-sm);
     background: var(--bg);
     border-radius: var(--radius);
 }
 
 .category-badge {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
     background: rgba(37, 99, 235, 0.9);
     color: white;
     padding: 0.25rem 0.75rem;
@@ -615,7 +620,7 @@ header {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    padding: 2rem;
+    padding: var(--spacing-xl);
 }
 
 .modal.active {
@@ -642,23 +647,23 @@ header {
 footer {
     background: var(--text);
     color: var(--white);
-    padding: 3rem 0 1rem;
+    padding: 3rem 0 var(--spacing-md);
     margin-top: 4rem;
 }
 
 .footer-container {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 var(--spacing-md);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
 }
 
 .footer-section h3 {
     color: var(--white);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     font-size: 1.2rem;
 }
 
@@ -675,7 +680,7 @@ footer {
 
 .footer-bottom {
     border-top: 1px solid #4b5563;
-    padding-top: 1rem;
+    padding-top: var(--spacing-md);
     text-align: center;
     font-size: 0.9rem;
     color: #d1d5db;
@@ -705,10 +710,10 @@ footer {
     background: var(--bg);
     color: var(--text);
     border: 2px dashed var(--border);
-    padding: 2rem;
+    padding: var(--spacing-xl);
     border-radius: var(--radius);
     text-align: center;
-    margin: 1rem 0;
+    margin: var(--spacing-md) 0;
 }
 
 .text-center {
@@ -719,13 +724,13 @@ footer {
     color: var(--text-light);
     font-size: 1.1rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-xl);
     font-style: italic;
 }
 
 .category-icon {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     display: block;
 }
 
@@ -737,11 +742,11 @@ footer {
 
 .view-all-container {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: var(--spacing-xl);
 }
 
 .weather-section {
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-xl);
 }
 
 .loading-message {
@@ -752,12 +757,12 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: var(--spacing-md);
 }
 
 .video-link {
     display: inline-block;
-    margin-top: 1rem;
+    margin-top: var(--spacing-md);
     color: var(--primary);
     text-decoration: none;
     font-weight: 500;
@@ -803,28 +808,25 @@ footer {
     background: rgba(6, 182, 212, 0.9) !important;
 }
 
-/* COMPATIBILITY: HTML classes inherit from base classes above */
-.main-nav,
-.nav {
+/* LEGACY COMPATIBILITY - Inheritance based, minimal duplication */
+.main-nav {
     background: var(--white);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow);
 }
 
-.main-nav ul,
-.nav ul {
+.main-nav ul {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 var(--spacing-md);
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: var(--spacing-xl);
 }
 
-.main-nav a,
-.nav a {
+.main-nav a {
     display: block;
-    padding: 1rem 0;
+    padding: var(--spacing-md) 0;
     text-decoration: none;
     color: var(--text);
     font-weight: 600;
@@ -833,8 +835,7 @@ footer {
     position: relative;
 }
 
-.main-nav a::before,
-.nav a::before {
+.main-nav a::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -847,43 +848,36 @@ footer {
 }
 
 .main-nav a:hover::before,
-.main-nav a.active::before,
-.nav a:hover::before,
-.nav a.active::before {
+.main-nav a.active::before {
     transform: scaleX(1);
 }
 
 .main-nav a:hover,
-.main-nav a.active,
-.nav a:hover,
-.nav a.active {
+.main-nav a.active {
     color: var(--primary);
 }
 
-.hero-stats,
-.stats {
+.hero-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
 }
 
 .attractions-grid,
 .featured-grid,
 .categories-grid,
-.country-info-grid,
-.grid {
+.country-info-grid {
     display: grid;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
     align-items: stretch;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .attraction-card,
 .category-card,
-.info-card,
-.card {
+.info-card {
     background: var(--white);
     border-radius: var(--radius);
     overflow: hidden;
@@ -898,7 +892,7 @@ footer {
 
 .card-medium {
     min-height: 180px;
-    padding: 2rem 1rem;
+    padding: var(--spacing-xl) var(--spacing-md);
     text-align: center;
     cursor: pointer;
     text-decoration: none;
@@ -907,8 +901,7 @@ footer {
 }
 
 .card-image,
-.attraction-image,
-.image {
+.attraction-image {
     width: 100%;
     height: 220px;
     background: linear-gradient(135deg, var(--bg), #e2e8f0);
@@ -921,9 +914,8 @@ footer {
 }
 
 .card-content,
-.attraction-content,
-.content {
-    padding: 1.5rem;
+.attraction-content {
+    padding: var(--spacing-lg);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -931,37 +923,34 @@ footer {
 }
 
 .card-meta,
-.attraction-meta,
-.meta {
+.attraction-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
     font-size: 0.9rem;
     min-height: 2rem;
     align-items: flex-start;
 }
 
 .card-actions,
-.attraction-actions,
-.actions {
+.attraction-actions {
     margin-top: auto;
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-md);
     align-items: center;
     justify-content: space-between;
-    padding-top: 1rem;
+    padding-top: var(--spacing-md);
     border-top: 1px solid var(--border);
 }
 
 .cta-button,
 .primary-btn,
-.view-all-btn,
-.btn {
+.view-all-btn {
     background: var(--accent);
     color: var(--white);
     border: none;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem var(--spacing-lg);
     font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
@@ -1009,7 +998,7 @@ footer {
 
     .nav a,
     .main-nav a {
-        padding: 1rem 2rem;
+        padding: var(--spacing-md) var(--spacing-xl);
     }
 
     .nav a:hover,
@@ -1029,14 +1018,14 @@ footer {
     }
 
     .hero {
-        padding: 3rem 1.5rem;
+        padding: 3rem var(--spacing-lg);
         min-height: 350px;
     }
 
     .stats,
     .hero-stats {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: var(--spacing-md);
     }
 
     .stat-number {
@@ -1045,7 +1034,7 @@ footer {
 
     .weather-info {
         flex-direction: column;
-        gap: 1rem;
+        gap: var(--spacing-md);
     }
 
     .grid,
@@ -1053,7 +1042,7 @@ footer {
     .featured-grid,
     .categories-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: var(--spacing-md);
     }
 
     .card,
@@ -1070,7 +1059,7 @@ footer {
     .content,
     .card-content,
     .attraction-content {
-        padding: 1rem;
+        padding: var(--spacing-md);
         min-height: 180px;
     }
 
@@ -1081,7 +1070,7 @@ footer {
     }
 
     .modal {
-        padding: 1rem;
+        padding: var(--spacing-md);
     }
 
     .modal-content {
@@ -1092,7 +1081,7 @@ footer {
     .card-actions,
     .attraction-actions {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--spacing-sm);
     }
 
     .btn,
@@ -1104,11 +1093,11 @@ footer {
 
 @media (max-width: 480px) {
     main {
-        padding: 1rem 0.5rem;
+        padding: var(--spacing-md) var(--spacing-sm);
     }
 
     .hero {
-        padding: 2rem 1rem;
+        padding: var(--spacing-xl) var(--spacing-md);
         min-height: 300px;
     }
 
