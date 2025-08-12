@@ -203,13 +203,15 @@ header {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-.nav {
+.nav,
+.main-nav {
     background: var(--white);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow);
 }
 
-.nav ul {
+.nav ul,
+.main-nav ul {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 1rem;
@@ -218,7 +220,8 @@ header {
     gap: 2rem;
 }
 
-.nav a {
+.nav a,
+.main-nav a {
     display: block;
     padding: 1rem 0;
     text-decoration: none;
@@ -229,7 +232,8 @@ header {
     position: relative;
 }
 
-.nav a::before {
+.nav a::before,
+.main-nav a::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -242,12 +246,16 @@ header {
 }
 
 .nav a:hover::before,
-.nav a.active::before {
+.nav a.active::before,
+.main-nav a:hover::before,
+.main-nav a.active::before {
     transform: scaleX(1);
 }
 
 .nav a:hover,
-.nav a.active {
+.nav a.active,
+.main-nav a:hover,
+.main-nav a.active {
     color: var(--primary);
 }
 
@@ -343,10 +351,6 @@ main {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
-.grid-sm {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
 .card,
 .attraction-card,
 .category-card,
@@ -360,24 +364,19 @@ main {
     display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 450px;
 }
 
-.card:hover,
-.attraction-card:hover,
-.category-card:hover,
-.info-card:hover {
+.card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
 
-.card-tall,
-.attraction-card {
+.card-tall {
     min-height: 450px;
 }
 
-.card-medium,
-.category-card,
-.info-card {
+.card-medium {
     min-height: 180px;
     padding: 2rem 1rem;
     text-align: center;
@@ -401,9 +400,7 @@ main {
     border-bottom: 1px solid var(--border);
 }
 
-.image img,
-.card-image img,
-.attraction-image img {
+.image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -414,9 +411,7 @@ main {
     background: var(--bg);
 }
 
-.image img:hover,
-.card-image img:hover,
-.attraction-image img:hover {
+.image img:hover {
     transform: scale(1.05);
 }
 
@@ -430,9 +425,7 @@ main {
     min-height: 200px;
 }
 
-.content h3,
-.card-content h3,
-.attraction-content h3 {
+.content h3 {
     color: var(--text-dark);
     margin-bottom: 1rem;
     font-size: 1.25rem;
@@ -444,9 +437,7 @@ main {
     overflow: hidden;
 }
 
-.description,
-.card-description,
-.attraction-description {
+.description {
     color: var(--text-light);
     margin-bottom: 1rem;
     line-height: 1.5;
@@ -470,9 +461,7 @@ main {
     align-items: flex-start;
 }
 
-.meta span,
-.card-meta span,
-.attraction-meta span {
+.meta span {
     background: var(--bg);
     padding: 0.25rem 0.5rem;
     border-radius: var(--radius);
@@ -513,22 +502,13 @@ main {
     text-align: center;
 }
 
-.btn:hover,
-.cta-button:hover,
-.primary-btn:hover,
-.view-all-btn:hover {
+.btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
 
-.primary-btn,
-.view-all-btn {
+.primary-btn {
     background: var(--primary);
-}
-
-.btn-large {
-    padding: 1rem 2rem;
-    font-size: 1rem;
 }
 
 .favorite-btn {
@@ -553,8 +533,7 @@ main {
     backdrop-filter: blur(10px);
 }
 
-.favorite-btn:hover,
-.favorite-btn.active {
+.favorite-btn:hover {
     background: var(--accent);
     color: var(--white);
     transform: scale(1.1);
@@ -585,10 +564,6 @@ main {
 .search-container input:focus {
     outline: none;
     box-shadow: 0 0 0 2px var(--primary);
-}
-
-.weather-section {
-    margin-bottom: 2rem;
 }
 
 .weather-widget {
@@ -650,42 +625,6 @@ main {
     border-radius: var(--radius);
 }
 
-.section-subtitle {
-    color: var(--text-light);
-    font-size: 1.1rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    font-style: italic;
-}
-
-.loading-message {
-    text-align: center;
-    padding: 3rem;
-    color: var(--text);
-    font-style: italic;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.view-all-container {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-.category-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    display: block;
-}
-
-.category-count {
-    color: var(--secondary);
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
 .category-badge {
     position: absolute;
     top: 1rem;
@@ -701,34 +640,6 @@ main {
     backdrop-filter: blur(10px);
     z-index: 2;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.category-nature {
-    background: rgba(16, 185, 129, 0.9) !important;
-}
-
-.category-culture {
-    background: rgba(139, 92, 246, 0.9) !important;
-}
-
-.category-architecture {
-    background: rgba(245, 158, 11, 0.9) !important;
-}
-
-.category-history {
-    background: rgba(239, 68, 68, 0.9) !important;
-}
-
-.category-entertainment {
-    background: rgba(236, 72, 153, 0.9) !important;
-}
-
-.category-food {
-    background: rgba(249, 115, 22, 0.9) !important;
-}
-
-.category-shopping {
-    background: rgba(6, 182, 212, 0.9) !important;
 }
 
 .modal {
@@ -767,20 +678,6 @@ main {
 
 .modal.active .modal-content {
     transform: scale(1);
-}
-
-.video-link {
-    display: inline-block;
-    margin-top: 1rem;
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.video-link:hover {
-    color: var(--accent);
-    text-decoration: underline;
 }
 
 footer {
@@ -845,25 +742,14 @@ footer {
     }
 }
 
-.error,
-.no-results {
-    background: #fee2e2;
-    color: var(--accent);
-    padding: 2rem;
-    border-radius: var(--radius);
-    text-align: center;
-    margin: 1rem 0;
-    border: 1px solid #fecaca;
-}
-
 .no-results {
     background: var(--bg);
     color: var(--text);
     border: 2px dashed var(--border);
-}
-
-.text-center {
+    padding: 2rem;
+    border-radius: var(--radius);
     text-align: center;
+    margin: 1rem 0;
 }
 
 .featured-gems,
@@ -872,12 +758,70 @@ footer {
     margin-bottom: 3rem;
 }
 
+.section-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.category-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.category-count {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.view-all-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.category-nature {
+    background: rgba(16, 185, 129, 0.9) !important;
+}
+
+.category-culture {
+    background: rgba(139, 92, 246, 0.9) !important;
+}
+
+.category-architecture {
+    background: rgba(245, 158, 11, 0.9) !important;
+}
+
+.category-history {
+    background: rgba(239, 68, 68, 0.9) !important;
+}
+
+.category-entertainment {
+    background: rgba(236, 72, 153, 0.9) !important;
+}
+
+.category-food {
+    background: rgba(249, 115, 22, 0.9) !important;
+}
+
+.category-shopping {
+    background: rgba(6, 182, 212, 0.9) !important;
+}
+
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
     }
 
-    .nav {
+    .nav,
+    .main-nav {
         display: none;
         position: absolute;
         top: 100%;
@@ -888,26 +832,27 @@ footer {
         z-index: 1000;
     }
 
-    .nav.active {
+    .nav.active,
+    .main-nav.active {
         display: block;
     }
 
-    .nav ul {
+    .nav ul,
+    .main-nav ul {
         flex-direction: column;
         gap: 0;
         padding: 0;
     }
 
-    .nav a {
+    .nav a,
+    .main-nav a {
         padding: 1rem 2rem;
     }
 
-    .nav a::before {
-        display: none;
-    }
-
     .nav a:hover,
-    .nav a.active {
+    .nav a.active,
+    .main-nav a:hover,
+    .main-nav a.active {
         background: var(--bg);
         border-left: 4px solid var(--accent);
     }
@@ -923,10 +868,6 @@ footer {
     .hero {
         padding: 3rem 1.5rem;
         min-height: 350px;
-    }
-
-    .search-container {
-        flex-direction: column;
     }
 
     .stats,
@@ -952,7 +893,7 @@ footer {
         gap: 1rem;
     }
 
-    .card-tall,
+    .card,
     .attraction-card {
         min-height: 400px;
     }
@@ -968,11 +909,6 @@ footer {
     .attraction-content {
         padding: 1rem;
         min-height: 180px;
-    }
-
-    .category-badge {
-        font-size: 0.7rem;
-        padding: 0.2rem 0.5rem;
     }
 
     .favorite-btn {
@@ -1039,13 +975,11 @@ footer {
         font-size: 1.8rem;
     }
 
-    .card-medium,
-    .category-card,
-    .info-card {
+    .card-medium {
         min-height: 150px;
     }
 
-    .card-tall,
+    .card,
     .attraction-card {
         min-height: 350px;
     }
