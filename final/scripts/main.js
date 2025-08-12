@@ -1,6 +1,6 @@
 // Hidden Gems Explorer - Main JavaScript Module
 // Albert Silva - WDD 231 Final Project
-// PRODUCTION VERSION - OPTIMIZED FOR CSS CLASSES
+// ULTRA OPTIMIZED - AUDIT COMPLIANT
 
 // Global state management
 window.appState = {
@@ -331,7 +331,7 @@ async function displayFeaturedAttractions() {
             return;
         }
 
-        // First image without lazy loading, others with lazy loading
+        // CRITICAL: First image without lazy loading, others with lazy loading
         container.innerHTML = featured.map((attraction, index) =>
             createAttractionHTML(attraction, index > 0)
         ).join('');
@@ -367,9 +367,9 @@ async function displayAttractions(attractions = window.appState.filteredAttracti
             return;
         }
 
-        // All images with lazy loading (below the fold)
+        // CRITICAL: ALL images with lazy loading (below the fold)
         container.innerHTML = attractions.map(attraction =>
-            createAttractionHTML(attraction, true)
+            createAttractionHTML(attraction, true) // ALL with lazy loading
         ).join('');
     } catch (error) {
         container.innerHTML = '<p class="error-message">Failed to load attractions.</p>';
@@ -379,14 +379,18 @@ async function displayAttractions(attractions = window.appState.filteredAttracti
 function createAttractionHTML(attraction, useLazyLoading = true) {
     const isFavorite = window.appState.favorites.includes(attraction.id);
     const imageUrl = attraction.image || '';
-    const lazyAttribute = useLazyLoading ? 'loading="lazy"' : '';
+
+    // CRITICAL: Proper lazy loading implementation
+    const lazyAttributes = useLazyLoading ?
+        'loading="lazy" data-lazy="true"' :
+        'loading="eager"';
 
     return `
-        <div class="attraction-card" data-id="${attraction.id}">
-            <div class="attraction-image">
+        <div class="card card-tall attraction-card" data-id="${attraction.id}">
+            <div class="image attraction-image">
                 <img src="${imageUrl}" 
                      alt="${attraction.name}"
-                     ${lazyAttribute}
+                     ${lazyAttributes}
                      onerror="handleImageError(this, '${attraction.name}', '${attraction.category}')"
                      onload="handleImageLoad(this)"
                      style="opacity: 0; transition: opacity 0.3s ease;">
@@ -400,16 +404,16 @@ function createAttractionHTML(attraction, useLazyLoading = true) {
                     ${isFavorite ? '❤️' : '🤍'}
                 </button>
             </div>
-            <div class="attraction-content">
+            <div class="content attraction-content">
                 <h3>${attraction.name}</h3>
-                <p class="attraction-description">${attraction.description}</p>
-                <div class="attraction-meta">
+                <p class="description attraction-description">${attraction.description}</p>
+                <div class="meta attraction-meta">
                     <span class="location">📍 ${attraction.location || attraction.neighborhood}</span>
                     <span class="cost">💰 ${attraction.cost}</span>
                     <span class="accessibility">♿ ${attraction.accessibility}</span>
                     <span class="rating">⭐ ${attraction.rating || 4.5}</span>
                 </div>
-                <div class="attraction-actions">
+                <div class="actions attraction-actions">
                     <button class="btn btn-primary details-btn" onclick="openModal(${attraction.id})">
                         View Details
                     </button>
@@ -460,7 +464,7 @@ function handleImageLoad(img) {
     img.style.opacity = '1';
     img.classList.add('loaded');
 
-    const card = img.closest('.attraction-card');
+    const card = img.closest('.card, .attraction-card');
     if (card) {
         card.classList.remove('card-loading');
     }
@@ -473,7 +477,7 @@ function handleImageError(img, attractionName, category) {
     img.style.opacity = '1';
     img.classList.add('placeholder-image');
 
-    const card = img.closest('.attraction-card');
+    const card = img.closest('.card, .attraction-card');
     if (card) {
         card.classList.remove('card-loading');
         card.classList.add('placeholder-card');
@@ -493,28 +497,70 @@ function preloadCriticalImages() {
     });
 }
 
+// ENHANCED LAZY LOADING with IntersectionObserver
 function initializeLazyLoading() {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                    }
-                    img.classList.remove('lazy');
-                    imageObserver.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: '50px 0px',
-            threshold: 0.01
-        });
+    // Modern browsers with native lazy loading
+    if ('loading' in HTMLImageElement.prototype) {
+        // Native lazy loading is supported, add fallback observer for better control
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
 
-        // Observe all images with loading="lazy"
-        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-            imageObserver.observe(img);
-        });
+                        // Ensure lazy images are processed
+                        if (img.dataset.lazy) {
+                            img.classList.add('lazy-loading');
+
+                            // Add loaded event listener
+                            img.addEventListener('load', () => {
+                                img.classList.remove('lazy-loading');
+                                img.classList.add('lazy-loaded');
+                            });
+                        }
+
+                        imageObserver.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.01
+            });
+
+            // Observe all lazy images
+            const lazyImages = document.querySelectorAll('img[loading="lazy"], img[data-lazy]');
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    } else {
+        // Fallback for older browsers
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.01
+            });
+
+            // Convert loading="lazy" to data-src for older browsers
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                img.dataset.src = img.src;
+                img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB2aWV3Qm94PSIwIDAgMSAxIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNGM0Y0RjYiLz48L3N2Zz4=';
+                img.classList.add('lazy');
+                imageObserver.observe(img);
+            });
+        }
     }
 }
 
@@ -631,7 +677,7 @@ function debounce(func, wait) {
 
 function initializeNavigation() {
     const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.main-nav');
+    const navMenu = document.querySelector('.nav, .main-nav');
 
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
@@ -639,7 +685,7 @@ function initializeNavigation() {
             navMenu.classList.toggle('active');
         });
 
-        document.querySelectorAll('.main-nav a').forEach(link => {
+        document.querySelectorAll('.nav a, .main-nav a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
@@ -753,6 +799,7 @@ function openModal(attractionId) {
                 <img src="${imageUrl}" 
                      alt="${attraction.name}" 
                      class="modal-image"
+                     loading="eager"
                      onerror="handleImageError(this, '${attraction.name}', '${attraction.category}')"
                      onload="handleImageLoad(this)"
                      style="opacity: 0; transition: opacity 0.3s ease;">
@@ -761,7 +808,7 @@ function openModal(attractionId) {
                 </div>
             </div>
             <div class="modal-info">
-                <h2>${attraction.name}</h2>
+                <h2 id="modal-heading">${attraction.name}</h2>
                 <p class="modal-description">${attraction.description}</p>
                 <div class="modal-details">
                     <div class="detail-item">
@@ -858,7 +905,7 @@ function displayCategories() {
     };
 
     container.innerHTML = Object.entries(categories).map(([category, count]) => `
-        <div class="category-card" onclick="filterByCategory('${category}')">
+        <div class="card card-medium category-card" onclick="filterByCategory('${category}')">
             <div class="category-icon">${categoryIcons[category] || '📍'}</div>
             <h3>${category}</h3>
             <p class="category-count">${count} locations</p>
@@ -884,19 +931,19 @@ function displayCountryInfo() {
 
     try {
         container.innerHTML = `
-            <div class="info-card">
+            <div class="card card-medium info-card">
                 <h4>🗺️ Geography</h4>
                 <p>Located in South America, Buenos Aires is the capital of Argentina.</p>
             </div>
-            <div class="info-card">
+            <div class="card card-medium info-card">
                 <h4>🕒 Timezone</h4>
                 <p>GMT-3 (Argentina Time)</p>
             </div>
-            <div class="info-card">
+            <div class="card card-medium info-card">
                 <h4>💰 Currency</h4>
                 <p>Argentine Peso (ARS)</p>
             </div>
-            <div class="info-card">
+            <div class="card card-medium info-card">
                 <h4>🗣️ Language</h4>
                 <p>Spanish</p>
             </div>
