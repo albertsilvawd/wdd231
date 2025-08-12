@@ -1,11 +1,19 @@
 /**
  * Hidden Gems Explorer - Attractions Page JavaScript
  * Albert Silva - WDD 231 Final Project
- * OPTIMIZED FOR 100% AUDIT COMPLIANCE
+ * PRODUCTION VERSION - NO CONSOLE STATEMENTS
  */
 
 // Import main.js functionality for shared features
 import './main.js';
+
+// Production logging system (silent in production)
+const isDevelopment = false;
+const logger = {
+    log: isDevelopment ? console.log : () => { },
+    warn: isDevelopment ? console.warn : () => { },
+    error: isDevelopment ? console.error : () => { }
+};
 
 // The main.js already handles the attractions page initialization
 // This file serves as the entry point and can add page-specific enhancements
@@ -122,7 +130,7 @@ function initAdvancedFilters() {
  */
 function addQuickFilterButtons() {
     try {
-        const filterSection = document.querySelector('.filter-section .filter-container') ||
+        const filterSection = document.querySelector('.search-filter .filter-row') ||
             document.querySelector('.filters-container');
         if (!filterSection) return;
 
@@ -179,7 +187,7 @@ function applyQuickFilter(filter) {
                 break;
             case 'accessible':
                 if (accessibilityFilter) {
-                    accessibilityFilter.value = 'High' || 'Fully Accessible';
+                    accessibilityFilter.value = 'High';
                 }
                 break;
             case 'nature':
@@ -365,8 +373,210 @@ function showFallbackMessage() {
     }
 }
 
+/**
+ * Enhanced filter management with suggestions
+ */
+function initFilterEnhancements() {
+    try {
+        // Add filter reset confirmation for multiple active filters
+        const clearButton = document.getElementById('clearFilters');
+        if (clearButton) {
+            clearButton.addEventListener('click', (e) => {
+                const activeFilters = getActiveFilters();
+                if (activeFilters.length > 2) {
+                    e.preventDefault();
+                    if (confirm(`Clear all ${activeFilters.length} active filters?`)) {
+                        if (typeof window.clearAllFilters === 'function') {
+                            window.clearAllFilters();
+                        }
+                    }
+                }
+            });
+        }
+
+        // Add filter combination suggestions
+        addFilterSuggestions();
+    } catch (error) {
+        // Filter enhancements failed - non-critical
+    }
+}
+
+/**
+ * Get currently active filters
+ */
+function getActiveFilters() {
+    const activeFilters = [];
+
+    try {
+        const categoryFilter = document.getElementById('categoryFilter');
+        const costFilter = document.getElementById('costFilter');
+        const accessibilityFilter = document.getElementById('accessibilityFilter');
+        const searchInput = document.getElementById('searchInput');
+
+        if (categoryFilter && categoryFilter.value !== 'all') {
+            activeFilters.push('category');
+        }
+        if (costFilter && costFilter.value !== 'all') {
+            activeFilters.push('cost');
+        }
+        if (accessibilityFilter && accessibilityFilter.value !== 'all') {
+            activeFilters.push('accessibility');
+        }
+        if (searchInput && searchInput.value.trim()) {
+            activeFilters.push('search');
+        }
+    } catch (error) {
+        // Return empty array if detection fails
+    }
+
+    return activeFilters;
+}
+
+/**
+ * Add intelligent filter suggestions
+ */
+function addFilterSuggestions() {
+    try {
+        const suggestionContainer = document.createElement('div');
+        suggestionContainer.className = 'filter-suggestions';
+        suggestionContainer.style.cssText = `
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+            color: #0369a1;
+            display: none;
+        `;
+
+        const filtersSection = document.querySelector('.search-filter');
+        if (filtersSection) {
+            filtersSection.appendChild(suggestionContainer);
+        }
+
+        // Show suggestions based on filter combinations
+        function showSuggestion(message) {
+            suggestionContainer.textContent = message;
+            suggestionContainer.style.display = 'block';
+
+            setTimeout(() => {
+                suggestionContainer.style.display = 'none';
+            }, 5000);
+        }
+
+        // Monitor filter changes for suggestions
+        const categoryFilter = document.getElementById('categoryFilter');
+        const costFilter = document.getElementById('costFilter');
+
+        if (categoryFilter) {
+            categoryFilter.addEventListener('change', (e) => {
+                const category = e.target.value;
+                if (category === 'Nature' && (!costFilter || costFilter.value === 'all')) {
+                    showSuggestion('💡 Tip: Most nature attractions are free! Try filtering by "Free" cost.');
+                } else if (category === 'Entertainment' && (!costFilter || costFilter.value === 'all')) {
+                    showSuggestion('💡 Tip: Entertainment venues often have entrance fees. Check cost filters.');
+                }
+            });
+        }
+    } catch (error) {
+        // Suggestions failed - non-critical
+    }
+}
+
+/**
+ * Initialize performance monitoring for attractions page
+ */
+function initPerformanceMonitoring() {
+    try {
+        // Monitor page load performance
+        window.addEventListener('load', () => {
+            const loadTime = performance.now();
+
+            // Store performance data
+            const perfData = {
+                page: 'attractions',
+                loadTime: Math.round(loadTime),
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent.substring(0, 50)
+            };
+
+            // Store in localStorage for analytics
+            try {
+                const perfHistory = JSON.parse(localStorage.getItem('page_performance') || '[]');
+                perfHistory.push(perfData);
+
+                // Keep only last 20 entries
+                if (perfHistory.length > 20) {
+                    perfHistory.splice(0, perfHistory.length - 20);
+                }
+
+                localStorage.setItem('page_performance', JSON.stringify(perfHistory));
+            } catch (storageError) {
+                // Performance monitoring failed - non-critical
+            }
+        });
+
+        // Monitor filter performance
+        let filterStartTime;
+        const categoryFilter = document.getElementById('categoryFilter');
+        const costFilter = document.getElementById('costFilter');
+
+        [categoryFilter, costFilter].forEach(filter => {
+            if (filter) {
+                filter.addEventListener('change', () => {
+                    filterStartTime = performance.now();
+                });
+            }
+        });
+
+        // Monitor attractions grid updates
+        const observer = new MutationObserver(() => {
+            if (filterStartTime) {
+                const filterTime = performance.now() - filterStartTime;
+
+                // If filtering takes too long, could suggest performance improvements
+                if (filterTime > 100) {
+                    // Store slow filter performance for optimization
+                    try {
+                        const slowFilters = JSON.parse(localStorage.getItem('slow_filters') || '[]');
+                        slowFilters.push({
+                            time: Math.round(filterTime),
+                            timestamp: new Date().toISOString()
+                        });
+
+                        if (slowFilters.length > 10) {
+                            slowFilters.splice(0, slowFilters.length - 10);
+                        }
+
+                        localStorage.setItem('slow_filters', JSON.stringify(slowFilters));
+                    } catch (error) {
+                        // Performance tracking failed - non-critical
+                    }
+                }
+
+                filterStartTime = null;
+            }
+        });
+
+        const attractionsGrid = document.getElementById('attractionsGrid');
+        if (attractionsGrid) {
+            observer.observe(attractionsGrid, { childList: true });
+        }
+    } catch (error) {
+        // Performance monitoring failed - non-critical
+    }
+}
+
+// Initialize all enhancements
+document.addEventListener('DOMContentLoaded', () => {
+    initFilterEnhancements();
+    initPerformanceMonitoring();
+});
+
 // Export any functions that might be needed by other modules
 export {
     initAttractionsPageEnhancements,
-    applyQuickFilter
+    applyQuickFilter,
+    getActiveFilters
 };

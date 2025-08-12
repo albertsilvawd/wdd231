@@ -280,13 +280,13 @@ main {
 }
 
 /* =============================================== */
-/* HERO SECTION - FIXED BACKGROUND               */
+/* HERO SECTION - FIXED BACKGROUND & VISIBILITY  */
 /* =============================================== */
 .hero {
     background: linear-gradient(135deg,
-            rgba(37, 99, 235, 0.9),
-            rgba(5, 150, 105, 0.9)),
-        url('../images/hero-background.jpg') center/cover;
+            rgba(37, 99, 235, 0.85),
+            rgba(5, 150, 105, 0.85)),
+        url('../images/hero-background.jpg') center/cover fixed;
     color: var(--white);
     padding: 4rem 2rem;
     border-radius: var(--radius-lg);
@@ -313,7 +313,7 @@ main {
     color: var(--white);
     font-size: 3rem;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
     font-weight: 700;
 }
 
@@ -324,6 +324,51 @@ main {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* =============================================== */
+/* HERO STATS - FIXED VISIBILITY                 */
+/* =============================================== */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* FIXED: Highly visible hero stats numbers */
+.stat-item .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    /* STRONG SHADOW FOR MAXIMUM CONTRAST */
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
+    /* SUBTLE OUTLINE FOR BETTER READABILITY */
+}
+
+.stat-item .stat-label {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    font-size: 1rem;
+    display: block;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* =============================================== */
@@ -360,19 +405,22 @@ main {
     box-shadow: var(--shadow-hover);
 }
 
-/* FIXED: Image containers with uniform height */
+/* =============================================== */
+/* FIXED: STANDARDIZED IMAGE CONTAINERS          */
+/* =============================================== */
 .card-image,
 .gem-image,
 .attraction-image {
     width: 100%;
-    height: 200px;
-    /* FIXED HEIGHT FOR ALL IMAGES */
-    background: var(--light-gray);
+    height: 220px;
+    /* STANDARDIZED HEIGHT FOR ALL IMAGES */
+    background: linear-gradient(135deg, var(--light-gray), #e2e8f0);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid var(--border-gray);
 }
 
 .card-image img,
@@ -381,10 +429,12 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* MAINTAINS ASPECT RATIO */
+    /* MAINTAINS ASPECT RATIO WHILE FILLING CONTAINER */
     object-position: center;
+    /* CENTERS THE IMAGE */
     transition: var(--transition);
     display: block;
+    border: none;
 }
 
 .card-image img:hover,
@@ -403,7 +453,7 @@ img[loading="lazy"].loaded {
     opacity: 1;
 }
 
-/* Image fallback placeholder */
+/* Image fallback placeholder with icon */
 .image-fallback {
     display: flex;
     flex-direction: column;
@@ -413,9 +463,25 @@ img[loading="lazy"].loaded {
     color: var(--primary-blue);
     background: linear-gradient(135deg, var(--light-gray), #e2e8f0);
     font-size: 3rem;
+    opacity: 0.6;
 }
 
-/* Card Content */
+.image-fallback::before {
+    content: "🏞️";
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+}
+
+.image-fallback::after {
+    content: "Image Loading...";
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+}
+
+/* =============================================== */
+/* CARD CONTENT - IMPROVED LAYOUT                */
+/* =============================================== */
 .card-content,
 .gem-content,
 .attraction-content {
@@ -423,6 +489,8 @@ img[loading="lazy"].loaded {
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-height: 200px;
+    /* ENSURES CONSISTENT CARD HEIGHT */
 }
 
 .card-content h3,
@@ -432,6 +500,12 @@ img[loading="lazy"].loaded {
     margin-bottom: 1rem;
     font-size: 1.25rem;
     line-height: 1.3;
+    min-height: 2.6rem;
+    /* RESERVES SPACE FOR 2 LINES */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* FIXED: Description with consistent height */
@@ -446,9 +520,11 @@ img[loading="lazy"].loaded {
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex: 1;
+    min-height: 4.5rem;
+    /* RESERVES SPACE FOR 3 LINES */
 }
 
-/* REMOVED: Problematic green category badge */
+/* Meta information */
 .card-meta,
 .gem-meta,
 .attraction-meta {
@@ -457,6 +533,9 @@ img[loading="lazy"].loaded {
     gap: 0.5rem;
     margin-bottom: 1rem;
     font-size: 0.9rem;
+    min-height: 2rem;
+    /* RESERVES SPACE FOR META TAGS */
+    align-items: flex-start;
 }
 
 .card-meta span,
@@ -467,6 +546,8 @@ img[loading="lazy"].loaded {
     border-radius: var(--radius);
     color: var(--text-gray);
     font-weight: 500;
+    font-size: 0.8rem;
+    line-height: 1.2;
 }
 
 /* FIXED: Card actions alignment */
@@ -477,6 +558,9 @@ img[loading="lazy"].loaded {
     display: flex;
     gap: 1rem;
     align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-gray);
 }
 
 /* =============================================== */
@@ -488,8 +572,8 @@ img[loading="lazy"].loaded {
     background: var(--discovery-red);
     color: var(--white);
     border: none;
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     border-radius: var(--radius);
@@ -498,6 +582,8 @@ img[loading="lazy"].loaded {
     text-decoration: none;
     display: inline-block;
     text-align: center;
+    flex: 1;
+    max-width: 120px;
 }
 
 .btn:hover,
@@ -517,6 +603,15 @@ img[loading="lazy"].loaded {
 .btn-secondary:hover {
     background: var(--primary-blue);
     color: var(--white);
+}
+
+/* Hero CTA Button */
+.hero .cta-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Favorite Button */
@@ -675,6 +770,10 @@ img[loading="lazy"].loaded {
     text-decoration: none;
     color: inherit;
     border: 1px solid var(--border-gray);
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .category-card:hover {
@@ -691,6 +790,7 @@ img[loading="lazy"].loaded {
 .category-card h3 {
     color: var(--primary-blue);
     margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .category-count {
@@ -716,6 +816,10 @@ img[loading="lazy"].loaded {
     box-shadow: var(--shadow);
     transition: var(--transition);
     border: 1px solid var(--border-gray);
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .stat-card:hover {
@@ -738,25 +842,6 @@ img[loading="lazy"].loaded {
     font-size: 1.1rem;
     display: block;
     margin-bottom: 1rem;
-}
-
-/* =============================================== */
-/* HERO STATS                                     */
-/* =============================================== */
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.stat-item {
-    text-align: center;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* =============================================== */
@@ -1021,6 +1106,11 @@ footer {
         font-size: 1.1rem;
     }
 
+    .hero {
+        padding: 3rem 1.5rem;
+        min-height: 350px;
+    }
+
     .search-container {
         flex-direction: column;
     }
@@ -1028,6 +1118,11 @@ footer {
     .hero-stats {
         grid-template-columns: 1fr;
         gap: 1rem;
+    }
+
+    .stat-item .stat-number {
+        font-size: 2rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .weather-info {
@@ -1054,6 +1149,19 @@ footer {
     .modal-content {
         max-height: 95vh;
     }
+
+    .card-actions,
+    .gem-actions,
+    .attraction-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .btn,
+    .primary-btn {
+        max-width: none;
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1063,6 +1171,7 @@ footer {
 
     .hero {
         padding: 2rem 1rem;
+        min-height: 300px;
     }
 
     .hero-content h2 {
@@ -1085,6 +1194,16 @@ footer {
     .gem-content,
     .attraction-content {
         padding: 1rem;
+        min-height: 180px;
+    }
+
+    .stat-item .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .category-card,
+    .stat-card {
+        min-height: 150px;
     }
 }
 
@@ -1114,6 +1233,11 @@ footer {
     .category-card,
     .stat-card {
         border: 2px solid #000000;
+    }
+
+    .stat-item .stat-number {
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 1.0);
+        -webkit-text-stroke: 2px rgba(0, 0, 0, 0.5);
     }
 }
 
@@ -1176,6 +1300,47 @@ footer {
     }
 }
 
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Card loading animation */
+.card-loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Hero stats animation */
+.stat-item .stat-number {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Image hover effect enhancement */
+.card-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.card-image:hover::after {
+    transform: translateX(100%);
+}
+
 /* =============================================== */
 /* CUSTOM SCROLLBAR                               */
 /* =============================================== */
@@ -1195,4 +1360,23 @@ footer {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--neutral-gray);
+}
+
+/* =============================================== */
+/* DARK MODE SUPPORT (OPTIONAL)                   */
+/* =============================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-dark: #f9fafb;
+        --text-gray: #d1d5db;
+        --light-gray: #1f2937;
+        --border-gray: #374151;
+        --white: #111827;
+        --neutral-gray: #f9fafb;
+    }
+
+    .stat-item .stat-number {
+        color: var(--white);
+        text-shadow: 3px 3px 6px rgba(255, 255, 255, 0.3);
+    }
 }

@@ -1,13 +1,15 @@
 /**
  * Hidden Gems Explorer - Main JavaScript Module
  * Albert Silva - WDD 231 Final Project
- * OPTIMIZED FOR 100% AUDIT COMPLIANCE
  */
 
-// ES Module imports (if modules directory exists)
-// import { APIService } from './modules/api.js';
-// import { StorageService } from './modules/storage.js';
-// import { UIHelpers } from './modules/ui-helpers.js';
+// Production logging system (silent in production)
+const isDevelopment = false; // Set to true only for development
+const logger = {
+    log: isDevelopment ? console.log : () => { },
+    warn: isDevelopment ? console.warn : () => { },
+    error: isDevelopment ? console.error : () => { }
+};
 
 // Global application state
 window.appState = {
@@ -223,7 +225,7 @@ function getFallbackAttractions() {
             location: "Caballito, Buenos Aires",
             cost: "Low",
             accessibility: "Medium",
-            image: "./images/attractions/rooftop-beehive-garden.webp",
+            image: "./images/attractions/rooftop-beehive-gardens.webp",
             rating: 4.5,
             neighborhood: "Caballito",
             openHours: "9:00 AM - 5:00 PM"
@@ -262,7 +264,7 @@ function getFallbackAttractions() {
             location: "Villa Crespo, Buenos Aires",
             cost: "Free",
             accessibility: "High",
-            image: "./images/attractions/vintage-record-shop-basement.webp",
+            image: "./images/attractions/rooftop-bookstore-gardens.webp",
             rating: 4.8,
             neighborhood: "Villa Crespo",
             openHours: "8:00 AM - 10:00 PM"
@@ -534,6 +536,8 @@ function createAttractionHTML(attraction) {
                      alt="${attraction.name}"
                      loading="lazy"
                      src="${placeholderUrl}"
+                     width="400"
+                     height="200"
                      onerror="this.onerror=null; this.src='${placeholderUrl}';"
                      class="lazy-image">
                 <div class="category-badge category-${attraction.category.toLowerCase()}">
@@ -949,6 +953,8 @@ function openModal(attractionId) {
                 <img src="${imageUrl}" 
                      alt="${attraction.name}" 
                      class="modal-image"
+                     width="600"
+                     height="300"
                      onerror="this.onerror=null; this.src='${createPlaceholderImage(attraction.name, attraction.category)}';">
                 <div class="modal-info">
                     <h2>${attraction.name}</h2>

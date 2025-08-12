@@ -60,7 +60,7 @@
             "location": "Villa Crespo, Buenos Aires",
             "cost": "Medium",
             "accessibility": "Medium",
-            "image": "images/attractions/hidden-speakeasy-cave.webp",
+            "image": "images/attractions/vintage-record-shop-basement.webp",
             "rating": 4.4,
             "neighborhood": "Villa Crespo",
             "openHours": "7:00 PM - 1:00 AM"
@@ -112,7 +112,7 @@
             "location": "Caballito, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "images/attractions/vintage-record-shop-basement.webp",
+            "image": "images/attractions/rooftop-beehive-garden.webp",
             "rating": 4.5,
             "neighborhood": "Caballito",
             "openHours": "9:00 AM - 5:00 PM"
@@ -145,19 +145,6 @@
         },
         {
             "id": 12,
-            "name": "Rooftop Bookstore Gardens",
-            "category": "Culture",
-            "description": "Urban bookstore project with outdoor garden, reading areas, and book exchange programs for the community.",
-            "location": "Villa Crespo, Buenos Aires",
-            "cost": "Free",
-            "accessibility": "High",
-            "image": "images/attractions/vintage-record-shop-basement.webp",
-            "rating": 4.8,
-            "neighborhood": "Villa Crespo",
-            "openHours": "8:00 AM - 10:00 PM"
-        },
-        {
-            "id": 13,
             "name": "Telescope Observatory Deck",
             "category": "Entertainment",
             "description": "Community-run telescope facility offering stargazing sessions with knowledgeable volunteers and modern equipment.",
@@ -170,7 +157,7 @@
             "openHours": "8:00 PM - 12:00 AM"
         },
         {
-            "id": 14,
+            "id": 13,
             "name": "Ancient Tree Grove",
             "category": "Nature",
             "description": "Collection of 200+ year old trees in an urban setting. Features educational signage about urban forest conservation.",
@@ -183,7 +170,7 @@
             "openHours": "6:00 AM - 8:00 PM"
         },
         {
-            "id": 15,
+            "id": 14,
             "name": "Graffiti Hall of Fame",
             "category": "Culture",
             "description": "Legal graffiti wall showcasing rotating collection of local and international street artists' work.",
@@ -196,7 +183,7 @@
             "openHours": "24/7"
         },
         {
-            "id": 16,
+            "id": 15,
             "name": "Meditation Labyrinth",
             "category": "Nature",
             "description": "Stone labyrinth for walking meditation in quiet garden setting. Includes benches and information about mindfulness practices.",
@@ -207,6 +194,19 @@
             "rating": 4.3,
             "neighborhood": "Belgrano",
             "openHours": "6:00 AM - 10:00 PM"
+        },
+        {
+            "id": 16,
+            "name": "Hidden Waterfall Vista",
+            "category": "Nature",
+            "description": "Secret viewpoint overlooking a hidden waterfall in the urban landscape. Perfect for photography and peaceful reflection.",
+            "location": "Núñez, Buenos Aires",
+            "cost": "Free",
+            "accessibility": "Medium",
+            "image": "images/attractions/hidden-speakeasy-cave.webp",
+            "rating": 4.8,
+            "neighborhood": "Núñez",
+            "openHours": "Dawn to Dusk"
         }
     ]
 }

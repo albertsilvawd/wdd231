@@ -4,12 +4,16 @@
 // Import main.js functionality for shared features
 import './main.js';
 
-console.log('About page module loaded');
+// Production logging system (silent in production)
+const isDevelopment = false;
+const logger = {
+    log: isDevelopment ? console.log : () => { },
+    warn: isDevelopment ? console.warn : () => { },
+    error: isDevelopment ? console.error : () => { }
+};
 
 // About page specific enhancements
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('About page specific initialization...');
-
     initAboutPageEnhancements();
 });
 
@@ -28,7 +32,7 @@ function initAboutPageEnhancements() {
 }
 
 function initEnhancedFormValidation() {
-    const form = document.getElementById('contactForm');
+    const form = document.getElementById('gemSubmissionForm');
     if (!form) return;
 
     // Real-time validation
@@ -40,16 +44,14 @@ function initEnhancedFormValidation() {
 
     // Enhanced validation rules
     const validationRules = {
-        name: {
+        gemName: {
             required: true,
-            minLength: 2,
-            maxLength: 100,
-            pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
+            minLength: 3,
+            maxLength: 200,
             messages: {
-                required: 'Name is required',
-                minLength: 'Name must be at least 2 characters',
-                maxLength: 'Name cannot exceed 100 characters',
-                pattern: 'Name can only contain letters and spaces'
+                required: 'Hidden gem name is required',
+                minLength: 'Name must be at least 3 characters',
+                maxLength: 'Name cannot exceed 200 characters'
             }
         },
         email: {
@@ -60,16 +62,6 @@ function initEnhancedFormValidation() {
                 required: 'Email address is required',
                 pattern: 'Please enter a valid email address',
                 maxLength: 'Email address is too long'
-            }
-        },
-        gemName: {
-            required: true,
-            minLength: 3,
-            maxLength: 200,
-            messages: {
-                required: 'Hidden gem name is required',
-                minLength: 'Name must be at least 3 characters',
-                maxLength: 'Name cannot exceed 200 characters'
             }
         },
         category: {
@@ -98,7 +90,7 @@ function initEnhancedFormValidation() {
                 maxLength: 'Description cannot exceed 1000 characters'
             }
         },
-        tips: {
+        visitorTips: {
             maxLength: 500,
             messages: {
                 maxLength: 'Tips cannot exceed 500 characters'
@@ -195,10 +187,10 @@ function initEnhancedFormValidation() {
 }
 
 function initFormAutoSave() {
-    const form = document.getElementById('contactForm');
+    const form = document.getElementById('gemSubmissionForm');
     if (!form) return;
 
-    const AUTOSAVE_KEY = 'form_autosave_contact';
+    const AUTOSAVE_KEY = 'form_autosave_about';
 
     // Load saved data
     function loadSavedData() {
@@ -212,10 +204,9 @@ function initFormAutoSave() {
                         field.value = value;
                     }
                 });
-                console.log('📋 Loaded auto-saved form data');
             }
         } catch (error) {
-            console.error('Error loading auto-saved data:', error);
+            // Silent fallback - auto-save feature disabled
         }
     }
 
@@ -233,7 +224,7 @@ function initFormAutoSave() {
 
             localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(data));
         } catch (error) {
-            console.error('Error auto-saving form data:', error);
+            // Silent fallback - auto-save feature disabled
         }
     }
 
@@ -241,9 +232,8 @@ function initFormAutoSave() {
     function clearSavedData() {
         try {
             localStorage.removeItem(AUTOSAVE_KEY);
-            console.log('🧹 Cleared auto-saved form data');
         } catch (error) {
-            console.error('Error clearing auto-saved data:', error);
+            // Silent fallback
         }
     }
 
@@ -342,7 +332,7 @@ function initCharacterCounters() {
 }
 
 function initFormAnalytics() {
-    const form = document.getElementById('contactForm');
+    const form = document.getElementById('gemSubmissionForm');
     if (!form) return;
 
     let startTime = Date.now();
@@ -373,7 +363,7 @@ function initFormAnalytics() {
         const totalTime = Date.now() - startTime;
 
         const analytics = {
-            formId: 'contact',
+            formId: 'gemSubmission',
             totalTime,
             fieldInteractions,
             timestamp: new Date().toISOString()
@@ -390,16 +380,13 @@ function initFormAnalytics() {
             }
 
             localStorage.setItem('form_analytics', JSON.stringify(formAnalytics));
-            console.log('📊 Form analytics recorded:', analytics);
         } catch (error) {
-            console.error('Error storing form analytics:', error);
+            // Silent fallback - analytics disabled
         }
     });
 }
 
 function submitForm(form) {
-    console.log('📝 Submitting contact form...');
-
     // Show loading state
     const submitBtn = form.querySelector('.submit-btn');
     const originalText = submitBtn.textContent;
@@ -409,14 +396,14 @@ function submitForm(form) {
     // Collect form data
     const formData = new FormData(form);
     const submissionData = {
-        name: formData.get('name'),
-        email: formData.get('email'),
         gemName: formData.get('gemName'),
+        email: formData.get('email'),
         category: formData.get('category'),
         location: formData.get('location'),
         description: formData.get('description'),
         accessibility: formData.get('accessibility') || 'Not specified',
-        tips: formData.get('tips') || 'None provided',
+        cost: formData.get('cost') || 'Not specified',
+        visitorTips: formData.get('visitorTips') || 'None provided',
         timestamp: new Date().toISOString(),
         id: Date.now()
     };
@@ -433,16 +420,13 @@ function submitForm(form) {
             if (submissions.length > 20) submissions.pop();
             localStorage.setItem('formSubmissions', JSON.stringify(submissions));
 
-            console.log('✅ Form submitted successfully');
-
             // Clear auto-saved data
-            localStorage.removeItem('form_autosave_contact');
+            localStorage.removeItem('form_autosave_about');
 
             // Redirect to thank you page
             const params = new URLSearchParams({
-                name: submissionData.name,
-                email: submissionData.email,
                 gemName: submissionData.gemName,
+                email: submissionData.email,
                 category: submissionData.category,
                 location: submissionData.location,
                 timestamp: submissionData.timestamp
@@ -451,8 +435,6 @@ function submitForm(form) {
             window.location.href = `thankyou.html?${params.toString()}`;
 
         } catch (error) {
-            console.error('❌ Form submission error:', error);
-
             // Reset button state
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;

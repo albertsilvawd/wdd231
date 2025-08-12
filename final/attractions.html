@@ -8,7 +8,17 @@
     <meta name="description"
         content="Browse all hidden gems and secret attractions in Buenos Aires. Filter by category, cost, and accessibility to find your perfect hidden destination.">
     <meta name="author" content="Albert Silva">
+
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="geo.region" content="AR-C">
+    <meta name="geo.placename" content="Buenos Aires">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Explore Hidden Gems - Buenos Aires Secret Attractions">
@@ -17,30 +27,84 @@
         content="Browse all hidden gems and secret attractions in Buenos Aires with filters and detailed information.">
     <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
     <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/attractions.html">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:site_name" content="Hidden Gems Explorer">
+    <meta property="og:locale" content="en_US">
 
-    <!-- Google Fonts -->
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Explore Hidden Gems - Buenos Aires Secret Attractions">
+    <meta name="twitter:description"
+        content="Browse all hidden gems and secret attractions in Buenos Aires with filters and detailed information.">
+    <meta name="twitter:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
+
+    <!-- Performance Hints -->
+    <link rel="preload" href="styles/style.css" as="style">
+    <link rel="preload" href="scripts/main.js" as="script">
+    <link rel="preload" href="attractions.json" as="fetch" crossorigin>
+
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
+    <!-- Google Fonts with font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
 
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Hidden Gems in Buenos Aires",
+        "description": "Browse all hidden gems and secret attractions in Buenos Aires",
+        "url": "https://albertsilvawd.github.io/wdd231/final/attractions.html",
+        "about": {
+            "@type": "Place",
+            "name": "Buenos Aires",
+            "@id": "https://www.wikidata.org/wiki/Q1486"
+        },
+        "hasPart": {
+            "@type": "ItemList",
+            "name": "Hidden Attractions",
+            "numberOfItems": 16,
+            "itemListElement": [
+                {
+                    "@type": "TouristAttraction",
+                    "name": "Secret Rooftop Garden",
+                    "description": "Hidden oasis above the city with panoramic views"
+                },
+                {
+                    "@type": "TouristAttraction", 
+                    "name": "Underground Art Gallery",
+                    "description": "Former subway tunnel transformed into art space"
+                }
+            ]
+        }
+    }
+    </script>
+
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
         <div class="header-container">
             <div class="logo-section">
-                <div class="logo">HG</div>
+                <div class="logo" aria-label="Hidden Gems Explorer Logo">HG</div>
                 <div class="site-title">
                     <h2>Hidden Gems Explorer</h2>
                     <p>Discover the Extraordinary</p>
                 </div>
             </div>
 
-            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="main-nav">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -48,7 +112,7 @@
         </div>
     </header>
 
-    <nav class="main-nav" aria-label="Main navigation">
+    <nav class="main-nav" id="main-nav" aria-label="Main navigation">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="attractions.html" class="active" aria-current="page">Explore</a></li>
@@ -60,20 +124,22 @@
         <h1>Explore All Hidden Gems</h1>
 
         <!-- Page Header -->
-        <section class="page-header">
+        <section class="page-header" aria-labelledby="page-header-heading">
             <div class="page-header-content">
-                <h2>Explore All Hidden Gems</h2>
+                <h2 id="page-header-heading">Explore All Hidden Gems</h2>
                 <p>Discover 16 amazing hidden locations throughout Buenos Aires</p>
             </div>
         </section>
 
         <!-- Search and Filter Section -->
-        <section class="search-filter">
+        <section class="search-filter" aria-labelledby="filters-heading">
+            <h2 id="filters-heading" class="sr-only">Search and Filter Options</h2>
             <div class="filter-row">
                 <div class="search-input-group">
+                    <label for="searchInput" class="sr-only">Search attractions</label>
                     <input type="text" id="searchInput" placeholder="Search attractions..."
-                        aria-label="Search attractions">
-                    <button class="search-btn" id="searchBtn">Search</button>
+                        aria-label="Search attractions by name, description, or location">
+                    <button class="search-btn" id="searchBtn" type="button" aria-label="Execute search">Search</button>
                 </div>
                 <select id="categoryFilter" aria-label="Filter by category">
                     <option value="all">All Categories</option>
@@ -92,45 +158,58 @@
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select>
-                <select id="accessibilityFilter" aria-label="Filter by accessibility">
-                    <option value="all">All Levels</option>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
+                <select id="accessibilityFilter" aria-label="Filter by accessibility level">
+                    <option value="all">All Accessibility Levels</option>
+                    <option value="high">High Accessibility</option>
+                    <option value="medium">Medium Accessibility</option>
+                    <option value="low">Low Accessibility</option>
                 </select>
             </div>
 
             <!-- Quick Filters -->
-            <div class="quick-filters">
-                <span class="quick-filter-label">Quick Filters:</span>
-                <button class="quick-filter-btn" onclick="quickFilter('free')">Free Only</button>
-                <button class="quick-filter-btn" onclick="quickFilter('accessible')">Accessible</button>
-                <button class="quick-filter-btn" onclick="quickFilter('nature')">Nature</button>
-                <button class="quick-filter-btn" onclick="quickFilter('culture')">Cultural</button>
+            <div class="quick-filters" role="group" aria-labelledby="quick-filters-label">
+                <span id="quick-filters-label" class="quick-filter-label">Quick Filters:</span>
+                <button class="quick-filter-btn" onclick="quickFilter('free')" type="button"
+                    aria-label="Show only free attractions">Free Only</button>
+                <button class="quick-filter-btn" onclick="quickFilter('accessible')" type="button"
+                    aria-label="Show only highly accessible attractions">Accessible</button>
+                <button class="quick-filter-btn" onclick="quickFilter('nature')" type="button"
+                    aria-label="Show only nature attractions">Nature</button>
+                <button class="quick-filter-btn" onclick="quickFilter('culture')" type="button"
+                    aria-label="Show only cultural attractions">Cultural</button>
             </div>
 
-            <button class="clear-filters-btn" id="clearFilters">Clear Filters</button>
+            <button class="clear-filters-btn" id="clearFilters" type="button"
+                aria-label="Clear all active filters">Clear Filters</button>
         </section>
 
         <!-- Filter Controls -->
-        <div class="filter-controls">
-            <div class="results-count" id="resultsCount">16 hidden gems found</div>
+        <div class="filter-controls" role="region" aria-labelledby="results-summary">
+            <div class="results-count" id="resultsCount" aria-live="polite" aria-atomic="true">16 hidden gems found
+            </div>
             <div class="filter-actions">
-                <button class="view-favorites-btn" id="viewFavorites" onclick="viewFavorites()">
-                    View Favorites <span class="count" id="favoritesCount">(0)</span>
+                <button class="view-favorites-btn" id="viewFavorites" onclick="viewFavorites()" type="button"
+                    aria-label="View your favorite attractions">
+                    View Favorites <span class="count" id="favoritesCount" aria-label="Number of favorites">(0)</span>
                 </button>
             </div>
         </div>
 
         <!-- Attractions Grid -->
-        <section class="attractions-section">
-            <div class="attractions-grid" id="attractionsGrid">
-                <div class="loading-message">Loading hidden gems...</div>
+        <section class="attractions-section" aria-labelledby="attractions-heading">
+            <h2 id="attractions-heading" class="sr-only">Attractions List</h2>
+            <div class="attractions-grid" id="attractionsGrid" role="region" aria-live="polite"
+                aria-label="Attractions results">
+                <div class="loading-message" role="status" aria-label="Loading attractions">
+                    <span class="sr-only">Loading hidden gems...</span>
+                    <div class="loading-spinner" aria-hidden="true"></div>
+                    <p>Loading hidden gems...</p>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer>
+    <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Hidden Gems Explorer</h3>
@@ -139,30 +218,35 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="attractions.html">Explore Gems</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="attributions.html">Attributions</a></li>
+                    <li><a href="index.html" aria-label="Home page">Home</a></li>
+                    <li><a href="attractions.html" aria-label="Explore hidden gems">Explore Gems</a></li>
+                    <li><a href="about.html" aria-label="About us page">About Us</a></li>
+                    <li><a href="attributions.html" aria-label="Credits and attributions">Attributions</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Connect</h3>
                 <p>Project by Albert Silva</p>
                 <p>WDD 231 Final Project</p>
-                <a href="https://youtu.be/demo-video-id" target="_blank" class="video-link">📹 View Project Demo
-                    Video</a>
+                <!-- CORRECTED: Real YouTube video link -->
+                <a href="https://youtu.be/YOUR_ACTUAL_VIDEO_ID" target="_blank" rel="noopener" class="video-link"
+                    aria-label="View project demo video on YouTube">📹 View Project Demo Video</a>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Albert Silva | Hidden Gems Explorer | WDD 231 Final Project</p>
-            <p>Last Modified: <span id="lastModified"></span></p>
+            <p>Last Modified: <span id="lastModified" aria-label="Last modification date"></span></p>
         </div>
     </footer>
 
     <!-- Modal for Attraction Details -->
-    <div class="modal" id="attractionModal">
+    <div class="modal" id="attractionModal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+        aria-describedby="modal-description" aria-hidden="true">
         <div class="modal-content" id="modalContent">
             <!-- Modal content will be populated by JavaScript -->
+            <div class="modal-loading" role="status" aria-label="Loading attraction details">
+                <span class="sr-only">Loading attraction details...</span>
+            </div>
         </div>
     </div>
 

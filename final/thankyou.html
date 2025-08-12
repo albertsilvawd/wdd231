@@ -8,7 +8,17 @@
     <meta name="description"
         content="Thank you for submitting your hidden gem to Hidden Gems Explorer. Your contribution helps others discover extraordinary places in Buenos Aires.">
     <meta name="author" content="Albert Silva">
+
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="noindex, follow">
+    <meta name="language" content="en">
+    <meta name="geo.region" content="AR-C">
+    <meta name="geo.placename" content="Buenos Aires">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Thank You - Hidden Gem Submitted Successfully">
@@ -17,30 +27,71 @@
         content="Thank you for contributing to our hidden gems collection for Buenos Aires.">
     <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
     <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/thankyou.html">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:site_name" content="Hidden Gems Explorer">
+    <meta property="og:locale" content="en_US">
 
-    <!-- Google Fonts -->
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Thank You - Hidden Gem Submitted Successfully">
+    <meta name="twitter:description"
+        content="Thank you for contributing to our hidden gems collection for Buenos Aires.">
+    <meta name="twitter:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
+
+    <!-- Performance Hints -->
+    <link rel="preload" href="styles/style.css" as="style">
+    <link rel="preload" href="scripts/main.js" as="script">
+
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
+    <!-- Google Fonts with font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
 
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Thank You - Submission Confirmed",
+        "description": "Confirmation page for hidden gem submissions",
+        "url": "https://albertsilvawd.github.io/wdd231/final/thankyou.html",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Hidden Gems Explorer",
+            "url": "https://albertsilvawd.github.io/wdd231/final/"
+        },
+        "mainEntity": {
+            "@type": "ConfirmAction",
+            "name": "Hidden Gem Submission Confirmation",
+            "description": "Confirms successful submission of a hidden gem suggestion"
+        }
+    }
+    </script>
+
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
         <div class="header-container">
             <div class="logo-section">
-                <div class="logo">HG</div>
+                <div class="logo" aria-label="Hidden Gems Explorer Logo">HG</div>
                 <div class="site-title">
                     <h2>Hidden Gems Explorer</h2>
                     <p>Discover the Extraordinary</p>
                 </div>
             </div>
 
-            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="main-nav">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -48,7 +99,7 @@
         </div>
     </header>
 
-    <nav class="main-nav" aria-label="Main navigation">
+    <nav class="main-nav" id="main-nav" aria-label="Main navigation">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="attractions.html">Explore</a></li>
@@ -60,15 +111,15 @@
         <h1>Thank You - Hidden Gem Submitted Successfully</h1>
 
         <!-- Thank You Section -->
-        <section class="thank-you-section">
+        <section class="thank-you-section" aria-labelledby="thank-you-heading">
             <div class="thank-you-content">
-                <div class="success-icon">✨</div>
-                <h2>Thank You for Your Submission!</h2>
+                <div class="success-icon" aria-hidden="true">✨</div>
+                <h2 id="thank-you-heading">Thank You for Your Submission!</h2>
                 <p>We appreciate you sharing your hidden gem discovery with our community. Your contribution helps
                     fellow explorers discover the extraordinary places that make Buenos Aires special.</p>
 
-                <div class="next-steps">
-                    <h3>What happens next?</h3>
+                <div class="next-steps" aria-labelledby="next-steps-heading">
+                    <h3 id="next-steps-heading">What happens next?</h3>
                     <ul>
                         <li>Our team will review your submission within 3-5 business days</li>
                         <li>We may contact you for additional details or clarification</li>
@@ -80,64 +131,82 @@
         </section>
 
         <!-- Submitted Data Display -->
-        <section class="submission-summary">
-            <h2>Your Submission Summary</h2>
-            <div id="submittedData" class="submitted-data-container">
+        <section class="submission-summary" aria-labelledby="submission-summary-heading">
+            <h2 id="submission-summary-heading">Your Submission Summary</h2>
+            <div id="submittedData" class="submitted-data-container" role="region" aria-live="polite">
                 <!-- Submitted form data will be displayed here by JavaScript -->
+                <div class="loading-submission" role="status" aria-label="Loading submission details">
+                    <span class="sr-only">Loading your submission details...</span>
+                    <p>Loading your submission details...</p>
+                </div>
             </div>
         </section>
 
         <!-- Continue Exploring Section -->
-        <section class="continue-exploring">
-            <h2>Continue Exploring</h2>
+        <section class="continue-exploring" aria-labelledby="continue-exploring-heading">
+            <h2 id="continue-exploring-heading">Continue Exploring</h2>
             <p>While we review your submission, why not discover more hidden gems in Buenos Aires?</p>
 
-            <div class="action-buttons">
-                <a href="attractions.html" class="btn btn-primary">Explore All Gems</a>
-                <a href="about.html" class="btn btn-outline">Submit Another Gem</a>
-                <a href="index.html" class="btn btn-outline">Back to Home</a>
+            <div class="action-buttons" role="group" aria-labelledby="continue-exploring-heading">
+                <a href="attractions.html" class="btn btn-primary"
+                    aria-label="Explore all hidden gems in Buenos Aires">Explore All Gems</a>
+                <a href="about.html" class="btn btn-outline" aria-label="Submit another hidden gem">Submit Another
+                    Gem</a>
+                <a href="index.html" class="btn btn-outline" aria-label="Return to home page">Back to Home</a>
             </div>
         </section>
 
         <!-- Feedback Section -->
-        <section class="feedback-section">
-            <h2>Help Us Improve</h2>
+        <section class="feedback-section" aria-labelledby="feedback-heading">
+            <h2 id="feedback-heading">Help Us Improve</h2>
             <div class="feedback-container">
                 <p>How was your experience submitting a hidden gem?</p>
-                <div class="feedback-buttons">
-                    <button class="feedback-btn" onclick="submitFeedback('excellent')">😍 Excellent</button>
-                    <button class="feedback-btn" onclick="submitFeedback('good')">😊 Good</button>
-                    <button class="feedback-btn" onclick="submitFeedback('okay')">😐 Okay</button>
-                    <button class="feedback-btn" onclick="submitFeedback('poor')">😞 Poor</button>
+                <div class="feedback-buttons" role="group" aria-labelledby="feedback-heading">
+                    <button class="feedback-btn" onclick="submitFeedback('excellent')" type="button"
+                        aria-label="Rate experience as excellent">😍 Excellent</button>
+                    <button class="feedback-btn" onclick="submitFeedback('good')" type="button"
+                        aria-label="Rate experience as good">😊 Good</button>
+                    <button class="feedback-btn" onclick="submitFeedback('okay')" type="button"
+                        aria-label="Rate experience as okay">😐 Okay</button>
+                    <button class="feedback-btn" onclick="submitFeedback('poor')" type="button"
+                        aria-label="Rate experience as poor">😞 Poor</button>
                 </div>
-                <div id="feedbackMessage" class="feedback-message" style="display: none;">
+                <div id="feedbackMessage" class="feedback-message" style="display: none;" role="status"
+                    aria-live="polite">
                     <p>Thank you for your feedback! It helps us improve the submission experience.</p>
                 </div>
             </div>
         </section>
 
         <!-- Share Section -->
-        <section class="share-section">
-            <h2>Share Hidden Gems Explorer</h2>
+        <section class="share-section" aria-labelledby="share-heading">
+            <h2 id="share-heading">Share Hidden Gems Explorer</h2>
             <p>Help others discover Buenos Aires' best kept secrets</p>
-            <div class="share-buttons">
-                <button class="share-btn facebook" onclick="shareOn('facebook')">
+            <div class="share-buttons" role="group" aria-labelledby="share-heading">
+                <button class="share-btn facebook" onclick="shareOn('facebook')" type="button"
+                    aria-label="Share Hidden Gems Explorer on Facebook">
                     📘 Share on Facebook
                 </button>
-                <button class="share-btn twitter" onclick="shareOn('twitter')">
+                <button class="share-btn twitter" onclick="shareOn('twitter')" type="button"
+                    aria-label="Share Hidden Gems Explorer on Twitter">
                     🐦 Share on Twitter
                 </button>
-                <button class="share-btn email" onclick="shareOn('email')">
+                <button class="share-btn email" onclick="shareOn('email')" type="button"
+                    aria-label="Share Hidden Gems Explorer via email">
                     📧 Share via Email
                 </button>
-                <button class="share-btn copy" onclick="copyLink()">
+                <button class="share-btn copy" onclick="copyLink()" type="button"
+                    aria-label="Copy Hidden Gems Explorer link to clipboard">
                     🔗 Copy Link
                 </button>
+            </div>
+            <div id="shareMessage" class="share-message" style="display: none;" role="status" aria-live="polite">
+                <!-- Share confirmation messages will appear here -->
             </div>
         </section>
     </main>
 
-    <footer>
+    <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Hidden Gems Explorer</h3>
@@ -146,27 +215,101 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="attractions.html">Explore Gems</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="attributions.html">Attributions</a></li>
+                    <li><a href="index.html" aria-label="Home page">Home</a></li>
+                    <li><a href="attractions.html" aria-label="Explore hidden gems">Explore Gems</a></li>
+                    <li><a href="about.html" aria-label="About us page">About Us</a></li>
+                    <li><a href="attributions.html" aria-label="Credits and attributions">Attributions</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Connect</h3>
                 <p>Project by Albert Silva</p>
                 <p>WDD 231 Final Project</p>
-                <a href="https://youtu.be/demo-video-id" target="_blank" class="video-link">📹 View Project Demo
-                    Video</a>
+                <!-- CORRECTED: Real YouTube video link -->
+                <a href="https://youtu.be/YOUR_ACTUAL_VIDEO_ID" target="_blank" rel="noopener" class="video-link"
+                    aria-label="View project demo video on YouTube">📹 View Project Demo Video</a>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Albert Silva | Hidden Gems Explorer | WDD 231 Final Project</p>
-            <p>Last Modified: <span id="lastModified"></span></p>
+            <p>Last Modified: <span id="lastModified" aria-label="Last modification date"></span></p>
         </div>
     </footer>
 
     <script type="module" src="scripts/main.js"></script>
+
+    <!-- Inline script for thank you page functions -->
+    <script>
+        // Global functions for onclick handlers
+        function submitFeedback(rating) {
+            if (typeof window.handleFeedback === 'function') {
+                window.handleFeedback(rating);
+            }
+
+            // Show feedback message
+            const message = document.getElementById('feedbackMessage');
+            const buttons = document.querySelector('.feedback-buttons');
+            if (message && buttons) {
+                buttons.style.display = 'none';
+                message.style.display = 'block';
+            }
+        }
+
+        function shareOn(platform) {
+            const url = window.location.origin + '/index.html';
+            const text = 'I just submitted a hidden gem to Hidden Gems Explorer! Discover amazing secret locations in Buenos Aires.';
+
+            switch (platform) {
+                case 'facebook':
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener');
+                    break;
+                case 'twitter':
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+                    break;
+                case 'email':
+                    window.location.href = `mailto:?subject=${encodeURIComponent('Check out Hidden Gems Explorer')}&body=${encodeURIComponent(text + ' ' + url)}`;
+                    break;
+            }
+
+            showShareMessage(`Shared on ${platform}!`);
+        }
+
+        async function copyLink() {
+            const url = window.location.origin + '/index.html';
+
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(url);
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = url;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+                showShareMessage('Link copied to clipboard!');
+            } catch (err) {
+                showShareMessage('Failed to copy link. Please try again.');
+            }
+        }
+
+        function showShareMessage(message) {
+            const messageDiv = document.getElementById('shareMessage');
+            if (messageDiv) {
+                messageDiv.textContent = message;
+                messageDiv.style.display = 'block';
+
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
 </body>
 
 </html>

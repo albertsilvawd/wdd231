@@ -1,15 +1,20 @@
 // Hidden Gems Explorer - Thank You Page JavaScript
 // Albert Silva - WDD 231 Final Project
+// PRODUCTION VERSION - NO CONSOLE STATEMENTS
 
 // Import main.js functionality for shared features
 import './main.js';
 
-console.log('Thank you page module loaded');
+// Production logging system (silent in production)
+const isDevelopment = false;
+const logger = {
+    log: isDevelopment ? console.log : () => { },
+    warn: isDevelopment ? console.warn : () => { },
+    error: isDevelopment ? console.error : () => { }
+};
 
 // Thank you page specific functionality
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Thank you page specific initialization...');
-
     initThankYouPageEnhancements();
 });
 
@@ -31,37 +36,32 @@ function initThankYouPageEnhancements() {
 }
 
 function displaySubmissionData() {
-    console.log('📋 Loading submission data...');
-
     // Get data from URL parameters first
     const urlParams = new URLSearchParams(window.location.search);
     let submissionData = {};
 
     // Try URL parameters first (from form submission)
-    if (urlParams.has('name')) {
+    if (urlParams.has('gemName')) {
         submissionData = {
-            name: urlParams.get('name'),
-            email: urlParams.get('email'),
             gemName: urlParams.get('gemName'),
+            email: urlParams.get('email'),
             category: urlParams.get('category'),
             location: urlParams.get('location'),
             timestamp: urlParams.get('timestamp') || new Date().toISOString()
         };
-        console.log('📋 Using URL parameters for submission data');
     } else {
         // Fallback to localStorage
         try {
             const stored = localStorage.getItem('lastSubmission');
             if (stored) {
                 submissionData = JSON.parse(stored);
-                console.log('📋 Using localStorage for submission data');
             }
         } catch (error) {
-            console.error('Error reading localStorage:', error);
+            // Silent fallback
         }
     }
 
-    if (submissionData.name) {
+    if (submissionData.gemName) {
         populateSubmissionDisplay(submissionData);
 
         // Store for analytics
@@ -72,8 +72,11 @@ function displaySubmissionData() {
 }
 
 function populateSubmissionDisplay(data) {
+    const container = document.getElementById('submittedData');
+    if (!container) return;
+
     const elements = {
-        submitterName: data.name || '-',
+        submitterName: data.name || data.gemName || '-',
         submitterEmail: data.email || '-',
         gemName: data.gemName || '-',
         gemCategory: data.category || '-',
@@ -89,40 +92,63 @@ function populateSubmissionDisplay(data) {
             new Date().toLocaleDateString()
     };
 
-    Object.entries(elements).forEach(([id, value]) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = value;
+    // Create submission display HTML
+    container.innerHTML = `
+        <div class="submission-details">
+            <h3>Your Submission Details</h3>
+            <div class="submission-grid">
+                <div class="detail-item">
+                    <strong>Hidden Gem Name:</strong>
+                    <span>${elements.gemName}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Email:</strong>
+                    <span>${elements.submitterEmail}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Category:</strong>
+                    <span>${elements.gemCategory}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Location:</strong>
+                    <span>${elements.gemLocation}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Submitted:</strong>
+                    <span>${elements.submissionDate}</span>
+                </div>
+            </div>
+        </div>
+    `;
 
-            // Add fade-in animation
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(10px)';
+    // Add fade-in animation to elements
+    const detailItems = container.querySelectorAll('.detail-item');
+    detailItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(10px)';
 
-            setTimeout(() => {
-                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }, Math.random() * 500); // Staggered animation
-        }
+        setTimeout(() => {
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+        }, index * 100); // Staggered animation
     });
-
-    console.log(`✅ Populated submission data for: ${data.name}`);
 }
 
 function showNoDataMessage() {
-    const detailsSection = document.querySelector('.submission-details');
-    if (detailsSection) {
-        detailsSection.innerHTML = `
-            <div class="no-data-message">
-                <h3>🤔 No Submission Data Found</h3>
-                <p>It looks like you arrived here directly. To submit a hidden gem suggestion, please visit our About page.</p>
-                <div class="action-buttons" style="margin-top: 1.5rem;">
-                    <a href="about.html" class="primary-btn">📝 Submit a Hidden Gem</a>
-                    <a href="index.html" class="secondary-btn">🏠 Return Home</a>
-                </div>
+    const container = document.getElementById('submittedData');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="no-data-message">
+            <h3>🤔 No Submission Data Found</h3>
+            <p>It looks like you arrived here directly. To submit a hidden gem suggestion, please visit our About page.</p>
+            <div class="action-buttons" style="margin-top: 1.5rem;">
+                <a href="about.html" class="btn btn-primary">📝 Submit a Hidden Gem</a>
+                <a href="index.html" class="btn btn-secondary">🏠 Return Home</a>
             </div>
-        `;
-    }
+        </div>
+    `;
 }
 
 function initCelebrationAnimation() {
@@ -237,7 +263,7 @@ function handleSharing(platform) {
         });
         localStorage.setItem('sharing_analytics', JSON.stringify(analytics.slice(-50)));
     } catch (error) {
-        console.error('Error tracking sharing analytics:', error);
+        // Silent fallback
     }
 }
 
@@ -259,7 +285,6 @@ async function copyToClipboard(text) {
         }
         return true;
     } catch (err) {
-        console.error('Failed to copy text: ', err);
         return false;
     }
 }
@@ -345,8 +370,6 @@ function handleFeedback(rating) {
 
         localStorage.setItem('user_feedback', JSON.stringify(feedbackData));
 
-        console.log(`📝 Feedback recorded: ${rating}/5 stars`);
-
         // Show appreciation message based on rating
         if (rating >= 4) {
             setTimeout(() => {
@@ -359,7 +382,7 @@ function handleFeedback(rating) {
         }
 
     } catch (error) {
-        console.error('Error storing feedback:', error);
+        // Silent fallback
     }
 }
 
@@ -445,14 +468,14 @@ function addRecentSubmissionsCounter() {
             }
         }
     } catch (error) {
-        console.error('Error adding submissions counter:', error);
+        // Silent fallback
     }
 }
 
 function storeSubmissionAnalytics(submissionData) {
     try {
         const analytics = {
-            submissionId: submissionData.id,
+            submissionId: submissionData.id || Date.now(),
             category: submissionData.category,
             timestamp: submissionData.timestamp,
             pageLoadTime: Date.now(),
@@ -474,10 +497,8 @@ function storeSubmissionAnalytics(submissionData) {
 
         localStorage.setItem('submission_analytics', JSON.stringify(submissionAnalytics));
 
-        console.log('📊 Submission analytics stored');
-
     } catch (error) {
-        console.error('Error storing submission analytics:', error);
+        // Silent fallback
     }
 }
 
@@ -639,6 +660,38 @@ function addAnimationStyles() {
             margin-bottom: 1rem;
         }
         
+        .submission-details {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .submission-grid {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .detail-item strong {
+            color: #374151;
+        }
+        
+        .detail-item span {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
         @media (max-width: 768px) {
             .feedback-buttons,
             .sharing-buttons,
@@ -652,6 +705,12 @@ function addAnimationStyles() {
             .suggestion-btn {
                 width: 100%;
                 max-width: 250px;
+            }
+            
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
             }
         }
     `;
@@ -680,10 +739,9 @@ window.addEventListener('load', () => {
         }
 
         localStorage.setItem('page_performance', JSON.stringify(performanceData));
-        console.log(`⚡ Thank you page loaded in ${Math.round(loadTime)}ms`);
 
     } catch (error) {
-        console.error('Error tracking page performance:', error);
+        // Silent fallback
     }
 });
 
