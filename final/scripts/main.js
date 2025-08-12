@@ -536,8 +536,6 @@ function createAttractionHTML(attraction) {
                      alt="${attraction.name}"
                      loading="lazy"
                      src="${placeholderUrl}"
-                     width="400"
-                     height="200"
                      onerror="this.onerror=null; this.src='${placeholderUrl}';"
                      class="lazy-image">
                 <div class="category-badge category-${attraction.category.toLowerCase()}">
