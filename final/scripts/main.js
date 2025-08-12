@@ -326,13 +326,16 @@ async function initializePage(page) {
     }
 }
 
-// Initialize home page
+// Initialize home page - ENHANCED
 async function initializeHomePage() {
     console.log('🏠 Initializing home page...');
 
     try {
         // Update statistics
         updateStatistics();
+
+        // Preload critical images
+        preloadCriticalImages();
 
         // Load featured attractions
         await displayFeaturedAttractions();
@@ -345,6 +348,9 @@ async function initializeHomePage() {
 
         // Load country information
         displayCountryInfo();
+
+        // Initialize lazy loading
+        initializeLazyLoading();
 
     } catch (error) {
         console.error('❌ Error initializing home page:', error);
@@ -428,11 +434,9 @@ async function displayAttractions(attractions = window.appState.filteredAttracti
     }
 }
 
-// Create attraction HTML with corrected image handling
+// Create attraction HTML with enhanced image handling - CORRECTED
 function createAttractionHTML(attraction) {
     const isFavorite = window.appState.favorites.includes(attraction.id);
-
-    // Create image with proper error handling
     const imageUrl = attraction.image || '';
     const placeholderUrl = createPlaceholderImage(attraction.name, attraction.category);
 
@@ -442,8 +446,8 @@ function createAttractionHTML(attraction) {
                 <img src="${imageUrl}" 
                      alt="${attraction.name}"
                      loading="lazy"
-                     onerror="this.onerror=null; this.src='${placeholderUrl}';"
-                     onload="this.style.opacity='1';"
+                     onerror="handleImageError(this, '${attraction.name}', '${attraction.category}')"
+                     onload="handleImageLoad(this)"
                      style="opacity: 0; transition: opacity 0.3s ease;">
                 <div class="category-badge category-${attraction.category.toLowerCase()}">
                     ${attraction.category}
@@ -451,7 +455,7 @@ function createAttractionHTML(attraction) {
                 <button class="favorite-btn ${isFavorite ? 'active' : ''}" 
                         onclick="toggleFavorite(${attraction.id})"
                         data-id="${attraction.id}"
-                        aria-label="Add to favorites">
+                        aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
                     ${isFavorite ? '❤️' : '🤍'}
                 </button>
             </div>
@@ -474,7 +478,7 @@ function createAttractionHTML(attraction) {
     `;
 }
 
-// Create placeholder image URL
+// Enhanced placeholder image creation - CORRECTED
 function createPlaceholderImage(attractionName, category) {
     const colors = {
         'Nature': '#10B981',
@@ -486,10 +490,111 @@ function createPlaceholderImage(attractionName, category) {
         'Shopping': '#06B6D4'
     };
 
-    const bgColor = encodeURIComponent(colors[category] || '#6B7280');
-    const initials = attractionName.split(' ').map(word => word[0]).join('').substring(0, 2);
+    const bgColor = colors[category] || '#6B7280';
+    const lightColor = adjustColorBrightness(bgColor, 40);
+    const initials = attractionName.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
 
-    return `data:image/svg+xml;charset=UTF-8,%3csvg width='400' height='200' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='400' height='200' fill='${bgColor}' opacity='0.1'/%3e%3ctext x='200' y='100' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='48' font-weight='bold' fill='${bgColor}' opacity='0.8'%3e${initials}%3c/text%3e%3c/svg%3e`;
+    // SVG placeholder with sophisticated gradient
+    return `data:image/svg+xml;charset=UTF-8,%3csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3clinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:${encodeURIComponent(lightColor)};stop-opacity:0.8' /%3e%3cstop offset='100%25' style='stop-color:${encodeURIComponent(bgColor)};stop-opacity:0.6' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='400' height='300' fill='url(%23grad)' /%3e%3ccircle cx='200' cy='120' r='40' fill='${encodeURIComponent(bgColor)}' opacity='0.3'/%3e%3ctext x='200' y='130' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='${encodeURIComponent(bgColor)}' opacity='0.9'%3e${initials}%3c/text%3e%3ctext x='200' y='200' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='14' font-weight='500' fill='${encodeURIComponent(bgColor)}' opacity='0.7'%3e${encodeURIComponent(category)}%3c/text%3e%3c/svg%3e`;
+}
+
+// Helper function to adjust color brightness
+function adjustColorBrightness(hex, percent) {
+    // Remove # if present
+    hex = hex.replace('#', '');
+
+    // Convert to RGB
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+
+    // Adjust brightness
+    const newR = Math.min(255, Math.max(0, r + (r * percent / 100)));
+    const newG = Math.min(255, Math.max(0, g + (g * percent / 100)));
+    const newB = Math.min(255, Math.max(0, b + (b * percent / 100)));
+
+    // Convert back to hex
+    const toHex = (c) => {
+        const hex = Math.round(c).toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+    };
+
+    return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}`;
+}
+
+// Handle successful image loading
+function handleImageLoad(img) {
+    img.style.opacity = '1';
+    img.classList.add('loaded');
+
+    // Remove loading class if exists
+    const card = img.closest('.attraction-card');
+    if (card) {
+        card.classList.remove('card-loading');
+    }
+
+    console.log('✅ Image loaded successfully:', img.alt);
+}
+
+// Handle image loading error with robust fallback
+function handleImageError(img, attractionName, category) {
+    img.onerror = null; // Prevent infinite loop
+
+    console.log('⚠️ Image failed to load, using placeholder for:', attractionName);
+
+    // Set placeholder as fallback
+    img.src = createPlaceholderImage(attractionName, category);
+    img.alt = `${attractionName} - Image not available`;
+    img.style.opacity = '1';
+
+    // Add class for specific styling
+    img.classList.add('placeholder-image');
+
+    // Remove loading class
+    const card = img.closest('.attraction-card');
+    if (card) {
+        card.classList.remove('card-loading');
+        card.classList.add('placeholder-card');
+    }
+}
+
+// Preload critical images for better performance
+function preloadCriticalImages() {
+    const featuredAttractions = window.appState.attractions
+        .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+        .slice(0, 3);
+
+    featuredAttractions.forEach(attraction => {
+        if (attraction.image) {
+            const img = new Image();
+            img.onload = () => console.log('✅ Preloaded:', attraction.name);
+            img.onerror = () => console.log('⚠️ Failed to preload:', attraction.name);
+            img.src = attraction.image;
+        }
+    });
+}
+
+// Initialize optimized lazy loading
+function initializeLazyLoading() {
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src || img.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.01
+        });
+
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
 }
 
 // Initialize filters
@@ -704,6 +809,7 @@ function updateFavoriteButtons() {
         const isActive = window.appState.favorites.includes(id);
         btn.classList.toggle('active', isActive);
         btn.innerHTML = isActive ? '❤️' : '🤍';
+        btn.setAttribute('aria-label', isActive ? 'Remove from favorites' : 'Add to favorites');
     });
 
     // Update view favorites button
@@ -732,7 +838,7 @@ function initializeModal() {
     });
 }
 
-// Open attraction modal
+// Enhanced modal with better image handling
 function openModal(attractionId) {
     const attraction = window.appState.attractions.find(a => a.id === attractionId);
     if (!attraction) return;
@@ -746,39 +852,65 @@ function openModal(attractionId) {
     const imageUrl = attraction.image || createPlaceholderImage(attraction.name, attraction.category);
 
     modalContent.innerHTML = `
-        <span class="close" onclick="closeModal()">&times;</span>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
         <div class="modal-body">
-            <img src="${imageUrl}" 
-                 alt="${attraction.name}" 
-                 class="modal-image"
-                 onerror="this.onerror=null; this.src='${createPlaceholderImage(attraction.name, attraction.category)}';">
+            <div class="modal-image-container">
+                <img src="${imageUrl}" 
+                     alt="${attraction.name}" 
+                     class="modal-image"
+                     onerror="handleImageError(this, '${attraction.name}', '${attraction.category}')"
+                     onload="handleImageLoad(this)"
+                     style="opacity: 0; transition: opacity 0.3s ease;">
+                <div class="category-badge category-${attraction.category.toLowerCase()}">
+                    ${attraction.category}
+                </div>
+            </div>
             <div class="modal-info">
                 <h2>${attraction.name}</h2>
-                <p class="modal-category">${attraction.category}</p>
                 <p class="modal-description">${attraction.description}</p>
                 <div class="modal-details">
-                    <p><strong>📍 Location:</strong> ${attraction.location || attraction.neighborhood}</p>
-                    <p><strong>💰 Cost:</strong> ${attraction.cost}</p>
-                    <p><strong>♿ Accessibility:</strong> ${attraction.accessibility}</p>
-                    <p><strong>🕒 Hours:</strong> ${attraction.openHours || 'Varies'}</p>
-                    <p><strong>⭐ Rating:</strong> ${attraction.rating || 4.5}/5</p>
+                    <div class="detail-item">
+                        <strong>📍 Location:</strong> ${attraction.location || attraction.neighborhood}
+                    </div>
+                    <div class="detail-item">
+                        <strong>💰 Cost:</strong> ${attraction.cost}
+                    </div>
+                    <div class="detail-item">
+                        <strong>♿ Accessibility:</strong> ${attraction.accessibility}
+                    </div>
+                    <div class="detail-item">
+                        <strong>🕒 Hours:</strong> ${attraction.openHours || 'Varies'}
+                    </div>
+                    <div class="detail-item">
+                        <strong>⭐ Rating:</strong> ${attraction.rating || 4.5}/5
+                    </div>
                 </div>
-                <button class="favorite-btn-modal ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(${attraction.id}); updateModalFavoriteBtn(${attraction.id})">
+                <button class="favorite-btn-modal ${isFavorite ? 'active' : ''}" 
+                        onclick="toggleFavorite(${attraction.id}); updateModalFavoriteBtn(${attraction.id})"
+                        aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
                     ${isFavorite ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}
                 </button>
             </div>
         </div>
     `;
 
-    modal.style.display = 'block';
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+
+    // Focus on close button for accessibility
+    setTimeout(() => {
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) closeBtn.focus();
+    }, 100);
 }
 
 // Close modal
 function closeModal() {
     const modal = document.getElementById('attractionModal');
     if (modal) {
-        modal.style.display = 'none';
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
     }
 }
@@ -791,6 +923,7 @@ function updateModalFavoriteBtn(attractionId) {
         const isActive = window.appState.favorites.includes(attractionId);
         favoriteBtn.classList.toggle('active', isActive);
         favoriteBtn.innerHTML = isActive ? '❤️ Remove from Favorites' : '🤍 Add to Favorites';
+        favoriteBtn.setAttribute('aria-label', isActive ? 'Remove from favorites' : 'Add to favorites');
     }
     updateFavoriteButtons();
 }
@@ -1110,6 +1243,10 @@ window.quickFilter = quickFilter;
 window.submitFeedback = submitFeedback;
 window.shareOn = shareOn;
 window.copyLink = copyLink;
+window.handleImageLoad = handleImageLoad;
+window.handleImageError = handleImageError;
+window.preloadCriticalImages = preloadCriticalImages;
+window.initializeLazyLoading = initializeLazyLoading;
 
 // Initialize URL params and last modified on attractions page
 if (getCurrentPage() === 'attractions') {
