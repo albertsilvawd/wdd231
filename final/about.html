@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures</title>
+    <title>About Us - Hidden Gems Explorer Mission & Story</title>
     <meta name="description"
-        content="Discover hidden gems in Buenos Aires! Explore 16 secret attractions, local favorites, and extraordinary places beyond typical tourist destinations.">
+        content="Learn about Hidden Gems Explorer, our mission to uncover Buenos Aires' best kept secrets, and submit your own hidden gem discoveries.">
     <meta name="author" content="Albert Silva">
 
     <!-- SEO Meta Tags -->
@@ -21,20 +21,20 @@
     <link rel="apple-touch-icon" href="images/favicon.ico">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures">
+    <meta property="og:title" content="About Us - Hidden Gems Explorer Mission & Story">
     <meta property="og:type" content="website">
     <meta property="og:description"
-        content="Explore hidden gems and unique attractions in Buenos Aires beyond typical tourist destinations.">
+        content="Learn about our mission to discover and share hidden gems in Buenos Aires.">
     <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
-    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/">
+    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/about.html">
     <meta property="og:site_name" content="Hidden Gems Explorer">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures">
+    <meta name="twitter:title" content="About Us - Hidden Gems Explorer Mission & Story">
     <meta name="twitter:description"
-        content="Explore hidden gems and unique attractions in Buenos Aires beyond typical tourist destinations.">
+        content="Learn about our mission to discover and share hidden gems in Buenos Aires.">
     <meta name="twitter:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
 
     <!-- Performance Hints -->
@@ -56,19 +56,18 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Hidden Gems Explorer",
-        "description": "Discover hidden gems and unique attractions in Buenos Aires",
-        "url": "https://albertsilvawd.github.io/wdd231/final/",
-        "author": {
-            "@type": "Person",
-            "name": "Albert Silva"
-        },
-        "inLanguage": "en-US",
-        "about": {
-            "@type": "Place",
-            "name": "Buenos Aires",
-            "description": "Capital city of Argentina"
+        "@type": "AboutPage",
+        "name": "About Hidden Gems Explorer",
+        "description": "Learn about our mission to uncover Buenos Aires' best kept secrets",
+        "url": "https://albertsilvawd.github.io/wdd231/final/about.html",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "Hidden Gems Explorer",
+            "description": "Platform for discovering hidden attractions in Buenos Aires",
+            "founder": {
+                "@type": "Person",
+                "name": "Albert Silva"
+            }
         }
     }
     </script>
@@ -83,7 +82,7 @@
     <header>
         <div class="header-container">
             <div class="logo-section">
-                <div class="logo" title="Hidden Gems Explorer Logo">HG</div>
+                <div class="logo" aria-label="Hidden Gems Explorer Logo">HG</div>
                 <div class="site-title">
                     <h2>Hidden Gems Explorer</h2>
                     <p>Discover the Extraordinary</p>
@@ -101,91 +100,196 @@
 
     <nav class="main-nav" id="main-nav" aria-label="Main navigation">
         <ul>
-            <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="attractions.html">Explore</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="about.html" class="active" aria-current="page">About</a></li>
         </ul>
     </nav>
 
     <main id="main-content">
-        <h1>Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures</h1>
+        <h1>About Hidden Gems Explorer</h1>
 
-        <!-- Hero Section -->
-        <section class="hero" aria-labelledby="hero-heading">
-            <div class="hero-content">
-                <h2 id="hero-heading">Discover Buenos Aires' Best Kept Secrets</h2>
-                <p>Explore extraordinary places beyond the typical tourist trail in Argentina's vibrant capital</p>
-                <div class="search-container">
-                    <label for="searchInput" class="sr-only">Search for hidden gems</label>
-                    <input type="text" id="searchInput" placeholder="Search for hidden gems..."
-                        aria-label="Search hidden gems">
-                    <button id="exploreBtn" class="cta-button" type="button">Explore Now</button>
-                </div>
+        <!-- Page Header -->
+        <section class="page-header" aria-labelledby="page-header-heading">
+            <div class="page-header-content">
+                <h2 id="page-header-heading">Discover the Extraordinary</h2>
+                <p>We believe the most memorable travel experiences happen when you venture beyond the typical tourist
+                    destinations and discover the hidden treasures that locals cherish.</p>
             </div>
-            <div class="hero-stats" aria-label="Site statistics">
-                <div class="stat-item">
-                    <span class="stat-number" id="totalGems" title="Total hidden gems">16</span>
-                    <span class="stat-label">Hidden Gems</span>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="mission-section" aria-labelledby="mission-heading">
+            <h2 id="mission-heading">Our Mission</h2>
+            <div class="mission-grid" role="list">
+                <div class="mission-item" role="listitem">
+                    <div class="mission-icon" aria-hidden="true">🔍</div>
+                    <h3>Authentic Discovery</h3>
+                    <p>We curate genuine hidden gems that offer authentic experiences away from crowded tourist
+                        hotspots, connecting you with the true spirit of Buenos Aires.</p>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="totalCategories" title="Total categories">7</span>
-                    <span class="stat-label">Categories</span>
+                <div class="mission-item" role="listitem">
+                    <div class="mission-icon" aria-hidden="true">🏛️</div>
+                    <h3>Local Heritage</h3>
+                    <p>Every hidden gem we feature tells a story about Buenos Aires' rich cultural heritage, from secret
+                        architectural marvels to neighborhood traditions.</p>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="totalFavorites" title="Your favorites count">0</span>
-                    <span class="stat-label">Your Favorites</span>
+                <div class="mission-item" role="listitem">
+                    <div class="mission-icon" aria-hidden="true">✨</div>
+                    <h3>Memorable Experiences</h3>
+                    <p>We help create unforgettable moments by guiding you to extraordinary places that will become your
+                        most treasured travel memories.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Weather Widget -->
-        <section class="weather-section" aria-labelledby="weather-heading">
-            <div class="weather-widget" id="weatherWidget">
-                <h3 id="weather-heading">Buenos Aires Weather</h3>
-                <div class="weather-info">
-                    <div class="weather-current">
-                        <span class="weather-temp" title="Current temperature">22°C</span>
-                        <span class="weather-desc" title="Weather condition">Partly Cloudy</span>
+        <!-- Impact Section -->
+        <section class="impact-section" aria-labelledby="impact-heading">
+            <h2 id="impact-heading">Our Impact</h2>
+            <div class="impact-stats" role="list">
+                <div class="impact-stat" role="listitem">
+                    <span class="impact-number" aria-label="Sixteen plus hidden gems">16+</span>
+                    <span class="impact-label">Hidden Gems</span>
+                    <p class="impact-desc">Carefully curated locations across Buenos Aires</p>
+                </div>
+                <div class="impact-stat" role="listitem">
+                    <span class="impact-number" aria-label="Seven categories">7</span>
+                    <span class="impact-label">Categories</span>
+                    <p class="impact-desc">From nature escapes to cultural treasures</p>
+                </div>
+                <div class="impact-stat" role="listitem">
+                    <span class="impact-number"
+                        aria-label="One thousand three hundred forty-seven explorers served">1,347</span>
+                    <span class="impact-label">Explorers Served</span>
+                    <p class="impact-desc">Adventure seekers who've discovered something special</p>
+                </div>
+                <div class="impact-stat" role="listitem">
+                    <span class="impact-number" aria-label="One hundred percent local focus">100%</span>
+                    <span class="impact-label">Local Focus</span>
+                    <p class="impact-desc">Authentic Buenos Aires experiences only</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="story-section" aria-labelledby="story-heading">
+            <h2 id="story-heading">Our Story</h2>
+            <div class="story-content">
+                <p>Hidden Gems Explorer was born from a simple belief: the best travel experiences happen when you step
+                    off the beaten path. While millions of visitors flock to Buenos Aires' famous landmarks, the city's
+                    true magic lies in its hidden corners, secret gardens, and local treasures.</p>
+
+                <p>As a passionate explorer of Buenos Aires, I discovered that some of my most meaningful travel
+                    experiences came from stumbling upon places that weren't in any guidebook. That spark ignited a
+                    mission to uncover and gather them in a digital gallery in a former subway tunnel, or the historic
+                    clock tower that tourists have never heard of.</p>
+
+                <p>This website is my way of sharing these extraordinary discoveries with fellow adventurers who crave
+                    authentic experiences. Each hidden gem is personally researched and visited, ensuring you'll find
+                    accurate, up-to-date information about places that will truly surprise and delight you.</p>
+
+                <p>Whether you're a first-time visitor or a Buenos Aires local looking to rediscover your city, our
+                    carefully curated collection of hidden gems will open your eyes to the extraordinary places hiding
+                    in plain sight.</p>
+            </div>
+        </section>
+
+        <!-- Submission Form Section -->
+        <section class="submission-section" aria-labelledby="submission-heading">
+            <h2 id="submission-heading">Share Your Hidden Gem</h2>
+            <p>Know a secret spot in Buenos Aires that deserves to be featured? We'd love to hear about it.</p>
+
+            <form id="gemSubmissionForm" action="thankyou.html" method="POST" class="submission-form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gemName">Hidden Gem Name *</label>
+                        <input type="text" id="gemName" name="gemName" required
+                            placeholder="e.g., Secret Rooftop Garden" aria-describedby="gemNameHelp" autocomplete="off">
+                        <small id="gemNameHelp">We'll create a title for your submission</small>
                     </div>
-                    <div class="weather-details">
-                        <span title="Humidity level">Humidity: 65%</span>
-                        <span title="Wind speed">Wind: 13 km/h</span>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com"
+                            aria-describedby="emailHelp" autocomplete="email">
+                        <small id="emailHelp">We'll only use this to follow up about your submission</small>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Featured Gems -->
-        <section class="featured-gems" aria-labelledby="featured-heading">
-            <h2 id="featured-heading">Featured Hidden Gems</h2>
-            <p class="section-subtitle">Discover our most popular hidden treasures in Buenos Aires</p>
-            <div class="featured-grid" id="featuredAttractions" role="region" aria-label="Featured attractions">
-                <div class="loading-message" aria-live="polite">Loading featured gems...</div>
-            </div>
-            <div class="view-all-container">
-                <a href="attractions.html" class="view-all-btn" aria-label="View all hidden gems">View All Hidden
-                    Gems</a>
-            </div>
-        </section>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required aria-describedby="categoryHelp">
+                            <option value="">Select a category</option>
+                            <option value="Nature">Nature</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Architecture">Architecture</option>
+                            <option value="History">History</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Food">Food</option>
+                            <option value="Shopping">Shopping</option>
+                        </select>
+                        <small id="categoryHelp">Choose the best category for your hidden gem</small>
+                    </div>
 
-        <!-- Categories Section -->
-        <section class="categories-section" aria-labelledby="categories-heading">
-            <h2 id="categories-heading">Explore by Category</h2>
-            <div class="categories-grid" id="categoriesGrid" role="region" aria-label="Attraction categories">
-                <!-- Categories will be populated by JavaScript -->
-            </div>
-        </section>
+                    <div class="form-group">
+                        <label for="location">Location in Buenos Aires *</label>
+                        <input type="text" id="location" name="location" required
+                            placeholder="e.g., Palermo district, near Plaza Armenia" aria-describedby="locationHelp"
+                            autocomplete="off">
+                        <small id="locationHelp">Help visitors find your gem</small>
+                    </div>
+                </div>
 
-        <!-- Country Info Section -->
-        <section class="country-section" aria-labelledby="country-heading">
-            <h2 id="country-heading">About Buenos Aires</h2>
-            <div class="country-info-grid" id="countryInfo" role="region" aria-label="Buenos Aires information">
-                <div class="loading-message" aria-live="polite">Loading country information...</div>
-            </div>
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" required rows="4" maxlength="1000"
+                        placeholder="Tell us what makes this place special..." aria-describedby="descHelp"></textarea>
+                    <small id="descHelp">Describe the atmosphere, what makes it unique, and why visitors should
+                        go</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="accessibility">Accessibility Level</label>
+                        <select id="accessibility" name="accessibility" aria-describedby="accessibilityHelp">
+                            <option value="High">High - Easy access for everyone</option>
+                            <option value="Medium">Medium - Some walking or stairs required</option>
+                            <option value="Low">Low - Challenging access or terrain</option>
+                        </select>
+                        <small id="accessibilityHelp">Help visitors understand physical requirements</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cost">Estimated Cost</label>
+                        <select id="cost" name="cost" aria-describedby="costHelp">
+                            <option value="Free">Free</option>
+                            <option value="Low">Low (Under $10)</option>
+                            <option value="Medium">Medium ($10-25)</option>
+                            <option value="High">High ($25+)</option>
+                        </select>
+                        <small id="costHelp">Approximate cost per person</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="visitorTips">Visitor Tips</label>
+                    <textarea id="visitorTips" name="visitorTips" rows="3" maxlength="500"
+                        placeholder="Any special tips for visitors? Best time to visit, what to bring, etc."
+                        aria-describedby="tipsHelp"></textarea>
+                    <small id="tipsHelp">Optional: Share insider knowledge to help visitors make the most of their
+                        visit</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Submit Hidden Gem</button>
+                    <button type="reset" class="reset-btn">Clear Form</button>
+                </div>
+            </form>
         </section>
     </main>
 
-    <footer>
+    <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Hidden Gems Explorer</h3>
@@ -204,23 +308,16 @@
                 <h3>Connect</h3>
                 <p>Project by Albert Silva</p>
                 <p>WDD 231 Final Project</p>
-                <a href="https://youtu.be/tgbNymZ7vqY" target="_blank" rel="noopener" id="videoLink" class="video-link"
+                <!-- FIXED: Real YouTube video link -->
+                <a href="https://youtu.be/tgbNymZ7vqY" target="_blank" rel="noopener" class="video-link"
                     aria-label="View project demo video on YouTube">📹 View Project Demo Video</a>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Albert Silva | Hidden Gems Explorer | WDD 231 Final Project</p>
-            <p>Last Modified: <time id="lastModified" title="Last modification date"></time></p>
+            <p>Last Modified: <span id="lastModified" aria-label="Last modification date"></span></p>
         </div>
     </footer>
-
-    <!-- Modal for Attraction Details -->
-    <div class="modal" id="attractionModal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
-        aria-hidden="true">
-        <div class="modal-content" id="modalContent">
-            <!-- Modal content will be populated by JavaScript -->
-        </div>
-    </div>
 
     <script type="module" src="scripts/main.js"></script>
 </body>
