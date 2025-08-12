@@ -259,6 +259,35 @@ header {
     color: var(--primary);
 }
 
+.weather-section {
+    margin-bottom: 2rem;
+}
+
+.loading-message {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text);
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.video-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.video-link:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
 main {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -339,11 +368,7 @@ main {
     letter-spacing: 0.5px;
 }
 
-.grid,
-.attractions-grid,
-.featured-grid,
-.categories-grid,
-.country-info-grid {
+.grid {
     display: grid;
     gap: 1.5rem;
     margin-bottom: 2rem;
@@ -351,10 +376,7 @@ main {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
-.card,
-.attraction-card,
-.category-card,
-.info-card {
+.card {
     background: var(--white);
     border-radius: var(--radius);
     overflow: hidden;
@@ -372,23 +394,7 @@ main {
     box-shadow: var(--shadow-lg);
 }
 
-.card-tall {
-    min-height: 450px;
-}
-
-.card-medium {
-    min-height: 180px;
-    padding: 2rem 1rem;
-    text-align: center;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    justify-content: center;
-}
-
-.image,
-.card-image,
-.attraction-image {
+.image {
     width: 100%;
     height: 220px;
     background: linear-gradient(135deg, var(--bg), #e2e8f0);
@@ -415,9 +421,7 @@ main {
     transform: scale(1.05);
 }
 
-.content,
-.card-content,
-.attraction-content {
+.content {
     padding: 1.5rem;
     flex: 1;
     display: flex;
@@ -437,21 +441,7 @@ main {
     overflow: hidden;
 }
 
-.description {
-    color: var(--text-light);
-    margin-bottom: 1rem;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex: 1;
-    min-height: 4.5rem;
-}
-
-.meta,
-.card-meta,
-.attraction-meta {
+.meta {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -471,9 +461,7 @@ main {
     line-height: 1.2;
 }
 
-.actions,
-.card-actions,
-.attraction-actions {
+.actions {
     margin-top: auto;
     display: flex;
     gap: 1rem;
@@ -483,10 +471,7 @@ main {
     border-top: 1px solid var(--border);
 }
 
-.btn,
-.cta-button,
-.primary-btn,
-.view-all-btn {
+.btn {
     background: var(--accent);
     color: var(--white);
     border: none;
@@ -505,10 +490,6 @@ main {
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
-}
-
-.primary-btn {
-    background: var(--primary);
 }
 
 .favorite-btn {
@@ -813,6 +794,124 @@ footer {
 
 .category-shopping {
     background: rgba(6, 182, 212, 0.9) !important;
+}
+
+/* Legacy compatibility - inherit from base classes */
+.attractions-grid,
+.featured-grid,
+.categories-grid,
+.country-info-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: stretch;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.attraction-card,
+.category-card,
+.info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 450px;
+}
+
+.card-medium,
+.category-card,
+.info-card {
+    min-height: 180px;
+    padding: 2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    justify-content: center;
+}
+
+.card-image,
+.attraction-image {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(135deg, var(--bg), #e2e8f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-content,
+.attraction-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+}
+
+.card-meta,
+.attraction-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    min-height: 2rem;
+    align-items: flex-start;
+}
+
+.card-actions,
+.attraction-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.cta-button,
+.primary-btn,
+.view-all-btn {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.primary-btn,
+.view-all-btn {
+    background: var(--primary);
+}
+
+.description {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+    min-height: 4.5rem;
 }
 
 @media (max-width: 768px) {
