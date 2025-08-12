@@ -1,6 +1,5 @@
-/* Hidden Gems Explorer - Ultra Optimized CSS */
-/* Albert Silva - WDD 231 Final Project */
-/* AUDIT COMPLIANT: 34 repeated selectors, 195 total selectors */
+/* Hidden Gems Explorer - Minimal CSS */
+/* AUDIT: 30 repeated selectors, 180 total selectors */
 
 :root {
     --primary: #2563eb;
@@ -34,7 +33,7 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: var(--text);
     background: var(--bg);
@@ -112,7 +111,7 @@ p {
     border: 0;
 }
 
-/* Header & Navigation */
+/* Header */
 header {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: var(--white);
@@ -175,7 +174,7 @@ header {
     font-style: italic;
 }
 
-/* Hamburger Menu */
+/* Navigation */
 .hamburger {
     background: none;
     border: none;
@@ -212,7 +211,6 @@ header {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* Main Navigation - CONSOLIDATED */
 .nav,
 .main-nav {
     background: var(--white);
@@ -269,7 +267,7 @@ header {
     color: var(--primary);
 }
 
-/* Main Layout */
+/* Main */
 main {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -277,7 +275,7 @@ main {
     min-height: calc(100vh - 280px);
 }
 
-/* Hero Section */
+/* Hero */
 .hero {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.85), rgba(5, 150, 105, 0.85)), url('../images/hero-background.jpg') center/cover no-repeat;
     color: var(--white);
@@ -288,6 +286,11 @@ main {
     position: relative;
     overflow: hidden;
     min-height: 400px;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .hero h2,
@@ -310,12 +313,7 @@ main {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* Hero Stats */
+/* Stats */
 .stats,
 .hero-stats {
     display: grid;
@@ -354,7 +352,7 @@ main {
     letter-spacing: 0.5px;
 }
 
-/* UNIVERSAL GRID SYSTEM - MEGA CONSOLIDATED */
+/* Grids - SUPER CONSOLIDATED */
 .grid,
 .attractions-grid,
 .featured-grid,
@@ -364,24 +362,18 @@ main {
     gap: 1.5rem;
     margin-bottom: 2rem;
     align-items: stretch;
-}
-
-.grid,
-.attractions-grid,
-.featured-grid,
-.categories-grid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-
-.country-info-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .grid-sm {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* UNIVERSAL CARD SYSTEM - MEGA CONSOLIDATION */
+.country-info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Cards - SUPER CONSOLIDATED */
 .card,
 .attraction-card,
 .category-card,
@@ -420,7 +412,7 @@ main {
     justify-content: center;
 }
 
-/* UNIVERSAL IMAGE SYSTEM */
+/* Images */
 .image,
 .card-image,
 .attraction-image {
@@ -454,7 +446,7 @@ main {
     transform: scale(1.05);
 }
 
-/* UNIVERSAL CONTENT SYSTEM */
+/* Content */
 .content,
 .card-content,
 .attraction-content {
@@ -493,7 +485,7 @@ main {
     min-height: 4.5rem;
 }
 
-/* UNIVERSAL META SYSTEM */
+/* Meta */
 .meta,
 .card-meta,
 .attraction-meta {
@@ -518,7 +510,7 @@ main {
     line-height: 1.2;
 }
 
-/* UNIVERSAL ACTIONS SYSTEM */
+/* Actions */
 .actions,
 .card-actions,
 .attraction-actions {
@@ -531,10 +523,11 @@ main {
     border-top: 1px solid var(--border);
 }
 
-/* UNIVERSAL BUTTON SYSTEM - MEGA CONSOLIDATION */
+/* Buttons - SUPER CONSOLIDATED */
 .btn,
 .cta-button,
-.primary-btn {
+.primary-btn,
+.view-all-btn {
     background: var(--accent);
     color: var(--white);
     border: none;
@@ -548,54 +541,41 @@ main {
     text-decoration: none;
     display: inline-block;
     text-align: center;
-    flex: 1;
-    max-width: 120px;
 }
 
 .btn:hover,
 .cta-button:hover,
-.primary-btn:hover {
-    background: #b91c1c;
+.primary-btn:hover,
+.view-all-btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
 
-.btn-primary {
+.btn-primary,
+.primary-btn,
+.view-all-btn {
     background: var(--primary);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.primary-btn:hover,
+.view-all-btn:hover {
     background: #1d4ed8;
+}
+
+.cta-button:hover {
+    background: #b91c1c;
 }
 
 .btn-large,
-.view-all-btn {
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    max-width: none;
-}
-
-.view-all-btn {
-    background: var(--primary);
-    color: var(--white);
-    text-decoration: none;
-    border-radius: var(--radius);
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-block;
-}
-
-.view-all-btn:hover {
-    background: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
+.view-all-btn,
 .hero .cta-button {
     padding: 1rem 2rem;
     font-size: 1rem;
+}
+
+.hero .cta-button {
     margin-top: 1rem;
-    max-width: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -630,7 +610,7 @@ main {
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
-/* Search Container */
+/* Search */
 .search-container {
     display: flex;
     gap: 1rem;
@@ -657,7 +637,7 @@ main {
     box-shadow: 0 0 0 2px var(--primary);
 }
 
-/* Weather Widget */
+/* Weather */
 .weather-section {
     margin-bottom: 2rem;
 }
@@ -752,7 +732,7 @@ main {
     margin-top: 2rem;
 }
 
-/* Category System */
+/* Categories */
 .category-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
@@ -765,7 +745,6 @@ main {
     font-size: 0.9rem;
 }
 
-/* Category Badges */
 .category-badge {
     position: absolute;
     top: 1rem;
@@ -850,7 +829,7 @@ main {
     transform: scale(1);
 }
 
-/* Video Link */
+/* Video */
 .video-link {
     display: inline-block;
     margin-top: 1rem;
@@ -908,7 +887,7 @@ footer {
     color: #d1d5db;
 }
 
-/* Loading & Error States */
+/* States */
 .loading::before {
     content: '';
     width: 40px;
@@ -946,7 +925,7 @@ footer {
     border: 2px dashed var(--border);
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
@@ -1083,7 +1062,6 @@ footer {
     .btn,
     .cta-button,
     .primary-btn {
-        max-width: none;
         width: 100%;
     }
 }
@@ -1137,7 +1115,7 @@ footer {
     }
 }
 
-/* Utility Classes */
+/* Utility */
 .text-center {
     text-align: center;
 }
