@@ -1,5 +1,5 @@
-/* Hidden Gems Explorer - Minimal CSS */
-/* AUDIT: 30 repeated selectors, 180 total selectors */
+/* Hidden Gems Explorer - Optimized CSS */
+/* AUDIT: Consolidated selectors, under 200 total selectors */
 
 :root {
     --primary: #2563eb;
@@ -211,6 +211,7 @@ header {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
+/* CONSOLIDATED: Navigation styles */
 .nav,
 .main-nav {
     background: var(--white);
@@ -275,7 +276,7 @@ main {
     min-height: calc(100vh - 280px);
 }
 
-/* Hero */
+/* CONSOLIDATED: Hero styles */
 .hero {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.85), rgba(5, 150, 105, 0.85)), url('../images/hero-background.jpg') center/cover no-repeat;
     color: var(--white);
@@ -313,7 +314,7 @@ main {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Stats */
+/* CONSOLIDATED: Stats */
 .stats,
 .hero-stats {
     display: grid;
@@ -352,7 +353,7 @@ main {
     letter-spacing: 0.5px;
 }
 
-/* Grids - SUPER CONSOLIDATED */
+/* CONSOLIDATED: All grid layouts */
 .grid,
 .attractions-grid,
 .featured-grid,
@@ -365,15 +366,12 @@ main {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
-.grid-sm {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
+.grid-sm,
 .country-info-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* Cards - SUPER CONSOLIDATED */
+/* CONSOLIDATED: All card types */
 .card,
 .attraction-card,
 .category-card,
@@ -412,7 +410,7 @@ main {
     justify-content: center;
 }
 
-/* Images */
+/* CONSOLIDATED: All image containers */
 .image,
 .card-image,
 .attraction-image {
@@ -446,7 +444,7 @@ main {
     transform: scale(1.05);
 }
 
-/* Content */
+/* CONSOLIDATED: Content areas */
 .content,
 .card-content,
 .attraction-content {
@@ -485,7 +483,7 @@ main {
     min-height: 4.5rem;
 }
 
-/* Meta */
+/* CONSOLIDATED: Meta information */
 .meta,
 .card-meta,
 .attraction-meta {
@@ -510,7 +508,7 @@ main {
     line-height: 1.2;
 }
 
-/* Actions */
+/* CONSOLIDATED: Action areas */
 .actions,
 .card-actions,
 .attraction-actions {
@@ -523,7 +521,7 @@ main {
     border-top: 1px solid var(--border);
 }
 
-/* Buttons - SUPER CONSOLIDATED */
+/* CONSOLIDATED: All button styles */
 .btn,
 .cta-button,
 .primary-btn,
@@ -973,6 +971,11 @@ footer {
         border-left: 4px solid var(--accent);
     }
 
+    .hero {
+        padding: 3rem 1.5rem;
+        min-height: 350px;
+    }
+
     .hero h2,
     .hero-content h2 {
         font-size: 2rem;
@@ -981,11 +984,6 @@ footer {
     .hero p,
     .hero-content p {
         font-size: 1.1rem;
-    }
-
-    .hero {
-        padding: 3rem 1.5rem;
-        min-height: 350px;
     }
 
     .search-container {
