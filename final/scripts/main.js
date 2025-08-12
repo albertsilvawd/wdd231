@@ -1,6 +1,6 @@
 // Hidden Gems Explorer - Main JavaScript Module
 // Albert Silva - WDD 231 Final Project
-// PRODUCTION VERSION - NO CONSOLE LOGS
+// PRODUCTION VERSION - OPTIMIZED FOR CSS CLASSES
 
 // Global state management
 window.appState = {
@@ -331,7 +331,10 @@ async function displayFeaturedAttractions() {
             return;
         }
 
-        container.innerHTML = featured.map(attraction => createAttractionHTML(attraction, false)).join('');
+        // First image without lazy loading, others with lazy loading
+        container.innerHTML = featured.map((attraction, index) =>
+            createAttractionHTML(attraction, index > 0)
+        ).join('');
     } catch (error) {
         container.innerHTML = '<p class="error-message">Failed to load featured attractions.</p>';
     }
@@ -364,7 +367,10 @@ async function displayAttractions(attractions = window.appState.filteredAttracti
             return;
         }
 
-        container.innerHTML = attractions.map((attraction, index) => createAttractionHTML(attraction, index > 2)).join('');
+        // All images with lazy loading (below the fold)
+        container.innerHTML = attractions.map(attraction =>
+            createAttractionHTML(attraction, true)
+        ).join('');
     } catch (error) {
         container.innerHTML = '<p class="error-message">Failed to load attractions.</p>';
     }
@@ -493,7 +499,9 @@ function initializeLazyLoading() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    img.src = img.dataset.src || img.src;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                    }
                     img.classList.remove('lazy');
                     imageObserver.unobserve(img);
                 }
@@ -503,6 +511,7 @@ function initializeLazyLoading() {
             threshold: 0.01
         });
 
+        // Observe all images with loading="lazy"
         document.querySelectorAll('img[loading="lazy"]').forEach(img => {
             imageObserver.observe(img);
         });
@@ -852,7 +861,7 @@ function displayCategories() {
         <div class="category-card" onclick="filterByCategory('${category}')">
             <div class="category-icon">${categoryIcons[category] || '📍'}</div>
             <h3>${category}</h3>
-            <p>${count} locations</p>
+            <p class="category-count">${count} locations</p>
         </div>
     `).join('');
 }
@@ -1102,8 +1111,6 @@ window.shareOn = shareOn;
 window.copyLink = copyLink;
 window.handleImageLoad = handleImageLoad;
 window.handleImageError = handleImageError;
-window.preloadCriticalImages = preloadCriticalImages;
-window.initializeLazyLoading = initializeLazyLoading;
 
 // Initialize URL params and last modified on attractions page
 if (getCurrentPage() === 'attractions') {
