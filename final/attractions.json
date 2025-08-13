@@ -21,7 +21,7 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Low",
             "accessibility": "High",
-            "image": "./images/attractions/underground-art-galery.webp",
+            "image": "./images/attractions/underground-art-gallery.webp",
             "rating": 4.6,
             "neighborhood": "San Telmo",
             "openHours": "2:00 PM - 10:00 PM"
@@ -145,16 +145,16 @@
         },
         {
             "id": 12,
-            "name": "Rooftop Bookstore Gardens",
-            "category": "Culture",
-            "description": "Urban bookstore project with outdoor garden, reading areas, and book exchange programs for the community.",
+            "name": "Alternative Speakeasy Experience",
+            "category": "Entertainment",
+            "description": "Another hidden speakeasy with different atmosphere, featuring vintage cocktails and live music performances.",
             "location": "Villa Crespo, Buenos Aires",
-            "cost": "Free",
-            "accessibility": "High",
-            "image": "./images/attractions/vintage-record-shop-basement.webp",
-            "rating": 4.8,
+            "cost": "High",
+            "accessibility": "Medium",
+            "image": "./images/attractions/hidden-speakeasy-cave.webp",
+            "rating": 4.6,
             "neighborhood": "Villa Crespo",
-            "openHours": "8:00 AM - 10:00 PM"
+            "openHours": "8:00 PM - 2:00 AM"
         },
         {
             "id": 13,

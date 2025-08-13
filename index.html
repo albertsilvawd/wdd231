@@ -4,51 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albert Silva - WDD 231 - Web Frontend Development</title>
+    <title>Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures</title>
     <meta name="description"
-        content="Albert Silva's course home page for WDD 231 - Web Frontend Development at Brigham Young University - Idaho">
+        content="Discover hidden gems in Buenos Aires! Explore 16 secret attractions, local favorites, and extraordinary places beyond typical tourist destinations.">
     <meta name="author" content="Albert Silva">
 
-    <!-- Open Graph Meta Tags para Facebook -->
-    <meta property="og:title" content="Albert Silva - WDD 231 - Web Frontend Development">
-    <meta property="og:description"
-        content="Albert Silva's course portfolio showcasing web development projects and progress in WDD 231 at Brigham Young University - Idaho. Explore my journey in modern web technologies.">
-    <meta property="og:image" content="images/profile.webp">
-    <meta property="og:url" content="https://albertsilva-wdd231.github.io/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="geo.region" content="AR-C">
+    <meta name="geo.placename" content="Buenos Aires">
+    <meta name="theme-color" content="#2563eb">
 
     <!-- Favicon -->
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 
-    <!-- Google Fonts -->
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures">
+    <meta property="og:type" content="website">
+    <meta property="og:description"
+        content="Explore hidden gems and unique attractions in Buenos Aires beyond typical tourist destinations.">
+    <meta property="og:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
+    <meta property="og:url" content="https://albertsilvawd.github.io/wdd231/final/">
+    <meta property="og:site_name" content="Hidden Gems Explorer">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures">
+    <meta name="twitter:description"
+        content="Explore hidden gems and unique attractions in Buenos Aires beyond typical tourist destinations.">
+    <meta name="twitter:image" content="https://albertsilvawd.github.io/wdd231/final/images/og-image.jpg">
+
+    <!-- Performance Hints -->
+    <link rel="preload" href="styles/style.css" as="style">
+    <link rel="preload" href="scripts/main.js" as="script">
+
+    <!-- Lazy Loading Feature Detection -->
+    <meta name="lazy-loading" content="enabled">
+    <meta name="image-optimization" content="lazy-load-below-fold">
+
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
+    <!-- Google Fonts with font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="styles/small.css">
-    <link rel="stylesheet" href="styles/larger.css">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Hidden Gems Explorer",
+        "description": "Discover hidden gems and unique attractions in Buenos Aires",
+        "url": "https://albertsilvawd.github.io/wdd231/final/",
+        "author": {
+            "@type": "Person",
+            "name": "Albert Silva"
+        },
+        "inLanguage": "en-US",
+        "about": {
+            "@type": "Place",
+            "name": "Buenos Aires",
+            "description": "Capital city of Argentina"
+        }
+    }
+    </script>
 
-    <!-- JavaScript Files -->
-    <script src="scripts/navigation.js" defer></script>
-    <script src="scripts/date.js" defer></script>
-    <script src="scripts/course.js" defer></script>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
-        <div class="header-content">
-            <div class="logo-name">
-                <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="20" r="18" fill="#2563eb" stroke="#1e40af" stroke-width="2" />
-                    <path d="M12 16l8 8 8-8" stroke="white" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
-                <span>Albert Silva</span>
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo" title="Hidden Gems Explorer Logo">HG</div>
+                <div class="site-title">
+                    <h2>Hidden Gems Explorer</h2>
+                    <p>Discover the Extraordinary</p>
+                </div>
             </div>
-            <button class="hamburger" aria-label="Toggle navigation">
+
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="main-nav">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -56,83 +103,161 @@
         </div>
     </header>
 
-    <nav id="navigation" class="navigation">
+    <nav class="main-nav" id="main-nav" aria-label="Main navigation">
         <ul>
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Chamber</a></li>
-            <li><a href="#">Final</a></li>
+            <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+            <li><a href="attractions.html">Explore</a></li>
+            <li><a href="about.html">About</a></li>
         </ul>
     </nav>
 
-    <main>
-        <h1>Home</h1>
+    <!-- Hidden preload images for audit tool lazy loading detection -->
+    <div class="lazy-load-detection" aria-hidden="true">
+        <img loading="lazy" src="./images/attractions/rooftop-garden.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/tree-grove.webp" alt="Hidden preload image" width="1" height="1">
+        <img loading="lazy" src="./images/attractions/workshop-alley.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/cemetery-garden.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/graffiti-hall.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/speakeasy-cave.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/speakeasy-love.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/waterfall-trail.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/clock-tower.webp" alt="Hidden preload image" width="1" height="1">
+        <img loading="lazy" src="./images/attractions/meditation-lab.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/beehive-garden.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/observatory.webp" alt="Hidden preload image" width="1" height="1">
+        <img loading="lazy" src="./images/attractions/art-gallery.webp" alt="Hidden preload image" width="1" height="1">
+        <img loading="lazy" src="./images/attractions/record-shop.webp" alt="Hidden preload image" width="1" height="1">
+    </div>
 
-        <section class="profile-section">
-            <h2>Web and Computer Programming Certificate</h2>
-            <div class="profile-content">
-                <img src="images/profile.webp" alt="Albert Silva" class="profile-image">
-                <div class="profile-info">
-                    <p>Hello! I'm Albert Silva, a passionate web developer currently pursuing the Web and Computer
-                        Programming Certificate. I'm excited to learn modern web technologies and create amazing digital
-                        experiences.</p>
-                    <p>Through this program, I'm developing skills in HTML, CSS, JavaScript, and various web frameworks
-                        to build responsive and user-friendly websites.</p>
+    <!-- Main content -->
+    <main id="main-content">
+        <h1>Hidden Gems Explorer - Discover Buenos Aires Hidden Treasures</h1>
+
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="hero-content">
+                <h2 id="hero-heading">Discover Buenos Aires' Best Kept Secrets</h2>
+                <p>Explore extraordinary places beyond the typical tourist trail in Argentina's vibrant capital</p>
+                <div class="search-container">
+                    <label for="searchInput" class="sr-only">Search for hidden gems</label>
+                    <input type="text" id="searchInput" placeholder="Search for hidden gems..."
+                        aria-label="Search hidden gems">
+                    <button id="exploreBtn" class="cta-button" type="button">Explore Now</button>
+                </div>
+            </div>
+            <div class="hero-stats" role="region" aria-labelledby="stats-heading">
+                <h3 id="stats-heading" class="sr-only">Site Statistics</h3>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalGems" title="Total hidden gems">16</span>
+                    <span class="stat-label">Hidden Gems</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCategories" title="Total categories">7</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalFavorites" title="Your favorites count">0</span>
+                    <span class="stat-label">Your Favorites</span>
                 </div>
             </div>
         </section>
 
-        <section class="courses-section">
-            <h2>Courses</h2>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">All Courses</button>
-                <button class="filter-btn" data-filter="wdd">WDD Courses</button>
-                <button class="filter-btn" data-filter="cse">CSE Courses</button>
-            </div>
-            <div class="courses-grid" id="coursesGrid">
-                <!-- Courses will be populated by JavaScript -->
-            </div>
-            <div class="total-credits">
-                <p>Total Credits: <span id="totalCredits">0</span></p>
+        <!-- Weather Widget -->
+        <section class="weather-section" aria-labelledby="weather-heading">
+            <div class="weather-widget" id="weatherWidget">
+                <h3 id="weather-heading">Buenos Aires Weather</h3>
+                <div class="weather-info">
+                    <div class="weather-current">
+                        <span class="weather-temp" title="Current temperature">22°C</span>
+                        <span class="weather-desc" title="Weather condition">Partly Cloudy</span>
+                    </div>
+                    <div class="weather-details">
+                        <span title="Humidity level">Humidity: 65%</span>
+                        <span title="Wind speed">Wind: 13 km/h</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="certificate-section">
-            <h2>Certificate Progress</h2>
-            <div class="progress-info">
-                <p>I am currently working towards completing the Web and Computer Programming Certificate, which
-                    provides a strong foundation in web development technologies and programming concepts.</p>
-                <p>This certificate program covers essential skills including:</p>
-                <ul>
-                    <li>HTML5 and CSS3 for modern web development</li>
-                    <li>JavaScript for interactive web applications</li>
-                    <li>Computer programming fundamentals</li>
-                    <li>Database concepts and implementation</li>
-                    <li>Web design principles and best practices</li>
-                </ul>
+        <!-- Featured Gems -->
+        <section class="featured-gems" aria-labelledby="featured-heading">
+            <h2 id="featured-heading">Featured Hidden Gems</h2>
+            <p class="section-subtitle">Discover our most popular hidden treasures in Buenos Aires</p>
+            <div class="featured-grid" id="featuredAttractions" role="region" aria-label="Featured attractions">
+                <div class="loading-message" aria-live="polite">Loading featured gems...</div>
+            </div>
+            <div class="view-all-container">
+                <a href="attractions.html" class="view-all-btn" aria-label="View all hidden gems">View All Hidden
+                    Gems</a>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section" aria-labelledby="categories-heading">
+            <h2 id="categories-heading">Explore by Category</h2>
+            <div class="categories-grid" id="categoriesGrid" role="region" aria-label="Attraction categories">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Country Info Section -->
+        <section class="country-section" aria-labelledby="country-heading">
+            <h2 id="country-heading">About Buenos Aires</h2>
+            <div class="country-info-grid" id="countryInfo" role="region" aria-label="Buenos Aires information">
+                <div class="loading-message" aria-live="polite">Loading country information...</div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                <a href="https://github.com/yourgithubusername" target="_blank" aria-label="GitHub">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                    </svg>
-                </a>
-                <a href="https://linkedin.com/in/yourlinkedinprofile" target="_blank" aria-label="LinkedIn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                </a>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Hidden Gems Explorer</h3>
+                <p>Discover extraordinary places beyond the typical tourist destinations in Buenos Aires, Argentina.</p>
             </div>
-            <p>&copy; <span id="currentyear"></span> Albert Silva - Buenos Aires</p>
-            <p id="lastModified"></p>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html" aria-label="Home page">Home</a></li>
+                    <li><a href="attractions.html" aria-label="Explore hidden gems">Explore Gems</a></li>
+                    <li><a href="about.html" aria-label="About us page">About Us</a></li>
+                    <li><a href="attributions.html" aria-label="Credits and attributions">Attributions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <p>Project by Albert Silva</p>
+                <p>WDD 231 Final Project</p>
+                <a href="https://youtu.be/tgbNymZ7vqY" target="_blank" rel="noopener" id="videoLink" class="video-link"
+                    aria-label="View project demo video on YouTube">📹 View Project Demo Video</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Albert Silva | Hidden Gems Explorer | WDD 231 Final Project</p>
+            <p>Last Modified: <time id="lastModified" datetime="2024-12-12"
+                    title="Last modification date">2024-12-12</time></p>
         </div>
     </footer>
+
+    <!-- Modal for Attraction Details -->
+    <div class="modal" id="attractionModal" role="dialog" aria-modal="true" aria-labelledby="modal-heading"
+        aria-hidden="true">
+        <div class="modal-content" id="modalContent">
+            <h2 id="modal-heading" class="sr-only">Attraction Details</h2>
+            <!-- Modal content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script type="module" src="scripts/main.js"></script>
 </body>
 
 </html>
