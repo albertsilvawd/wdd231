@@ -12,7 +12,9 @@
     --radius: 8px;
 }
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -26,18 +28,17 @@ body {
     overflow-x: hidden;
 }
 
-/* LAYOUT CONTAINERS */
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-}
-
+/* LAYOUT */
+main,
 .header-container,
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
+}
+
+main {
+    padding: 2rem 1rem;
 }
 
 .footer-container {
@@ -47,12 +48,13 @@ main {
     margin-bottom: 2rem;
 }
 
-/* GRID LAYOUTS */
+/* GRIDS */
 .grid,
 .attractions-grid,
 .featured-grid,
 .categories-grid,
-.country-info-grid {
+.country-info-grid,
+.hero-stats {
     display: grid;
     gap: 1.5rem;
     margin-bottom: 3rem;
@@ -80,14 +82,13 @@ main {
 }
 
 .hero-stats {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 2rem;
     max-width: 600px;
     margin: 2rem auto 0;
 }
 
-/* CARD COMPONENTS */
+/* CARDS */
 .card,
 .attraction-card,
 .category-card,
@@ -118,7 +119,7 @@ main {
     min-height: 140px;
 }
 
-/* IMAGE CONTAINERS */
+/* IMAGES */
 .image,
 .card-image,
 .attraction-image {
@@ -137,7 +138,7 @@ main {
     transition: opacity 0.3s ease;
 }
 
-/* CONTENT SECTIONS */
+/* CONTENT */
 .content,
 .card-content,
 .attraction-content {
@@ -181,7 +182,7 @@ main {
     align-items: center;
 }
 
-/* META INFORMATION */
+/* META & ACTIONS */
 .meta,
 .card-meta,
 .attraction-meta {
@@ -193,7 +194,6 @@ main {
     color: var(--text-light);
 }
 
-/* ACTION BUTTONS */
 .actions,
 .card-actions,
 .attraction-actions {
@@ -202,6 +202,7 @@ main {
     margin-top: auto;
 }
 
+/* BUTTONS */
 .btn,
 .primary-btn,
 .cta-button,
@@ -239,7 +240,7 @@ main {
     background: #b91c1c;
 }
 
-/* HEADER & NAVIGATION */
+/* HEADER */
 header {
     background: var(--white);
     box-shadow: var(--shadow);
@@ -289,6 +290,7 @@ header {
     text-align: left;
 }
 
+/* NAVIGATION */
 .main-nav {
     background: var(--white);
     border-top: 1px solid var(--border);
@@ -343,7 +345,7 @@ header {
     transition: 0.3s;
 }
 
-/* HERO SECTION */
+/* HERO */
 .hero {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.8) 0%, rgba(5, 150, 105, 0.8) 100%),
@@ -400,7 +402,7 @@ header {
     opacity: 0.9;
 }
 
-/* WEATHER WIDGETS */
+/* WEATHER */
 .weather-section {
     margin: 2rem auto;
     max-width: 1200px;
@@ -483,7 +485,7 @@ header {
     font-size: 1rem;
 }
 
-/* INTERACTIVE ELEMENTS */
+/* INTERACTIVE */
 .category-badge {
     position: absolute;
     top: 1rem;
@@ -600,7 +602,7 @@ footer {
     margin: 0 auto;
 }
 
-/* UTILITY CLASSES */
+/* UTILITIES */
 .no-results,
 .loading-message {
     text-align: center;
@@ -670,7 +672,6 @@ footer {
     border: 0;
 }
 
-/* LAZY LOADING */
 img[loading="lazy"] {
     transition: opacity 0.3s ease;
 }
