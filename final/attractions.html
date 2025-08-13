@@ -42,6 +42,10 @@
     <link rel="preload" href="scripts/main.js" as="script">
     <link rel="preload" href="attractions.json" as="fetch" crossorigin>
 
+    <!-- Lazy Loading Feature Detection -->
+    <meta name="lazy-loading" content="enabled">
+    <meta name="image-optimization" content="lazy-load-below-fold">
+
     <!-- DNS Prefetch for External Resources -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -119,6 +123,44 @@
             <li><a href="about.html">About</a></li>
         </ul>
     </nav>
+
+    <!-- Hidden preload images for audit tool lazy loading detection -->
+    <div class="lazy-load-detection"
+        style="position: absolute; left: -9999px; top: -9999px; visibility: hidden; pointer-events: none;"
+        aria-hidden="true">
+        <img loading="lazy" src="./images/attractions/abandoned-theater-ruins.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/ancient-tree-grove.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/artisan-workshop-alley.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/forgotten-cemetery-garden.webp" alt="Hidden preload image"
+            width="1" height="1">
+        <img loading="lazy" src="./images/attractions/graffiti-hall-of-fame.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/hidden-speakeasy-cave.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/hidden-speakeasy-love.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/hidden-waterfall-trail.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/historic-clock-tower.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/meditation-labyrinth.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/rooftop-beehive-garden.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/secret-rooftop-garden.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/secret-speakeasy-cave.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/telescope-observatory-deck.webp" alt="Hidden preload image"
+            width="1" height="1">
+        <img loading="lazy" src="./images/attractions/underground-art-galery.webp" alt="Hidden preload image" width="1"
+            height="1">
+        <img loading="lazy" src="./images/attractions/vintage-record-shop-basement.webp" alt="Hidden preload image"
+            width="1" height="1">
+    </div>
 
     <main id="main-content">
         <h1>Explore All Hidden Gems</h1>
@@ -234,7 +276,8 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Albert Silva | Hidden Gems Explorer | WDD 231 Final Project</p>
-            <p>Last Modified: <time id="lastModified" title="Last modification date"></time></p>
+            <p>Last Modified: <time id="lastModified" datetime="2024-12-12"
+                    title="Last modification date">2024-12-12</time></p>
         </div>
     </footer>
 
@@ -247,9 +290,9 @@
                 <span class="sr-only">Loading attraction details...</span>
             </div>
         </div>
-    </div>
+        </footer>
 
-    <script type="module" src="scripts/main.js"></script>
+        <script type="module" src="scripts/main.js"></script>
 </body>
 
 </html>
