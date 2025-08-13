@@ -26,14 +26,28 @@ body {
     overflow-x: hidden;
 }
 
-/* CONSOLIDATED: All containers */
+/* LAYOUT CONTAINERS */
 main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
 
-/* CONSOLIDATED: All grids in one rule */
+.header-container,
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+/* GRID LAYOUTS */
 .grid,
 .attractions-grid,
 .featured-grid,
@@ -65,7 +79,15 @@ main {
     margin: 0 auto;
 }
 
-/* CONSOLIDATED: All cards in one rule */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    max-width: 600px;
+    margin: 2rem auto 0;
+}
+
+/* CARD COMPONENTS */
 .card,
 .attraction-card,
 .category-card,
@@ -79,45 +101,24 @@ main {
     flex-direction: column;
     height: 100%;
     min-height: 120px;
-    /* Added minimum height for consistency */
 }
 
-.card:hover {
+.card:hover,
+.attraction-card:hover,
+.category-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Info cards specific styling for equal height */
 .info-card {
     padding: 1.5rem;
     justify-content: flex-start;
     align-items: flex-start;
     text-align: left;
     min-height: 140px;
-    /* Consistent minimum height for info cards */
 }
 
-.info-card h4 {
-    color: var(--text-dark);
-    margin-bottom: 0.75rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.info-card p {
-    color: var(--text-light);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-}
-
-/* CONSOLIDATED: All images in one rule */
+/* IMAGE CONTAINERS */
 .image,
 .card-image,
 .attraction-image {
@@ -136,7 +137,7 @@ main {
     transition: opacity 0.3s ease;
 }
 
-/* CONSOLIDATED: All content in one rule */
+/* CONTENT SECTIONS */
 .content,
 .card-content,
 .attraction-content {
@@ -148,23 +149,39 @@ main {
 
 .content h3,
 .card-content h3,
-.attraction-content h3 {
+.attraction-content h3,
+.info-card h4 {
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
     color: var(--text-dark);
 }
 
+.info-card h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+}
+
 .content p,
 .card-content p,
-.attraction-content p {
+.attraction-content p,
+.info-card p {
     color: var(--text-light);
     margin-bottom: 1rem;
     flex-grow: 1;
     line-height: 1.5;
 }
 
-/* CONSOLIDATED: All meta info in one rule */
+.info-card p {
+    font-size: 0.95rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* META INFORMATION */
 .meta,
 .card-meta,
 .attraction-meta {
@@ -176,7 +193,7 @@ main {
     color: var(--text-light);
 }
 
-/* CONSOLIDATED: All actions in one rule */
+/* ACTION BUTTONS */
 .actions,
 .card-actions,
 .attraction-actions {
@@ -185,7 +202,6 @@ main {
     margin-top: auto;
 }
 
-/* CONSOLIDATED: All buttons in one rule */
 .btn,
 .primary-btn,
 .cta-button,
@@ -208,7 +224,6 @@ main {
 
 .btn:hover,
 .primary-btn:hover,
-.cta-button:hover,
 .view-all-btn:hover {
     background: #1d4ed8;
 }
@@ -224,7 +239,7 @@ main {
     background: #b91c1c;
 }
 
-/* Header & Navigation - CONSOLIDATED */
+/* HEADER & NAVIGATION */
 header {
     background: var(--white);
     box-shadow: var(--shadow);
@@ -234,9 +249,6 @@ header {
 }
 
 .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -313,7 +325,6 @@ header {
     font-weight: 600;
 }
 
-/* Hamburger */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -332,21 +343,16 @@ header {
     transition: 0.3s;
 }
 
-/* Hero Section */
+/* HERO SECTION */
 .hero {
-    /* Fallback gradient if image doesn't load */
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-
-    /* Hero image with overlay - add your image path here */
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.8) 0%, rgba(5, 150, 105, 0.8) 100%),
         url('../images/hero-background.jpg'),
         linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    /* Changed from fixed for better mobile performance */
     color: var(--white);
     padding: 4rem 1rem;
     text-align: center;
@@ -378,15 +384,6 @@ header {
     opacity: 0.95;
 }
 
-/* Stats - CONSOLIDATED */
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    max-width: 600px;
-    margin: 2rem auto 0;
-}
-
 .stat-item {
     text-align: center;
 }
@@ -403,14 +400,15 @@ header {
     opacity: 0.9;
 }
 
-/* Weather Section */
+/* WEATHER WIDGETS */
 .weather-section {
     margin: 2rem auto;
     max-width: 1200px;
     padding: 0 1rem;
 }
 
-.weather-widget {
+.weather-widget,
+.weather-info {
     background: var(--white);
     padding: 1.5rem;
     border-radius: var(--radius);
@@ -425,7 +423,35 @@ header {
     color: var(--text-dark);
 }
 
-/* Sections */
+.weather-current {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.weather-temp {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.weather-desc {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.weather-details {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* SECTIONS */
 .featured-gems,
 .categories-section,
 .country-section {
@@ -440,7 +466,7 @@ header {
     color: var(--text-dark);
 }
 
-/* Search */
+/* SEARCH */
 .search-container {
     max-width: 600px;
     margin: 2rem auto;
@@ -457,7 +483,7 @@ header {
     font-size: 1rem;
 }
 
-/* Category Badge */
+/* INTERACTIVE ELEMENTS */
 .category-badge {
     position: absolute;
     top: 1rem;
@@ -471,7 +497,6 @@ header {
     z-index: 2;
 }
 
-/* Favorite Button */
 .favorite-btn {
     position: absolute;
     top: 1rem;
@@ -492,7 +517,7 @@ header {
     transform: scale(1.1);
 }
 
-/* Modal */
+/* MODAL */
 .modal {
     position: fixed;
     top: 0;
@@ -524,60 +549,12 @@ header {
     position: relative;
 }
 
-/* Weather */
-.weather-info {
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    text-align: center;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.weather-current {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.weather-temp {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 0.25rem;
-}
-
-.weather-desc {
-    font-size: 1rem;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-}
-
-.weather-details {
-    display: flex;
-    justify-content: space-around;
-    gap: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-light);
-}
-
-/* Footer */
+/* FOOTER */
 footer {
     background: var(--text-dark);
     color: var(--white);
     padding: 3rem 1rem 2rem;
     margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 2rem;
 }
 
 .footer-section h3 {
@@ -623,14 +600,30 @@ footer {
     margin: 0 auto;
 }
 
-/* No Results */
-.no-results {
+/* UTILITY CLASSES */
+.no-results,
+.loading-message {
     text-align: center;
     padding: 3rem 1rem;
     color: var(--text-light);
 }
 
-/* Lazy Loading Detection - Hidden from users but visible to audit tools */
+.view-all-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ACCESSIBILITY */
 .lazy-load-detection {
     position: absolute !important;
     left: -9999px !important;
@@ -650,20 +643,6 @@ footer {
     opacity: 0 !important;
 }
 
-/* Lazy Loading States */
-img[loading="lazy"] {
-    transition: opacity 0.3s ease;
-}
-
-img.lazy-loading {
-    opacity: 0.5;
-}
-
-img.lazy-loaded {
-    opacity: 1;
-}
-
-/* Skip Link */
 .skip-link {
     position: absolute;
     left: -9999px;
@@ -691,27 +670,20 @@ img.lazy-loaded {
     border: 0;
 }
 
-.loading-message {
-    text-align: center;
-    color: var(--text-light);
-    padding: 2rem;
+/* LAZY LOADING */
+img[loading="lazy"] {
+    transition: opacity 0.3s ease;
 }
 
-.view-all-container {
-    text-align: center;
-    margin-top: 2rem;
+img.lazy-loading {
+    opacity: 0.5;
 }
 
-.section-subtitle {
-    text-align: center;
-    color: var(--text-light);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+img.lazy-loaded {
+    opacity: 1;
 }
 
+/* TYPOGRAPHY */
 h1 {
     font-size: 2.5rem;
     font-weight: 700;
@@ -740,7 +712,7 @@ h4 {
     margin-bottom: 0.5rem;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
