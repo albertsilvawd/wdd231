@@ -1,6 +1,5 @@
 // Hidden Gems Explorer - Main JavaScript Module
 // Albert Silva - WDD 231 Final Project
-// PRODUCTION VERSION - NO CONSOLE OUTPUT - REWRITTEN FROM SCRATCH
 
 // Global state management
 window.appState = {
