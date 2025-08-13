@@ -1,7 +1,7 @@
 // Hidden Gems Explorer - Attractions Page Enhancements
 // This file only adds EXTRA functionality, does NOT interfere with main filtering
 
-const isDevelopment = true; // Enable for debugging
+const isDevelopment = false; // Disabled for production
 const logger = {
     log: isDevelopment ? console.log : () => { },
     warn: isDevelopment ? console.warn : () => { },
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initAttractionsPageEnhancements() {
     logger.log('🔧 Initializing attractions page enhancements...');
-    
+
     // Only add enhancements that don't interfere with core functionality
     initKeyboardShortcuts();
     initViewModeToggle();
@@ -30,7 +30,7 @@ function initKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
         // Don't interfere with form inputs
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        
+
         switch (e.key.toLowerCase()) {
             case 'f':
                 e.preventDefault();
@@ -71,12 +71,12 @@ function initViewModeToggle() {
 
     const viewToggle = document.createElement('div');
     viewToggle.className = 'view-toggle';
-    viewToggle.innerHTML = 
+    viewToggle.innerHTML =
         '<button class="view-btn active" data-view="grid" aria-label="Grid view" title="Grid View">' +
-            '<span>⊞</span>' +
+        '<span>⊞</span>' +
         '</button>' +
         '<button class="view-btn" data-view="list" aria-label="List view" title="List View">' +
-            '<span>☰</span>' +
+        '<span>☰</span>' +
         '</button>';
 
     filterControls.appendChild(viewToggle);
@@ -86,7 +86,7 @@ function initViewModeToggle() {
         if (!btn) return;
 
         const viewMode = btn.dataset.view;
-        
+
         // Update button states
         document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -94,7 +94,7 @@ function initViewModeToggle() {
         // Update grid layout
         const attractionsGrid = document.getElementById('attractionsGrid');
         if (attractionsGrid) {
-            attractionsGrid.className = viewMode === 'list' ? 
+            attractionsGrid.className = viewMode === 'list' ?
                 'attractions-list' : 'attractions-grid';
         }
 
@@ -209,8 +209,8 @@ function showSearchSuggestions(query) {
 
     suggestionContainer.innerHTML = allSuggestions.map((suggestion, index) =>
         '<div class="suggestion-item" data-index="' + index + '" data-type="' + suggestion.type + '">' +
-            '<span class="suggestion-text">' + suggestion.text + '</span>' +
-            (suggestion.category ? '<span class="suggestion-category">' + suggestion.category + '</span>' : '') +
+        '<span class="suggestion-text">' + suggestion.text + '</span>' +
+        (suggestion.category ? '<span class="suggestion-category">' + suggestion.category + '</span>' : '') +
         '</div>'
     ).join('');
 
@@ -237,7 +237,7 @@ function handleSuggestionClick(e) {
         if (categoryFilter) {
             categoryFilter.value = suggestion.text;
             if (searchInput) searchInput.value = '';
-            
+
             // Use main.js function if available
             if (typeof window.applyFilters === 'function') {
                 window.applyFilters();
@@ -246,7 +246,7 @@ function handleSuggestionClick(e) {
     } else {
         if (searchInput) {
             searchInput.value = suggestion.text;
-            
+
             // Use main.js function if available
             if (typeof window.applyFilters === 'function') {
                 window.applyFilters();
@@ -267,20 +267,20 @@ function hideSearchSuggestions() {
 function initAdvancedUIFeatures() {
     // Add loading states
     addLoadingStates();
-    
+
     // Add tooltips
     addTooltips();
-    
+
     // Add smooth animations
     addAnimations();
-    
+
     logger.log('✅ Advanced UI features initialized');
 }
 
 function addLoadingStates() {
     // Add loading indicators when filters change
     const filterElements = ['categoryFilter', 'costFilter', 'accessibilityFilter'];
-    
+
     filterElements.forEach(elementId => {
         const element = document.getElementById(elementId);
         if (element) {

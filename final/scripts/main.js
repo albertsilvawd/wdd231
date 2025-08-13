@@ -21,14 +21,10 @@ let imageObserver = null;
 let contentObserver = null;
 
 // DOM ready initialization
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 DOM Content Loaded - Starting initialization');
-    initializeApp();
-});
+document.addEventListener('DOMContentLoaded', initializeApp);
 
 async function initializeApp() {
     try {
-        console.log('🔧 Initializing app...');
         removeLoadingMessages();
         await loadAttractions();
         initializeNavigation();
@@ -38,10 +34,8 @@ async function initializeApp() {
         initializeLazyLoading();
 
         const currentPage = getCurrentPage();
-        console.log('📄 Current page:', currentPage);
         await initializePage(currentPage);
     } catch (error) {
-        console.error('❌ App initialization error:', error);
         showErrorMessage('Failed to initialize the application. Please refresh the page.');
     }
 }
@@ -70,18 +64,10 @@ async function loadAttractions() {
         window.appState.attractions = data.attractions || [];
         window.appState.filteredAttractions = [...window.appState.attractions];
 
-        console.log('Loaded attractions:', window.appState.attractions.length);
-        console.log('Categories found:', [...new Set(window.appState.attractions.map(a => a.category))]);
-
         return window.appState.attractions;
     } catch (error) {
-        console.log('Failed to load attractions.json, using fallback data');
         window.appState.attractions = getFallbackAttractions();
         window.appState.filteredAttractions = [...window.appState.attractions];
-
-        console.log('Fallback attractions loaded:', window.appState.attractions.length);
-        console.log('Fallback categories:', [...new Set(window.appState.attractions.map(a => a.category))]);
-
         return window.appState.attractions;
     }
 }
@@ -644,7 +630,6 @@ function applyFilters() {
     const accessibilityFilter = document.getElementById('accessibilityFilter');
     const searchInput = document.getElementById('searchInput');
 
-    // Update current filters state
     window.appState.currentFilters = {
         category: categoryFilter ? categoryFilter.value : 'all',
         cost: costFilter ? costFilter.value : 'all',
@@ -652,10 +637,6 @@ function applyFilters() {
         search: searchInput ? searchInput.value.toLowerCase() : ''
     };
 
-    console.log('🔍 Current filters:', window.appState.currentFilters);
-    console.log('📊 Total attractions before filter:', window.appState.attractions.length);
-
-    // Filter attractions based on current filters
     window.appState.filteredAttractions = window.appState.attractions.filter(attraction => {
         const matchesCategory = window.appState.currentFilters.category === 'all' ||
             attraction.category.toLowerCase() === window.appState.currentFilters.category.toLowerCase();
@@ -672,20 +653,9 @@ function applyFilters() {
             (attraction.location && attraction.location.toLowerCase().includes(window.appState.currentFilters.search)) ||
             (attraction.neighborhood && attraction.neighborhood.toLowerCase().includes(window.appState.currentFilters.search));
 
-        const matches = matchesCategory && matchesCost && matchesAccessibility && matchesSearch;
-
-        if (!matches) {
-            console.log('❌ Filtered out:', attraction.name, 'Category:', attraction.category);
-        } else {
-            console.log('✅ Kept:', attraction.name, 'Category:', attraction.category);
-        }
-
-        return matches;
+        return matchesCategory && matchesCost && matchesAccessibility && matchesSearch;
     });
 
-    console.log('📈 Filtered attractions count:', window.appState.filteredAttractions.length);
-
-    // Update display and results count
     displayAttractions(window.appState.filteredAttractions);
     updateResultsCount();
 }
@@ -973,39 +943,26 @@ function displayCategories() {
 }
 
 function filterByCategory(category) {
-    console.log('🎯 filterByCategory called with:', category);
-
     try {
         localStorage.setItem('selectedCategory', category);
-        console.log('💾 Saved to localStorage:', category);
     } catch (error) {
-        console.error('❌ Error saving to localStorage:', error);
+        // Silent error handling
     }
 
     if (getCurrentPage() !== 'attractions') {
-        console.log('🔀 Redirecting to attractions page with category:', category);
-        // Redirect to attractions page with category parameter
         window.location.href = 'attractions.html?category=' + encodeURIComponent(category);
     } else {
-        console.log('🔄 Already on attractions page, applying filter directly');
-        // Already on attractions page, apply filter directly
         const categoryFilter = document.getElementById('categoryFilter');
         if (categoryFilter) {
             categoryFilter.value = category;
-            console.log('✅ Set category filter to:', category);
-            // Force immediate filter application
             applyFilters();
 
-            // Scroll to results
             setTimeout(() => {
                 const attractionsGrid = document.getElementById('attractionsGrid');
                 if (attractionsGrid) {
                     attractionsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    console.log('📍 Scrolled to results');
                 }
             }, 100);
-        } else {
-            console.error('❌ Category filter element not found');
         }
     }
 }
@@ -1146,12 +1103,10 @@ function quickFilter(type) {
 }
 
 function initializeURLParams() {
-    // Check URL parameters first
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     const categoryParam = urlParams.get('category');
 
-    // Check localStorage
     let storedCategory = null;
     try {
         storedCategory = localStorage.getItem('selectedCategory');
@@ -1162,64 +1117,38 @@ function initializeURLParams() {
         // Silent error handling
     }
 
-    // Determine which category to use (URL has priority)
     const targetCategory = categoryParam || storedCategory;
 
-    console.log('=== FILTER DEBUG ===');
-    console.log('URL Category:', categoryParam);
-    console.log('Stored Category:', storedCategory);
-    console.log('Target Category:', targetCategory);
-    console.log('Attractions loaded:', window.appState.attractions.length);
-
-    // Apply filters immediately if we have parameters
     let hasFilters = false;
 
-    // Apply search parameter
     if (searchParam) {
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.value = searchParam;
             hasFilters = true;
-            console.log('✓ Applied search filter:', searchParam);
         }
     }
 
-    // Apply category parameter
     if (targetCategory) {
         const categoryFilter = document.getElementById('categoryFilter');
         if (categoryFilter) {
-            // Verify the option exists
             const option = categoryFilter.querySelector('option[value="' + targetCategory + '"]');
             if (option) {
                 categoryFilter.value = targetCategory;
                 hasFilters = true;
-                console.log('✓ Applied category filter:', targetCategory);
-            } else {
-                console.error('❌ Category option not found:', targetCategory);
-                console.log('Available options:', Array.from(categoryFilter.options).map(opt => opt.value));
             }
-        } else {
-            console.error('❌ Category filter element not found');
         }
     }
 
-    // Apply filters if any were set
     if (hasFilters) {
-        console.log('🔄 Applying filters now...');
-
-        // Apply filters immediately
         applyFilters();
 
-        // Scroll to results after filtering
         setTimeout(() => {
             const attractionsGrid = document.getElementById('attractionsGrid');
             if (attractionsGrid) {
                 attractionsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                console.log('📍 Scrolled to results');
             }
         }, 100);
-    } else {
-        console.log('ℹ️ No filters to apply');
     }
 }
 
