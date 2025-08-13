@@ -16,6 +16,7 @@
     --spacing: 1rem;
 }
 
+/* Reset & Base */
 *,
 *::before,
 *::after {
@@ -37,6 +38,7 @@ body {
     min-height: 100vh;
 }
 
+/* Typography */
 h1,
 h2,
 h3,
@@ -71,6 +73,7 @@ p {
     line-height: 1.7;
 }
 
+/* Layout */
 main {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -78,6 +81,7 @@ main {
     min-height: calc(100vh - 280px);
 }
 
+/* Accessibility */
 .skip-link {
     position: absolute;
     top: -40px;
@@ -113,6 +117,7 @@ main {
     border: 0;
 }
 
+/* Header */
 header {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: var(--white);
@@ -175,6 +180,7 @@ header {
     font-style: italic;
 }
 
+/* Navigation */
 .hamburger {
     background: none;
     border: none;
@@ -259,6 +265,7 @@ header {
     color: var(--primary);
 }
 
+/* Hero Section */
 .hero {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.85), rgba(5, 150, 105, 0.85)), url('../images/hero-background.jpg') center/cover no-repeat;
     color: var(--white);
@@ -294,6 +301,7 @@ header {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/* Stats */
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -331,6 +339,7 @@ header {
     letter-spacing: 0.5px;
 }
 
+/* Grid System */
 .grid {
     display: grid;
     gap: calc(var(--spacing) * 1.5);
@@ -339,6 +348,7 @@ header {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
+/* Cards */
 .card {
     background: var(--white);
     border-radius: var(--radius);
@@ -350,6 +360,7 @@ header {
     flex-direction: column;
     height: 100%;
     min-height: 450px;
+    position: relative;
 }
 
 .card:hover {
@@ -357,6 +368,17 @@ header {
     box-shadow: var(--shadow-lg);
 }
 
+.card--medium {
+    min-height: 180px;
+    padding: calc(var(--spacing) * 2) var(--spacing);
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    justify-content: center;
+}
+
+/* Images */
 .image {
     width: 100%;
     height: 220px;
@@ -384,6 +406,7 @@ header {
     transform: scale(1.05);
 }
 
+/* Content */
 .content {
     padding: calc(var(--spacing) * 1.5);
     flex: 1;
@@ -436,6 +459,7 @@ header {
     line-height: 1.2;
 }
 
+/* Actions */
 .actions {
     margin-top: auto;
     display: flex;
@@ -446,6 +470,7 @@ header {
     border-top: 1px solid var(--border);
 }
 
+/* Buttons */
 .btn {
     background: var(--accent);
     color: var(--white);
@@ -467,7 +492,7 @@ header {
     box-shadow: var(--shadow-lg);
 }
 
-.btn-primary {
+.btn--primary {
     background: var(--primary);
 }
 
@@ -501,6 +526,7 @@ header {
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
+/* Search */
 .search-container {
     display: flex;
     gap: var(--spacing);
@@ -527,6 +553,7 @@ header {
     box-shadow: 0 0 0 2px var(--primary);
 }
 
+/* Weather Widget */
 .weather-widget {
     background: var(--white);
     padding: calc(var(--spacing) * 2);
@@ -586,6 +613,7 @@ header {
     border-radius: var(--radius);
 }
 
+/* Badges */
 .category-badge {
     position: absolute;
     top: var(--spacing);
@@ -603,6 +631,36 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Category Colors */
+.category--nature {
+    background: rgba(16, 185, 129, 0.9) !important;
+}
+
+.category--culture {
+    background: rgba(139, 92, 246, 0.9) !important;
+}
+
+.category--architecture {
+    background: rgba(245, 158, 11, 0.9) !important;
+}
+
+.category--history {
+    background: rgba(239, 68, 68, 0.9) !important;
+}
+
+.category--entertainment {
+    background: rgba(236, 72, 153, 0.9) !important;
+}
+
+.category--food {
+    background: rgba(249, 115, 22, 0.9) !important;
+}
+
+.category--shopping {
+    background: rgba(6, 182, 212, 0.9) !important;
+}
+
+/* Modal */
 .modal {
     position: fixed;
     top: 0;
@@ -641,6 +699,7 @@ header {
     transform: scale(1);
 }
 
+/* Footer */
 footer {
     background: var(--text);
     color: var(--white);
@@ -683,6 +742,7 @@ footer {
     color: #d1d5db;
 }
 
+/* Utilities */
 .loading::before {
     content: '';
     width: 40px;
@@ -777,216 +837,13 @@ footer {
     margin-bottom: calc(var(--spacing) * 3);
 }
 
-.category-nature {
-    background: rgba(16, 185, 129, 0.9) !important;
-}
-
-.category-culture {
-    background: rgba(139, 92, 246, 0.9) !important;
-}
-
-.category-architecture {
-    background: rgba(245, 158, 11, 0.9) !important;
-}
-
-.category-history {
-    background: rgba(239, 68, 68, 0.9) !important;
-}
-
-.category-entertainment {
-    background: rgba(236, 72, 153, 0.9) !important;
-}
-
-.category-food {
-    background: rgba(249, 115, 22, 0.9) !important;
-}
-
-.category-shopping {
-    background: rgba(6, 182, 212, 0.9) !important;
-}
-
-/* MINIMAL COMPATIBILITY - Only essential legacy classes */
-.main-nav,
-.nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow);
-}
-
-.main-nav ul,
-.nav ul {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--spacing);
-    display: flex;
-    list-style: none;
-    gap: calc(var(--spacing) * 2);
-}
-
-.main-nav a,
-.nav a {
-    display: block;
-    padding: var(--spacing) 0;
-    text-decoration: none;
-    color: var(--text);
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    transition: var(--transition);
-    position: relative;
-}
-
-.main-nav a::before,
-.nav a::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.main-nav a:hover::before,
-.main-nav a.active::before,
-.nav a:hover::before,
-.nav a.active::before {
-    transform: scaleX(1);
-}
-
-.main-nav a:hover,
-.main-nav a.active,
-.nav a:hover,
-.nav a.active {
-    color: var(--primary);
-}
-
-.hero-stats,
-.stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: calc(var(--spacing) * 2);
-    margin-top: calc(var(--spacing) * 2);
-}
-
-.attractions-grid,
-.featured-grid,
-.categories-grid,
-.country-info-grid,
-.grid {
-    display: grid;
-    gap: calc(var(--spacing) * 1.5);
-    margin-bottom: calc(var(--spacing) * 2);
-    align-items: stretch;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-
-.attraction-card,
-.category-card,
-.info-card,
-.card {
-    background: var(--white);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 450px;
-}
-
-.card-medium {
-    min-height: 180px;
-    padding: calc(var(--spacing) * 2) var(--spacing);
-    text-align: center;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    justify-content: center;
-}
-
-.card-image,
-.attraction-image,
-.image {
-    width: 100%;
-    height: 220px;
-    background: linear-gradient(135deg, var(--bg), #e2e8f0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 1px solid var(--border);
-}
-
-.card-content,
-.attraction-content,
-.content {
-    padding: calc(var(--spacing) * 1.5);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 200px;
-}
-
-.card-meta,
-.attraction-meta,
-.meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: calc(var(--spacing) * 0.5);
-    margin-bottom: var(--spacing);
-    font-size: 0.9rem;
-    min-height: 2rem;
-    align-items: flex-start;
-}
-
-.card-actions,
-.attraction-actions,
-.actions {
-    margin-top: auto;
-    display: flex;
-    gap: var(--spacing);
-    align-items: center;
-    justify-content: space-between;
-    padding-top: var(--spacing);
-    border-top: 1px solid var(--border);
-}
-
-.cta-button,
-.primary-btn,
-.view-all-btn,
-.btn {
-    background: var(--accent);
-    color: var(--white);
-    border: none;
-    padding: 0.75rem calc(var(--spacing) * 1.5);
-    font-size: 0.9rem;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-}
-
-.primary-btn,
-.view-all-btn {
-    background: var(--primary);
-}
-
+/* Media Queries */
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
     }
 
-    .nav,
-    .main-nav {
+    .nav {
         display: none;
         position: absolute;
         top: 100%;
@@ -997,27 +854,22 @@ footer {
         z-index: 1000;
     }
 
-    .nav.active,
-    .main-nav.active {
+    .nav.active {
         display: block;
     }
 
-    .nav ul,
-    .main-nav ul {
+    .nav ul {
         flex-direction: column;
         gap: 0;
         padding: 0;
     }
 
-    .nav a,
-    .main-nav a {
+    .nav a {
         padding: var(--spacing) calc(var(--spacing) * 2);
     }
 
     .nav a:hover,
-    .nav a.active,
-    .main-nav a:hover,
-    .main-nav a.active {
+    .nav a.active {
         background: var(--bg);
         border-left: 4px solid var(--accent);
     }
@@ -1035,8 +887,7 @@ footer {
         min-height: 350px;
     }
 
-    .stats,
-    .hero-stats {
+    .stats {
         grid-template-columns: 1fr;
         gap: var(--spacing);
     }
@@ -1050,28 +901,20 @@ footer {
         gap: var(--spacing);
     }
 
-    .grid,
-    .attractions-grid,
-    .featured-grid,
-    .categories-grid {
+    .grid {
         grid-template-columns: 1fr;
         gap: var(--spacing);
     }
 
-    .card,
-    .attraction-card {
+    .card {
         min-height: 400px;
     }
 
-    .image,
-    .card-image,
-    .attraction-image {
+    .image {
         height: 200px;
     }
 
-    .content,
-    .card-content,
-    .attraction-content {
+    .content {
         padding: var(--spacing);
         min-height: 180px;
     }
@@ -1090,16 +933,12 @@ footer {
         max-height: 95vh;
     }
 
-    .actions,
-    .card-actions,
-    .attraction-actions {
+    .actions {
         flex-direction: column;
         gap: calc(var(--spacing) * 0.5);
     }
 
-    .btn,
-    .cta-button,
-    .primary-btn {
+    .btn {
         width: 100%;
     }
 }
@@ -1123,15 +962,11 @@ footer {
         text-align: center;
     }
 
-    .image,
-    .card-image,
-    .attraction-image {
+    .image {
         height: 180px;
     }
 
-    .content,
-    .card-content,
-    .attraction-content {
+    .content {
         padding: 0.75rem;
         min-height: 160px;
     }
@@ -1140,12 +975,11 @@ footer {
         font-size: 1.8rem;
     }
 
-    .card-medium {
+    .card--medium {
         min-height: 150px;
     }
 
-    .card,
-    .attraction-card {
+    .card {
         min-height: 350px;
     }
 }
