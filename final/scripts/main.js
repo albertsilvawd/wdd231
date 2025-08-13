@@ -21,10 +21,14 @@ let imageObserver = null;
 let contentObserver = null;
 
 // DOM ready initialization
-document.addEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM Content Loaded - Starting initialization');
+    initializeApp();
+});
 
 async function initializeApp() {
     try {
+        console.log('🔧 Initializing app...');
         removeLoadingMessages();
         await loadAttractions();
         initializeNavigation();
@@ -34,8 +38,10 @@ async function initializeApp() {
         initializeLazyLoading();
 
         const currentPage = getCurrentPage();
+        console.log('📄 Current page:', currentPage);
         await initializePage(currentPage);
     } catch (error) {
+        console.error('❌ App initialization error:', error);
         showErrorMessage('Failed to initialize the application. Please refresh the page.');
     }
 }
@@ -64,10 +70,18 @@ async function loadAttractions() {
         window.appState.attractions = data.attractions || [];
         window.appState.filteredAttractions = [...window.appState.attractions];
 
+        console.log('Loaded attractions:', window.appState.attractions.length);
+        console.log('Categories found:', [...new Set(window.appState.attractions.map(a => a.category))]);
+
         return window.appState.attractions;
     } catch (error) {
+        console.log('Failed to load attractions.json, using fallback data');
         window.appState.attractions = getFallbackAttractions();
         window.appState.filteredAttractions = [...window.appState.attractions];
+
+        console.log('Fallback attractions loaded:', window.appState.attractions.length);
+        console.log('Fallback categories:', [...new Set(window.appState.attractions.map(a => a.category))]);
+
         return window.appState.attractions;
     }
 }
@@ -112,6 +126,175 @@ function getFallbackAttractions() {
             rating: 4.5,
             neighborhood: "Monserrat",
             openHours: "10:00 AM - 6:00 PM"
+        },
+        {
+            id: 4,
+            name: "Secret Jazz Club",
+            category: "Entertainment",
+            description: "Hidden speakeasy-style jazz club with intimate performances.",
+            location: "San Telmo, Buenos Aires",
+            cost: "Medium",
+            accessibility: "High",
+            image: "images/attractions/jazz-club.webp",
+            rating: 4.7,
+            neighborhood: "San Telmo",
+            openHours: "8:00 PM - 2:00 AM"
+        },
+        {
+            id: 5,
+            name: "Vintage Tango Hall",
+            category: "Entertainment",
+            description: "Authentic milonga where locals dance traditional tango.",
+            location: "La Boca, Buenos Aires",
+            cost: "Low",
+            accessibility: "Medium",
+            image: "images/attractions/tango-hall.webp",
+            rating: 4.9,
+            neighborhood: "La Boca",
+            openHours: "9:00 PM - 1:00 AM"
+        },
+        {
+            id: 6,
+            name: "Hidden Botanical Corner",
+            category: "Nature",
+            description: "Secluded section of botanical garden with rare native plants.",
+            location: "Palermo, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/botanical.webp",
+            rating: 4.4,
+            neighborhood: "Palermo",
+            openHours: "8:00 AM - 6:00 PM"
+        },
+        {
+            id: 7,
+            name: "Artisan Market Alley",
+            category: "Culture",
+            description: "Narrow alley filled with local artisans and unique crafts.",
+            location: "San Telmo, Buenos Aires",
+            cost: "Free",
+            accessibility: "Medium",
+            image: "images/attractions/market-alley.webp",
+            rating: 4.3,
+            neighborhood: "San Telmo",
+            openHours: "10:00 AM - 6:00 PM"
+        },
+        {
+            id: 8,
+            name: "Colonial Mansion Ruins",
+            category: "History",
+            description: "Preserved ruins of 18th-century colonial mansion with guided tours.",
+            location: "Monserrat, Buenos Aires",
+            cost: "Low",
+            accessibility: "Low",
+            image: "images/attractions/mansion-ruins.webp",
+            rating: 4.6,
+            neighborhood: "Monserrat",
+            openHours: "9:00 AM - 5:00 PM"
+        },
+        {
+            id: 9,
+            name: "Riverside Walkway",
+            category: "Nature",
+            description: "Peaceful walkway along the river with stunning sunset views.",
+            location: "Puerto Madero, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/riverside.webp",
+            rating: 4.5,
+            neighborhood: "Puerto Madero",
+            openHours: "24/7"
+        },
+        {
+            id: 10,
+            name: "Art Deco Cinema",
+            category: "Architecture",
+            description: "Beautifully preserved 1930s cinema with original Art Deco features.",
+            location: "Barracas, Buenos Aires",
+            cost: "Medium",
+            accessibility: "Medium",
+            image: "images/attractions/art-deco-cinema.webp",
+            rating: 4.8,
+            neighborhood: "Barracas",
+            openHours: "7:00 PM - 11:00 PM"
+        },
+        {
+            id: 11,
+            name: "Street Performance Corner",
+            category: "Entertainment",
+            description: "Vibrant corner where street performers showcase their talents daily.",
+            location: "La Boca, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/street-performance.webp",
+            rating: 4.2,
+            neighborhood: "La Boca",
+            openHours: "2:00 PM - 8:00 PM"
+        },
+        {
+            id: 12,
+            name: "Graffiti Gallery",
+            category: "Culture",
+            description: "Open-air gallery featuring the best street art in the city.",
+            location: "Villa Crespo, Buenos Aires",
+            cost: "Free",
+            accessibility: "High",
+            image: "images/attractions/graffiti-gallery.webp",
+            rating: 4.4,
+            neighborhood: "Villa Crespo",
+            openHours: "24/7"
+        },
+        {
+            id: 13,
+            name: "Secret Garden Cafe",
+            category: "Nature",
+            description: "Hidden cafe with beautiful garden setting and organic menu.",
+            location: "Palermo, Buenos Aires",
+            cost: "Medium",
+            accessibility: "Medium",
+            image: "images/attractions/garden-cafe.webp",
+            rating: 4.7,
+            neighborhood: "Palermo",
+            openHours: "8:00 AM - 6:00 PM"
+        },
+        {
+            id: 14,
+            name: "Vintage Bookstore",
+            category: "Entertainment",
+            description: "Three-story bookstore with rare books and cozy reading nooks.",
+            location: "Recoleta, Buenos Aires",
+            cost: "Free",
+            accessibility: "Low",
+            image: "images/attractions/bookstore.webp",
+            rating: 4.6,
+            neighborhood: "Recoleta",
+            openHours: "10:00 AM - 8:00 PM"
+        },
+        {
+            id: 15,
+            name: "Hidden Viewpoint",
+            category: "Nature",
+            description: "Elevated viewpoint offering panoramic views of the city skyline.",
+            location: "Puerto Madero, Buenos Aires",
+            cost: "Free",
+            accessibility: "Low",
+            image: "images/attractions/viewpoint.webp",
+            rating: 4.9,
+            neighborhood: "Puerto Madero",
+            openHours: "6:00 AM - 10:00 PM"
+        },
+        {
+            id: 16,
+            name: "Live Music Venue",
+            category: "Entertainment",
+            description: "Intimate venue hosting local and international musicians nightly.",
+            location: "Villa Crespo, Buenos Aires",
+            cost: "Medium",
+            accessibility: "High",
+            image: "images/attractions/music-venue.webp",
+            rating: 4.5,
+            neighborhood: "Villa Crespo",
+            openHours: "8:00 PM - 2:00 AM"
         }
     ];
 }
@@ -188,7 +371,13 @@ async function initializeAttractionsPage() {
         initializeFilters();
         await displayAttractions(window.appState.attractions);
         initializeSearch();
-        updateResultsCount();
+
+        // CRITICAL: Initialize URL params AFTER filters are set up
+        setTimeout(() => {
+            initializeURLParams();
+            updateResultsCount();
+        }, 100);
+
         setTimeout(() => {
             initializeLazyLoading();
         }, 500);
@@ -455,6 +644,7 @@ function applyFilters() {
     const accessibilityFilter = document.getElementById('accessibilityFilter');
     const searchInput = document.getElementById('searchInput');
 
+    // Update current filters state
     window.appState.currentFilters = {
         category: categoryFilter ? categoryFilter.value : 'all',
         cost: costFilter ? costFilter.value : 'all',
@@ -462,6 +652,10 @@ function applyFilters() {
         search: searchInput ? searchInput.value.toLowerCase() : ''
     };
 
+    console.log('🔍 Current filters:', window.appState.currentFilters);
+    console.log('📊 Total attractions before filter:', window.appState.attractions.length);
+
+    // Filter attractions based on current filters
     window.appState.filteredAttractions = window.appState.attractions.filter(attraction => {
         const matchesCategory = window.appState.currentFilters.category === 'all' ||
             attraction.category.toLowerCase() === window.appState.currentFilters.category.toLowerCase();
@@ -478,9 +672,20 @@ function applyFilters() {
             (attraction.location && attraction.location.toLowerCase().includes(window.appState.currentFilters.search)) ||
             (attraction.neighborhood && attraction.neighborhood.toLowerCase().includes(window.appState.currentFilters.search));
 
-        return matchesCategory && matchesCost && matchesAccessibility && matchesSearch;
+        const matches = matchesCategory && matchesCost && matchesAccessibility && matchesSearch;
+
+        if (!matches) {
+            console.log('❌ Filtered out:', attraction.name, 'Category:', attraction.category);
+        } else {
+            console.log('✅ Kept:', attraction.name, 'Category:', attraction.category);
+        }
+
+        return matches;
     });
 
+    console.log('📈 Filtered attractions count:', window.appState.filteredAttractions.length);
+
+    // Update display and results count
     displayAttractions(window.appState.filteredAttractions);
     updateResultsCount();
 }
@@ -677,7 +882,7 @@ function openModal(attractionId) {
         '<div class="detail-item"><strong>📍 Location:</strong> ' + (attraction.location || attraction.neighborhood) + '</div>' +
         '<div class="detail-item"><strong>💰 Cost:</strong> ' + attraction.cost + '</div>' +
         '<div class="detail-item"><strong>♿ Accessibility:</strong> ' + attraction.accessibility + '</div>' +
-        '<div class="detail-item"><strong>🕐 Hours:</strong> ' + (attraction.openHours || 'Varies') + '</div>' +
+        '<div class="detail-item"><strong>🕒 Hours:</strong> ' + (attraction.openHours || 'Varies') + '</div>' +
         '<div class="detail-item"><strong>⭐ Rating:</strong> ' + (attraction.rating || 4.5) + '/5</div>' +
         '</div>' +
         '<button class="favorite-btn-modal ' + (isFavorite ? 'active' : '') + '" onclick="toggleFavorite(' + attraction.id + '); updateModalFavoriteBtn(' + attraction.id + ')" aria-label="' + (isFavorite ? 'Remove from favorites' : 'Add to favorites') + '">' +
@@ -768,24 +973,39 @@ function displayCategories() {
 }
 
 function filterByCategory(category) {
+    console.log('🎯 filterByCategory called with:', category);
+
     try {
         localStorage.setItem('selectedCategory', category);
+        console.log('💾 Saved to localStorage:', category);
     } catch (error) {
-        // Silent error handling
+        console.error('❌ Error saving to localStorage:', error);
     }
 
     if (getCurrentPage() !== 'attractions') {
+        console.log('🔀 Redirecting to attractions page with category:', category);
+        // Redirect to attractions page with category parameter
         window.location.href = 'attractions.html?category=' + encodeURIComponent(category);
     } else {
+        console.log('🔄 Already on attractions page, applying filter directly');
+        // Already on attractions page, apply filter directly
         const categoryFilter = document.getElementById('categoryFilter');
         if (categoryFilter) {
             categoryFilter.value = category;
+            console.log('✅ Set category filter to:', category);
+            // Force immediate filter application
             applyFilters();
 
-            const attractionsGrid = document.getElementById('attractionsGrid');
-            if (attractionsGrid) {
-                attractionsGrid.scrollIntoView({ behavior: 'smooth' });
-            }
+            // Scroll to results
+            setTimeout(() => {
+                const attractionsGrid = document.getElementById('attractionsGrid');
+                if (attractionsGrid) {
+                    attractionsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    console.log('📍 Scrolled to results');
+                }
+            }, 100);
+        } else {
+            console.error('❌ Category filter element not found');
         }
     }
 }
@@ -800,7 +1020,7 @@ function displayCountryInfo() {
             '<p>Located in South America, Buenos Aires is the capital of Argentina.</p>' +
             '</div>' +
             '<div class="card card--medium info-card">' +
-            '<h4>🕐 Timezone</h4>' +
+            '<h4>🕒 Timezone</h4>' +
             '<p>GMT-3 (Argentina Time)</p>' +
             '</div>' +
             '<div class="card card--medium info-card">' +
@@ -926,10 +1146,12 @@ function quickFilter(type) {
 }
 
 function initializeURLParams() {
+    // Check URL parameters first
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     const categoryParam = urlParams.get('category');
 
+    // Check localStorage
     let storedCategory = null;
     try {
         storedCategory = localStorage.getItem('selectedCategory');
@@ -940,22 +1162,64 @@ function initializeURLParams() {
         // Silent error handling
     }
 
+    // Determine which category to use (URL has priority)
+    const targetCategory = categoryParam || storedCategory;
+
+    console.log('=== FILTER DEBUG ===');
+    console.log('URL Category:', categoryParam);
+    console.log('Stored Category:', storedCategory);
+    console.log('Target Category:', targetCategory);
+    console.log('Attractions loaded:', window.appState.attractions.length);
+
+    // Apply filters immediately if we have parameters
+    let hasFilters = false;
+
+    // Apply search parameter
     if (searchParam) {
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.value = searchParam;
+            hasFilters = true;
+            console.log('✓ Applied search filter:', searchParam);
         }
     }
 
-    if (categoryParam || storedCategory) {
+    // Apply category parameter
+    if (targetCategory) {
         const categoryFilter = document.getElementById('categoryFilter');
         if (categoryFilter) {
-            categoryFilter.value = categoryParam || storedCategory;
+            // Verify the option exists
+            const option = categoryFilter.querySelector('option[value="' + targetCategory + '"]');
+            if (option) {
+                categoryFilter.value = targetCategory;
+                hasFilters = true;
+                console.log('✓ Applied category filter:', targetCategory);
+            } else {
+                console.error('❌ Category option not found:', targetCategory);
+                console.log('Available options:', Array.from(categoryFilter.options).map(opt => opt.value));
+            }
+        } else {
+            console.error('❌ Category filter element not found');
         }
     }
 
-    if (searchParam || categoryParam || storedCategory) {
+    // Apply filters if any were set
+    if (hasFilters) {
+        console.log('🔄 Applying filters now...');
+
+        // Apply filters immediately
         applyFilters();
+
+        // Scroll to results after filtering
+        setTimeout(() => {
+            const attractionsGrid = document.getElementById('attractionsGrid');
+            if (attractionsGrid) {
+                attractionsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                console.log('📍 Scrolled to results');
+            }
+        }, 100);
+    } else {
+        console.log('ℹ️ No filters to apply');
     }
 }
 
@@ -1035,15 +1299,6 @@ window.shareOn = shareOn;
 window.copyLink = copyLink;
 window.handleImageLoad = handleImageLoad;
 window.handleImageError = handleImageError;
-
-// Initialize URL params and last modified on attractions page
-if (getCurrentPage() === 'attractions') {
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            initializeURLParams();
-        }, 100);
-    });
-}
 
 // Update last modified on all pages
 document.addEventListener('DOMContentLoaded', updateLastModified);
