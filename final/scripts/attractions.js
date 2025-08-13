@@ -1,4 +1,3 @@
-// Hidden Gems Explorer - Attractions Page JavaScript
 import './main.js';
 
 const isDevelopment = false;
@@ -8,7 +7,6 @@ const logger = {
     error: isDevelopment ? console.error : () => { }
 };
 
-// Estado global da página
 let currentFilters = {
     category: '',
     location: '',
@@ -19,12 +17,10 @@ let currentFilters = {
 let attractionsData = [];
 let filteredAttractions = [];
 
-// Inicialização quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
     initAttractionsPageEnhancements();
 });
 
-// Função principal de inicialização
 function initAttractionsPageEnhancements() {
     logger.log('Inicializando melhorias da página Attractions');
 
@@ -37,10 +33,8 @@ function initAttractionsPageEnhancements() {
     initLazyLoading();
 }
 
-// Carregamento de dados das atrações
 async function loadAttractionsData() {
     try {
-        // Simulação de carregamento de dados (substituir por API real)
         attractionsData = await fetchAttractionsData();
         filteredAttractions = [...attractionsData];
         renderAttractions();
@@ -51,7 +45,6 @@ async function loadAttractionsData() {
     }
 }
 
-// Simulação de fetch de dados (substituir por API real)
 function fetchAttractionsData() {
     return new Promise(resolve => {
         setTimeout(() => {
@@ -80,18 +73,39 @@ function fetchAttractionsData() {
                     reviews: 89,
                     isFavorite: false
                 },
-                // Mais dados simulados...
+                {
+                    id: 3,
+                    name: "Mirante do Pôr do Sol",
+                    category: "cultura",
+                    location: "Chapada Diamantina",
+                    difficulty: "facil",
+                    description: "Vista panorâmica espetacular ao entardecer...",
+                    image: "https://via.placeholder.com/300x200",
+                    rating: 4.9,
+                    reviews: 203,
+                    isFavorite: false
+                },
+                {
+                    id: 4,
+                    name: "Trilha da Pedra do Elefante",
+                    category: "aventura",
+                    location: "Nova Friburgo",
+                    difficulty: "moderado",
+                    description: "Formação rochosa impressionante com vista única...",
+                    image: "https://via.placeholder.com/300x200",
+                    rating: 4.7,
+                    reviews: 156,
+                    isFavorite: false
+                }
             ]);
         }, 1000);
     });
 }
 
-// Sistema de filtros
 function initFilterSystem() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const filterSelects = document.querySelectorAll('.filter-select');
 
-    // Botões de filtro rápido
     filterButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             const filterType = e.target.dataset.filter;
@@ -101,7 +115,6 @@ function initFilterSystem() {
         });
     });
 
-    // Selects de filtro
     filterSelects.forEach(select => {
         select.addEventListener('change', (e) => {
             const filterType = e.target.name;
@@ -112,16 +125,12 @@ function initFilterSystem() {
     });
 }
 
-// Aplicar filtro rápido
 function applyQuickFilter(filterType, filterValue, buttonElement) {
-    // Toggle visual do botão
     const wasActive = buttonElement.classList.contains('active');
 
-    // Limpar outros botões do mesmo tipo
     const sameTypeButtons = document.querySelectorAll(`[data-filter="${filterType}"]`);
     sameTypeButtons.forEach(btn => btn.classList.remove('active'));
 
-    // Aplicar ou remover filtro
     if (wasActive) {
         currentFilters[filterType] = '';
     } else {
@@ -135,32 +144,26 @@ function applyQuickFilter(filterType, filterValue, buttonElement) {
     logger.log(`Filtro ${filterType} aplicado:`, filterValue);
 }
 
-// Atualizar filtro individual
 function updateFilter(filterType, filterValue) {
     currentFilters[filterType] = filterValue;
     applyFilters();
     updateFilterCount();
 }
 
-// Aplicar todos os filtros
 function applyFilters() {
     filteredAttractions = attractionsData.filter(attraction => {
-        // Filtro de categoria
         if (currentFilters.category && attraction.category !== currentFilters.category) {
             return false;
         }
 
-        // Filtro de localização
         if (currentFilters.location && !attraction.location.toLowerCase().includes(currentFilters.location.toLowerCase())) {
             return false;
         }
 
-        // Filtro de dificuldade
         if (currentFilters.difficulty && attraction.difficulty !== currentFilters.difficulty) {
             return false;
         }
 
-        // Filtro de busca
         if (currentFilters.search) {
             const searchTerm = currentFilters.search.toLowerCase();
             const matchesName = attraction.name.toLowerCase().includes(searchTerm);
@@ -178,7 +181,6 @@ function applyFilters() {
     renderAttractions();
 }
 
-// Funcionalidade de busca
 function initSearchFunctionality() {
     const searchInput = document.getElementById('attraction-search');
     if (!searchInput) return;
@@ -188,7 +190,6 @@ function initSearchFunctionality() {
     searchInput.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
 
-        // Debounce para evitar muitas buscas
         searchTimeout = setTimeout(() => {
             currentFilters.search = e.target.value;
             applyFilters();
@@ -196,7 +197,6 @@ function initSearchFunctionality() {
         }, 300);
     });
 
-    // Limpar busca
     const clearButton = document.getElementById('clear-search');
     if (clearButton) {
         clearButton.addEventListener('click', () => {
@@ -208,7 +208,6 @@ function initSearchFunctionality() {
     }
 }
 
-// Opções de ordenação
 function initSortingOptions() {
     const sortSelect = document.getElementById('sort-attractions');
     if (!sortSelect) return;
@@ -219,7 +218,6 @@ function initSortingOptions() {
     });
 }
 
-// Ordenar atrações
 function sortAttractions(sortBy) {
     switch (sortBy) {
         case 'name':
@@ -240,7 +238,6 @@ function sortAttractions(sortBy) {
     renderAttractions();
 }
 
-// Alternar visualização (grid/lista)
 function initViewToggle() {
     const viewButtons = document.querySelectorAll('.view-toggle button');
     const attractionsContainer = document.getElementById('attractions-container');
@@ -257,9 +254,7 @@ function initViewToggle() {
     });
 }
 
-// Sistema de favoritos
 function initFavoriteSystem() {
-    // Carregar favoritos do localStorage
     const savedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
     attractionsData.forEach(attraction => {
@@ -267,18 +262,15 @@ function initFavoriteSystem() {
     });
 }
 
-// Alternar favorito
 function toggleFavorite(attractionId) {
     const attraction = attractionsData.find(a => a.id === attractionId);
     if (!attraction) return;
 
     attraction.isFavorite = !attraction.isFavorite;
 
-    // Salvar no localStorage
     const favorites = attractionsData.filter(a => a.isFavorite).map(a => a.id);
     localStorage.setItem('favorites', JSON.stringify(favorites));
 
-    // Atualizar UI
     const favoriteButton = document.querySelector(`[data-attraction-id="${attractionId}"] .favorite-btn`);
     if (favoriteButton) {
         favoriteButton.classList.toggle('active', attraction.isFavorite);
@@ -288,7 +280,6 @@ function toggleFavorite(attractionId) {
     logger.log(`Favorito ${attraction.isFavorite ? 'adicionado' : 'removido'}:`, attraction.name);
 }
 
-// Lazy loading de imagens
 function initLazyLoading() {
     const imageObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -301,7 +292,6 @@ function initLazyLoading() {
         });
     });
 
-    // Observar imagens lazy quando renderizar
     setTimeout(() => {
         document.querySelectorAll('img[data-src]').forEach(img => {
             imageObserver.observe(img);
@@ -309,7 +299,6 @@ function initLazyLoading() {
     }, 100);
 }
 
-// Renderizar atrações
 function renderAttractions() {
     const container = document.getElementById('attractions-container');
     if (!container) return;
@@ -360,11 +349,9 @@ function renderAttractions() {
         </div>
     `).join('');
 
-    // Reinicializar lazy loading para novas imagens
     initLazyLoading();
 }
 
-// Atualizar contador de filtros
 function updateFilterCount() {
     const countElement = document.getElementById('results-count');
     if (countElement) {
@@ -372,7 +359,6 @@ function updateFilterCount() {
     }
 }
 
-// Limpar todos os filtros
 function clearAllFilters() {
     currentFilters = {
         category: '',
@@ -381,7 +367,6 @@ function clearAllFilters() {
         search: ''
     };
 
-    // Limpar UI
     document.querySelectorAll('.filter-btn.active').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -397,17 +382,14 @@ function clearAllFilters() {
     updateFilterCount();
 }
 
-// Ver detalhes da atração
 function viewAttractionDetails(attractionId) {
     const attraction = attractionsData.find(a => a.id === attractionId);
     if (attraction) {
         logger.log('Visualizando detalhes:', attraction.name);
-        // Redirecionar para página de detalhes ou abrir modal
         window.location.href = `attraction-detail.html?id=${attractionId}`;
     }
 }
 
-// Compartilhar atração
 function shareAttraction(attractionId) {
     const attraction = attractionsData.find(a => a.id === attractionId);
     if (!attraction) return;
@@ -419,7 +401,6 @@ function shareAttraction(attractionId) {
             url: `${window.location.origin}/attraction-detail.html?id=${attractionId}`
         });
     } else {
-        // Fallback para cópia do link
         const link = `${window.location.origin}/attraction-detail.html?id=${attractionId}`;
         navigator.clipboard.writeText(link).then(() => {
             alert('Link copiado para a área de transferência!');
@@ -427,7 +408,6 @@ function shareAttraction(attractionId) {
     }
 }
 
-// Mostrar estado de erro
 function showErrorState() {
     const container = document.getElementById('attractions-container');
     if (container) {
@@ -443,7 +423,6 @@ function showErrorState() {
     }
 }
 
-// Obter filtros ativos (útil para outras partes da aplicação)
 function getActiveFilters() {
     const activeFilters = {};
 
@@ -456,7 +435,6 @@ function getActiveFilters() {
     return activeFilters;
 }
 
-// Exportar funções que podem ser necessárias em outros módulos
 export {
     initAttractionsPageEnhancements,
     applyQuickFilter,
