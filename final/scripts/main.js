@@ -86,7 +86,7 @@ function getFallbackAttractions() {
             location: "Palermo, Buenos Aires",
             cost: "Free",
             accessibility: "Medium",
-            image: "images/attractions/secret-rooftop-garden.webp",
+            image: "images/attractions/secret-garden.webp",
             rating: 4.8,
             neighborhood: "Palermo",
             openHours: "6:00 AM - 8:00 PM"
@@ -99,7 +99,7 @@ function getFallbackAttractions() {
             location: "San Telmo, Buenos Aires",
             cost: "Low",
             accessibility: "High",
-            image: "images/attractions/underground-art-galery.webp",
+            image: "images/attractions/art-gallery.webp",
             rating: 4.6,
             neighborhood: "San Telmo",
             openHours: "2:00 PM - 10:00 PM"
@@ -112,7 +112,7 @@ function getFallbackAttractions() {
             location: "Monserrat, Buenos Aires",
             cost: "Medium",
             accessibility: "Medium",
-            image: "images/attractions/historic-clock-tower.webp",
+            image: "images/attractions/clock-tower.webp",
             rating: 4.5,
             neighborhood: "Monserrat",
             openHours: "10:00 AM - 6:00 PM"

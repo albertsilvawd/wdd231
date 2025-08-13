@@ -8,7 +8,7 @@
             "location": "Palermo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "./images/attractions/secret-rooftop-garden.webp",
+            "image": "./images/attractions/secret-garden.webp",
             "rating": 4.8,
             "neighborhood": "Palermo",
             "openHours": "6:00 AM - 8:00 PM"
@@ -21,7 +21,7 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Low",
             "accessibility": "High",
-            "image": "./images/attractions/underground-art-gallery.webp",
+            "image": "./images/attractions/art-gallery.webp",
             "rating": 4.6,
             "neighborhood": "San Telmo",
             "openHours": "2:00 PM - 10:00 PM"
@@ -34,7 +34,7 @@
             "location": "Monserrat, Buenos Aires",
             "cost": "Medium",
             "accessibility": "Medium",
-            "image": "./images/attractions/historic-clock-tower.webp",
+            "image": "./images/attractions/clock-tower.webp",
             "rating": 4.5,
             "neighborhood": "Monserrat",
             "openHours": "10:00 AM - 6:00 PM"
@@ -47,7 +47,7 @@
             "location": "Belgrano, Buenos Aires",
             "cost": "Free",
             "accessibility": "Low",
-            "image": "./images/attractions/hidden-waterfall-trail.webp",
+            "image": "./images/attractions/hidden-trail.webp",
             "rating": 4.7,
             "neighborhood": "Belgrano",
             "openHours": "Dawn to Dusk"
@@ -60,7 +60,7 @@
             "location": "Villa Crespo, Buenos Aires",
             "cost": "Medium",
             "accessibility": "Medium",
-            "image": "./images/attractions/vintage-record-shop-basement.webp",
+            "image": "./images/attractions/vintage-shop.webp",
             "rating": 4.4,
             "neighborhood": "Villa Crespo",
             "openHours": "7:00 PM - 1:00 AM"
@@ -73,7 +73,7 @@
             "location": "Recoleta, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/forgotten-cemetery-garden.webp",
+            "image": "./images/attractions/cemetery-garden.webp",
             "rating": 4.3,
             "neighborhood": "Recoleta",
             "openHours": "8:00 AM - 6:00 PM"
@@ -86,7 +86,7 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "./images/attractions/artisan-workshop-alley.webp",
+            "image": "./images/attractions/artisan-alley.webp",
             "rating": 4.6,
             "neighborhood": "San Telmo",
             "openHours": "10:00 AM - 7:00 PM"
@@ -99,7 +99,7 @@
             "location": "Palermo, Buenos Aires",
             "cost": "High",
             "accessibility": "Low",
-            "image": "./images/attractions/secret-speakeasy-cave.webp",
+            "image": "./images/attractions/secret-cave.webp",
             "rating": 4.9,
             "neighborhood": "Palermo",
             "openHours": "8:00 PM - 3:00 AM"
@@ -112,7 +112,7 @@
             "location": "Caballito, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "./images/attractions/rooftop-beehive-garden.webp",
+            "image": "./images/attractions/beehive-garden.webp",
             "rating": 4.5,
             "neighborhood": "Caballito",
             "openHours": "9:00 AM - 5:00 PM"
@@ -125,7 +125,7 @@
             "location": "Puerto Madero, Buenos Aires",
             "cost": "Medium",
             "accessibility": "High",
-            "image": "./images/attractions/hidden-speakeasy-love.webp",
+            "image": "./images/attractions/hidden-love.webp",
             "rating": 4.7,
             "neighborhood": "Puerto Madero",
             "openHours": "6:00 PM - 2:00 AM"
@@ -138,7 +138,7 @@
             "location": "Barracas, Buenos Aires",
             "cost": "Free",
             "accessibility": "Low",
-            "image": "./images/attractions/abandoned-theater-ruins.webp",
+            "image": "./images/attractions/theater-ruins.webp",
             "rating": 4.2,
             "neighborhood": "Barracas",
             "openHours": "10:00 AM - 4:00 PM"
@@ -151,7 +151,7 @@
             "location": "Villa Crespo, Buenos Aires",
             "cost": "High",
             "accessibility": "Medium",
-            "image": "./images/attractions/hidden-speakeasy-cave.webp",
+            "image": "./images/attractions/hidden-cave.webp",
             "rating": 4.6,
             "neighborhood": "Villa Crespo",
             "openHours": "8:00 PM - 2:00 AM"
@@ -164,7 +164,7 @@
             "location": "Núñez, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "./images/attractions/telescope-observatory-deck.webp",
+            "image": "./images/attractions/observatory-deck.webp",
             "rating": 4.6,
             "neighborhood": "Núñez",
             "openHours": "8:00 PM - 12:00 AM"
@@ -177,7 +177,7 @@
             "location": "Parque Chacabuco, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/ancient-tree-grove.webp",
+            "image": "./images/attractions/tree-grove.webp",
             "rating": 4.4,
             "neighborhood": "Parque Chacabuco",
             "openHours": "6:00 AM - 8:00 PM"
@@ -190,7 +190,7 @@
             "location": "La Boca, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "./images/attractions/graffiti-hall-of-fame.webp",
+            "image": "./images/attractions/graffiti-fame.webp",
             "rating": 4.5,
             "neighborhood": "La Boca",
             "openHours": "24/7"
