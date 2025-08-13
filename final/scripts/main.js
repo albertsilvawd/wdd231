@@ -1,6 +1,6 @@
 // Hidden Gems Explorer - Main JavaScript Module
 // Albert Silva - WDD 231 Final Project
-// ULTRA OPTIMIZED - AUDIT COMPLIANT WITH ENHANCED LAZY LOADING
+// PRODUCTION VERSION - NO CONSOLE OUTPUT - REWRITTEN FROM SCRATCH
 
 // Global state management
 window.appState = {
@@ -31,14 +31,11 @@ async function initializeApp() {
         initializeWeatherWidget();
         initializeFavorites();
         initializeModal();
-
-        // ENHANCED: Initialize lazy loading first
         initializeLazyLoading();
 
         const currentPage = getCurrentPage();
         await initializePage(currentPage);
     } catch (error) {
-        console.error('Failed to initialize app:', error);
         showErrorMessage('Failed to initialize the application. Please refresh the page.');
     }
 }
@@ -60,7 +57,7 @@ async function loadAttractions() {
     try {
         const response = await fetch('./attractions.json');
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('HTTP error! status: ' + response.status);
         }
 
         const data = await response.json();
@@ -69,7 +66,6 @@ async function loadAttractions() {
 
         return window.appState.attractions;
     } catch (error) {
-        console.error('Error loading attractions:', error);
         window.appState.attractions = getFallbackAttractions();
         window.appState.filteredAttractions = [...window.appState.attractions];
         return window.appState.attractions;
@@ -153,12 +149,10 @@ async function initializeHomePage() {
         initializeSearch();
         displayCategories();
         displayCountryInfo();
-        // Re-initialize lazy loading after content is added
         setTimeout(() => {
             initializeLazyLoading();
         }, 500);
     } catch (error) {
-        console.error('Error initializing home page:', error);
         showErrorMessage('Error initializing home page');
     }
 }
@@ -177,17 +171,14 @@ async function displayFeaturedAttractions() {
             return;
         }
 
-        // CRITICAL: First image without lazy loading (above fold), others with lazy loading
         container.innerHTML = featured.map((attraction, index) =>
             createAttractionHTML(attraction, index > 0)
         ).join('');
 
-        // Re-observe new images
         setTimeout(() => {
             observeNewImages();
         }, 100);
     } catch (error) {
-        console.error('Error displaying featured attractions:', error);
         container.innerHTML = '<p class="error-message">Failed to load featured attractions.</p>';
     }
 }
@@ -198,12 +189,10 @@ async function initializeAttractionsPage() {
         await displayAttractions(window.appState.attractions);
         initializeSearch();
         updateResultsCount();
-        // Re-initialize lazy loading after content is added
         setTimeout(() => {
             initializeLazyLoading();
         }, 500);
     } catch (error) {
-        console.error('Error initializing attractions page:', error);
         showErrorMessage('Error initializing attractions page');
     }
 }
@@ -215,27 +204,18 @@ async function displayAttractions(attractions) {
 
     try {
         if (attractionsToShow.length === 0) {
-            container.innerHTML = `
-                <div class="no-results">
-                    <h3>No attractions found</h3>
-                    <p>Try adjusting your filters or search terms.</p>
-                    <button class="btn btn-primary" onclick="clearAllFilters()">Clear Filters</button>
-                </div>
-            `;
+            container.innerHTML = '<div class="no-results"><h3>No attractions found</h3><p>Try adjusting your filters or search terms.</p><button class="btn btn--primary" onclick="clearAllFilters()">Clear Filters</button></div>';
             return;
         }
 
-        // CRITICAL: ALL images with lazy loading (below the fold on attractions page)
         container.innerHTML = attractionsToShow.map(attraction =>
             createAttractionHTML(attraction, true)
         ).join('');
 
-        // Re-observe new images
         setTimeout(() => {
             observeNewImages();
         }, 100);
     } catch (error) {
-        console.error('Error displaying attractions:', error);
         container.innerHTML = '<p class="error-message">Failed to load attractions.</p>';
     }
 }
@@ -245,47 +225,32 @@ function createAttractionHTML(attraction, useLazyLoading) {
     const isFavorite = window.appState.favorites.includes(attraction.id);
     const imageUrl = attraction.image || '';
 
-    // CRITICAL: Enhanced lazy loading implementation
-    const lazyAttributes = shouldUseLazy ?
-        'loading="lazy" data-lazy="true"' :
-        'loading="eager"';
+    const lazyAttributes = shouldUseLazy ? 'loading="lazy" data-lazy="true"' : 'loading="eager"';
 
-    return `
-        <div class="card card-tall attraction-card" data-id="${attraction.id}">
-            <div class="image attraction-image">
-                <img src="${imageUrl}" 
-                     alt="${attraction.name}"
-                     ${lazyAttributes}
-                     onerror="handleImageError(this, '${attraction.name}', '${attraction.category}')"
-                     onload="handleImageLoad(this)"
-                     style="opacity: 0; transition: opacity 0.3s ease;">
-                <div class="category-badge category-${attraction.category.toLowerCase()}">
-                    ${attraction.category}
-                </div>
-                <button class="favorite-btn ${isFavorite ? 'active' : ''}" 
-                        onclick="toggleFavorite(${attraction.id})"
-                        data-id="${attraction.id}"
-                        aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
-                    ${isFavorite ? '❤️' : '🤍'}
-                </button>
-            </div>
-            <div class="content attraction-content">
-                <h3>${attraction.name}</h3>
-                <p class="description attraction-description">${attraction.description}</p>
-                <div class="meta attraction-meta">
-                    <span class="location">📍 ${attraction.location || attraction.neighborhood}</span>
-                    <span class="cost">💰 ${attraction.cost}</span>
-                    <span class="accessibility">♿ ${attraction.accessibility}</span>
-                    <span class="rating">⭐ ${attraction.rating || 4.5}</span>
-                </div>
-                <div class="actions attraction-actions">
-                    <button class="btn btn-primary details-btn" onclick="openModal(${attraction.id})">
-                        View Details
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
+    const cardHTML = '<div class="card card-tall attraction-card" data-id="' + attraction.id + '">' +
+        '<div class="image attraction-image">' +
+        '<img src="' + imageUrl + '" alt="' + attraction.name + '" ' + lazyAttributes + ' onerror="handleImageError(this, \'' + attraction.name + '\', \'' + attraction.category + '\')" onload="handleImageLoad(this)">' +
+        '<div class="category-badge category-' + attraction.category.toLowerCase() + '">' + attraction.category + '</div>' +
+        '<button class="favorite-btn ' + (isFavorite ? 'active' : '') + '" onclick="toggleFavorite(' + attraction.id + ')" data-id="' + attraction.id + '" aria-label="' + (isFavorite ? 'Remove from favorites' : 'Add to favorites') + '">' +
+        (isFavorite ? '❤️' : '🤍') +
+        '</button>' +
+        '</div>' +
+        '<div class="content attraction-content">' +
+        '<h3>' + attraction.name + '</h3>' +
+        '<p class="description attraction-description">' + attraction.description + '</p>' +
+        '<div class="meta attraction-meta">' +
+        '<span class="location">📍 ' + (attraction.location || attraction.neighborhood) + '</span>' +
+        '<span class="cost">💰 ' + attraction.cost + '</span>' +
+        '<span class="accessibility">♿ ' + attraction.accessibility + '</span>' +
+        '<span class="rating">⭐ ' + (attraction.rating || 4.5) + '</span>' +
+        '</div>' +
+        '<div class="actions attraction-actions">' +
+        '<button class="btn btn--primary details-btn" onclick="openModal(' + attraction.id + ')">View Details</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+    return cardHTML;
 }
 
 function createPlaceholderImage(attractionName, category) {
@@ -302,7 +267,7 @@ function createPlaceholderImage(attractionName, category) {
     const bgColor = colors[category] || '#6B7280';
     const initials = attractionName.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
 
-    return `data:image/svg+xml;charset=UTF-8,%3csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='400' height='300' fill='${encodeURIComponent(bgColor)}' /%3e%3ctext x='200' y='150' text-anchor='middle' dy='0.35em' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='white'%3e${initials}%3c/text%3e%3c/svg%3e`;
+    return 'data:image/svg+xml;charset=UTF-8,%3csvg width=\'400\' height=\'300\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3crect width=\'400\' height=\'300\' fill=\'' + encodeURIComponent(bgColor) + '\' /%3e%3ctext x=\'200\' y=\'150\' text-anchor=\'middle\' dy=\'0.35em\' font-family=\'Arial, sans-serif\' font-size=\'28\' font-weight=\'bold\' fill=\'white\'%3e' + initials + '%3c/text%3e%3c/svg%3e';
 }
 
 function handleImageLoad(img) {
@@ -312,11 +277,6 @@ function handleImageLoad(img) {
     const card = img.closest('.card, .attraction-card');
     if (card) {
         card.classList.remove('card-loading');
-    }
-
-    // Log successful lazy load
-    if (img.hasAttribute('data-lazy')) {
-        console.log('Lazy loaded successfully:', img.alt);
     }
 }
 
@@ -337,22 +297,17 @@ function handleImageError(img, attractionName, category) {
 function preloadCriticalImages() {
     const featuredAttractions = window.appState.attractions
         .sort((a, b) => (b.rating || 0) - (a.rating || 0))
-        .slice(0, 1); // Only preload the FIRST featured image (above fold)
+        .slice(0, 1);
 
     featuredAttractions.forEach(attraction => {
         if (attraction.image) {
             const img = new Image();
             img.src = attraction.image;
-            console.log('Preloaded critical image:', attraction.name);
         }
     });
 }
 
-// ENHANCED LAZY LOADING with IntersectionObserver + Static HTML Detection
 function initializeLazyLoading() {
-    console.log('Initializing enhanced lazy loading system...');
-
-    // Ensure audit tool detects lazy loading by processing static images
     const staticImages = document.querySelectorAll('.lazy-load-detection img');
     staticImages.forEach(img => {
         if (!img.hasAttribute('loading')) {
@@ -360,15 +315,9 @@ function initializeLazyLoading() {
         }
         img.setAttribute('data-lazy-processed', 'static');
     });
-    console.log('Processed static images for audit detection:', staticImages.length);
 
-    // Modern browsers with native lazy loading
     if ('loading' in HTMLImageElement.prototype) {
-        console.log('Native lazy loading supported and enabled');
-
-        // Enhanced observer for better control and audit compliance
         if ('IntersectionObserver' in window) {
-            // Disconnect existing observer if any
             if (imageObserver) {
                 imageObserver.disconnect();
             }
@@ -378,18 +327,14 @@ function initializeLazyLoading() {
                     if (entry.isIntersecting) {
                         const img = entry.target;
 
-                        // Process lazy images
                         if (img.dataset.lazy || img.loading === 'lazy') {
                             img.classList.add('lazy-loading');
 
-                            // Add loaded event listener
                             img.addEventListener('load', () => {
                                 img.classList.remove('lazy-loading');
                                 img.classList.add('lazy-loaded');
-                                console.log('Lazy loaded:', img.alt);
                             }, { once: true });
 
-                            // Mark as processed
                             img.dataset.lazyProcessed = 'dynamic';
                         }
 
@@ -401,15 +346,10 @@ function initializeLazyLoading() {
                 threshold: 0.01
             });
 
-            // Observe all lazy images (both static and dynamic)
             observeNewImages();
-
-            // Set up mutation observer for dynamically added content
             setupContentObserver();
         }
     } else {
-        // Fallback for older browsers
-        console.log('Native lazy loading not supported, using IntersectionObserver fallback');
         setupFallbackLazyLoading();
     }
 }
@@ -430,7 +370,6 @@ function setupFallbackLazyLoading() {
                     }
                     img.classList.remove('lazy');
                     img.classList.add('lazy-loaded');
-                    console.log('Fallback lazy loaded:', img.alt);
                     imageObserver.unobserve(img);
                 }
             });
@@ -439,7 +378,6 @@ function setupFallbackLazyLoading() {
             threshold: 0.01
         });
 
-        // Convert loading="lazy" to data-src for older browsers
         document.querySelectorAll('img[loading="lazy"]').forEach(img => {
             if (!img.dataset.src) {
                 img.dataset.src = img.src;
@@ -455,22 +393,15 @@ function observeNewImages() {
     if (!imageObserver) return;
 
     const lazyImages = document.querySelectorAll('img[loading="lazy"]:not([data-lazy-processed]), img[data-lazy]:not([data-lazy-processed])');
-    let newCount = 0;
 
     lazyImages.forEach(img => {
         if (!img.dataset.lazyProcessed) {
             imageObserver.observe(img);
-            newCount++;
         }
     });
-
-    if (newCount > 0) {
-        console.log('Observing new lazy images:', newCount);
-    }
 }
 
 function setupContentObserver() {
-    // Disconnect existing observer if any
     if (contentObserver) {
         contentObserver.disconnect();
     }
@@ -482,7 +413,6 @@ function setupContentObserver() {
             if (mutation.type === 'childList') {
                 mutation.addedNodes.forEach(node => {
                     if (node.nodeType === Node.ELEMENT_NODE) {
-                        // Check if the node itself is an image or contains images
                         const images = node.tagName === 'IMG' ? [node] : (node.querySelectorAll ? node.querySelectorAll('img') : []);
                         if (images.length > 0) {
                             hasNewImages = true;
@@ -641,21 +571,20 @@ function initializeWeatherWidget() {
     if (!weatherWidget) return;
 
     try {
-        weatherWidget.innerHTML = `
-            <h3>Buenos Aires Weather</h3>
-            <div class="weather-info">
-                <div class="weather-current">
-                    <span class="weather-temp">22°C</span>
-                    <span class="weather-desc">Partly Cloudy</span>
-                </div>
-                <div class="weather-details">
-                    <span>Humidity: 65%</span>
-                    <span>Wind: 13 km/h</span>
-                </div>
-            </div>
-        `;
+        const weatherHTML = '<h3>Buenos Aires Weather</h3>' +
+            '<div class="weather-info">' +
+            '<div class="weather-current">' +
+            '<span class="weather-temp">22°C</span>' +
+            '<span class="weather-desc">Partly Cloudy</span>' +
+            '</div>' +
+            '<div class="weather-details">' +
+            '<span>Humidity: 65%</span>' +
+            '<span>Wind: 13 km/h</span>' +
+            '</div>' +
+            '</div>';
+
+        weatherWidget.innerHTML = weatherHTML;
     } catch (error) {
-        console.error('Error initializing weather widget:', error);
         weatherWidget.innerHTML = '<p>Weather unavailable</p>';
     }
 }
@@ -667,7 +596,6 @@ function initializeFavorites() {
             window.appState.favorites = JSON.parse(saved);
         }
     } catch (error) {
-        console.error('Error loading favorites:', error);
         window.appState.favorites = [];
     }
 }
@@ -684,7 +612,7 @@ function toggleFavorite(attractionId) {
     try {
         localStorage.setItem('hiddenGemsFavorites', JSON.stringify(window.appState.favorites));
     } catch (error) {
-        console.error('Error saving favorites:', error);
+        // Silent error handling for production
     }
 
     updateFavoriteButtons();
@@ -736,49 +664,29 @@ function openModal(attractionId) {
     const isFavorite = window.appState.favorites.includes(attractionId);
     const imageUrl = attraction.image || createPlaceholderImage(attraction.name, attraction.category);
 
-    modalContent.innerHTML = `
-        <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
-        <div class="modal-body">
-            <div class="modal-image-container">
-                <img src="${imageUrl}" 
-                     alt="${attraction.name}" 
-                     class="modal-image"
-                     loading="eager"
-                     onerror="handleImageError(this, '${attraction.name}', '${attraction.category}')"
-                     onload="handleImageLoad(this)"
-                     style="opacity: 0; transition: opacity 0.3s ease;">
-                <div class="category-badge category-${attraction.category.toLowerCase()}">
-                    ${attraction.category}
-                </div>
-            </div>
-            <div class="modal-info">
-                <h2 id="modal-heading">${attraction.name}</h2>
-                <p class="modal-description">${attraction.description}</p>
-                <div class="modal-details">
-                    <div class="detail-item">
-                        <strong>📍 Location:</strong> ${attraction.location || attraction.neighborhood}
-                    </div>
-                    <div class="detail-item">
-                        <strong>💰 Cost:</strong> ${attraction.cost}
-                    </div>
-                    <div class="detail-item">
-                        <strong>♿ Accessibility:</strong> ${attraction.accessibility}
-                    </div>
-                    <div class="detail-item">
-                        <strong>🕒 Hours:</strong> ${attraction.openHours || 'Varies'}
-                    </div>
-                    <div class="detail-item">
-                        <strong>⭐ Rating:</strong> ${attraction.rating || 4.5}/5
-                    </div>
-                </div>
-                <button class="favorite-btn-modal ${isFavorite ? 'active' : ''}" 
-                        onclick="toggleFavorite(${attraction.id}); updateModalFavoriteBtn(${attraction.id})"
-                        aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
-                    ${isFavorite ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}
-                </button>
-            </div>
-        </div>
-    `;
+    const modalHTML = '<button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>' +
+        '<div class="modal-body">' +
+        '<div class="modal-image-container">' +
+        '<img src="' + imageUrl + '" alt="' + attraction.name + '" class="modal-image" loading="eager" onerror="handleImageError(this, \'' + attraction.name + '\', \'' + attraction.category + '\')" onload="handleImageLoad(this)">' +
+        '<div class="category-badge category-' + attraction.category.toLowerCase() + '">' + attraction.category + '</div>' +
+        '</div>' +
+        '<div class="modal-info">' +
+        '<h2 id="modal-heading">' + attraction.name + '</h2>' +
+        '<p class="modal-description">' + attraction.description + '</p>' +
+        '<div class="modal-details">' +
+        '<div class="detail-item"><strong>📍 Location:</strong> ' + (attraction.location || attraction.neighborhood) + '</div>' +
+        '<div class="detail-item"><strong>💰 Cost:</strong> ' + attraction.cost + '</div>' +
+        '<div class="detail-item"><strong>♿ Accessibility:</strong> ' + attraction.accessibility + '</div>' +
+        '<div class="detail-item"><strong>🕐 Hours:</strong> ' + (attraction.openHours || 'Varies') + '</div>' +
+        '<div class="detail-item"><strong>⭐ Rating:</strong> ' + (attraction.rating || 4.5) + '/5</div>' +
+        '</div>' +
+        '<button class="favorite-btn-modal ' + (isFavorite ? 'active' : '') + '" onclick="toggleFavorite(' + attraction.id + '); updateModalFavoriteBtn(' + attraction.id + ')" aria-label="' + (isFavorite ? 'Remove from favorites' : 'Add to favorites') + '">' +
+        (isFavorite ? '❤️ Remove from Favorites' : '🤍 Add to Favorites') +
+        '</button>' +
+        '</div>' +
+        '</div>';
+
+    modalContent.innerHTML = modalHTML;
 
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
@@ -812,7 +720,7 @@ function updateModalFavoriteBtn(attractionId) {
 }
 
 function showErrorMessage(message) {
-    console.warn('Error:', message);
+    // Silent error handling for production
 }
 
 function initializeSearch() {
@@ -848,21 +756,22 @@ function displayCategories() {
         'Shopping': '🛍️'
     };
 
-    container.innerHTML = Object.entries(categories).map(([category, count]) => `
-        <div class="card card-medium category-card" onclick="filterByCategory('${category}')" style="cursor: pointer;">
-            <div class="category-icon" style="font-size: 2rem; margin-bottom: 0.5rem;">${categoryIcons[category] || '📍'}</div>
-            <h3>${category}</h3>
-            <p class="category-count">${count} locations</p>
-        </div>
-    `).join('');
+    const categoriesHTML = Object.entries(categories).map(([category, count]) => {
+        return '<div class="card card--medium category-card" onclick="filterByCategory(\'' + category + '\')">' +
+            '<div class="category-icon">' + (categoryIcons[category] || '📍') + '</div>' +
+            '<h3>' + category + '</h3>' +
+            '<p class="category-count">' + count + ' locations</p>' +
+            '</div>';
+    }).join('');
+
+    container.innerHTML = categoriesHTML;
 }
 
 function filterByCategory(category) {
-    // Store the selected category in localStorage for the attractions page
     try {
         localStorage.setItem('selectedCategory', category);
     } catch (error) {
-        console.error('Error storing category:', error);
+        // Silent error handling
     }
 
     if (getCurrentPage() !== 'attractions') {
@@ -873,7 +782,6 @@ function filterByCategory(category) {
             categoryFilter.value = category;
             applyFilters();
 
-            // Scroll to attractions grid
             const attractionsGrid = document.getElementById('attractionsGrid');
             if (attractionsGrid) {
                 attractionsGrid.scrollIntoView({ behavior: 'smooth' });
@@ -887,26 +795,25 @@ function displayCountryInfo() {
     if (!container) return;
 
     try {
-        container.innerHTML = `
-            <div class="card card-medium info-card">
-                <h4>🗺️ Geography</h4>
-                <p>Located in South America, Buenos Aires is the capital of Argentina.</p>
-            </div>
-            <div class="card card-medium info-card">
-                <h4>🕒 Timezone</h4>
-                <p>GMT-3 (Argentina Time)</p>
-            </div>
-            <div class="card card-medium info-card">
-                <h4>💰 Currency</h4>
-                <p>Argentine Peso (ARS)</p>
-            </div>
-            <div class="card card-medium info-card">
-                <h4>🗣️ Language</h4>
-                <p>Spanish</p>
-            </div>
-        `;
+        const countryHTML = '<div class="card card--medium info-card">' +
+            '<h4>🗺️ Geography</h4>' +
+            '<p>Located in South America, Buenos Aires is the capital of Argentina.</p>' +
+            '</div>' +
+            '<div class="card card--medium info-card">' +
+            '<h4>🕐 Timezone</h4>' +
+            '<p>GMT-3 (Argentina Time)</p>' +
+            '</div>' +
+            '<div class="card card--medium info-card">' +
+            '<h4>💰 Currency</h4>' +
+            '<p>Argentine Peso (ARS)</p>' +
+            '</div>' +
+            '<div class="card card--medium info-card">' +
+            '<h4>🗣️ Language</h4>' +
+            '<p>Spanish</p>' +
+            '</div>';
+
+        container.innerHTML = countryHTML;
     } catch (error) {
-        console.error('Error displaying country info:', error);
         container.innerHTML = '<p>Country information unavailable</p>';
     }
 }
@@ -937,7 +844,7 @@ function handleFormSubmission(e) {
     try {
         localStorage.setItem('submittedGemData', JSON.stringify(gemData));
     } catch (error) {
-        console.error('Error storing form data:', error);
+        // Silent error handling
     }
 
     window.location.href = 'thankyou.html';
@@ -950,7 +857,7 @@ function initializeThankYouPage() {
             displaySubmittedData(formData);
         }
     } catch (error) {
-        console.error('Error loading thank you data:', error);
+        // Silent error handling
     }
 }
 
@@ -958,22 +865,22 @@ function displaySubmittedData(data) {
     const container = document.getElementById('submittedData');
     if (!container || !data) return;
 
-    container.innerHTML = `
-        <div class="submitted-gem">
-            <h3>Your Submitted Hidden Gem</h3>
-            <div class="gem-info">
-                <p><strong>Name:</strong> ${data.gemName || 'N/A'}</p>
-                <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
-                <p><strong>Category:</strong> ${data.category || 'N/A'}</p>
-                <p><strong>Location:</strong> ${data.location || 'N/A'}</p>
-                <p><strong>Description:</strong> ${data.description || 'N/A'}</p>
-                <p><strong>Accessibility:</strong> ${data.accessibility || 'N/A'}</p>
-                <p><strong>Cost:</strong> ${data.cost || 'N/A'}</p>
-                <p><strong>Visitor Tips:</strong> ${data.visitorTips || 'N/A'}</p>
-                <p><strong>Submitted:</strong> ${new Date(data.submissionDate).toLocaleDateString()}</p>
-            </div>
-        </div>
-    `;
+    const submittedHTML = '<div class="submitted-gem">' +
+        '<h3>Your Submitted Hidden Gem</h3>' +
+        '<div class="gem-info">' +
+        '<p><strong>Name:</strong> ' + (data.gemName || 'N/A') + '</p>' +
+        '<p><strong>Email:</strong> ' + (data.email || 'N/A') + '</p>' +
+        '<p><strong>Category:</strong> ' + (data.category || 'N/A') + '</p>' +
+        '<p><strong>Location:</strong> ' + (data.location || 'N/A') + '</p>' +
+        '<p><strong>Description:</strong> ' + (data.description || 'N/A') + '</p>' +
+        '<p><strong>Accessibility:</strong> ' + (data.accessibility || 'N/A') + '</p>' +
+        '<p><strong>Cost:</strong> ' + (data.cost || 'N/A') + '</p>' +
+        '<p><strong>Visitor Tips:</strong> ' + (data.visitorTips || 'N/A') + '</p>' +
+        '<p><strong>Submitted:</strong> ' + new Date(data.submissionDate).toLocaleDateString() + '</p>' +
+        '</div>' +
+        '</div>';
+
+    container.innerHTML = submittedHTML;
 }
 
 function viewFavorites() {
@@ -1018,21 +925,19 @@ function quickFilter(type) {
     applyFilters();
 }
 
-// Initialize URL params and apply stored category filter
 function initializeURLParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     const categoryParam = urlParams.get('category');
 
-    // Check for stored category from localStorage
     let storedCategory = null;
     try {
         storedCategory = localStorage.getItem('selectedCategory');
         if (storedCategory) {
-            localStorage.removeItem('selectedCategory'); // Clear after use
+            localStorage.removeItem('selectedCategory');
         }
     } catch (error) {
-        console.error('Error loading stored category:', error);
+        // Silent error handling
     }
 
     if (searchParam) {
@@ -1049,7 +954,6 @@ function initializeURLParams() {
         }
     }
 
-    // Apply filters if any parameters were set
     if (searchParam || categoryParam || storedCategory) {
         applyFilters();
     }
@@ -1105,7 +1009,6 @@ function fallbackCopyText(text) {
         document.execCommand('copy');
         alert('Link copied to clipboard!');
     } catch (err) {
-        console.error('Could not copy text:', err);
         alert('Could not copy link. Please copy manually: ' + text);
     }
     document.body.removeChild(textArea);
