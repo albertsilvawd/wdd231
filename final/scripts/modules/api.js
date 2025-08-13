@@ -31,7 +31,7 @@ class ApiService {
         if (cacheKey && this.cache.has(cacheKey)) {
             const cached = this.cache.get(cacheKey);
             if (Date.now() - cached.timestamp < this.cacheTimeout) {
-                console.log(`✅ Using cached data for: ${cacheKey}`);
+                console.log(`âœ… Using cached data for: ${cacheKey}`);
                 return cached.data;
             } else {
                 // Remove expired cache entry
@@ -42,7 +42,7 @@ class ApiService {
         // Retry logic with exponential backoff
         for (let attempt = 1; attempt <= this.retryAttempts; attempt++) {
             try {
-                console.log(`🌐 Fetching data from: ${url} (attempt ${attempt})`);
+                console.log(`ðŸŒ Fetching data from: ${url} (attempt ${attempt})`);
 
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
@@ -67,14 +67,14 @@ class ApiService {
                         data,
                         timestamp: Date.now()
                     });
-                    console.log(`💾 Cached data for: ${cacheKey}`);
+                    console.log(`ðŸ’¾ Cached data for: ${cacheKey}`);
                 }
 
-                console.log(`✅ Successfully fetched data from: ${url}`);
+                console.log(`âœ… Successfully fetched data from: ${url}`);
                 return data;
 
             } catch (error) {
-                console.warn(`❌ Attempt ${attempt} failed for ${url}:`, error.message);
+                console.warn(`âŒ Attempt ${attempt} failed for ${url}:`, error.message);
 
                 // If it's the last attempt, throw the error
                 if (attempt === this.retryAttempts) {
@@ -99,11 +99,11 @@ class ApiService {
     // Get weather data for a city with proper try/catch
     async getWeatherData(city) {
         try {
-            console.log(`🌤️ Fetching weather data for: ${city}`);
+            console.log(`ðŸŒ¤ï¸ Fetching weather data for: ${city}`);
 
             // Check if we have a valid API key
             if (!API_CONFIG.weather.key || API_CONFIG.weather.key === 'YOUR_API_KEY_HERE') {
-                console.warn('⚠️ No valid weather API key configured, using mock data');
+                console.warn('âš ï¸ No valid weather API key configured, using mock data');
                 return this.getMockWeatherData(city);
             }
 
@@ -117,14 +117,14 @@ class ApiService {
                 throw new Error('Invalid weather data structure received');
             }
 
-            console.log(`✅ Weather data loaded for ${city}: ${weatherData.main.temp}°C`);
+            console.log(`âœ… Weather data loaded for ${city}: ${weatherData.main.temp}Â°C`);
             return weatherData;
 
         } catch (error) {
-            console.error(`❌ Weather API failed for ${city}:`, error);
+            console.error(`âŒ Weather API failed for ${city}:`, error);
 
             // Fallback to mock data
-            console.log('🔄 Falling back to mock weather data');
+            console.log('ðŸ”„ Falling back to mock weather data');
             return this.getMockWeatherData(city);
         }
     }
@@ -132,7 +132,7 @@ class ApiService {
     // Get country information with proper try/catch
     async getCountryInfo(countryName) {
         try {
-            console.log(`🌍 Fetching country info for: ${countryName}`);
+            console.log(`ðŸŒ Fetching country info for: ${countryName}`);
 
             const url = `${API_CONFIG.countries.baseUrl}/name/${encodeURIComponent(countryName)}?fields=name,capital,population,region,languages,currencies,flags,timezones`;
             const cacheKey = `country_${countryName.toLowerCase()}`;
@@ -149,14 +149,14 @@ class ApiService {
                 throw new Error('Invalid country data structure');
             }
 
-            console.log(`✅ Country data loaded for ${countryName}: ${country.capital[0]}`);
+            console.log(`âœ… Country data loaded for ${countryName}: ${country.capital[0]}`);
             return countryData;
 
         } catch (error) {
-            console.error(`❌ Countries API failed for ${countryName}:`, error);
+            console.error(`âŒ Countries API failed for ${countryName}:`, error);
 
             // Fallback to mock data
-            console.log('🔄 Falling back to mock country data');
+            console.log('ðŸ”„ Falling back to mock country data');
             return this.getMockCountryData(countryName);
         }
     }
@@ -164,7 +164,7 @@ class ApiService {
     // Get attractions data from local JSON with proper try/catch
     async getAttractionsData() {
         try {
-            console.log('🗺️ Fetching attractions data from local JSON');
+            console.log('ðŸ—ºï¸ Fetching attractions data from local JSON');
 
             const cacheKey = 'attractions_data';
 
@@ -172,7 +172,7 @@ class ApiService {
             if (this.cache.has(cacheKey)) {
                 const cached = this.cache.get(cacheKey);
                 if (Date.now() - cached.timestamp < this.cacheTimeout) {
-                    console.log('✅ Using cached attractions data');
+                    console.log('âœ… Using cached attractions data');
                     return cached.data;
                 }
             }
@@ -216,21 +216,21 @@ class ApiService {
                 timestamp: Date.now()
             });
 
-            console.log(`✅ Loaded ${data.attractions.length} attractions and ${data.categories.length} categories`);
+            console.log(`âœ… Loaded ${data.attractions.length} attractions and ${data.categories.length} categories`);
             return data;
 
         } catch (error) {
-            console.error('❌ Failed to load attractions data:', error);
+            console.error('âŒ Failed to load attractions data:', error);
 
             // Fallback to embedded data
-            console.log('🔄 Falling back to embedded attractions data');
+            console.log('ðŸ”„ Falling back to embedded attractions data');
             return this.getFallbackAttractionsData();
         }
     }
 
     // Mock weather data for demo/fallback purposes
     getMockWeatherData(city) {
-        console.log(`🎭 Generating mock weather data for: ${city}`);
+        console.log(`ðŸŽ­ Generating mock weather data for: ${city}`);
 
         const mockData = {
             'Buenos Aires': {
@@ -291,7 +291,7 @@ class ApiService {
 
     // Mock country data for demo/fallback purposes
     getMockCountryData(countryName) {
-        console.log(`🎭 Generating mock country data for: ${countryName}`);
+        console.log(`ðŸŽ­ Generating mock country data for: ${countryName}`);
 
         const mockData = {
             'Argentina': [{
@@ -334,7 +334,7 @@ class ApiService {
 
     // Comprehensive fallback attractions data
     getFallbackAttractionsData() {
-        console.log('🎭 Using embedded fallback attractions data');
+        console.log('ðŸŽ­ Using embedded fallback attractions data');
 
         return {
             attractions: [
@@ -343,13 +343,13 @@ class ApiService {
                     name: "Secret Rooftop Garden",
                     category: "Nature",
                     description: "Hidden oasis above the city with panoramic views and exotic plants. A peaceful escape featuring rare botanical specimens and stunning sunset vistas over Buenos Aires.",
-                    location: "Microcentro, above Galería Güemes",
+                    location: "Microcentro, above GalerÃ­a GÃ¼emes",
                     cost: "Free",
                     accessibility: "Limited Access",
                     rating: 4.8,
                     difficulty: "Easy",
                     bestTime: "Golden hour (5-7 PM)",
-                    tips: "Enter through the old Galería building, take elevator to top floor",
+                    tips: "Enter through the old GalerÃ­a building, take elevator to top floor",
                     image: "ancient-trees.webp",
                     coordinates: [-34.6037, -58.3816],
                     tags: ["photography", "peaceful", "views", "plants", "sunset"],
@@ -391,13 +391,13 @@ class ApiService {
                 }
             ],
             categories: [
-                { name: "Nature", icon: "🌿", count: 1, description: "Natural escapes and outdoor experiences" },
-                { name: "Culture", icon: "🎨", count: 1, description: "Art, crafts, and cultural experiences" },
-                { name: "Architecture", icon: "🏛️", count: 1, description: "Historic buildings and architectural marvels" },
-                { name: "History", icon: "📜", count: 0, description: "Historical sites and heritage locations" },
-                { name: "Entertainment", icon: "🎭", count: 0, description: "Music, performances, and nightlife" },
-                { name: "Food", icon: "🍽️", count: 0, description: "Culinary gems and food experiences" },
-                { name: "Shopping", icon: "🛍️", count: 0, description: "Unique shopping and market experiences" }
+                { name: "Nature", icon: "ðŸŒ¿", count: 1, description: "Natural escapes and outdoor experiences" },
+                { name: "Culture", icon: "ðŸŽ¨", count: 1, description: "Art, crafts, and cultural experiences" },
+                { name: "Architecture", icon: "ðŸ›ï¸", count: 1, description: "Historic buildings and architectural marvels" },
+                { name: "History", icon: "ðŸ“œ", count: 0, description: "Historical sites and heritage locations" },
+                { name: "Entertainment", icon: "ðŸŽ­", count: 0, description: "Music, performances, and nightlife" },
+                { name: "Food", icon: "ðŸ½ï¸", count: 0, description: "Culinary gems and food experiences" },
+                { name: "Shopping", icon: "ðŸ›ï¸", count: 0, description: "Unique shopping and market experiences" }
             ],
             stats: {
                 totalAttractions: 3,
@@ -413,7 +413,7 @@ class ApiService {
     clearCache() {
         const cacheSize = this.cache.size;
         this.cache.clear();
-        console.log(`🗑️ Cleared ${cacheSize} cache entries`);
+        console.log(`ðŸ—‘ï¸ Cleared ${cacheSize} cache entries`);
     }
 
     // Get cache status and statistics
@@ -451,7 +451,7 @@ class ApiService {
 
         const cleanedCount = initialSize - this.cache.size;
         if (cleanedCount > 0) {
-            console.log(`🧹 Cleaned ${cleanedCount} expired cache entries`);
+            console.log(`ðŸ§¹ Cleaned ${cleanedCount} expired cache entries`);
         }
 
         return cleanedCount;
@@ -516,7 +516,7 @@ class WeatherAPI {
 
     static async getWeatherForecast(city, days = 5) {
         try {
-            console.log(`🌤️ Fetching ${days}-day forecast for ${city}`);
+            console.log(`ðŸŒ¤ï¸ Fetching ${days}-day forecast for ${city}`);
 
             if (API_CONFIG.weather.key === 'YOUR_API_KEY_HERE') {
                 return WeatherAPI.getMockForecast(city, days);
@@ -540,7 +540,7 @@ class WeatherAPI {
     }
 
     static getMockForecast(city, days) {
-        console.log(`🎭 Generating mock ${days}-day forecast for ${city}`);
+        console.log(`ðŸŽ­ Generating mock ${days}-day forecast for ${city}`);
 
         const forecast = [];
         const baseTemp = 20;
@@ -593,7 +593,7 @@ class CountriesAPI {
 
     static async getCountryByCode(code) {
         try {
-            console.log(`🌍 Fetching country by code: ${code}`);
+            console.log(`ðŸŒ Fetching country by code: ${code}`);
 
             const api = new ApiService();
             const url = `${API_CONFIG.countries.baseUrl}/alpha/${code}?fields=name,capital,population,region,languages,currencies,flags`;
@@ -613,7 +613,7 @@ class CountriesAPI {
 
     static async getAllCountries() {
         try {
-            console.log('🌍 Fetching all countries data');
+            console.log('ðŸŒ Fetching all countries data');
 
             const api = new ApiService();
             const url = `${API_CONFIG.countries.baseUrl}/all?fields=name,capital,population,region,flags`;
@@ -633,7 +633,7 @@ class CountriesAPI {
 
     static async getCountriesByRegion(region) {
         try {
-            console.log(`🌍 Fetching countries in region: ${region}`);
+            console.log(`ðŸŒ Fetching countries in region: ${region}`);
 
             const api = new ApiService();
             const url = `${API_CONFIG.countries.baseUrl}/region/${encodeURIComponent(region)}?fields=name,capital,population,flags`;
@@ -828,7 +828,7 @@ class RateLimiter {
         this.requests = this.requests.filter(time => now - time < this.windowMs);
 
         if (this.requests.length >= this.maxRequests) {
-            console.warn(`⚠️ Rate limit exceeded: ${this.requests.length}/${this.maxRequests} requests in ${this.windowMs}ms window`);
+            console.warn(`âš ï¸ Rate limit exceeded: ${this.requests.length}/${this.maxRequests} requests in ${this.windowMs}ms window`);
             return false;
         }
 
@@ -894,7 +894,7 @@ class NetworkUtils {
             } catch (error) {
                 if (i === maxRetries - 1) throw error;
 
-                console.log(`🔄 Request failed, retrying in ${delay}ms... (${i + 1}/${maxRetries})`);
+                console.log(`ðŸ”„ Request failed, retrying in ${delay}ms... (${i + 1}/${maxRetries})`);
                 await new Promise(resolve => setTimeout(resolve, delay));
                 delay *= 2; // Exponential backoff
             }

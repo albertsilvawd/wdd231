@@ -11,9 +11,9 @@ class StorageService {
         this.version = '1.0';
 
         if (!this.storageAvailable) {
-            console.warn('⚠️ localStorage not available, using memory storage fallback');
+            console.warn('âš ï¸ localStorage not available, using memory storage fallback');
         } else {
-            console.log('✅ localStorage available and ready');
+            console.log('âœ… localStorage available and ready');
         }
 
         // Initialize cleanup
@@ -66,13 +66,13 @@ class StorageService {
 
             // Check size before storing
             if (serializedValue.length > 1024 * 1024) { // 1MB per item limit
-                console.warn(`⚠️ Large data size for key ${key}: ${(serializedValue.length / 1024).toFixed(2)}KB`);
+                console.warn(`âš ï¸ Large data size for key ${key}: ${(serializedValue.length / 1024).toFixed(2)}KB`);
             }
 
             if (this.storageAvailable) {
                 // Check available space
                 if (this.getStorageUsage().percentage > 80) {
-                    console.warn('⚠️ Storage usage high, cleaning up...');
+                    console.warn('âš ï¸ Storage usage high, cleaning up...');
                     this.cleanupExpiredEntries();
                     this.cleanupOldEntries();
                 }
@@ -82,15 +82,15 @@ class StorageService {
                 this.memoryStore.set(namespacedKey, serializedValue);
             }
 
-            console.log(`✅ Stored item: ${key} (${(serializedValue.length / 1024).toFixed(2)}KB)`);
+            console.log(`âœ… Stored item: ${key} (${(serializedValue.length / 1024).toFixed(2)}KB)`);
             return true;
 
         } catch (error) {
-            console.error(`❌ Error storing item ${key}:`, error);
+            console.error(`âŒ Error storing item ${key}:`, error);
 
             // Handle quota exceeded error
             if (error.name === 'QuotaExceededError' || error.code === 22) {
-                console.warn('💾 Storage quota exceeded, attempting cleanup...');
+                console.warn('ðŸ’¾ Storage quota exceeded, attempting cleanup...');
 
                 try {
                     this.cleanupExpiredEntries();
@@ -113,19 +113,19 @@ class StorageService {
                         this.memoryStore.set(namespacedKey, serializedValue);
                     }
 
-                    console.log(`✅ Stored item after cleanup: ${key}`);
+                    console.log(`âœ… Stored item after cleanup: ${key}`);
                     return true;
 
                 } catch (retryError) {
-                    console.error(`❌ Retry failed for ${key}:`, retryError);
+                    console.error(`âŒ Retry failed for ${key}:`, retryError);
 
                     // Last resort: try to store in memory
                     try {
                         this.memoryStore.set(namespacedKey, JSON.stringify(storageData));
-                        console.log(`💾 Stored in memory fallback: ${key}`);
+                        console.log(`ðŸ’¾ Stored in memory fallback: ${key}`);
                         return true;
                     } catch (memoryError) {
-                        console.error(`❌ Memory fallback failed for ${key}:`, memoryError);
+                        console.error(`âŒ Memory fallback failed for ${key}:`, memoryError);
                         return false;
                     }
                 }
@@ -156,34 +156,34 @@ class StorageService {
 
             // Validate stored data structure
             if (!parsed || typeof parsed !== 'object' || !parsed.hasOwnProperty('data')) {
-                console.warn(`⚠️ Invalid stored data structure for key: ${key}, returning default`);
+                console.warn(`âš ï¸ Invalid stored data structure for key: ${key}, returning default`);
                 this.removeItem(key); // Clean up invalid data
                 return defaultValue;
             }
 
             // Check if data has expired
             if (parsed.expires && Date.now() > parsed.expires) {
-                console.log(`⏰ Data expired for key: ${key}, removing`);
+                console.log(`â° Data expired for key: ${key}, removing`);
                 this.removeItem(key);
                 return defaultValue;
             }
 
             // Version compatibility check
             if (parsed.version && parsed.version !== this.version) {
-                console.warn(`⚠️ Version mismatch for key: ${key} (stored: ${parsed.version}, current: ${this.version})`);
+                console.warn(`âš ï¸ Version mismatch for key: ${key} (stored: ${parsed.version}, current: ${this.version})`);
                 // Could add migration logic here if needed
             }
 
             return parsed.data;
 
         } catch (error) {
-            console.error(`❌ Error retrieving item ${key}:`, error);
+            console.error(`âŒ Error retrieving item ${key}:`, error);
 
             // Try to clean up corrupted data
             try {
                 this.removeItem(key);
             } catch (cleanupError) {
-                console.error(`❌ Failed to clean up corrupted data for ${key}:`, cleanupError);
+                console.error(`âŒ Failed to clean up corrupted data for ${key}:`, cleanupError);
             }
 
             return defaultValue;
@@ -201,11 +201,11 @@ class StorageService {
                 this.memoryStore.delete(namespacedKey);
             }
 
-            console.log(`🗑️ Removed item: ${key}`);
+            console.log(`ðŸ—‘ï¸ Removed item: ${key}`);
             return true;
 
         } catch (error) {
-            console.error(`❌ Error removing item ${key}:`, error);
+            console.error(`âŒ Error removing item ${key}:`, error);
             return false;
         }
     }
@@ -233,11 +233,11 @@ class StorageService {
                 }
             }
 
-            console.log(`🧹 Cleared ${removedCount} items from storage`);
+            console.log(`ðŸ§¹ Cleared ${removedCount} items from storage`);
             return true;
 
         } catch (error) {
-            console.error('❌ Error clearing storage:', error);
+            console.error('âŒ Error clearing storage:', error);
             return false;
         }
     }
@@ -265,7 +265,7 @@ class StorageService {
             return keys;
 
         } catch (error) {
-            console.error('❌ Error getting all keys:', error);
+            console.error('âŒ Error getting all keys:', error);
             return [];
         }
     }
@@ -317,7 +317,7 @@ class StorageService {
             };
 
         } catch (error) {
-            console.error('❌ Error getting storage usage:', error);
+            console.error('âŒ Error getting storage usage:', error);
             return {
                 available: false,
                 error: error.message
@@ -352,20 +352,20 @@ class StorageService {
                     }
                 } catch (error) {
                     // If parsing fails, consider it corrupted and remove it
-                    console.warn(`⚠️ Removing corrupted data for key: ${key}`);
+                    console.warn(`âš ï¸ Removing corrupted data for key: ${key}`);
                     this.removeItem(key);
                     expiredCount++;
                 }
             });
 
             if (expiredCount > 0) {
-                console.log(`🧹 Cleaned up ${expiredCount} expired entries`);
+                console.log(`ðŸ§¹ Cleaned up ${expiredCount} expired entries`);
             }
 
             return expiredCount;
 
         } catch (error) {
-            console.error('❌ Error cleaning expired entries:', error);
+            console.error('âŒ Error cleaning expired entries:', error);
             return 0;
         }
     }
@@ -401,20 +401,20 @@ class StorageService {
                         }
                     }
                 } catch (error) {
-                    console.warn(`⚠️ Error processing old entry ${key}, removing:`, error);
+                    console.warn(`âš ï¸ Error processing old entry ${key}, removing:`, error);
                     this.removeItem(key);
                     removedCount++;
                 }
             });
 
             if (removedCount > 0) {
-                console.log(`🧹 Cleaned up ${removedCount} old entries`);
+                console.log(`ðŸ§¹ Cleaned up ${removedCount} old entries`);
             }
 
             return removedCount;
 
         } catch (error) {
-            console.error('❌ Error cleaning old entries:', error);
+            console.error('âŒ Error cleaning old entries:', error);
             return 0;
         }
     }
@@ -434,7 +434,7 @@ class StorageService {
                         exportedCount++;
                     }
                 } catch (error) {
-                    console.warn(`⚠️ Failed to export key ${key}:`, error);
+                    console.warn(`âš ï¸ Failed to export key ${key}:`, error);
                 }
             });
 
@@ -446,11 +446,11 @@ class StorageService {
                 data
             };
 
-            console.log(`📤 Exported ${exportedCount} items`);
+            console.log(`ðŸ“¤ Exported ${exportedCount} items`);
             return exportData;
 
         } catch (error) {
-            console.error('❌ Error exporting data:', error);
+            console.error('âŒ Error exporting data:', error);
             return null;
         }
     }
@@ -478,11 +478,11 @@ class StorageService {
                 } catch (error) {
                     imported[key] = false;
                     errorCount++;
-                    console.error(`❌ Error importing ${key}:`, error);
+                    console.error(`âŒ Error importing ${key}:`, error);
                 }
             });
 
-            console.log(`📥 Import complete: ${successCount} successful, ${errorCount} failed`);
+            console.log(`ðŸ“¥ Import complete: ${successCount} successful, ${errorCount} failed`);
 
             return {
                 success: true,
@@ -492,7 +492,7 @@ class StorageService {
             };
 
         } catch (error) {
-            console.error('❌ Error importing data:', error);
+            console.error('âŒ Error importing data:', error);
             return {
                 success: false,
                 error: error.message
@@ -564,7 +564,7 @@ class StorageService {
             return stats;
 
         } catch (error) {
-            console.error('❌ Error getting storage stats:', error);
+            console.error('âŒ Error getting storage stats:', error);
             return null;
         }
     }
@@ -592,17 +592,17 @@ class FavoritesService extends StorageService {
                 const success = this.setItem(this.favoritesKey, favorites);
 
                 if (success) {
-                    console.log(`❤️ Added to favorites: ${attractionId}`);
+                    console.log(`â¤ï¸ Added to favorites: ${attractionId}`);
                     return true;
                 }
             } else {
-                console.log(`ℹ️ Already in favorites: ${attractionId}`);
+                console.log(`â„¹ï¸ Already in favorites: ${attractionId}`);
                 return true;
             }
 
             return false;
         } catch (error) {
-            console.error(`❌ Error adding favorite ${attractionId}:`, error);
+            console.error(`âŒ Error adding favorite ${attractionId}:`, error);
             return false;
         }
     }
@@ -618,17 +618,17 @@ class FavoritesService extends StorageService {
                 const success = this.setItem(this.favoritesKey, favorites);
 
                 if (success) {
-                    console.log(`💔 Removed from favorites: ${attractionId}`);
+                    console.log(`ðŸ’” Removed from favorites: ${attractionId}`);
                     return true;
                 }
             } else {
-                console.log(`ℹ️ Not in favorites: ${attractionId}`);
+                console.log(`â„¹ï¸ Not in favorites: ${attractionId}`);
                 return true;
             }
 
             return false;
         } catch (error) {
-            console.error(`❌ Error removing favorite ${attractionId}:`, error);
+            console.error(`âŒ Error removing favorite ${attractionId}:`, error);
             return false;
         }
     }
@@ -638,7 +638,7 @@ class FavoritesService extends StorageService {
             const favorites = this.getFavorites();
             return favorites.includes(attractionId.toString());
         } catch (error) {
-            console.error(`❌ Error checking favorite ${attractionId}:`, error);
+            console.error(`âŒ Error checking favorite ${attractionId}:`, error);
             return false;
         }
     }
@@ -653,11 +653,11 @@ class FavoritesService extends StorageService {
         try {
             const success = this.setItem(this.favoritesKey, []);
             if (success) {
-                console.log('🧹 Cleared all favorites');
+                console.log('ðŸ§¹ Cleared all favorites');
             }
             return success;
         } catch (error) {
-            console.error('❌ Error clearing favorites:', error);
+            console.error('âŒ Error clearing favorites:', error);
             return false;
         }
     }
@@ -675,7 +675,7 @@ class FavoritesService extends StorageService {
                 mostRecent: favorites.length > 0 ? favorites[favorites.length - 1] : null
             };
         } catch (error) {
-            console.error('❌ Error getting favorites stats:', error);
+            console.error('âŒ Error getting favorites stats:', error);
             return { total: 0, addedToday: 0, mostRecent: null };
         }
     }
@@ -710,11 +710,11 @@ class VisitHistoryService extends StorageService {
 
             const success = this.setItem(this.historyKey, trimmed);
             if (success) {
-                console.log(`📍 Recorded visit to: ${attractionId}`);
+                console.log(`ðŸ“ Recorded visit to: ${attractionId}`);
             }
             return success;
         } catch (error) {
-            console.error(`❌ Error adding visit ${attractionId}:`, error);
+            console.error(`âŒ Error adding visit ${attractionId}:`, error);
             return false;
         }
     }
@@ -733,7 +733,7 @@ class VisitHistoryService extends StorageService {
             const history = this.getVisitHistory();
             return history.some(item => item.attractionId === attractionId.toString());
         } catch (error) {
-            console.error(`❌ Error checking visit ${attractionId}:`, error);
+            console.error(`âŒ Error checking visit ${attractionId}:`, error);
             return false;
         }
     }
@@ -743,7 +743,7 @@ class VisitHistoryService extends StorageService {
             const history = this.getVisitHistory();
             return history.filter(item => item.attractionId === attractionId.toString()).length;
         } catch (error) {
-            console.error(`❌ Error getting visit count ${attractionId}:`, error);
+            console.error(`âŒ Error getting visit count ${attractionId}:`, error);
             return 0;
         }
     }
@@ -752,11 +752,11 @@ class VisitHistoryService extends StorageService {
         try {
             const success = this.setItem(this.historyKey, []);
             if (success) {
-                console.log('🧹 Cleared visit history');
+                console.log('ðŸ§¹ Cleared visit history');
             }
             return success;
         } catch (error) {
-            console.error('❌ Error clearing history:', error);
+            console.error('âŒ Error clearing history:', error);
             return false;
         }
     }
@@ -785,7 +785,7 @@ class VisitHistoryService extends StorageService {
                 lastVisit: history.length > 0 ? history[0].date : null
             };
         } catch (error) {
-            console.error('❌ Error getting visit stats:', error);
+            console.error('âŒ Error getting visit stats:', error);
             return null;
         }
     }
@@ -819,7 +819,7 @@ class UserPreferencesService extends StorageService {
                 ...stored
             };
         } catch (error) {
-            console.error('❌ Error getting preferences:', error);
+            console.error('âŒ Error getting preferences:', error);
             return this.defaultPreferences;
         }
     }
@@ -831,11 +831,11 @@ class UserPreferencesService extends StorageService {
 
             const success = this.setItem(this.preferencesKey, current);
             if (success) {
-                console.log(`⚙️ Updated preference ${key}: ${value}`);
+                console.log(`âš™ï¸ Updated preference ${key}: ${value}`);
             }
             return success;
         } catch (error) {
-            console.error(`❌ Error setting preference ${key}:`, error);
+            console.error(`âŒ Error setting preference ${key}:`, error);
             return false;
         }
     }
@@ -844,11 +844,11 @@ class UserPreferencesService extends StorageService {
         try {
             const success = this.setItem(this.preferencesKey, this.defaultPreferences);
             if (success) {
-                console.log('🔄 Reset preferences to defaults');
+                console.log('ðŸ”„ Reset preferences to defaults');
             }
             return success;
         } catch (error) {
-            console.error('❌ Error resetting preferences:', error);
+            console.error('âŒ Error resetting preferences:', error);
             return false;
         }
     }
@@ -897,11 +897,11 @@ class FormDataService extends StorageService {
 
             const success = this.setItem(this.submissionsKey, trimmed);
             if (success) {
-                console.log(`📝 Saved form submission: ${formId}`);
+                console.log(`ðŸ“ Saved form submission: ${formId}`);
             }
             return success;
         } catch (error) {
-            console.error(`❌ Error saving form data ${formId}:`, error);
+            console.error(`âŒ Error saving form data ${formId}:`, error);
             return false;
         }
     }
@@ -916,7 +916,7 @@ class FormDataService extends StorageService {
 
             return submissions;
         } catch (error) {
-            console.error('❌ Error getting form submissions:', error);
+            console.error('âŒ Error getting form submissions:', error);
             return [];
         }
     }
@@ -926,7 +926,7 @@ class FormDataService extends StorageService {
             const submissions = this.getFormSubmissions();
             return submissions.length > 0 ? submissions[0] : null;
         } catch (error) {
-            console.error('❌ Error getting last submission:', error);
+            console.error('âŒ Error getting last submission:', error);
             return null;
         }
     }
@@ -935,11 +935,11 @@ class FormDataService extends StorageService {
         try {
             const success = this.setItem(this.submissionsKey, []);
             if (success) {
-                console.log('🧹 Cleared form submissions');
+                console.log('ðŸ§¹ Cleared form submissions');
             }
             return success;
         } catch (error) {
-            console.error('❌ Error clearing form data:', error);
+            console.error('âŒ Error clearing form data:', error);
             return false;
         }
     }
@@ -960,7 +960,7 @@ class FormDataService extends StorageService {
                 lastSubmission: submissions.length > 0 ? submissions[0].date : null
             };
         } catch (error) {
-            console.error('❌ Error getting submission stats:', error);
+            console.error('âŒ Error getting submission stats:', error);
             return null;
         }
     }
@@ -996,11 +996,11 @@ class AnalyticsService extends StorageService {
 
             const success = this.setItem(this.eventsKey, trimmed);
             if (success) {
-                console.log(`📊 Tracked event: ${eventName}`);
+                console.log(`ðŸ“Š Tracked event: ${eventName}`);
             }
             return success;
         } catch (error) {
-            console.error(`❌ Error tracking event ${eventName}:`, error);
+            console.error(`âŒ Error tracking event ${eventName}:`, error);
             return false;
         }
     }
@@ -1023,7 +1023,7 @@ class AnalyticsService extends StorageService {
             const events = this.getEvents();
             return events.filter(event => event.name === eventName);
         } catch (error) {
-            console.error(`❌ Error getting events by type ${eventName}:`, error);
+            console.error(`âŒ Error getting events by type ${eventName}:`, error);
             return [];
         }
     }
@@ -1044,7 +1044,7 @@ class AnalyticsService extends StorageService {
                 lastEvent: events.length > 0 ? events[0].date : null
             };
         } catch (error) {
-            console.error('❌ Error getting usage stats:', error);
+            console.error('âŒ Error getting usage stats:', error);
             return null;
         }
     }
@@ -1053,10 +1053,10 @@ class AnalyticsService extends StorageService {
         try {
             this.removeItem(this.eventsKey);
             this.removeItem('sessionId');
-            console.log('🧹 Cleared analytics data');
+            console.log('ðŸ§¹ Cleared analytics data');
             return true;
         } catch (error) {
-            console.error('❌ Error clearing analytics:', error);
+            console.error('âŒ Error clearing analytics:', error);
             return false;
         }
     }
@@ -1091,10 +1091,10 @@ const storageUtils = {
                 }
             });
 
-            console.log(`🧹 Cleared data from ${cleared} services`);
+            console.log(`ðŸ§¹ Cleared data from ${cleared} services`);
             return cleared === services.length;
         } catch (error) {
-            console.error('❌ Error clearing all data:', error);
+            console.error('âŒ Error clearing all data:', error);
             return false;
         }
     },
@@ -1112,7 +1112,7 @@ const storageUtils = {
                 timestamp: new Date().toISOString()
             };
         } catch (error) {
-            console.error('❌ Error getting storage overview:', error);
+            console.error('âŒ Error getting storage overview:', error);
             return { error: error.message };
         }
     },
@@ -1133,7 +1133,7 @@ const storageUtils = {
                 }
             };
         } catch (error) {
-            console.error('❌ Error exporting all data:', error);
+            console.error('âŒ Error exporting all data:', error);
             return { error: error.message };
         }
     },
@@ -1161,13 +1161,13 @@ const storageUtils = {
                 }
             });
 
-            console.log('📥 Import completed for all services');
+            console.log('ðŸ“¥ Import completed for all services');
             return {
                 success: true,
                 results
             };
         } catch (error) {
-            console.error('❌ Error importing all data:', error);
+            console.error('âŒ Error importing all data:', error);
             return {
                 success: false,
                 error: error.message
@@ -1202,10 +1202,10 @@ const storageUtils = {
                 }
             });
 
-            console.log('🔧 Storage optimization complete:', results);
+            console.log('ðŸ”§ Storage optimization complete:', results);
             return results;
         } catch (error) {
-            console.error('❌ Error optimizing storage:', error);
+            console.error('âŒ Error optimizing storage:', error);
             return { error: error.message };
         }
     },

@@ -8,7 +8,7 @@
             "location": "Palermo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "images/attractions/secret-rooftop-garden.webp",
+            "image": "./images/attractions/secret-rooftop-garden.webp",
             "rating": 4.8,
             "neighborhood": "Palermo",
             "openHours": "6:00 AM - 8:00 PM"
@@ -21,7 +21,7 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Low",
             "accessibility": "High",
-            "image": "images/attractions/underground-art-galery.webp",
+            "image": "./images/attractions/underground-art-galery.webp",
             "rating": 4.6,
             "neighborhood": "San Telmo",
             "openHours": "2:00 PM - 10:00 PM"
@@ -34,7 +34,7 @@
             "location": "Monserrat, Buenos Aires",
             "cost": "Medium",
             "accessibility": "Medium",
-            "image": "images/attractions/historic-clock-tower.webp",
+            "image": "./images/attractions/historic-clock-tower.webp",
             "rating": 4.5,
             "neighborhood": "Monserrat",
             "openHours": "10:00 AM - 6:00 PM"
@@ -47,7 +47,7 @@
             "location": "Belgrano, Buenos Aires",
             "cost": "Free",
             "accessibility": "Low",
-            "image": "images/attractions/hidden-waterfall-trail.webp",
+            "image": "./images/attractions/hidden-waterfall-trail.webp",
             "rating": 4.7,
             "neighborhood": "Belgrano",
             "openHours": "Dawn to Dusk"
@@ -60,7 +60,7 @@
             "location": "Villa Crespo, Buenos Aires",
             "cost": "Medium",
             "accessibility": "Medium",
-            "image": "images/attractions/vintage-record-shop-basement.webp",
+            "image": "./images/attractions/vintage-record-shop-basement.webp",
             "rating": 4.4,
             "neighborhood": "Villa Crespo",
             "openHours": "7:00 PM - 1:00 AM"
@@ -73,7 +73,7 @@
             "location": "Recoleta, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "images/attractions/forgotten-cemetery-garden.webp",
+            "image": "./images/attractions/forgotten-cemetery-garden.webp",
             "rating": 4.3,
             "neighborhood": "Recoleta",
             "openHours": "8:00 AM - 6:00 PM"
@@ -86,7 +86,7 @@
             "location": "San Telmo, Buenos Aires",
             "cost": "Free",
             "accessibility": "Medium",
-            "image": "images/attractions/artisan-workshop-alley.webp",
+            "image": "./images/attractions/artisan-workshop-alley.webp",
             "rating": 4.6,
             "neighborhood": "San Telmo",
             "openHours": "10:00 AM - 7:00 PM"
@@ -99,7 +99,7 @@
             "location": "Palermo, Buenos Aires",
             "cost": "High",
             "accessibility": "Low",
-            "image": "images/attractions/secret-speakeasy-cave.webp",
+            "image": "./images/attractions/secret-speakeasy-cave.webp",
             "rating": 4.9,
             "neighborhood": "Palermo",
             "openHours": "8:00 PM - 3:00 AM"
@@ -112,7 +112,7 @@
             "location": "Caballito, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "images/attractions/rooftop-beehive-garden.webp",
+            "image": "./images/attractions/rooftop-beehive-garden.webp",
             "rating": 4.5,
             "neighborhood": "Caballito",
             "openHours": "9:00 AM - 5:00 PM"
@@ -125,7 +125,7 @@
             "location": "Puerto Madero, Buenos Aires",
             "cost": "Medium",
             "accessibility": "High",
-            "image": "images/attractions/hidden-speakeasy-love.webp",
+            "image": "./images/attractions/hidden-speakeasy-love.webp",
             "rating": 4.7,
             "neighborhood": "Puerto Madero",
             "openHours": "6:00 PM - 2:00 AM"
@@ -138,75 +138,75 @@
             "location": "Barracas, Buenos Aires",
             "cost": "Free",
             "accessibility": "Low",
-            "image": "images/attractions/abandoned-theater-ruins.webp",
+            "image": "./images/attractions/abandoned-theater-ruins.webp",
             "rating": 4.2,
             "neighborhood": "Barracas",
             "openHours": "10:00 AM - 4:00 PM"
         },
         {
             "id": 12,
+            "name": "Rooftop Bookstore Gardens",
+            "category": "Culture",
+            "description": "Urban bookstore project with outdoor garden, reading areas, and book exchange programs for the community.",
+            "location": "Villa Crespo, Buenos Aires",
+            "cost": "Free",
+            "accessibility": "High",
+            "image": "./images/attractions/vintage-record-shop-basement.webp",
+            "rating": 4.8,
+            "neighborhood": "Villa Crespo",
+            "openHours": "8:00 AM - 10:00 PM"
+        },
+        {
+            "id": 13,
             "name": "Telescope Observatory Deck",
             "category": "Entertainment",
             "description": "Community-run telescope facility offering stargazing sessions with knowledgeable volunteers and modern equipment.",
             "location": "Núñez, Buenos Aires",
             "cost": "Low",
             "accessibility": "Medium",
-            "image": "images/attractions/telescope-observatory-deck.webp",
+            "image": "./images/attractions/telescope-observatory-deck.webp",
             "rating": 4.6,
             "neighborhood": "Núñez",
             "openHours": "8:00 PM - 12:00 AM"
         },
         {
-            "id": 13,
+            "id": 14,
             "name": "Ancient Tree Grove",
             "category": "Nature",
             "description": "Collection of 200+ year old trees in an urban setting. Features educational signage about urban forest conservation.",
             "location": "Parque Chacabuco, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "images/attractions/ancient-tree-grove.webp",
+            "image": "./images/attractions/ancient-tree-grove.webp",
             "rating": 4.4,
             "neighborhood": "Parque Chacabuco",
             "openHours": "6:00 AM - 8:00 PM"
         },
         {
-            "id": 14,
+            "id": 15,
             "name": "Graffiti Hall of Fame",
             "category": "Culture",
             "description": "Legal graffiti wall showcasing rotating collection of local and international street artists' work.",
             "location": "La Boca, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "images/attractions/graffiti-hall-of-fame.webp",
+            "image": "./images/attractions/graffiti-hall-of-fame.webp",
             "rating": 4.5,
             "neighborhood": "La Boca",
             "openHours": "24/7"
         },
         {
-            "id": 15,
+            "id": 16,
             "name": "Meditation Labyrinth",
             "category": "Nature",
             "description": "Stone labyrinth for walking meditation in quiet garden setting. Includes benches and information about mindfulness practices.",
             "location": "Belgrano, Buenos Aires",
             "cost": "Free",
             "accessibility": "High",
-            "image": "images/attractions/meditation-labyrinth.webp",
+            "image": "./images/attractions/meditation-labyrinth.webp",
             "rating": 4.3,
             "neighborhood": "Belgrano",
             "openHours": "6:00 AM - 10:00 PM"
-        },
-        {
-            "id": 16,
-            "name": "Hidden Waterfall Vista",
-            "category": "Nature",
-            "description": "Secret viewpoint overlooking a hidden waterfall in the urban landscape. Perfect for photography and peaceful reflection.",
-            "location": "Núñez, Buenos Aires",
-            "cost": "Free",
-            "accessibility": "Medium",
-            "image": "images/attractions/hidden-speakeasy-cave.webp",
-            "rating": 4.8,
-            "neighborhood": "Núñez",
-            "openHours": "Dawn to Dusk"
         }
     ]
 }

@@ -171,10 +171,10 @@ class UIHelpers {
         toast.setAttribute('aria-live', 'assertive');
 
         const iconMap = {
-            success: '✓',
-            error: '✕',
-            warning: '⚠',
-            info: 'ℹ'
+            success: 'âœ“',
+            error: 'âœ•',
+            warning: 'âš ',
+            info: 'â„¹'
         };
 
         const actionsHTML = actions.length > 0 ?

@@ -1,4 +1,3 @@
-
 // Hidden Gems Explorer - Thank You Page JavaScript
 
 import './main.js';

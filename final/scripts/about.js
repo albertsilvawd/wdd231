@@ -1,4 +1,3 @@
-
 // Hidden Gems Explorer - About Page JavaScript
 
 import './main.js';
