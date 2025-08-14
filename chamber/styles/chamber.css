@@ -25,7 +25,6 @@ body {
     padding: 0;
 }
 
-/* Background pattern geométrico sutil */
 body::before {
     content: '';
     position: fixed;
@@ -43,7 +42,6 @@ body::before {
     pointer-events: none;
 }
 
-/* Typography */
 h1,
 h2,
 h3,
@@ -55,7 +53,6 @@ h6 {
     margin: 0 0 1rem 0;
 }
 
-/* Header */
 header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: var(--white);
@@ -73,6 +70,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .logo-section {
@@ -109,7 +107,6 @@ header {
     font-size: 0.9rem;
 }
 
-/* Hamburger menu */
 .hamburger {
     background: none;
     border: none;
@@ -118,6 +115,7 @@ header {
     flex-direction: column;
     gap: 4px;
     padding: 8px;
+    z-index: 1001;
 }
 
 .hamburger span {
@@ -128,7 +126,6 @@ header {
     transition: 0.3s;
 }
 
-/* Navigation */
 .main-nav {
     background: var(--white);
     border-bottom: 1px solid var(--border-color);
@@ -160,13 +157,19 @@ header {
     transition: all 0.3s ease;
 }
 
-.main-nav a:hover,
-.main-nav a.active {
+.main-nav a:hover {
     color: var(--primary-color);
     border-bottom-color: var(--accent1-color);
 }
 
-/* Hide main H1 visually but keep for accessibility */
+.main-nav a.active,
+.main-nav a[aria-current="page"] {
+    color: var(--primary-color);
+    border-bottom-color: var(--accent1-color);
+    background-color: rgba(30, 58, 138, 0.05);
+    font-weight: 700;
+}
+
 main>h1 {
     position: absolute;
     left: -10000px;
@@ -176,14 +179,12 @@ main>h1 {
     overflow: hidden;
 }
 
-/* Main content */
 main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
 
-/* Hero Section */
 .hero {
     position: relative;
     height: 60vh;
@@ -257,7 +258,6 @@ main {
     background: #f59e0b;
 }
 
-/* Content Grid Layout */
 .content-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -276,7 +276,6 @@ main {
     gap: 2rem;
 }
 
-/* Sections */
 .current-events,
 .weather,
 .spotlights {
@@ -305,7 +304,6 @@ main {
     font-size: 1.8rem;
 }
 
-/* Event Cards */
 .event-card {
     background: var(--accent2-color);
     padding: 1.5rem;
@@ -345,7 +343,6 @@ main {
     text-decoration: underline;
 }
 
-/* Weather Section */
 .weather-info {
     display: flex;
     flex-direction: column;
@@ -431,7 +428,6 @@ main {
     font-size: 1.2rem;
 }
 
-/* Spotlights */
 #spotlight-container {
     display: flex;
     flex-direction: column;
@@ -525,7 +521,6 @@ main {
     font-style: italic;
 }
 
-/* Membership Level Styles */
 .membership-level {
     position: absolute;
     top: 1rem;
@@ -551,7 +546,6 @@ main {
     background: #cd7f32;
 }
 
-/* Footer */
 footer {
     background: var(--primary-color);
     color: var(--white);
@@ -656,10 +650,9 @@ footer {
     margin-top: 2rem;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
     .hamburger {
-        display: flex;
+        display: flex !important;
     }
 
     .main-nav {
@@ -671,10 +664,24 @@ footer {
         background: var(--white);
         box-shadow: var(--shadow);
         z-index: 1000;
+        border-top: 1px solid var(--border-color);
     }
 
     .main-nav.active {
         display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .main-nav ul {
@@ -699,12 +706,13 @@ footer {
     }
 
     .main-nav a:hover,
-    .main-nav a.active {
+    .main-nav a.active,
+    .main-nav a[aria-current="page"] {
         background: var(--accent2-color);
         color: var(--primary-color);
+        border-bottom: none;
     }
 
-    /* Hamburger animation */
     .hamburger.active span:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
@@ -750,7 +758,6 @@ footer {
         min-height: 300px;
     }
 
-    /* Responsive foter */
     .social-links {
         justify-content: center;
     }

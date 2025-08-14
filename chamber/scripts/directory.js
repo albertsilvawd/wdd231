@@ -1,244 +1,273 @@
-// Global variables
-const membersContainer = document.getElementById('membersContainer');
-const gridViewBtn = document.getElementById('gridViewBtn');
-const listViewBtn = document.getElementById('listViewBtn');
-const hamburger = document.querySelector('.hamburger');
-const mainNav = document.querySelector('.main-nav');
-
-let membersData = [];
-
-// Initialize the page
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('🚀 Directory page initializing...');
-    setupEventListeners();
-    loadMembersData();
+    console.log('🎭 Discover Buenos Aires page loading...');
+
+    initializeHamburgerMenu();
+    initializeVisitMessage();
+    loadAttractions();
+    updateFooter();
 });
 
-// Setup event listeners
-function setupEventListeners() {
-    // View toggle buttons
-    if (gridViewBtn && listViewBtn) {
-        gridViewBtn.addEventListener('click', () => {
-            setActiveView('grid');
-            displayMembers(membersData, 'grid');
-        });
+function initializeHamburgerMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mainNav = document.querySelector('.main-nav');
 
-        listViewBtn.addEventListener('click', () => {
-            setActiveView('list');
-            displayMembers(membersData, 'list');
-        });
-    }
-
-    // Hamburger menu toggle
-    if (hamburger) {
-        hamburger.addEventListener('click', toggleMenu);
-    }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (hamburger && mainNav && !hamburger.contains(e.target) && !mainNav.contains(e.target)) {
-            closeMenu();
-        }
-    });
-
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeMenu();
-        }
-    });
-
-    // Close menu when clicking on nav links
-    if (mainNav) {
-        mainNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-    }
-}
-
-// Toggle hamburger menu
-function toggleMenu() {
-    const isOpen = hamburger.classList.contains('active');
-    if (isOpen) {
-        closeMenu();
-    } else {
-        openMenu();
-    }
-}
-
-// Open menu
-function openMenu() {
-    hamburger.classList.add('active');
-    mainNav.classList.add('active');
-    hamburger.setAttribute('aria-expanded', 'true');
-}
-
-// Close menu
-function closeMenu() {
     if (hamburger && mainNav) {
-        hamburger.classList.remove('active');
-        mainNav.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.addEventListener('click', function () {
+            const isOpen = hamburger.classList.contains('active');
+
+            if (isOpen) {
+                hamburger.classList.remove('active');
+                mainNav.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            } else {
+                hamburger.classList.add('active');
+                mainNav.classList.add('active');
+                hamburger.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!hamburger.contains(e.target) && !mainNav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mainNav.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                hamburger.classList.remove('active');
+                mainNav.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function () {
+                hamburger.classList.remove('active');
+                mainNav.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        console.log('✅ Hamburger menu initialized');
     }
 }
 
-// Load members data from JSON - simplified
-async function loadMembersData() {
+function initializeVisitMessage() {
+    const visitMessageContainer = document.getElementById('visitMessage');
+    if (!visitMessageContainer) {
+        console.warn('Visit message container not found');
+        return;
+    }
+
     try {
-        console.log('Loading members data...');
-        const response = await fetch('data/members.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        const lastVisit = localStorage.getItem('chamberLastVisit');
+        const currentVisit = Date.now();
+        let message = '';
+        let messageClass = '';
+
+        if (!lastVisit) {
+            message = "Welcome! Let us know if you have any questions.";
+            messageClass = 'first-visit';
+        } else {
+            const daysBetween = Math.floor((currentVisit - parseInt(lastVisit)) / (1000 * 60 * 60 * 24));
+
+            if (daysBetween < 1) {
+                message = "Back so soon! Awesome!";
+                messageClass = 'recent-visit';
+            } else if (daysBetween === 1) {
+                message = "You last visited 1 day ago.";
+                messageClass = '';
+            } else {
+                message = `You last visited ${daysBetween} days ago.`;
+                messageClass = '';
+            }
         }
-        const data = await response.json();
-        membersData = data.members;
-        displayMembers(membersData, 'grid');
-        console.log('✅ Members loaded successfully:', membersData.length);
+
+        visitMessageContainer.innerHTML = message;
+        visitMessageContainer.className = `visit-message ${messageClass}`;
+
+        localStorage.setItem('chamberLastVisit', currentVisit.toString());
+
+        console.log(`✅ Visit message: ${message}`);
     } catch (error) {
-        console.error('❌ Error loading members data:', error);
-        if (membersContainer) {
-            membersContainer.innerHTML = `
-                <div style="text-align: center; padding: 2rem; color: var(--text-color);">
-                    <p>Error loading member data. Please try again later.</p>
-                </div>
-            `;
-        }
+        console.error('❌ Error in visit message:', error);
+        visitMessageContainer.innerHTML = "Welcome to Buenos Aires!";
+        visitMessageContainer.className = 'visit-message';
     }
 }
 
-// Display members in the specified view
-function displayMembers(members, viewType) {
-    if (!membersContainer) return;
-
-    membersContainer.innerHTML = '';
-
-    // Update container class
-    if (viewType === 'grid') {
-        membersContainer.className = 'members-grid';
-    } else {
-        membersContainer.className = 'members-list';
+async function loadAttractions() {
+    const attractionsGrid = document.getElementById('attractionsGrid');
+    if (!attractionsGrid) {
+        console.warn('Attractions grid container not found');
+        return;
     }
 
-    members.forEach(member => {
-        const memberCard = createMemberCard(member, viewType);
-        membersContainer.appendChild(memberCard);
+    try {
+        attractionsGrid.innerHTML = '<div class="loading">Loading Buenos Aires attractions...</div>';
+
+        console.log('📡 Loading attractions from JSON...');
+
+        const response = await fetch('data/attractions.json');
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: Cannot load attractions data`);
+        }
+
+        const data = await response.json();
+        console.log('📊 Attractions data loaded successfully from JSON');
+
+        if (!data.attractions || !Array.isArray(data.attractions)) {
+            throw new Error('Invalid attractions data format');
+        }
+
+        const attractions = data.attractions;
+        console.log(`🔍 Found ${attractions.length} attractions from JSON file`);
+
+        attractionsGrid.innerHTML = '';
+
+        attractions.forEach((attraction, index) => {
+            console.log(`🏛️ Creating card ${index + 1}: ${attraction.name}`);
+            const card = createAttractionCard(attraction);
+            attractionsGrid.appendChild(card);
+        });
+
+        console.log('✅ All attraction cards created successfully from JSON data');
+
+    } catch (error) {
+        console.error('❌ Error loading attractions from JSON:', error);
+        showFallbackAttractions();
+    }
+}
+
+function showFallbackAttractions() {
+    const attractionsGrid = document.getElementById('attractionsGrid');
+    if (!attractionsGrid) return;
+
+    console.log('🔄 Loading fallback attractions...');
+
+    const fallbackAttractions = [
+        {
+            name: "Teatro Colón",
+            address: "Cerrito 628, Buenos Aires, Argentina",
+            description: "World-renowned opera house and concert hall, considered one of the finest in the world for its exceptional acoustics and stunning Belle Époque architecture.",
+            image: "teatro-colon.webp",
+            category: "Culture"
+        },
+        {
+            name: "Puerto Madero",
+            address: "Puerto Madero, Buenos Aires, Argentina",
+            description: "Modern waterfront district featuring upscale restaurants, corporate offices, and luxury apartments. Perfect for business meetings and elegant dining experiences.",
+            image: "puerto-madero.webp",
+            category: "Business"
+        },
+        {
+            name: "La Boca & Caminito",
+            address: "Caminito, La Boca, Buenos Aires, Argentina",
+            description: "Colorful neighborhood famous for its vibrant street art, tango performances, and the iconic Boca Juniors football stadium. A true cultural experience.",
+            image: "la-boca-caminito.webp",
+            category: "Culture"
+        },
+        {
+            name: "Recoleta Cemetery",
+            address: "Junín 1760, Recoleta, Buenos Aires, Argentina",
+            description: "Historic cemetery where Eva Perón rests, featuring elaborate mausoleums and sculptures. A unique blend of history, art, and Argentine heritage.",
+            image: "recoleta-cemetery.webp",
+            category: "History"
+        },
+        {
+            name: "San Telmo Market",
+            address: "Defensa 963, San Telmo, Buenos Aires, Argentina",
+            description: "Traditional Sunday market featuring antiques, local crafts, and street tango performances. Experience authentic Argentine culture and find unique treasures.",
+            image: "san-telmo-market.webp",
+            category: "Shopping"
+        },
+        {
+            name: "Palermo Parks",
+            address: "Palermo, Buenos Aires, Argentina",
+            description: "Vast green spaces including Rose Garden and Japanese Garden. Ideal for business retreats, outdoor meetings, and recreational activities in the city.",
+            image: "palermo-parks.webp",
+            category: "Nature"
+        },
+        {
+            name: "Microcentro Financial District",
+            address: "Microcentro, Buenos Aires, Argentina",
+            description: "Heart of Buenos Aires' financial sector, home to banks, government buildings, and corporate headquarters. The business pulse of Argentina.",
+            image: "microcentro.webp",
+            category: "Business"
+        },
+        {
+            name: "Tigre Delta",
+            address: "Tigre, Buenos Aires Province, Argentina",
+            description: "Unique river delta system accessible by boat or train from Buenos Aires. Perfect for corporate retreats and exploring Argentina's natural waterways.",
+            image: "tigre-delta.webp",
+            category: "Nature"
+        }
+    ];
+
+    attractionsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 1rem; background: #e3f2fd; color: #1976d2; border-radius: 8px; margin-bottom: 1rem;">🔍 Discover Buenos Aires - Chamber Member Highlights</div>';
+
+    fallbackAttractions.forEach(attraction => {
+        const card = createAttractionCard(attraction);
+        attractionsGrid.appendChild(card);
     });
 
-    console.log(`Displayed ${members.length} members in ${viewType} view`);
+    console.log('✅ Fallback attractions displayed');
 }
 
-// Create a member card element - igual ao Home
-function createMemberCard(member, viewType) {
+function createAttractionCard(attraction) {
     const card = document.createElement('div');
-    card.className = `member-card ${viewType === 'list' ? 'list-view' : ''}`;
+    card.className = 'attraction-card';
 
-    const membershipLevelText = getMembershipLevelText(member.membershipLevel);
+    const name = attraction.name || 'Buenos Aires Attraction';
+    const address = attraction.address || 'Buenos Aires, Argentina';
+    const description = attraction.description || 'Discover this amazing attraction in Buenos Aires.';
+    const category = attraction.category || 'General';
 
-    console.log(`Creating card for: ${member.name}, Image: ${member.image}`);
+    const categoryClass = category.toLowerCase().replace(/\s+/g, '-');
 
-    // Create the basic card structure with badge ONLY in image (like Home)
+    const imagePath = attraction.image && attraction.image.includes('.webp')
+        ? `images/attractions/${attraction.image}`
+        : 'images/hero-large.webp';
+
     card.innerHTML = `
-        <div class="member-image">
-            <div class="membership-badge level-${member.membershipLevel}">${membershipLevelText}</div>
-            <div class="fallback-icon">🏢</div>
-        </div>
-        <div class="member-info">
-            <h3>${member.name}</h3>
-            <div class="member-details">
-                <p><strong>Address:</strong> ${member.address}</p>
-                <p><strong>Phone:</strong> ${member.phone}</p>
-                <p><strong>Website:</strong> <a href="${member.website}" target="_blank" rel="noopener">${member.website}</a></p>
-                <p><strong>Industry:</strong> ${member.industry || 'Business'}</p>
-            </div>
-        </div>
+        <h2>${name}</h2>
+        <figure>
+            <img src="${imagePath}" 
+                 alt="${name}" 
+                 loading="lazy"
+                 onerror="this.src='images/hero-large.webp'; console.warn('WebP image not found, using fallback:', '${imagePath}');">
+            <div class="category-badge ${categoryClass}">${category}</div>
+        </figure>
+        <address>${address}</address>
+        <p>${description}</p>
+        <button type="button" onclick="learnMore('${name.replace(/'/g, "\\'")}')">Learn More</button>
     `;
-
-    // Handle image loading - improved approach
-    const imageContainer = card.querySelector('.member-image');
-    const fallbackIcon = card.querySelector('.fallback-icon');
-
-    if (member.image && imageContainer && fallbackIcon) {
-        const img = document.createElement('img');
-        img.src = `images/${member.image}`;
-        img.alt = `${member.name} logo`;
-        img.loading = 'eager';
-
-        // Remove inline styles - let CSS handle it
-        img.className = 'member-card-image';
-
-        img.onload = function () {
-            console.log(`✅ Image loaded successfully: ${member.image}`);
-            fallbackIcon.style.display = 'none';
-            img.style.display = 'block';
-        };
-
-        img.onerror = function () {
-            console.error(`❌ Failed to load image: ${member.image}`);
-            fallbackIcon.style.display = 'flex';
-            img.style.display = 'none';
-        };
-
-        // Add the image to container
-        imageContainer.appendChild(img);
-
-        // Ensure image loads properly
-        if (img.complete && img.naturalHeight !== 0) {
-            img.onload();
-        }
-    }
 
     return card;
 }
 
-// Get membership level text
-function getMembershipLevelText(level) {
-    switch (level) {
-        case 1:
-            return 'Member';
-        case 2:
-            return 'Silver';
-        case 3:
-            return 'Gold';
-        default:
-            return 'Member';
-    }
+function learnMore(attractionName) {
+    console.log(`🔍 Learn more clicked for: ${attractionName}`);
+
+    const message = `Learn more about ${attractionName}!\n\n` +
+        `For detailed information, contact the Buenos Aires Chamber of Commerce:\n\n` +
+        `📧 Email: info@ba-chamber.com.ar\n` +
+        `📞 Phone: +54 11 4567-8900\n` +
+        `📍 Address: Av. Corrientes 1000, Buenos Aires\n\n` +
+        `We can help you plan visits, arrange business meetings, or provide local insights!`;
+
+    alert(message);
 }
 
-// Set active view button
-function setActiveView(viewType) {
-    if (gridViewBtn && listViewBtn) {
-        gridViewBtn.classList.remove('active');
-        listViewBtn.classList.remove('active');
-
-        if (viewType === 'grid') {
-            gridViewBtn.classList.add('active');
-        } else {
-            listViewBtn.classList.add('active');
-        }
-    }
-}
-
-// Update footer with current date
 function updateFooter() {
     try {
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-        const formattedDate = currentDate.toLocaleDateString('en-US', options);
-
+        const currentYear = new Date().getFullYear();
         const currentYearElement = document.getElementById('currentYear');
         if (currentYearElement) {
             currentYearElement.textContent = currentYear;
-        }
-
-        const footerDate = document.getElementById('currentDate');
-        if (footerDate) {
-            footerDate.textContent = formattedDate;
         }
 
         const lastModified = document.getElementById('lastModified');
@@ -246,13 +275,18 @@ function updateFooter() {
             lastModified.textContent = document.lastModified;
         }
 
-        console.log('Footer updated with current date');
+        console.log('✅ Footer updated');
     } catch (error) {
-        console.error('Error updating footer:', error);
+        console.error('❌ Error updating footer:', error);
     }
 }
 
-// Initialize footer
-updateFooter();
+window.addEventListener('error', function (e) {
+    console.error('🚨 JavaScript error on discover page:', e.error);
+});
 
-console.log('Directory page script loaded successfully');
+window.addEventListener('unhandledrejection', function (e) {
+    console.error('🚨 Unhandled promise rejection on discover page:', e.reason);
+});
+
+console.log('🚀 Discover Buenos Aires script loaded successfully');
