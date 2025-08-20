@@ -2,9 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-    <!-- ========== CONFIGURAÇÕES BÁSICAS DA PÁGINA ========== -->
-    <!-- MODIFICAR NO CSS: Não há CSS específico para estas meta tags -->
-    <!-- MODIFICAR NO JS: Não há JavaScript específico para estas meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sistema de Portfólio Interativo com recursos avançados">
@@ -12,57 +9,35 @@
     <meta name="author" content="Desenvolvedor">
     <title>Portfólio Interativo</title>
 
-    <!-- ========== FONTES EXTERNAS ========== -->
-    <!-- MODIFICAR NO CSS: As fontes são usadas na variável --font-primary e --font-code -->
-    <!-- Para alterar fonte: mude o link aqui E a variável CSS correspondente -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap"
         rel="stylesheet">
 
-    <!-- ========== ÍCONES ========== -->
-    <!-- MODIFICAR NO CSS: Os ícones usam classes .fas, .fab do Font Awesome -->
-    <!-- Para alterar ícones: mude a classe do <i> no HTML -->
+    <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- ========== LINK PARA CSS ========== -->
-    <!-- Este arquivo CSS contém TODOS os estilos do projeto -->
+    <!-- Link para o CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- ========== TELA DE CARREGAMENTO ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".loading-screen" e ".spinner" -->
-    <!-- MODIFICAR NO JS: Procure por "loadingScreen" e "window.addEventListener('load')" -->
-    <!-- FUNÇÃO: Mostra animação enquanto a página carrega -->
+    <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="spinner"></div>
     </div>
 
-    <!-- ========== BARRA DE PROGRESSO DE SCROLL ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".progress-bar" -->
-    <!-- MODIFICAR NO JS: Procure por "progressBar" e "window.addEventListener('scroll')" -->
-    <!-- FUNÇÃO: Mostra o progresso de rolagem da página -->
+    <!-- Progress Bar -->
     <div class="progress-bar" id="progressBar"></div>
 
-    <!-- ========== CABEÇALHO E NAVEGAÇÃO PRINCIPAL ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".header", ".navbar", ".logo", ".nav-menu" -->
-    <!-- MODIFICAR NO JS: Procure por "header", "navMenu", "mobileMenuToggle" -->
-    <!-- FUNÇÃO: Navegação fixa no topo, com menu mobile e toggle de tema -->
+    <!-- Header -->
     <header class="header" id="header">
-        <div class="container"> <!-- CSS: .container - centraliza conteúdo -->
-            <nav class="navbar"> <!-- CSS: .navbar - layout flex do menu -->
-
-                <!-- LOGO DA PÁGINA -->
-                <!-- MODIFICAR NO CSS: Procure por ".logo" -->
-                <!-- Para alterar: mude o texto aqui E os estilos em .logo -->
+        <div class="container">
+            <nav class="navbar">
                 <a href="#home" class="logo">DevPortfolio</a>
 
-                <!-- MENU DE NAVEGAÇÃO -->
-                <!-- MODIFICAR NO CSS: Procure por ".nav-menu", ".nav-link" -->
-                <!-- MODIFICAR NO JS: Procure por "navMenu", "updateActiveNavLink" -->
-                <!-- Para adicionar link: copie uma <li> e altere href e texto -->
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#home" class="nav-link active">Início</a></li>
                     <li><a href="#about" class="nav-link">Sobre</a></li>
@@ -70,59 +45,31 @@
                     <li><a href="#contact" class="nav-link">Contato</a></li>
                 </ul>
 
-                <!-- BOTÕES DE AÇÃO DO HEADER -->
                 <div style="display: flex; align-items: center; gap: 1rem;">
-
-                    <!-- BOTÃO DE TEMA CLARO/ESCURO -->
-                    <!-- MODIFICAR NO CSS: Procure por ".theme-toggle" -->
-                    <!-- MODIFICAR NO JS: Procure por "themeToggle.addEventListener" -->
-                    <!-- FUNÇÃO: Alterna entre modo claro e escuro -->
                     <button class="theme-toggle tooltip" data-tooltip="Alternar tema" id="themeToggle">
-                        <i class="fas fa-moon"></i> <!-- Ícone muda via JS -->
+                        <i class="fas fa-moon"></i>
                     </button>
 
-                    <!-- BOTÃO DO MENU MOBILE -->
-                    <!-- MODIFICAR NO CSS: Procure por ".mobile-menu-toggle" -->
-                    <!-- MODIFICAR NO JS: Procure por "mobileMenuToggle.addEventListener" -->
-                    <!-- FUNÇÃO: Abre/fecha menu em dispositivos móveis -->
                     <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                        <i class="fas fa-bars"></i> <!-- Ícone muda via JS -->
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- ========== SEÇÃO HERO (PRINCIPAL/INICIAL) ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".hero", ".hero-content", ".hero-text", ".hero-visual" -->
-    <!-- MODIFICAR NO JS: Esta seção usa principalmente animações CSS, pouco JS -->
-    <!-- FUNÇÃO: Primeira impressão, apresentação principal do site -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="hero-content"> <!-- CSS: .hero-content - grid de 2 colunas -->
-
-                <!-- LADO ESQUERDO: TEXTO PRINCIPAL -->
-                <div class="hero-text"> <!-- CSS: .hero-text - estilos do texto -->
-
-                    <!-- TÍTULO PRINCIPAL -->
-                    <!-- Para alterar: mude o texto aqui E os estilos em .hero-text h1 -->
+            <div class="hero-content">
+                <div class="hero-text">
                     <h1>Desenvolvedor Full Stack</h1>
-
-                    <!-- SUBTÍTULO -->
-                    <!-- CSS: .hero-text .subtitle -->
                     <p class="subtitle">Criando experiências digitais incríveis</p>
-
-                    <!-- DESCRIÇÃO -->
-                    <!-- CSS: .hero-text .description -->
                     <p class="description">
                         Sou um desenvolvedor apaixonado por tecnologia, especializado em criar
                         aplicações web modernas e responsivas usando as mais recentes tecnologias
                         do mercado.
                     </p>
-
-                    <!-- BOTÕES DE AÇÃO -->
-                    <!-- CSS: .hero-actions, .btn, .btn-primary, .btn-secondary -->
-                    <!-- Para adicionar botão: copie um <a> e altere href, classes e texto -->
                     <div class="hero-actions">
                         <a href="#projects" class="btn btn-primary">
                             <i class="fas fa-code"></i>
@@ -135,24 +82,13 @@
                     </div>
                 </div>
 
-                <!-- LADO DIREITO: VISUAL/ANIMAÇÃO -->
-                <div class="hero-visual"> <!-- CSS: .hero-visual -->
-
-                    <!-- EDITOR DE CÓDIGO SIMULADO -->
-                    <!-- CSS: .code-editor, .code-editor-header, .code-content -->
-                    <!-- FUNÇÃO: Simula um editor de código com animação de digitação -->
+                <div class="hero-visual">
                     <div class="code-editor">
-
-                        <!-- HEADER DO EDITOR (BOLINHAS COLORIDAS) -->
                         <div class="code-editor-header">
                             <div class="code-editor-dots"></div>
                             <div class="code-editor-dots"></div>
                             <div class="code-editor-dots"></div>
                         </div>
-
-                        <!-- CONTEÚDO DO CÓDIGO -->
-                        <!-- CSS: .code-content, .code-line, .code-keyword, .code-string, etc. -->
-                        <!-- Para alterar código: mude o texto aqui, mantenha as classes de cor -->
                         <div class="code-content">
                             <span class="code-line">
                                 <span class="code-keyword">const</span>
@@ -172,9 +108,6 @@
                             <span class="code-line">
                                 <span class="code-comment">// Sempre aprendendo algo novo</span>
                             </span>
-
-                            <!-- LINHA COM ANIMAÇÃO DE DIGITAÇÃO -->
-                            <!-- CSS: .typing-animation -->
                             <span class="code-line typing-animation">
                                 <span class="code-function">console.log</span>(<span class="code-string">"Hello
                                     World!"</span>);
@@ -186,31 +119,16 @@
         </div>
     </section>
 
-    <!-- ========== SEÇÃO SOBRE MIM ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".about-content", ".about-text", ".skills-grid", ".stats-grid" -->
-    <!-- MODIFICAR NO JS: Procure por "animateCounters", contadores com data-count -->
-    <!-- FUNÇÃO: Apresenta informações pessoais, habilidades e estatísticas -->
+    <!-- About Section -->
     <section class="section" id="about">
         <div class="container">
-
-            <!-- TÍTULO DA SEÇÃO -->
-            <!-- CSS: .section-title - padrão para todos os títulos de seção -->
             <h2 class="section-title animate-on-scroll">Sobre Mim</h2>
-
-            <!-- SUBTÍTULO DA SEÇÃO -->
-            <!-- CSS: .section-subtitle - padrão para todos os subtítulos -->
             <p class="section-subtitle animate-on-scroll">
                 Conheça um pouco mais sobre minha jornada e habilidades
             </p>
 
-            <!-- CONTEÚDO PRINCIPAL DA SEÇÃO -->
-            <div class="about-content"> <!-- CSS: .about-content - grid de 2 colunas -->
-
-                <!-- LADO ESQUERDO: TEXTO E HABILIDADES -->
-                <div class="about-text animate-on-scroll"> <!-- CSS: .about-text -->
-
-                    <!-- PARÁGRAFOS DESCRITIVOS -->
-                    <!-- Para alterar: mude o texto, mantenha as tags <p> -->
+            <div class="about-content">
+                <div class="about-text animate-on-scroll">
                     <p>
                         Com mais de 5 anos de experiência em desenvolvimento web, tenho paixão por
                         criar soluções inovadoras que fazem a diferença na vida das pessoas.
@@ -226,9 +144,6 @@
                         desenvolvedor e como pessoa.
                     </p>
 
-                    <!-- GRID DE HABILIDADES -->
-                    <!-- CSS: .skills-grid, .skill-item, .skill-icon -->
-                    <!-- Para adicionar habilidade: copie um .skill-item e altere ícone e texto -->
                     <div class="skills-grid">
                         <div class="skill-item tooltip" data-tooltip="Frontend Development">
                             <div class="skill-icon">🎨</div>
@@ -257,13 +172,7 @@
                     </div>
                 </div>
 
-                <!-- LADO DIREITO: ESTATÍSTICAS -->
                 <div class="about-visual animate-on-scroll">
-
-                    <!-- GRID DE ESTATÍSTICAS -->
-                    <!-- CSS: .stats-grid, .stat-item, .stat-number, .stat-label -->
-                    <!-- MODIFICAR NO JS: Os números animam via data-count e função animateCounters -->
-                    <!-- Para alterar número: mude data-count E o texto inicial -->
                     <div class="stats-grid">
                         <div class="stat-item">
                             <span class="stat-number" data-count="50">0</span>
@@ -287,10 +196,7 @@
         </div>
     </section>
 
-    <!-- ========== SEÇÃO PROJETOS ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".projects-grid", ".project-card", ".project-image", ".project-content" -->
-    <!-- MODIFICAR NO JS: Procure por ".project-link" para tracking de cliques -->
-    <!-- FUNÇÃO: Exibe portfólio de projetos em cards organizados -->
+    <!-- Projects Section -->
     <section class="section" id="projects">
         <div class="container">
             <h2 class="section-title animate-on-scroll">Meus Projetos</h2>
@@ -298,47 +204,24 @@
                 Alguns dos trabalhos que desenvolvi recentemente
             </p>
 
-            <!-- GRID DE PROJETOS -->
-            <!-- CSS: .projects-grid - layout responsivo dos cards -->
-            <!-- Para adicionar projeto: copie um .project-card completo -->
             <div class="projects-grid">
-
-                <!-- PROJETO 1: E-COMMERCE -->
-                <div class="project-card animate-on-scroll"> <!-- CSS: .project-card -->
-
-                    <!-- IMAGEM/ÍCONE DO PROJETO -->
-                    <!-- CSS: .project-image - fundo gradient com ícone centralizado -->
-                    <!-- Para alterar ícone: mude a classe do <i> -->
+                <div class="project-card animate-on-scroll">
                     <div class="project-image">
                         <i class="fas fa-shopping-cart"
                             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: white;"></i>
                     </div>
-
-                    <!-- CONTEÚDO DO PROJETO -->
-                    <div class="project-content"> <!-- CSS: .project-content -->
-
-                        <!-- TÍTULO DO PROJETO -->
+                    <div class="project-content">
                         <h3 class="project-title">E-commerce Platform</h3>
-
-                        <!-- DESCRIÇÃO -->
                         <p class="project-description">
                             Plataforma completa de e-commerce com carrinho de compras,
                             pagamentos integrados e painel administrativo.
                         </p>
-
-                        <!-- TAGS DE TECNOLOGIAS -->
-                        <!-- CSS: .project-tags, .project-tag -->
-                        <!-- Para adicionar tag: copie um <span class="project-tag"> -->
                         <div class="project-tags">
                             <span class="project-tag">React</span>
                             <span class="project-tag">Node.js</span>
                             <span class="project-tag">MongoDB</span>
                             <span class="project-tag">Stripe</span>
                         </div>
-
-                        <!-- LINKS DO PROJETO -->
-                        <!-- CSS: .project-links, .project-link -->
-                        <!-- MODIFICAR NO JS: Links são rastreados para analytics -->
                         <div class="project-links">
                             <a href="#" class="project-link">
                                 <i class="fas fa-external-link-alt"></i>
@@ -352,8 +235,6 @@
                     </div>
                 </div>
 
-                <!-- PROJETO 2: TASK MANAGER -->
-                <!-- Estrutura idêntica ao projeto anterior -->
                 <div class="project-card animate-on-scroll">
                     <div class="project-image">
                         <i class="fas fa-tasks"
@@ -384,7 +265,6 @@
                     </div>
                 </div>
 
-                <!-- PROJETO 3: ANALYTICS DASHBOARD -->
                 <div class="project-card animate-on-scroll">
                     <div class="project-image">
                         <i class="fas fa-chart-line"
@@ -415,7 +295,6 @@
                     </div>
                 </div>
 
-                <!-- PROJETO 4: MOBILE FITNESS APP -->
                 <div class="project-card animate-on-scroll">
                     <div class="project-image">
                         <i class="fas fa-mobile-alt"
@@ -446,7 +325,6 @@
                     </div>
                 </div>
 
-                <!-- PROJETO 5: AI CHATBOT -->
                 <div class="project-card animate-on-scroll">
                     <div class="project-image">
                         <i class="fas fa-robot"
@@ -477,7 +355,6 @@
                     </div>
                 </div>
 
-                <!-- PROJETO 6: SOCIAL NETWORK -->
                 <div class="project-card animate-on-scroll">
                     <div class="project-image">
                         <i class="fas fa-globe"
@@ -511,10 +388,7 @@
         </div>
     </section>
 
-    <!-- ========== SEÇÃO CONTATO ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".contact-content", ".contact-info", ".contact-form" -->
-    <!-- MODIFICAR NO JS: Procure por "contactForm.addEventListener", validação de formulário -->
-    <!-- FUNÇÃO: Formulário de contato funcional com informações de contato -->
+    <!-- Contact Section -->
     <section class="section" id="contact">
         <div class="container">
             <h2 class="section-title animate-on-scroll">Vamos Trabalhar Juntos</h2>
@@ -522,20 +396,14 @@
                 Tem um projeto em mente? Entre em contato comigo!
             </p>
 
-            <!-- CONTEÚDO DE CONTATO -->
-            <div class="contact-content"> <!-- CSS: .contact-content - grid de 2 colunas -->
-
-                <!-- LADO ESQUERDO: INFORMAÇÕES DE CONTATO -->
-                <div class="contact-info animate-on-scroll"> <!-- CSS: .contact-info -->
+            <div class="contact-content">
+                <div class="contact-info animate-on-scroll">
                     <h3>Informações de Contato</h3>
                     <p>
                         Estou sempre aberto a discutir novas oportunidades,
                         projetos interessantes ou simplesmente bater um papo sobre tecnologia.
                     </p>
 
-                    <!-- MÉTODOS DE CONTATO -->
-                    <!-- CSS: .contact-methods, .contact-method -->
-                    <!-- Para adicionar método: copie um .contact-method e altere ícone e texto -->
                     <div class="contact-methods">
                         <div class="contact-method">
                             <i class="fas fa-envelope"></i>
@@ -571,10 +439,6 @@
                     </div>
                 </div>
 
-                <!-- LADO DIREITO: FORMULÁRIO DE CONTATO -->
-                <!-- CSS: .contact-form, .form-group, .form-label, .form-input, .form-textarea -->
-                <!-- MODIFICAR NO JS: Formulário é processado via "contactForm.addEventListener('submit')" -->
-                <!-- Para adicionar campo: copie um .form-group e altere label, input e name -->
                 <form class="contact-form animate-on-scroll" id="contactForm">
                     <div class="form-group">
                         <label for="name" class="form-label">Nome *</label>
@@ -597,9 +461,6 @@
                             placeholder="Conte-me sobre seu projeto..."></textarea>
                     </div>
 
-                    <!-- BOTÃO DE ENVIO -->
-                    <!-- CSS: .btn .btn-primary -->
-                    <!-- MODIFICAR NO JS: Texto do botão muda durante envio -->
                     <button type="submit" class="btn btn-primary" style="width: 100%;">
                         <i class="fas fa-paper-plane"></i>
                         Enviar Mensagem
@@ -609,27 +470,16 @@
         </div>
     </section>
 
-    <!-- ========== RODAPÉ ========== -->
-    <!-- MODIFICAR NO CSS: Procure por ".footer", ".footer-content", ".social-links" -->
-    <!-- MODIFICAR NO JS: Não há JavaScript específico para o footer -->
-    <!-- FUNÇÃO: Links de navegação, redes sociais e informações finais -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-
-            <!-- CONTEÚDO PRINCIPAL DO FOOTER -->
-            <div class="footer-content"> <!-- CSS: .footer-content - grid responsivo -->
-
-                <!-- SEÇÃO 1: SOBRE O SITE -->
-                <div class="footer-section"> <!-- CSS: .footer-section -->
+            <div class="footer-content">
+                <div class="footer-section">
                     <h3>DevPortfolio</h3>
                     <p>
                         Desenvolvendo soluções inovadoras para a web.
                         Sempre em busca de novos desafios e oportunidades de crescimento.
                     </p>
-
-                    <!-- LINKS DE REDES SOCIAIS -->
-                    <!-- CSS: .social-links, .social-link -->
-                    <!-- Para adicionar rede: copie um <a class="social-link"> e altere ícone e link -->
                     <div class="social-links">
                         <a href="#" class="social-link tooltip" data-tooltip="GitHub">
                             <i class="fab fa-github"></i>
@@ -646,7 +496,6 @@
                     </div>
                 </div>
 
-                <!-- SEÇÃO 2: LINKS ÚTEIS -->
                 <div class="footer-section">
                     <h3>Links Úteis</h3>
                     <p><a href="#home">Início</a></p>
@@ -655,7 +504,6 @@
                     <p><a href="#contact">Contato</a></p>
                 </div>
 
-                <!-- SEÇÃO 3: SERVIÇOS -->
                 <div class="footer-section">
                     <h3>Serviços</h3>
                     <p>Desenvolvimento Frontend</p>
@@ -664,7 +512,6 @@
                     <p>Consultoria Técnica</p>
                 </div>
 
-                <!-- SEÇÃO 4: TECNOLOGIAS -->
                 <div class="footer-section">
                     <h3>Tecnologias</h3>
                     <p>React & Next.js</p>
@@ -674,27 +521,18 @@
                 </div>
             </div>
 
-            <!-- LINHA FINAL DO FOOTER -->
-            <div class="footer-bottom"> <!-- CSS: .footer-bottom -->
-                <p>&copy; 2024 DevPortfolio. Todos os direitos reservados.</p>
+            <div class="footer-bottom">
+                <p>&copy; Albert SIlva - 2024 DevPortfolio. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- ========== ELEMENTOS ESPECIAIS/UTILITÁRIOS ========== -->
-
-    <!-- BOTÃO VOLTAR AO TOPO -->
-    <!-- MODIFICAR NO CSS: Procure por ".back-to-top" -->
-    <!-- MODIFICAR NO JS: Procure por "backToTop.addEventListener" e scroll detection -->
-    <!-- FUNÇÃO: Aparece após scroll e volta suavemente ao topo -->
+    <!-- Back to Top Button -->
     <button class="back-to-top tooltip" data-tooltip="Voltar ao topo" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- MODAL GENÉRICO -->
-    <!-- MODIFICAR NO CSS: Procure por ".modal", ".modal-content", ".modal-close" -->
-    <!-- MODIFICAR NO JS: Procure por "openModal", "closeModal", "modalClose.addEventListener" -->
-    <!-- FUNÇÃO: Pop-up reutilizável para exibir conteúdo adicional -->
+    <!-- Modal -->
     <div class="modal" id="modal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">
@@ -705,48 +543,13 @@
         </div>
     </div>
 
-    <!-- SISTEMA DE NOTIFICAÇÕES -->
-    <!-- MODIFICAR NO CSS: Procure por ".notification" -->
-    <!-- MODIFICAR NO JS: Procure por "showNotification" function -->
-    <!-- FUNÇÃO: Mostra mensagens temporárias de feedback -->
+    <!-- Notification -->
     <div class="notification" id="notification">
         <span id="notificationText">Mensagem de notificação</span>
     </div>
 
-    <!-- ========== LINK PARA JAVASCRIPT ========== -->
-    <!-- Este arquivo JS contém TODA a funcionalidade interativa do projeto -->
-    <!-- MODIFICAR NO JS: Todas as funções estão documentadas no arquivo script.js -->
+    <!-- Link para o JavaScript -->
     <script src="script.js"></script>
 </body>
 
 </html>
-
-<!-- ========== GUIA RÁPIDO DE MODIFICAÇÕES ========== -->
-
-<!-- 
-PARA ALTERAR CORES:
-- Vá para style.css e procure por ":root" no início
-- Modifique as variáveis --primary-color, --text-primary, etc.
-
-PARA ALTERAR TEXTOS:
-- Encontre o texto neste arquivo HTML
-- Modifique diretamente o conteúdo das tags
-
-PARA ADICIONAR NOVA SEÇÃO:
-- Copie uma <section class="section" id="nome"> existente
-- Altere o id e o conteúdo
-- Adicione link correspondente no menu de navegação
-- Adicione estilos específicos no CSS se necessário
-
-PARA ALTERAR LAYOUT:
-- Vá para style.css e procure pelas classes mencionadas nos comentários
-- Modifique propriedades como grid-template-columns, flexbox, etc.
-
-PARA ADICIONAR FUNCIONALIDADE:
-- Vá para script.js e adicione event listeners
-- Use as funções utilitárias já existentes como showNotification
-
-PARA ALTERAR RESPONSIVIDADE:
-- Vá para style.css e procure por "@media (max-width: 768px)"
-- Modifique ou adicione regras para diferentes tamanhos de tela
--->
