@@ -4,53 +4,1813 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Portfólio</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description"
+        content="Portfólio de Analista de Dados especializado em Business Intelligence e Ciência de Dados">
+    <meta name="keywords" content="analista de dados, power bi, tableau, python, sql, aws, azure">
+    <meta name="author" content="Analista de Dados">
+    <title>Portfólio - Analista de Dados</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #764ba2;
+            --secondary-color: #f093fb;
+            --accent-color: #ffecd2;
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --text-primary: #e94560;
+            --text-secondary: #f5f5f5;
+            --text-muted: #a0aec0;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --font-primary: 'Poppins', sans-serif;
+            --font-code: 'Fira Code', monospace;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 2rem;
+            --font-size-4xl: 3rem;
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 20px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --transition-fast: 0.15s ease-in-out;
+            --transition-base: 0.3s ease-in-out;
+            --transition-slow: 0.5s ease-in-out;
+        }
+
+        /* Tema claro */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #2563eb;
+            --text-secondary: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all var(--transition-base);
+        }
+
+        [data-theme="light"] .header {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header.scrolled {
+            background: rgba(15, 15, 35, 0.98);
+            box-shadow: var(--shadow-lg);
+        }
+
+        [data-theme="light"] .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+        }
+
+        .logo {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color var(--transition-base);
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-primary);
+            transition: width var(--transition-base);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: var(--font-size-xl);
+            cursor: pointer;
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: none;
+            color: var(--text-secondary);
+            padding: var(--spacing-sm);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--text-primary);
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        /* Seletor de idioma */
+        .language-selector {
+            position: relative;
+        }
+
+        .language-select {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--bg-secondary);
+            border-radius: var(--border-radius);
+            color: var(--text-secondary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-family: inherit;
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            outline: none;
+        }
+
+        .language-select:hover,
+        .language-select:focus {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.1);
+        }
+
+        .language-select option {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: var(--spacing-sm);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-2xl);
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-text .subtitle {
+            font-size: var(--font-size-xl);
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero-text .description {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .data-dashboard {
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-dashboard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+        }
+
+        .dashboard-dots {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        .dashboard-content {
+            font-family: var(--font-code);
+            font-size: var(--font-size-sm);
+            line-height: 1.8;
+        }
+
+        .data-line {
+            display: block;
+            padding: var(--spacing-xs) 0;
+        }
+
+        .data-keyword {
+            color: #ff79c6;
+        }
+
+        .data-string {
+            color: #f1fa8c;
+        }
+
+        .data-function {
+            color: #50fa7b;
+        }
+
+        .data-comment {
+            color: #6272a4;
+            font-style: italic;
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid var(--text-primary);
+            animation: typing 3s steps(40) infinite, blink 1s infinite;
+        }
+
+        @keyframes typing {
+            0% {
+                width: 0;
+            }
+
+            50% {
+                width: 100%;
+            }
+
+            100% {
+                width: 0;
+            }
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                border-color: var(--text-primary);
+            }
+
+            51%,
+            100% {
+                border-color: transparent;
+            }
+        }
+
+        .section {
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-2xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-2xl);
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: var(--font-size-base);
+            line-height: 1.8;
+        }
+
+        .about-text p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .skill-item {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: all var(--transition-base);
+            border: 1px solid transparent;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .skill-icon {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .stat-item {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--text-primary));
+        }
+
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            margin-top: var(--spacing-xs);
+        }
+
+        .interactive-projects {
+            background: var(--bg-secondary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .project-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            transition: all var(--transition-base);
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .project-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-powerbi {
+            background: linear-gradient(135deg, #F2C811, #E6B800);
+        }
+
+        .project-tableau {
+            background: linear-gradient(135deg, #E97627, #CC6A21);
+        }
+
+        .project-python {
+            background: linear-gradient(135deg, #3776AB, #2B5A8F);
+        }
+
+        .project-image i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .project-content {
+            padding: var(--spacing-lg);
+        }
+
+        .project-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-secondary);
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .project-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-base);
+        }
+
+        .project-link:hover {
+            color: var(--primary-color);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-2xl);
+        }
+
+        .contact-info h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+
+        .contact-info p {
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            transition: all var(--transition-base);
+        }
+
+        .contact-method:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
+        }
+
+        .contact-method i {
+            font-size: var(--font-size-lg);
+            color: var(--text-primary);
+            width: 24px;
+            text-align: center;
+        }
+
+        .contact-form {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 1px solid var(--bg-secondary);
+            border-radius: var(--border-radius);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-family: inherit;
+            transition: all var(--transition-base);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            padding: var(--spacing-2xl) 0 var(--spacing-lg);
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .footer-section h3 {
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: var(--text-primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 50%;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-base);
+        }
+
+        .social-link:hover {
+            background: var(--text-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--bg-tertiary);
+            color: var(--text-muted);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: var(--spacing-lg);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all var(--transition-base);
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .project-card {
+                margin: 0 var(--spacing-sm);
+            }
+
+            .contact-method {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-sm);
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <header>
-        <!-- Substitua 'Seu Nome' abaixo pelo seu nome real -->
-        <h1 id="nomeUsuario">Seu Nome</h1>
-        <nav>
-            <ul>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#projetos">Projetos</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-        </nav>
+<body data-theme="dark">
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#home" class="logo">
+                    <span>📊</span> DataPortfolio
+                </a>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link active" data-pt="Início" data-en="Home"
+                            data-es="Inicio">Início</a></li>
+                    <li><a href="#about" class="nav-link" data-pt="Sobre" data-en="About" data-es="Acerca">Sobre</a>
+                    </li>
+                    <li><a href="#projects" class="nav-link" data-pt="Projetos" data-en="Projects"
+                            data-es="Proyectos">Projetos</a></li>
+                    <li><a href="#contact" class="nav-link" data-pt="Contato" data-en="Contact"
+                            data-es="Contacto">Contato</a></li>
+                </ul>
+
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <!-- Seletor de Idioma -->
+                    <div class="language-selector">
+                        <select id="languageSelect" class="language-select">
+                            <option value="pt" data-flag="🇧🇷">PT</option>
+                            <option value="en" data-flag="🇺🇸">EN</option>
+                            <option value="es" data-flag="🇪🇸">ES</option>
+                        </select>
+                    </div>
+
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <section id="sobre">
-            <h2>Sobre Mim</h2>
-            <!-- Adicione sua descrição pessoal aqui -->
-            <p>Desenvolvedor apaixonado por criar soluções web inovadoras.</p>
-        </section>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 data-pt="Analista de Dados" data-en="Data Analyst" data-es="Analista de Datos">Analista de Dados
+                    </h1>
+                    <p class="subtitle" data-pt="Transformando dados em insights estratégicos"
+                        data-en="Turning data into strategic insights"
+                        data-es="Transformando datos en insights estratégicos">Transformando dados em insights
+                        estratégicos</p>
+                    <p class="description"
+                        data-pt="Minha trajetória profissional sempre me levou a trabalhar com dados, e hoje estudo desenvolvimento web com foco em migrar para a área de dados. Iniciei uma startup na área de análise de dados e já prestei serviços para diversos clientes, especializando-me em data entry, administração de banco de dados e análise de dados, desenvolvendo competências em nuvem (AWS e Azure)."
+                        data-en="My professional journey has always led me to work with data, and today I study web development with a focus on migrating to the data field. I started a startup in the data analysis area and have already provided services to several clients, specializing in data entry, database administration and data analysis, developing cloud skills (AWS and Azure)."
+                        data-es="Mi trayectoria profesional siempre me ha llevado a trabajar con datos, y hoy estudio desarrollo web con enfoque en migrar al área de datos. Inicié una startup en el área de análisis de datos y ya he prestado servicios a diversos clientes, especializándome en entrada de datos, administración de bases de datos y análisis de datos, desarrollando competencias en la nube (AWS y Azure).">
+                        Minha trajetória profissional sempre me levou a trabalhar com dados, e hoje estudo
+                        desenvolvimento web com foco em migrar para a área de dados. Iniciei uma startup
+                        na área de análise de dados e já prestei serviços para diversos clientes,
+                        especializando-me em data entry, administração de banco de dados e análise de dados,
+                        desenvolvendo competências em nuvem (AWS e Azure).
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary">
+                            <i class="fas fa-chart-bar"></i>
+                            <span data-pt="Ver Projetos" data-en="View Projects" data-es="Ver Proyectos">Ver
+                                Projetos</span>
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i>
+                            <span data-pt="Entrar em Contato" data-en="Get in Touch" data-es="Contactar">Entrar em
+                                Contato</span>
+                        </a>
+                    </div>
+                </div>
 
-        <section id="projetos">
-            <h2>Meus Projetos</h2>
-            <div class="projetos-container" id="projetosContainer">
-                <!-- Os projetos serão inseridos dinamicamente via JavaScript -->
+                <div class="hero-visual">
+                    <div class="data-dashboard">
+                        <div class="dashboard-header">
+                            <div class="dashboard-dots"></div>
+                            <div class="dashboard-dots"></div>
+                            <div class="dashboard-dots"></div>
+                        </div>
+                        <div class="dashboard-content">
+                            <span class="data-line">
+                                <span class="data-keyword">import</span>
+                                <span class="data-function">pandas</span> as pd
+                            </span>
+                            <span class="data-line">
+                                <span class="data-keyword">import</span>
+                                <span class="data-function">numpy</span> as np
+                            </span>
+                            <span class="data-line">
+                                <span class="data-keyword">from</span>
+                                <span class="data-function">sklearn</span> import model_selection
+                            </span>
+                            <span class="data-line">
+                                &nbsp;&nbsp;
+                            </span>
+                            <span class="data-line">
+                                <span class="data-comment"># Análise de dados de vendas</span>
+                            </span>
+                            <span class="data-line">
+                                df = pd.<span class="data-function">read_csv</span>(<span
+                                    class="data-string">'vendas.csv'</span>)
+                            </span>
+                            <span class="data-line">
+                                insights = df.<span class="data-function">groupby</span>(<span
+                                    class="data-string">'região'</span>)
+                            </span>
+                            <span class="data-line typing-animation">
+                                print(<span class="data-string">"Insights extraídos!"</span>)
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contato">
-            <h2>Contato</h2>
-            <form id="contatoForm">
-                <input type="text" placeholder="Nome" required>
-                <input type="email" placeholder="Email" required>
-                <textarea placeholder="Mensagem" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </section>
-    </main>
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll" data-pt="Sobre Mim" data-en="About Me" data-es="Sobre Mí">Sobre
+                Mim</h2>
+            <p class="section-subtitle animate-on-scroll"
+                data-pt="Conheça minha trajetória no mundo dos dados e analytics"
+                data-en="Learn about my journey in the world of data and analytics"
+                data-es="Conoce mi trayectoria en el mundo de los datos y analytics">
+                Conheça minha trajetória no mundo dos dados e analytics
+            </p>
 
-    <footer>
-        <p>&copy; <span id="anoAtual"></span> Todos os direitos reservados</p>
+            <div class="about-content">
+                <div class="about-text animate-on-scroll">
+                    <p>
+                        Com experiência sólida em análise de dados, trabalho com data entry,
+                        administração de banco de dados e extração de insights estratégicos.
+                        Minha paixão por dados me levou a iniciar uma startup e prestar
+                        serviços de consultoria para diversos clientes.
+                    </p>
+                    <p>
+                        Atualmente, desenvolvo competências em computação em nuvem com AWS e Azure,
+                        complementando meu conhecimento em ferramentas como Power BI, Tableau,
+                        Python e SQL para entregar soluções completas de Business Intelligence.
+                    </p>
+                    <p>
+                        Estudo desenvolvimento web para ampliar minhas habilidades técnicas,
+                        sempre com foco na área de dados, onde posso unir tecnologia e insights
+                        para gerar valor real para os negócios.
+                    </p>
+
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">📊</div>
+                            <div>Power BI</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">📈</div>
+                            <div>Tableau</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">🐍</div>
+                            <div>Python</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">🗃️</div>
+                            <div>SQL</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+                                    alt="AWS" width="32" height="20">
+                            </div>
+                            <div>AWS</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg"
+                                    alt="Azure" width="32" height="32">
+                            </div>
+                            <div>Azure</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg"
+                                    alt="Excel" width="32" height="32">
+                            </div>
+                            <div>Excel</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">💻</div>
+                            <div>HTML/CSS/JS</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-visual animate-on-scroll">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="25">0</span>
+                            <div class="stat-label">Projetos Entregues</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="3">0</span>
+                            <div class="stat-label">Anos de Experiência</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="15">0</span>
+                            <div class="stat-label">Clientes Atendidos</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="8">0</span>
+                            <div class="stat-label">Tecnologias</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Projects Section -->
+    <section class="section interactive-projects" id="projects">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll" data-pt="Projetos Interativos" data-en="Interactive Projects"
+                data-es="Proyectos Interactivos">Projetos Interativos</h2>
+            <p class="section-subtitle animate-on-scroll"
+                data-pt="Explore meus dashboards e análises em diferentes plataformas"
+                data-en="Explore my dashboards and analysis on different platforms"
+                data-es="Explora mis dashboards y análisis en diferentes plataformas">
+                Explore meus dashboards e análises em diferentes plataformas
+            </p>
+
+            <div class="projects-grid">
+                <!-- Projeto Power BI 1 -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image project-powerbi">
+                        <span class="project-badge">Power BI</span>
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Dashboard de Vendas - E-commerce</h3>
+                        <p class="project-description">
+                            Dashboard completo para análise de performance de vendas,
+                            incluindo métricas de conversão, análise de produtos top
+                            performers e segmentação de clientes.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Power BI</span>
+                            <span class="project-tag">DAX</span>
+                            <span class="project-tag">SQL Server</span>
+                            <span class="project-tag">KPIs</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" id="powerbi-project-1">
+                                <i class="fas fa-external-link-alt"></i>
+                                Visualizar Dashboard
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-file-alt"></i>
+                                Documentação
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto Power BI 2 -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image project-powerbi">
+                        <span class="project-badge">Power BI</span>
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Análise de RH - Gestão de Pessoas</h3>
+                        <p class="project-description">
+                            Dashboard estratégico para análise de indicadores de RH,
+                            incluindo turnover, performance, satisfação dos funcionários
+                            e análise de headcount.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Power BI</span>
+                            <span class="project-tag">Power Query</span>
+                            <span class="project-tag">Excel</span>
+                            <span class="project-tag">HR Analytics</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" id="powerbi-project-2">
+                                <i class="fas fa-external-link-alt"></i>
+                                Visualizar Dashboard
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-file-alt"></i>
+                                Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto Tableau -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image project-tableau">
+                        <span class="project-badge">Tableau</span>
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Análise Financeira - ROI Marketing</h3>
+                        <p class="project-description">
+                            Visualização interativa do retorno sobre investimento em
+                            campanhas de marketing, com análise de canais, períodos
+                            e segmentação por público-alvo.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Tableau</span>
+                            <span class="project-tag">Google Analytics</span>
+                            <span class="project-tag">PostgreSQL</span>
+                            <span class="project-tag">Marketing Analytics</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" id="tableau-project">
+                                <i class="fas fa-external-link-alt"></i>
+                                Ver no Tableau Public
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-download"></i>
+                                Download dos Dados
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto Python -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image project-python">
+                        <span class="project-badge">Python</span>
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Predição de Churn - Machine Learning</h3>
+                        <p class="project-description">
+                            Modelo de machine learning para predição de churn de clientes,
+                            desenvolvido em Python com análise exploratória completa e
+                            dashboard interativo em Streamlit.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Scikit-learn</span>
+                            <span class="project-tag">Streamlit</span>
+                            <span class="project-tag">Pandas</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" id="python-project">
+                                <i class="fas fa-external-link-alt"></i>
+                                Aplicação Streamlit
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                Código no GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll" data-pt="Vamos Trabalhar Juntos" data-en="Let's Work Together"
+                data-es="Trabajemos Juntos">Vamos Trabalhar Juntos</h2>
+            <p class="section-subtitle animate-on-scroll"
+                data-pt="Tem um projeto de dados em mente? Entre em contato comigo!"
+                data-en="Have a data project in mind? Get in touch with me!"
+                data-es="¿Tienes un proyecto de datos en mente? ¡Contáctame!">
+                Tem um projeto de dados em mente? Entre em contato comigo!
+            </p>
+
+            <div class="contact-content">
+                <div class="contact-info animate-on-scroll">
+                    <h3>Informações de Contato</h3>
+                    <p>
+                        Estou sempre aberto a discutir projetos de análise de dados,
+                        Business Intelligence e oportunidades de colaboração.
+                        Vamos transformar seus dados em insights valiosos!
+                    </p>
+
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong><br>
+                                contato@analista-dados.com
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Telefone</strong><br>
+                                +55 (11) 99999-9999
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Localização</strong><br>
+                                São Paulo, SP - Brasil
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <i class="fab fa-linkedin"></i>
+                            <div>
+                                <strong>LinkedIn</strong><br>
+                                /in/analista-dados
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form animate-on-scroll" id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nome *</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Assunto *</label>
+                        <input type="text" id="subject" name="subject" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Mensagem *</label>
+                        <textarea id="message" name="message" class="form-textarea" required
+                            placeholder="Conte-me sobre seu projeto de dados..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviar Mensagem
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DataPortfolio</h3>
+                    <p>
+                        Especializando-se em transformar dados em insights estratégicos
+                        para impulsionar decisões de negócios inteligentes.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-kaggle"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Navegação</h3>
+                    <p><a href="#home">Início</a></p>
+                    <p><a href="#about">Sobre</a></p>
+                    <p><a href="#projects">Projetos</a></p>
+                    <p><a href="#contact">Contato</a></p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Serviços</h3>
+                    <p>Business Intelligence</p>
+                    <p>Análise de Dados</p>
+                    <p>Dashboards Interativos</p>
+                    <p>Consultoria em BI</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Tecnologias</h3>
+                    <p>Power BI & Tableau</p>
+                    <p>Python & SQL</p>
+                    <p>AWS & Azure</p>
+                    <p>Excel & Google Sheets</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 DataPortfolio. Todos os direitos reservados.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Aguarda o DOM carregar completamente
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elementos DOM
+            const header = document.getElementById('header');
+            const navMenu = document.getElementById('navMenu');
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const themeToggle = document.getElementById('themeToggle');
+            const backToTop = document.getElementById('backToTop');
+            const languageSelect = document.getElementById('languageSelect');
+            const body = document.body;
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Sistema de tradução
+            const translations = {
+                pt: {
+                    'section-about-title': 'Sobre Mim',
+                    'section-about-subtitle': 'Conheça minha trajetória no mundo dos dados e analytics',
+                    'section-projects-title': 'Projetos Interativos',
+                    'section-projects-subtitle': 'Explore meus dashboards e análises em diferentes plataformas',
+                    'section-contact-title': 'Vamos Trabalhar Juntos',
+                    'section-contact-subtitle': 'Tem um projeto de dados em mente? Entre em contato comigo!',
+                    'contact-info-title': 'Informações de Contato',
+                    'contact-info-text': 'Estou sempre aberto a discutir projetos de análise de dados, Business Intelligence e oportunidades de colaboração. Vamos transformar seus dados em insights valiosos!'
+                },
+                en: {
+                    'section-about-title': 'About Me',
+                    'section-about-subtitle': 'Learn about my journey in the world of data and analytics',
+                    'section-projects-title': 'Interactive Projects',
+                    'section-projects-subtitle': 'Explore my dashboards and analysis on different platforms',
+                    'section-contact-title': 'Let\'s Work Together',
+                    'section-contact-subtitle': 'Have a data project in mind? Get in touch with me!',
+                    'contact-info-title': 'Contact Information',
+                    'contact-info-text': 'I\'m always open to discuss data analysis projects, Business Intelligence and collaboration opportunities. Let\'s turn your data into valuable insights!'
+                },
+                es: {
+                    'section-about-title': 'Sobre Mí',
+                    'section-about-subtitle': 'Conoce mi trayectoria en el mundo de los datos y analytics',
+                    'section-projects-title': 'Proyectos Interactivos',
+                    'section-projects-subtitle': 'Explora mis dashboards y análisis en diferentes plataformas',
+                    'section-contact-title': 'Trabajemos Juntos',
+                    'section-contact-subtitle': '¿Tienes un proyecto de datos en mente? ¡Contáctame!',
+                    'contact-info-title': 'Información de Contacto',
+                    'contact-info-text': 'Siempre estoy abierto a discutir proyectos de análisis de datos, Business Intelligence y oportunidades de colaboración. ¡Convirtamos tus datos en insights valiosos!'
+                }
+            };
+
+            // Função para atualizar idioma
+            function updateLanguage(lang) {
+                // Atualizar elementos com data-attributes
+                const elementsWithLang = document.querySelectorAll('[data-pt]');
+                elementsWithLang.forEach(element => {
+                    if (element.getAttribute('data-' + lang)) {
+                        element.textContent = element.getAttribute('data-' + lang);
+                    }
+                });
+
+                // Atualizar traduções específicas
+                const aboutTitle = document.querySelector('#about .section-title');
+                if (aboutTitle) aboutTitle.textContent = translations[lang]['section-about-title'];
+
+                const aboutSubtitle = document.querySelector('#about .section-subtitle');
+                if (aboutSubtitle) aboutSubtitle.textContent = translations[lang]['section-about-subtitle'];
+
+                const projectsTitle = document.querySelector('#projects .section-title');
+                if (projectsTitle) projectsTitle.textContent = translations[lang]['section-projects-title'];
+
+                const projectsSubtitle = document.querySelector('#projects .section-subtitle');
+                if (projectsSubtitle) projectsSubtitle.textContent = translations[lang]['section-projects-subtitle'];
+
+                const contactTitle = document.querySelector('#contact .section-title');
+                if (contactTitle) contactTitle.textContent = translations[lang]['section-contact-title'];
+
+                const contactSubtitle = document.querySelector('#contact .section-subtitle');
+                if (contactSubtitle) contactSubtitle.textContent = translations[lang]['section-contact-subtitle'];
+
+                const contactInfoTitle = document.querySelector('.contact-info h3');
+                if (contactInfoTitle) contactInfoTitle.textContent = translations[lang]['contact-info-title'];
+
+                const contactInfoText = document.querySelector('.contact-info p');
+                if (contactInfoText) contactInfoText.textContent = translations[lang]['contact-info-text'];
+
+                // Salvar idioma selecionado
+                try {
+                    localStorage.setItem('language', lang);
+                } catch (e) {
+                    console.log('LocalStorage não disponível');
+                }
+            }
+
+            // Event listener para mudança de idioma
+            languageSelect.addEventListener('change', function () {
+                updateLanguage(this.value);
+            });
+
+            // Carregar idioma salvo
+            try {
+                const savedLanguage = localStorage.getItem('language') || 'pt';
+                languageSelect.value = savedLanguage;
+                updateLanguage(savedLanguage);
+            } catch (e) {
+                console.log('LocalStorage não disponível');
+            }
+
+            // Controle de scroll
+            window.addEventListener('scroll', function () {
+                const scrolled = window.pageYOffset;
+
+                // Header com efeito de scroll
+                if (scrolled > 100) {
+                    header.classList.add('scrolled');
+                    backToTop.classList.add('visible');
+                } else {
+                    header.classList.remove('scrolled');
+                    backToTop.classList.remove('visible');
+                }
+
+                // Atualizar link ativo na navegação
+                updateActiveNavLink();
+
+                // Animações no scroll
+                animateOnScroll();
+            });
+
+            // Menu mobile
+            mobileMenuToggle.addEventListener('click', function () {
+                navMenu.classList.toggle('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // Fechar menu mobile ao clicar em link
+            navLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    navMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+
+            // Alternância de tema
+            themeToggle.addEventListener('click', function () {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+                body.setAttribute('data-theme', newTheme);
+
+                try {
+                    localStorage.setItem('theme', newTheme);
+                } catch (e) {
+                    console.log('LocalStorage não disponível');
+                }
+
+                const icon = themeToggle.querySelector('i');
+                if (newTheme === 'light') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+
+            // Carregar tema salvo
+            try {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                body.setAttribute('data-theme', savedTheme);
+
+                const icon = themeToggle.querySelector('i');
+                if (savedTheme === 'light') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                }
+            } catch (e) {
+                console.log('LocalStorage não disponível');
+            }
+
+            // Botão voltar ao topo
+            backToTop.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Scroll suave para âncoras
+            const anchorLinks = document.querySelectorAll('a[href^="#"]');
+            anchorLinks.forEach(function (anchor) {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+
+                    if (target) {
+                        const headerHeight = header.offsetHeight;
+                        const targetPosition = target.offsetTop - headerHeight - 20;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Atualizar link ativo na navegação
+            function updateActiveNavLink() {
+                const sections = document.querySelectorAll('section[id]');
+                let current = 'home';
+
+                sections.forEach(function (section) {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const sectionId = section.getAttribute('id');
+
+                    if (sectionTop <= 200 && sectionTop >= -section.offsetHeight + 200) {
+                        current = sectionId;
+                    }
+                });
+
+                navLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            // Animações no scroll
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                const windowHeight = window.innerHeight;
+
+                elements.forEach(function (element) {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+
+                    if (elementTop < windowHeight - elementVisible) {
+                        element.classList.add('animated');
+                    }
+                });
+            }
+
+            // Animação de contadores
+            function animateCounters() {
+                const counters = document.querySelectorAll('[data-count]');
+
+                counters.forEach(function (counter) {
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    const duration = 2000;
+                    const increment = target / (duration / 16);
+                    let current = 0;
+
+                    const timer = setInterval(function () {
+                        current += increment;
+                        counter.textContent = Math.floor(current);
+
+                        if (current >= target) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        }
+                    }, 16);
+                });
+            }
+
+            // Processamento do formulário de contato
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const submitButton = e.target.querySelector('button[type="submit"]');
+                    const originalText = submitButton.innerHTML;
+
+                    // Simular envio
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                    submitButton.disabled = true;
+
+                    setTimeout(function () {
+                        alert('Mensagem enviada com sucesso! Retornarei em breve.');
+                        e.target.reset();
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+                    }, 2000);
+                });
+            }
+
+            // Event listeners para os projetos interativos
+            const powerbiProject1 = document.getElementById('powerbi-project-1');
+            if (powerbiProject1) {
+                powerbiProject1.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    alert('Este espaço está reservado para seu primeiro projeto do Power BI.\n\nAqui você pode:\n- Incorporar um iframe com seu dashboard\n- Adicionar um link direto para o Power BI Service\n- Incluir screenshots interativos');
+                });
+            }
+
+            const powerbiProject2 = document.getElementById('powerbi-project-2');
+            if (powerbiProject2) {
+                powerbiProject2.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    alert('Este espaço está reservado para seu segundo projeto do Power BI.\n\nSugestões de conteúdo:\n- Dashboard de RH com métricas de performance\n- Análise de turnover e satisfação\n- Indicadores de headcount e produtividade');
+                });
+            }
+
+            const tableauProject = document.getElementById('tableau-project');
+            if (tableauProject) {
+                tableauProject.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    alert('Este espaço está reservado para seu projeto do Tableau.\n\nVocê pode:\n- Incorporar visualização do Tableau Public\n- Adicionar link para seu perfil no Tableau\n- Incluir story interativa com seus insights');
+                });
+            }
+
+            const pythonProject = document.getElementById('python-project');
+            if (pythonProject) {
+                pythonProject.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    alert('Este espaço está reservado para seu projeto em Python.\n\nOpções disponíveis:\n- Aplicação Streamlit hospedada\n- Notebook Jupyter interativo\n- Dashboard em Plotly/Dash\n- Link para repositório GitHub');
+                });
+            }
+
+            // Intersection Observer para animações
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+
+                        // Animar contadores na seção about
+                        if (entry.target.id === 'about') {
+                            setTimeout(function () {
+                                animateCounters();
+                            }, 500);
+                            observer.unobserve(entry.target);
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observar elementos para animação
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            animateElements.forEach(function (el) {
+                observer.observe(el);
+            });
+
+            // Inicializar animações já visíveis
+            animateOnScroll();
+
+            // Animar contadores após carregamento inicial
+            setTimeout(function () {
+                const aboutSection = document.getElementById('about');
+                if (aboutSection && isElementInViewport(aboutSection)) {
+                    animateCounters();
+                }
+            }, 1000);
+
+            // Função auxiliar para verificar se elemento está visível
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+        });
+    </script>
 </body>
 
 </html>

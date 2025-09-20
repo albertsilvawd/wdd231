@@ -1,130 +1,2427 @@
-/* Estilos gerais */
+/* ITEM DE ESTATÍSTICA */
+/* REFERENCIADO NO HTML: <div class="stat-item"> */
+/* MODIFICADO NO JS: Números animam via função animateCounters */
+.stat-item {
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    padding: var(--spacing-lg);
+    /* Espaçamento interno */
+    border-radius: var(--border-radius-lg);
+    /* Cantos arredondados */
+    text-align: center;
+    /* Texto centralizado */
+    position: relative;
+    /* Para barra colorida */
+    overflow: hidden;
+    /* Esconde overflow */
+}
+
+/* BARRA COLORIDA NO TOPO DAS ESTATÍSTICAS */
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    /* Altura da barra */
+    background: linear-gradient(90deg, var(--primary-color), var(--text-primary));
+}
+
+/* NÚMERO DA ESTATÍSTICA */
+/* REFERENCIADO NO HTML: <span class="stat-number" data-count="50"> */
+/* MODIFICADO NO JS: Valor anima de 0 até data-count */
+.stat-number {
+    font-size: var(--font-size-3xl);
+    /* Tamanho muito grande */
+    font-weight: 700;
+    /* Peso bold */
+    color: var(--text-primary);
+    /* Cor principal */
+    display: block;
+    /* Em linha própria */
+}
+
+/* LABEL DA ESTATÍSTICA */
+/* REFERENCIADO NO HTML: <div class="stat-label"> */
+.stat-label {
+    color: var(--text-muted);
+    /* Cor esmaecida */
+    margin-top: var(--spacing-xs);
+    /* Espaço acima */
+}
+
+/* ========== SEÇÃO PROJETOS ========== */
+/* 
+REFERENCIADO NO HTML: <section id="projects"> e elementos filhos
+PARA ALTERAR: Modifique minmax() em grid-template-columns para tamanho dos cards
+FUNCIONALIDADE: Grid responsivo de cards de projetos
+*/
+
+/* GRID DE PROJETOS */
+/* REFERENCIADO NO HTML: <div class="projects-grid"> */
+.projects-grid {
+    display: grid;
+    /* Layout em grid */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    /* Colunas responsivas */
+    gap: var(--spacing-xl);
+    /* Espaço entre cards */
+}
+
+/* CARD DE PROJETO */
+/* REFERENCIADO NO HTML: <div class="project-card"> */
+.project-card {
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    border-radius: var(--border-radius-lg);
+    /* Cantos arredondados */
+    overflow: hidden;
+    /* Esconde overflow */
+    transition: all var(--transition-base);
+    /* Transição suave */
+    position: relative;
+    /* Para efeitos */
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    /* Eleva o card */
+    box-shadow: var(--shadow-xl);
+    /* Sombra dramática */
+}
+
+/* IMAGEM DO PROJETO */
+/* REFERENCIADO NO HTML: <div class="project-image"> */
+.project-image {
+    height: 200px;
+    /* Altura fixa */
+    background: linear-gradient(135deg, var(--primary-color), var(--text-primary));
+    position: relative;
+    /* Para ícone centralizado */
+    overflow: hidden;
+    /* Esconde overflow */
+}
+
+/* CONTEÚDO DO PROJETO */
+/* REFERENCIADO NO HTML: <div class="project-content"> */
+.project-content {
+    padding: var(--spacing-lg);
+    /* Espaçamento interno */
+}
+
+/* TÍTULO DO PROJETO */
+/* REFERENCIADO NO HTML: <h3 class="project-title"> */
+.project-title {
+    font-size: var(--font-size-xl);
+    /* Tamanho grande */
+    font-weight: 600;
+    /* Peso semi-bold */
+    margin-bottom: var(--spacing-sm);
+    /* Espaço abaixo */
+    color: var(--text-secondary);
+    /* Cor secundária */
+}
+
+/* DESCRIÇÃO DO PROJETO */
+/* REFERENCIADO NO HTML: <p class="project-description"> */
+.project-description {
+    color: var(--text-muted);
+    /* Cor esmaecida */
+    margin-bottom: var(--spacing-md);
+    /* Espaço abaixo */
+    line-height: 1.6;
+    /* Altura da linha */
+}
+
+/* CONTAINER DAS TAGS */
+/* REFERENCIADO NO HTML: <div class="project-tags"> */
+.project-tags {
+    display: flex;
+    /* Layout horizontal */
+    flex-wrap: wrap;
+    /* Quebra em linhas */
+    gap: var(--spacing-xs);
+    /* Espaço pequeno entre tags */
+    margin-bottom: var(--spacing-md);
+    /* Espaço abaixo */
+}
+
+/* TAG INDIVIDUAL */
+/* REFERENCIADO NO HTML: <span class="project-tag"> */
+.project-tag {
+    background: rgba(102, 126, 234, 0.1);
+    /* Fundo azul translúcido */
+    color: var(--primary-color);
+    /* Cor azul */
+    padding: var(--spacing-xs) var(--spacing-sm);
+    /* Espaçamento interno */
+    border-radius: var(--border-radius);
+    /* Cantos arredondados */
+    font-size: var(--font-size-xs);
+    /* Tamanho pequeno */
+    font-weight: 500;
+    /* Peso médio */
+}
+
+/* CONTAINER DOS LINKS */
+/* REFERENCIADO NO HTML: <div class="project-links"> */
+.project-links {
+    display: flex;
+    /* Layout horizontal */
+    gap: var(--spacing-md);
+    /* Espaço entre links */
+}
+
+/* LINK DO PROJETO */
+/* REFERENCIADO NO HTML: <a class="project-link"> */
+/* MODIFICADO NO JS: Cliques são rastreados para analytics */
+.project-link {
+    display: inline-flex;
+    /* Layout flex inline */
+    align-items: center;
+    /* Alinha verticalmente */
+    gap: var(--spacing-xs);
+    /* Espaço entre ícone e texto */
+    color: var(--text-primary);
+    /* Cor principal */
+    text-decoration: none;
+    /* Remove sublinhado */
+    font-weight: 500;
+    /* Peso médio */
+    transition: color var(--transition-base);
+    /* Transição de cor */
+}
+
+.project-link:hover {
+    color: var(--primary-color);
+    /* Muda cor no hover */
+}
+
+/* ========== SEÇÃO CONTATO ========== */
+/* 
+REFERENCIADO NO HTML: <section id="contact"> e elementos filhos
+PARA ALTERAR: Modifique grid-template-columns para layout diferente
+FUNCIONALIDADE: Layout de duas colunas com informações e formulário
+*/
+
+/* CONTEÚDO DE CONTATO */
+/* REFERENCIADO NO HTML: <div class="contact-content"> */
+.contact-content {
+    display: grid;
+    /* Layout em grid */
+    grid-template-columns: 1fr 1fr;
+    /* Duas colunas iguais */
+    gap: var(--spacing-2xl);
+    /* Espaço entre colunas */
+}
+
+/* INFORMAÇÕES DE CONTATO */
+/* REFERENCIADO NO HTML: <div class="contact-info"> */
+.contact-info h3 {
+    font-size: var(--font-size-xl);
+    /* Tamanho grande */
+    margin-bottom: var(--spacing-md);
+    /* Espaço abaixo */
+    color: var(--text-primary);
+    /* Cor principal */
+}
+
+.contact-info p {
+    color: var(--text-muted);
+    /* Cor esmaecida */
+    margin-bottom: var(--spacing-lg);
+    /* Espaço abaixo */
+    line-height: 1.6;
+    /* Altura da linha */
+}
+
+/* MÉTODOS DE CONTATO */
+/* REFERENCIADO NO HTML: <div class="contact-methods"> */
+.contact-methods {
+    display: flex;
+    /* Layout vertical */
+    flex-direction: column;
+    /* Direção vertical */
+    gap: var(--spacing-md);
+    /* Espaço entre itens */
+}
+
+/* MÉTODO DE CONTATO INDIVIDUAL */
+/* REFERENCIADO NO HTML: <div class="contact-method"> */
+.contact-method {
+    display: flex;
+    /* Layout horizontal */
+    align-items: center;
+    /* Alinha verticalmente */
+    gap: var(--spacing-md);
+    /* Espaço entre ícone e texto */
+    padding: var(--spacing-md);
+    /* Espaçamento interno */
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    border-radius: var(--border-radius);
+    /* Cantos arredondados */
+    transition: all var(--transition-base);
+    /* Transição suave */
+}
+
+.contact-method:hover {
+    background: rgba(102, 126, 234, 0.1);
+    /* Fundo azul no hover */
+    transform: translateX(5px);
+    /* Move para direita */
+}
+
+/* ÍCONE DO MÉTODO DE CONTATO */
+.contact-method i {
+    font-size: var(--font-size-lg);
+    /* Tamanho grande */
+    color: var(--text-primary);
+    /* Cor principal */
+    width: 24px;
+    /* Largura fixa */
+    text-align: center;
+    /* Centralizado */
+}
+
+/* FORMULÁRIO DE CONTATO */
+/* REFERENCIADO NO HTML: <form class="contact-form"> */
+/* MODIFICADO NO JS: Submit é processado via JavaScript */
+.contact-form {
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    padding: var(--spacing-xl);
+    /* Espaçamento interno */
+    border-radius: var(--border-radius-lg);
+    /* Cantos arredondados */
+}
+
+/* GRUPO DE CAMPO DO FORMULÁRIO */
+/* REFERENCIADO NO HTML: <div class="form-group"> */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+    /* Espaço abaixo */
+}
+
+/* LABEL DO FORMULÁRIO */
+/* REFERENCIADO NO HTML: <label class="form-label"> */
+.form-label {
+    display: block;
+    /* Em linha própria */
+    margin-bottom: var(--spacing-sm);
+    /* Espaço abaixo */
+    font-weight: 500;
+    /* Peso médio */
+    color: var(--text-secondary);
+    /* Cor secundária */
+}
+
+/* INPUT E TEXTAREA DO FORMULÁRIO */
+/* REFERENCIADO NO HTML: <input class="form-input">, <textarea class="form-textarea"> */
+.form-input,
+.form-textarea {
+    width: 100%;
+    /* Largura total */
+    padding: var(--spacing-md);
+    /* Espaçamento interno */
+    border: 1px solid var(--bg-secondary);
+    /* Borda sutil */
+    border-radius: var(--border-radius);
+    /* Cantos arredondados */
+    background: var(--bg-secondary);
+    /* Fundo escuro */
+    color: var(--text-secondary);
+    /* Cor do texto */
+    font-family: inherit;
+    /* Herda fonte */
+    transition: all var(--transition-base);
+    /* Transição suave */
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    /* Remove outline padrão */
+    border-color: var(--text-primary);
+    /* Borda colorida */
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+    /* Sombra colorida */
+}
+
+/* TEXTAREA ESPECÍFICO */
+.form-textarea {
+    resize: vertical;
+    /* Redimensiona apenas verticalmente */
+    min-height: 120px;
+    /* Altura mínima */
+}
+
+/* ========== RODAPÉ ========== */
+/* 
+REFERENCIADO NO HTML: <footer class="footer"> e elementos filhos
+PARA ALTERAR: Modifique background para cor diferente, grid para layout
+FUNCIONALIDADE: Rodapé com múltiplas colunas e links sociais
+*/
+
+/* FOOTER PRINCIPAL */
+/* REFERENCIADO NO HTML: <footer class="footer"> */
+.footer {
+    background: var(--bg-secondary);
+    /* Fundo secundário */
+    padding: var(--spacing-2xl) 0 var(--spacing-lg);
+    /* Espaçamento */
+    border-top: 1px solid var(--bg-tertiary);
+    /* Borda superior */
+}
+
+/* CONTEÚDO DO FOOTER */
+/* REFERENCIADO NO HTML: <div class="footer-content"> */
+.footer-content {
+    display: grid;
+    /* Layout em grid */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Colunas responsivas */
+    gap: var(--spacing-xl);
+    /* Espaço entre colunas */
+    margin-bottom: var(--spacing-xl);
+    /* Espaço abaixo */
+}
+
+/* SEÇÃO DO FOOTER */
+/* REFERENCIADO NO HTML: <div class="footer-section"> */
+.footer-section h3 {
+    margin-bottom: var(--spacing-md);
+    /* Espaço abaixo */
+    color: var(--text-primary);
+    /* Cor principal */
+}
+
+.footer-section p,
+.footer-section a {
+    color: var(--text-muted);
+    /* Cor esmaecida */
+    text-decoration: none;
+    /* Remove sublinhado */
+    line-height: 1.6;
+    /* Altura da linha */
+}
+
+.footer-section a:hover {
+    color: var(--text-primary);
+    /* Cor principal no hover */
+}
+
+/* LINKS SOCIAIS */
+/* REFERENCIADO NO HTML: <div class="social-links"> */
+.social-links {
+    display: flex;
+    /* Layout horizontal */
+    gap: var(--spacing-md);
+    /* Espaço entre links */
+    margin-top: var(--spacing-md);
+    /* Espaço acima */
+}
+
+/* LINK SOCIAL INDIVIDUAL */
+/* REFERENCIADO NO HTML: <a class="social-link"> */
+.social-link {
+    display: inline-flex;
+    /* Layout flex inline */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    width: 40px;
+    /* Largura fixa */
+    height: 40px;
+    /* Altura fixa */
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    border-radius: 50%;
+    /* Formato circular */
+    color: var(--text-secondary);
+    /* Cor do ícone */
+    text-decoration: none;
+    /* Remove sublinhado */
+    transition: all var(--transition-base);
+    /* Transição suave */
+}
+
+.social-link:hover {
+    background: var(--text-primary);
+    /* Fundo colorido no hover */
+    color: white;
+    /* Ícone branco */
+    transform: translateY(-2px);
+    /* Eleva ligeiramente */
+}
+
+/* LINHA FINAL DO FOOTER */
+/* REFERENCIADO NO HTML: <div class="footer-bottom"> */
+.footer-bottom {
+    text-align: center;
+    /* Texto centralizado */
+    padding-top: var(--spacing-lg);
+    /* Espaço acima */
+    border-top: 1px solid var(--bg-tertiary);
+    /* Borda superior */
+    color: var(--text-muted);
+    /* Cor esmaecida */
+}
+
+/* ========== COMPONENTES ESPECIAIS ========== */
+
+/* === BOTÃO VOLTAR AO TOPO === */
+/* REFERENCIADO NO HTML: <button class="back-to-top"> */
+/* MODIFICADO NO JS: Visibilidade controlada via scroll */
+.back-to-top {
+    position: fixed;
+    /* Fixo na tela */
+    bottom: 30px;
+    /* 30px do fundo */
+    right: 30px;
+    /* 30px da direita */
+    width: 50px;
+    /* Largura */
+    height: 50px;
+    /* Altura */
+    background: var(--text-primary);
+    /* Fundo colorido */
+    color: white;
+    /* Ícone branco */
+    border: none;
+    /* Sem borda */
+    border-radius: 50%;
+    /* Formato circular */
+    cursor: pointer;
+    /* Cursor de clique */
+    opacity: 0;
+    /* Invisível por padrão */
+    visibility: hidden;
+    /* Escondido por padrão */
+    transition: all var(--transition-base);
+    /* Transição suave */
+    z-index: 1000;
+    /* Acima de outros elementos */
+}
+
+/* ESTADO VISÍVEL (CONTROLADO VIA JS) */
+.back-to-top.visible {
+    opacity: 1;
+    /* Visível */
+    visibility: visible;
+    /* Mostra */
+}
+
+.back-to-top:hover {
+    transform: translateY(-2px);
+    /* Eleva no hover */
+    box-shadow: var(--shadow-lg);
+    /* Sombra */
+}
+
+/* === TELA DE CARREGAMENTO === */
+/* REFERENCIADO NO HTML: <div class="loading-screen"> */
+/* MODIFICADO NO JS: Removida após carregamento da página */
+.loading-screen {
+    position: fixed;
+    /* Cobertura total */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    /* Fundo principal */
+    display: flex;
+    /* Layout flex */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    z-index: 9999;
+    /* Acima de tudo */
+    transition: opacity var(--transition-slow);
+    /* Transição lenta */
+}
+
+/* ESTADO ESCONDIDO (CONTROLADO VIA JS) */
+.loading-screen.hidden {
+    opacity: 0;
+    /* Invisível */
+    pointer-events: none;
+    /* Não intercepta cliques */
+}
+
+/* SPINNER DE CARREGAMENTO */
+/* REFERENCIADO NO HTML: <div class="spinner"> */
+.spinner {
+    width: 50px;
+    /* Largura */
+    height: 50px;
+    /* Altura */
+    border: 3px solid var(--bg-tertiary);
+    /* Borda base */
+    border-top: 3px solid var(--text-primary);
+    /* Borda colorida no topo */
+    border-radius: 50%;
+    /* Formato circular */
+    animation: spin 1s linear infinite;
+    /* Animação de rotação */
+}
+
+/* ANIMAÇÃO DE ROTAÇÃO */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    /* Posição inicial */
+    100% {
+        transform: rotate(360deg);
+    }
+
+    /* Rotação completa */
+}
+
+/* === MODAL === */
+/* REFERENCIADO NO HTML: <div class="modal"> */
+/* MODIFICADO NO JS: Aberto/fechado via funções openModal/closeModal */
+.modal {
+    position: fixed;
+    /* Cobertura total */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    /* Fundo escuro semi-transparente */
+    display: flex;
+    /* Layout flex */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    z-index: 10000;
+    /* Acima de tudo */
+    opacity: 0;
+    /* Invisível por padrão */
+    visibility: hidden;
+    /* Escondido por padrão */
+    transition: all var(--transition-base);
+    /* Transição suave */
+}
+
+/* ESTADO ATIVO (CONTROLADO VIA JS) */
+.modal.active {
+    opacity: 1;
+    /* Visível */
+    visibility: visible;
+    /* Mostra */
+}
+
+/* CONTEÚDO DO MODAL */
+/* REFERENCIADO NO HTML: <div class="modal-content"> */
+.modal-content {
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    padding: var(--spacing-xl);
+    /* Espaçamento interno */
+    border-radius: var(--border-radius-lg);
+    /* Cantos arredondados */
+    max-width: 500px;
+    /* Largura máxima */
+    width: 90%;
+    /* Largura responsiva */
+    position: relative;
+    /* Para botão de fechar */
+    transform: scale(0.7);
+    /* Tamanho reduzido inicial */
+    transition: transform var(--transition-base);
+    /* Transição de escala */
+}
+
+/* CONTEÚDO QUANDO MODAL ESTÁ ATIVO */
+.modal.active .modal-content {
+    transform: scale(1);
+    /* Tamanho normal */
+}
+
+/* BOTÃO DE FECHAR MODAL */
+/* REFERENCIADO NO HTML: <button class="modal-close"> */
+.modal-close {
+    position: absolute;
+    /* Posicionamento absoluto */
+    top: var(--spacing-md);
+    /* Do topo */
+    right: var(--spacing-md);
+    /* Da direita */
+    background: none;
+    /* Sem fundo */
+    border: none;
+    /* Sem borda */
+    color: var(--text-secondary);
+    /* Cor do ícone */
+    font-size: var(--font-size-lg);
+    /* Tamanho grande */
+    cursor: pointer;
+    /* Cursor de clique */
+}
+
+/* === BARRA DE PROGRESSO === */
+/* REFERENCIADO NO HTML: <div class="progress-bar"> */
+/* MODIFICADO NO JS: Largura atualizada conforme scroll */
+.progress-bar {
+    position: fixed;
+    /* Fixo no topo */
+    top: 0;
+    left: 0;
+    height: 3px;
+    /* Altura fina */
+    background: linear-gradient(90deg, var(--primary-color), var(--text-primary));
+    z-index: 9999;
+    /* Acima de outros elementos */
+    transition: width var(--transition-fast);
+    /* Transição rápida */
+}
+
+/* === NOTIFICAÇÃO === */
+/* REFERENCIADO NO HTML: <div class="notification"> */
+/* MODIFICADO NO JS: Mostrada/escondida via função showNotification */
+.notification {
+    position: fixed;
+    /* Fixo no canto */
+    top: 20px;
+    /* Do topo */
+    right: 20px;
+    /* Da direita */
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    padding: var(--spacing-md) var(--spacing-lg);
+    /* Espaçamento interno */
+    border-radius: var(--border-radius);
+    /* Cantos arredondados */
+    border-left: 4px solid var(--text-primary);
+    /* Borda colorida à esquerda */
+    box-shadow: var(--shadow-lg);
+    /* Sombra */
+    transform: translateX(100%);
+    /* Fora da tela inicialmente */
+    transition: transform var(--transition-base);
+    /* Transição suave */
+    z-index: 10001;
+    /* Acima do modal */
+}
+
+/* ESTADO VISÍVEL (CONTROLADO VIA JS) */
+.notification.show {
+    transform: translateX(0);
+    /* Na posição normal */
+}
+
+/* === TOOLTIP === */
+/* REFERENCIADO NO HTML: class="tooltip" data-tooltip="texto" */
+.tooltip {
+    position: relative;
+    /* Para elemento absoluto */
+}
+
+/* CONTEÚDO DO TOOLTIP */
+.tooltip::after {
+    content: attr(data-tooltip);
+    /* Usa conteúdo do atributo */
+    position: absolute;
+    /* Posicionamento absoluto */
+    bottom: 100%;
+    /* Acima do elemento */
+    left: 50%;
+    /* Centralizado horizontalmente */
+    transform: translateX(-50%);
+    /* Ajusta centralização */
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    color: var(--text-secondary);
+    /* Cor do texto */
+    padding: var(--spacing-xs) var(--spacing-sm);
+    /* Espaçamento */
+    border-radius: var(--border-radius);
+    /* Cantos arredondados */
+    font-size: var(--font-size-xs);
+    /* Tamanho pequeno */
+    white-space: nowrap;
+    /* Não quebra linha */
+    opacity: 0;
+    /* Invisível por padrão */
+    visibility: hidden;
+    /* Escondido por padrão */
+    transition: all var(--transition-base);
+    /* Transição suave */
+    z-index: 1000;
+    /* Acima de outros elementos */
+}
+
+/* TOOLTIP VISÍVEL NO HOVER */
+.tooltip:hover::after {
+    opacity: 1;
+    /* Visível */
+    visibility: visible;
+    /* Mostra */
+    transform: translateX(-50%) translateY(-5px);
+    /* Move para cima */
+}
+
+/* ========== ANIMAÇÕES PERSONALIZADAS ========== */
+/* 
+MODIFICADO NO JS: Algumas animações são ativadas via JavaScript
+FUNCIONALIDADE: Efeitos visuais avançados para melhor UX
+*/
+
+/* ANIMAÇÃO FADE IN UP */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        /* Invisível */
+        transform: translateY(30px);
+        /* 30px abaixo */
+    }
+
+    to {
+        opacity: 1;
+        /* Visível */
+        transform: translateY(0);
+        /* Posição normal */
+    }
+}
+
+/* ANIMAÇÃO SLIDE IN FROM LEFT */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        /* Invisível */
+        transform: translateX(-100px);
+        /* 100px à esquerda */
+    }
+
+    to {
+        opacity: 1;
+        /* Visível */
+        transform: translateX(0);
+        /* Posição normal */
+    }
+}
+
+/* ANIMAÇÃO BOUNCE */
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+        /* Posição normal */
+    }
+
+    40% {
+        transform: translateY(-10px);
+        /* Salta para cima */
+    }
+
+    60% {
+        transform: translateY(-5px);
+        /* Salta menos */
+    }
+}
+
+/* CLASSE PARA ANIMAÇÃO NO SCROLL */
+/* REFERENCIADO NO HTML: class="animate-on-scroll" */
+/* MODIFICADO NO JS: Classe .animated é adicionada quando elemento entra na tela */
+.animate-on-scroll {
+    opacity: 0;
+    /* Invisível por padrão */
+    transform: translateY(30px);
+    /* Posição abaixo */
+    transition: all 0.6s ease-out;
+    /* Transição suave */
+}
+
+/* ESTADO ANIMADO (CONTROLADO VIA JS) */
+.animate-on-scroll.animated {
+    opacity: 1;
+    /* Visível */
+    transform: translateY(0);
+    /* Posição normal */
+}
+
+/* === GLASSMORPHISM === */
+/* Para efeitos de vidro translúcido */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    /* Fundo translúcido */
+    backdrop-filter: blur(10px);
+    /* Desfoque do fundo */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Borda sutil */
+}
+
+/* ========== MODO CLARO ========== */
+/* 
+MODIFICADO NO JS: Atributo data-theme é alterado via JavaScript
+FUNCIONALIDADE: Sobrescreve cores para modo claro
+*/
+[data-theme="light"] {
+    --bg-primary: #ffffff;
+    /* Fundo branco */
+    --bg-secondary: #f8fafc;
+    /* Fundo cinza claro */
+    --bg-tertiary: #e2e8f0;
+    /* Fundo cinza */
+    --text-primary: #2563eb;
+    /* Azul para destaque */
+    --text-secondary: #1e293b;
+    /* Cinza escuro para texto */
+    --text-muted: #64748b;
+    /* Cinza médio para texto esmaecido */
+}
+
+/* ========== SCROLLBAR PERSONALIZADA ========== */
+/* Funciona apenas em navegadores Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    /* Largura da scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    /* Fundo da trilha */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-primary);
+    /* Cor do "polegar" */
+    border-radius: 4px;
+    /* Cantos arredondados */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+    /* Cor no hover */
+}
+
+/* ========== DESIGN RESPONSIVO ========== */
+/* 
+FUNCIONALIDADE: Adapta layout para diferentes tamanhos de tela
+BREAKPOINTS: 768px (tablet), 480px (mobile)
+*/
+
+/* TABLET E MOBILE */
+@media (max-width: 768px) {
+
+    /* MENU MOBILE */
+    /* MODIFICADO NO JS: Classe .active é controlada via JavaScript */
+    .mobile-menu-toggle {
+        display: block;
+        /* Mostra botão mobile */
+    }
+
+    .nav-menu {
+        position: absolute;
+        /* Posicionamento absoluto */
+        top: 100%;
+        /* Abaixo do header */
+        left: 0;
+        right: 0;
+        background: var(--bg-secondary);
+        /* Fundo escuro */
+        flex-direction: column;
+        /* Layout vertical */
+        padding: var(--spacing-lg);
+        /* Espaçamento */
+        transform: translateY(-100%);
+        /* Escondido acima */
+        opacity: 0;
+        /* Invisível */
+        visibility: hidden;
+        /* Escondido */
+        transition: all var(--transition-base);
+        /* Transição suave */
+    }
+
+    /* MENU MOBILE ATIVO (CONTROLADO VIA JS) */
+    .nav-menu.active {
+        transform: translateY(0);
+        /* Posição normal */
+        opacity: 1;
+        /* Visível */
+        visibility: visible;
+        /* Mostra */
+    }
+
+    /* LAYOUT DE UMA COLUNA */
+    .hero-content {
+        grid-template-columns: 1fr;
+        /* Uma coluna */
+        text-align: center;
+        /* Texto centralizado */
+    }
+
+    .about-content,
+    .contact-content {
+        grid-template-columns: 1fr;
+        /* Uma coluna */
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        /* Uma coluna */
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        /* Uma coluna */
+    }
+
+    /* TAMANHOS DE FONTE MENORES */
+    .hero-text h1 {
+        font-size: 2.5rem;
+        /* Título menor */
+    }
+
+    .section-title {
+        font-size: 2rem;
+        /* Título de seção menor */
+    }
+
+    /* FOOTER CENTRALIZADO */
+    .footer-content {
+        grid-template-columns: 1fr;
+        /* Uma coluna */
+        text-align: center;
+        /* Texto centralizado */
+    }
+}
+
+/* MOBILE PEQUENO */
+@media (max-width: 480px) {
+
+    /* ESPAÇAMENTO REDUZIDO */
+    .container {
+        padding: 0 var(--spacing-sm);
+        /* Menos padding lateral */
+    }
+
+    /* BOTÕES EM COLUNA */
+    .hero-actions {
+        flex-direction: column;
+        /* Layout vertical */
+        align-items: center;
+        /* Centralizado */
+    }
+
+    /* BOTÕES LARGURA TOTAL */
+    .btn {
+        width: 100%;
+        /* Largura total */
+        max-width: 300px;
+        /* Máximo de 300px */
+    }
+
+    /* CARDS COM MARGEM */
+    .project-card {
+        margin: 0 var(--spacing-sm);
+        /* Margem lateral */
+    }
+
+    /* SKILLS EM 2 COLUNAS */
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 colunas */
+    }
+
+    /* STATS UMA COLUNA */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        /* Uma coluna */
+        gap: var(--spacing-sm);
+        /* Espaço menor */
+    }
+
+    /* CONTATO VERTICAL */
+    .contact-method {
+        flex-direction: column;
+        /* Layout vertical */
+        text-align: center;
+        /* Texto centralizado */
+        gap: var(--spacing-sm);
+        /* Espaço menor */
+    }
+
+    /* REDES SOCIAIS CENTRALIZADAS */
+    .social-links {
+        justify-content: center;
+        /* Centralizado */
+    }
+}
+
+/* ========== ANIMAÇÕES EXTRAS ========== */
+
+/* ANIMAÇÃO FLUTUANTE PARA SKILLS */
+.skill-item {
+    animation: float 6s ease-in-out infinite;
+    /* Animação flutuante */
+}
+
+/* DELAYS DIFERENTES PARA CADA SKILL */
+.skill-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.skill-item:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.skill-item:nth-child(3) {
+    animation-delay: 2s;
+}
+
+.skill-item:nth-child(4) {
+    animation-delay: 3s;
+}
+
+.skill-item:nth-child(5) {
+    animation-delay: 4s;
+}
+
+.skill-item:nth-child(6) {
+    animation-delay: 5s;
+}
+
+/* ANIMAÇÃO FLOAT */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    /* Posição normal */
+    50% {
+        transform: translateY(-10px);
+    }
+
+    /* 10px acima */
+}
+
+/* TEXTO COM GRADIENTE ANIMADO */
+.gradient-text {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #ffecd2);
+    background-size: 400% 400%;
+    /* Tamanho grande para animação */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease infinite;
+    /* Animação do gradiente */
+}
+
+/* ANIMAÇÃO DO GRADIENTE */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* EFEITO DE PARTÍCULAS NO HERO */
+.hero::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: sparkle 20s linear infinite;
+    /* Animação de brilho */
+    opacity: 0.1;
+    /* Muito sutil */
+}
+
+/* ANIMAÇÃO DE BRILHO DAS PARTÍCULAS */
+@keyframes sparkle {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+/* ========== UTILIDADES CSS ========== */
+/* Classes auxiliares para desenvolvimento rápido */
+
+/* === UTILITÁRIOS DE TEXTO === */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-primary {
+    color: var(--text-primary);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-xs {
+    font-size: var(--font-size-xs);
+}
+
+.text-sm {
+    font-size: var(--font-size-sm);
+}
+
+.text-base {
+    font-size: var(--font-size-base);
+}
+
+.text-lg {
+    font-size: var(--font-size-lg);
+}
+
+.text-xl {
+    font-size: var(--font-size-xl);
+}
+
+.text-2xl {
+    font-size: var(--font-size-2xl);
+}
+
+.text-3xl {
+    font-size: var(--font-size-3xl);
+}
+
+.font-light {
+    font-weight: 300;
+}
+
+.font-normal {
+    font-weight: 400;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+/* === UTILITÁRIOS DE ESPAÇAMENTO === */
+.m-0 {
+    margin: 0;
+}
+
+.m-1 {
+    margin: var(--spacing-xs);
+}
+
+.m-2 {
+    margin: var(--spacing-sm);
+}
+
+.m-4 {
+    margin: var(--spacing-md);
+}
+
+.m-8 {
+    margin: var(--spacing-lg);
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.p-1 {
+    padding: var(--spacing-xs);
+}
+
+.p-2 {
+    padding: var(--spacing-sm);
+}
+
+.p-4 {
+    padding: var(--spacing-md);
+}
+
+.p-8 {
+    padding: var(--spacing-lg);
+}
+
+/* === UTILITÁRIOS DE DISPLAY === */
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.inline {
+    display: inline;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+/* === UTILITÁRIOS DE FLEXBOX === */
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.items-start {
+    align-items: flex-start;
+}
+
+.items-end {
+    align-items: flex-end;
+}
+
+/* === UTILITÁRIOS DE POSIÇÃO === */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.sticky {
+    position: sticky;
+}
+
+/* === UTILITÁRIOS DE Z-INDEX === */
+.z-10 {
+    z-index: 10;
+}
+
+.z-20 {
+    z-index: 20;
+}
+
+.z-30 {
+    z-index: 30;
+}
+
+.z-40 {
+    z-index: 40;
+}
+
+.z-50 {
+    z-index: 50;
+}
+
+/* === UTILITÁRIOS DE OPACIDADE === */
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-25 {
+    opacity: 0.25;
+}
+
+.opacity-50 {
+    opacity: 0.5;
+}
+
+.opacity-75 {
+    opacity: 0.75;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+/* === UTILITÁRIOS DE BORDER RADIUS === */
+.rounded {
+    border-radius: var(--border-radius);
+}
+
+.rounded-lg {
+    border-radius: var(--border-radius-lg);
+}
+
+.rounded-xl {
+    border-radius: var(--border-radius-xl);
+}
+
+.rounded-full {
+    border-radius: 50%;
+}
+
+/* === UTILITÁRIOS DE SOMBRA === */
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+/* ========== ESTILOS PARA IMPRESSÃO ========== */
+/* Remove elementos desnecessários ao imprimir */
+@media print {
+
+    .header,
+    .back-to-top,
+    .loading-screen,
+    .progress-bar,
+    .modal,
+    .notification {
+        display: none !important;
+        /* Esconde elementos interativos */
+    }
+
+    body {
+        background: white !important;
+        /* Fundo branco */
+        color: black !important;
+        /* Texto preto */
+    }
+
+    .section {
+        page-break-inside: avoid;
+        /* Evita quebra dentro da seção */
+    }
+
+    .project-card {
+        page-break-inside: avoid;
+        /* Evita quebra dentro do card */
+        margin-bottom: var(--spacing-lg);
+        /* Espaço entre cards */
+    }
+}
+
+/* ========== COMENTÁRIOS FINAIS E GUIA DE USO ========== */
+
+/*
+=== GUIA RÁPIDO DE MODIFICAÇÕES ===
+
+ALTERAR CORES:
+1. Vá para :root no início do arquivo
+2. Modifique as variáveis --primary-color, --text-primary, etc.
+3. Para modo claro: altere [data-theme="light"]
+
+ALTERAR LAYOUT:
+1. Procure pela classe mencionada nos comentários HTML
+2. Modifique grid-template-columns para mudar colunas
+3. Modifique padding/margin para espaçamentos
+
+ALTERAR RESPONSIVIDADE:
+1. Vá para @media (max-width: 768px) para tablet
+2. Vá para @media (max-width: 480px) para mobile
+3. Adicione novas media queries se necessário
+
+ADICIONAR ANIMAÇÕES:
+1. Crie nova @keyframes com nome único
+2. Aplique via animation: nome-da-animacao duração ease infinite
+3. Use transition para efeitos de hover
+
+MODIFICAR COMPONENTES:
+1. Encontre a seção do componente (ex: ========== BOTÕES ==========)
+2. Altere as propriedades desejadas
+3. Teste em diferentes tamanhos de tela
+
+CLASSES IMPORTANTES PARA LEMBRAR:
+- .container: centraliza e limita largura do conteúdo
+- .section: espaçamento padrão das seções
+- .animate-on-scroll: elementos que animam quando entram na tela
+- .btn: estilo base dos botões
+- .tooltip: adiciona tooltip ao elemento
+
+JAVASCRIPT RELACIONADO:
+- Procure no script.js pelas classes mencionadas nos comentários
+- Classes com "id=" são controladas via JavaScript
+- data-count é usado para animação de números
+- data-tooltip é usado para texto do tooltip
+*/
+/* ========== SISTEMA DE PORTFÓLIO INTERATIVO - CSS PRINCIPAL ========== */
+
+/* 
+COMO USAR ESTE ARQUIVO:
+- Cada seção está comentada indicando onde ela afeta o HTML
+- Para alterar cores: modifique as variáveis em :root
+- Para alterar layout: procure pela classe mencionada nos comentários HTML
+- Para responsividade: vá até as @media queries no final
+*/
+
+/* ========== VARIÁVEIS CSS GLOBAIS ========== */
+/* 
+REFERENCIADO NO HTML: Em todos os elementos que usam cores e espaçamentos
+PARA ALTERAR: Modifique os valores das variáveis aqui para mudar todo o site
+FUNCIONALIDADE: Sistema de design consistente e fácil manutenção
+*/
+:root {
+    /* === CORES PRIMÁRIAS === */
+    /* Usadas em: botões principais, links ativos, destaques */
+    --primary-color: #667eea;
+    /* Azul principal - botões, gradientes */
+    --primary-dark: #764ba2;
+    /* Azul escuro - gradientes, hover states */
+    --secondary-color: #f093fb;
+    /* Rosa - elementos secundários */
+    --accent-color: #ffecd2;
+    /* Amarelo claro - acentos especiais */
+
+    /* === CORES NEUTRAS (MODO ESCURO) === */
+    /* Usadas em: fundos, textos, bordas */
+    --bg-primary: #0f0f23;
+    /* Fundo principal do site */
+    --bg-secondary: #1a1a2e;
+    /* Fundo de seções alternadas */
+    --bg-tertiary: #16213e;
+    /* Fundo de cards e componentes */
+    --text-primary: #e94560;
+    /* Cor principal do texto (rosa/vermelho) */
+    --text-secondary: #f5f5f5;
+    /* Cor secundária do texto (branco) */
+    --text-muted: #a0aec0;
+    /* Cor de texto esmaecido (cinza) */
+
+    /* === ESPAÇAMENTOS PADRONIZADOS === */
+    /* Usados em: margin, padding, gaps */
+    --spacing-xs: 0.25rem;
+    /* 4px - espaçamentos mínimos */
+    --spacing-sm: 0.5rem;
+    /* 8px - espaçamentos pequenos */
+    --spacing-md: 1rem;
+    /* 16px - espaçamento padrão */
+    --spacing-lg: 2rem;
+    /* 32px - espaçamentos grandes */
+    --spacing-xl: 3rem;
+    /* 48px - espaçamentos extra grandes */
+    --spacing-2xl: 4rem;
+    /* 64px - espaçamentos máximos */
+
+    /* === TIPOGRAFIA === */
+    /* Usadas em: font-family, font-size */
+    --font-primary: 'Poppins', sans-serif;
+    /* Fonte principal do site */
+    --font-code: 'Fira Code', monospace;
+    /* Fonte para código */
+    --font-size-xs: 0.75rem;
+    /* 12px - textos muito pequenos */
+    --font-size-sm: 0.875rem;
+    /* 14px - textos pequenos */
+    --font-size-base: 1rem;
+    /* 16px - tamanho base */
+    --font-size-lg: 1.125rem;
+    /* 18px - textos grandes */
+    --font-size-xl: 1.25rem;
+    /* 20px - títulos menores */
+    --font-size-2xl: 1.5rem;
+    /* 24px - títulos médios */
+    --font-size-3xl: 2rem;
+    /* 32px - títulos grandes */
+    --font-size-4xl: 3rem;
+    /* 48px - títulos principais */
+
+    /* === BORDAS E CANTOS === */
+    /* Usados em: border-radius */
+    --border-radius: 8px;
+    /* Raio padrão */
+    --border-radius-lg: 12px;
+    /* Raio grande */
+    --border-radius-xl: 20px;
+    /* Raio extra grande */
+
+    /* === SOMBRAS === */
+    /* Usadas em: box-shadow */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    /* Sombra sutil */
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    /* Sombra média */
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    /* Sombra grande */
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    /* Sombra dramática */
+
+    /* === TRANSIÇÕES === */
+    /* Usadas em: transition */
+    --transition-fast: 0.15s ease-in-out;
+    /* Transições rápidas */
+    --transition-base: 0.3s ease-in-out;
+    /* Transições padrão */
+    --transition-slow: 0.5s ease-in-out;
+    /* Transições lentas */
+}
+
+/* ========== RESET CSS E CONFIGURAÇÕES BÁSICAS ========== */
+/* 
+REFERENCIADO NO HTML: Afeta todos os elementos
+PARA ALTERAR: Cuidado! Essas regras afetam todo o site
+FUNCIONALIDADE: Remove estilos padrão do navegador e define base consistente
+*/
+
+/* Remove margin/padding padrão e define box-sizing */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Configurações do HTML */
+html {
+    font-size: 16px;
+    /* Base para rem units */
+    scroll-behavior: smooth;
+    /* Scroll suave para âncoras */
+}
+
+/* Configurações do BODY */
+/* REFERENCIADO NO HTML: <body> */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-primary);
+    /* Fonte principal do site */
+    background: var(--bg-primary);
+    /* Cor de fundo principal */
+    color: var(--text-secondary);
+    /* Cor de texto padrão */
     line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
+    /* Altura da linha para legibilidade */
+    overflow-x: hidden;
+    /* Remove scroll horizontal */
 }
 
-header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 1rem 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
+/* ========== COMPONENTES BÁSICOS REUTILIZÁVEIS ========== */
 
-nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #3498db;
-}
-
-main {
-    margin-top: 80px;
-    padding: 20px;
-}
-
-section {
-    padding: 60px 20px;
-    min-height: 100vh;
-}
-
-h1,
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Estilos de projetos */
-.projetos-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.projeto-card {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-.projeto-card:hover {
-    transform: translateY(-10px);
-}
-
-.projeto-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.projeto-info {
-    padding: 15px;
-}
-
-/* Estilos de formulário */
-form {
-    max-width: 600px;
+/* === CONTAINER === */
+/* 
+REFERENCIADO NO HTML: <div class="container"> (em múltiplas seções)
+PARA ALTERAR: Modifique max-width para largura diferente
+FUNCIONALIDADE: Centraliza conteúdo e define largura máxima
+*/
+.container {
+    max-width: 1200px;
+    /* Largura máxima do conteúdo */
     margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Centraliza horizontalmente */
+    padding: 0 var(--spacing-md);
+    /* Espaçamento lateral */
 }
 
-input,
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #3498db;
-    color: white;
+/* === BOTÕES === */
+/* 
+REFERENCIADO NO HTML: <a class="btn">, <button class="btn">
+PARA ALTERAR: Modifique padding para tamanho, border-radius para formato
+FUNCIONALIDADE: Estilo base para todos os botões
+*/
+.btn {
+    display: inline-flex;
+    /* Layout flexível inline */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    padding: var(--spacing-sm) var(--spacing-lg);
+    /* Espaçamento interno */
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    /* Remove borda padrão */
+    border-radius: var(--border-radius);
+    /* Cantos arredondados */
+    font-family: inherit;
+    /* Herda fonte do pai */
+    font-weight: 500;
+    /* Peso da fonte */
+    text-decoration: none;
+    /* Remove sublinhado de links */
     cursor: pointer;
-    transition: background-color 0.3s;
+    /* Cursor de clique */
+    transition: all var(--transition-base);
+    /* Transição suave */
+    position: relative;
+    /* Para efeito ::before */
+    overflow: hidden;
+    /* Esconde overflow do efeito */
 }
 
-button:hover {
-    background-color: #2980b9;
+/* EFEITO DE BRILHO NOS BOTÕES */
+/* Cria animação de brilho que passa pelos botões no hover */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    /* Inicia fora da tela à esquerda */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left var(--transition-slow);
 }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #2c3e50;
+.btn:hover::before {
+    left: 100%;
+    /* Move para fora da tela à direita */
+}
+
+/* BOTÃO PRIMÁRIO */
+/* REFERENCIADO NO HTML: <a class="btn btn-primary"> */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
+    box-shadow: var(--shadow-md);
 }
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    /* Eleva o botão */
+    box-shadow: var(--shadow-lg);
+    /* Aumenta a sombra */
+}
+
+/* BOTÃO SECUNDÁRIO */
+/* REFERENCIADO NO HTML: <a class="btn btn-secondary"> */
+.btn-secondary {
+    background: transparent;
+    /* Fundo transparente */
+    color: var(--text-primary);
+    /* Cor do texto */
+    border: 2px solid var(--text-primary);
+    /* Borda colorida */
+}
+
+.btn-secondary:hover {
+    background: var(--text-primary);
+    /* Preenche com cor no hover */
+    color: white;
+    /* Inverte cor do texto */
+}
+
+/* ========== HEADER E NAVEGAÇÃO ========== */
+/* 
+REFERENCIADO NO HTML: <header class="header"> e elementos filhos
+PARA ALTERAR: Modifique background para cor diferente, top/position para comportamento
+FUNCIONALIDADE: Cabeçalho fixo com navegação principal
+*/
+
+/* HEADER PRINCIPAL */
+/* REFERENCIADO NO HTML: <header class="header" id="header"> */
+.header {
+    position: fixed;
+    /* Fixo no topo da tela */
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 15, 35, 0.95);
+    /* Fundo semi-transparente */
+    backdrop-filter: blur(10px);
+    /* Efeito de desfoque */
+    z-index: 1000;
+    /* Acima de outros elementos */
+    transition: all var(--transition-base);
+    /* Transição suave */
+}
+
+/* HEADER QUANDO PÁGINA FOI ROLADA */
+/* MODIFICADO NO JS: Classe .scrolled é adicionada via JavaScript */
+.header.scrolled {
+    background: rgba(15, 15, 35, 0.98);
+    /* Fundo mais opaco */
+    box-shadow: var(--shadow-lg);
+    /* Adiciona sombra */
+}
+
+/* NAVBAR (CONTAINER DA NAVEGAÇÃO) */
+/* REFERENCIADO NO HTML: <nav class="navbar"> */
+.navbar {
+    display: flex;
+    /* Layout flexível */
+    justify-content: space-between;
+    /* Espaça elementos nas extremidades */
+    align-items: center;
+    /* Alinha verticalmente */
+    padding: var(--spacing-md) 0;
+    /* Espaçamento vertical */
+}
+
+/* LOGO */
+/* REFERENCIADO NO HTML: <a href="#home" class="logo"> */
+.logo {
+    font-size: var(--font-size-2xl);
+    /* Tamanho grande */
+    font-weight: 700;
+    /* Peso bold */
+    color: var(--text-primary);
+    /* Cor principal */
+    text-decoration: none;
+    /* Remove sublinhado */
+    display: flex;
+    /* Layout flex para ícone */
+    align-items: center;
+    /* Alinha verticalmente */
+    gap: var(--spacing-sm);
+    /* Espaço entre ícone e texto */
+}
+
+/* ÍCONE DO LOGO (RAIO) */
+.logo::before {
+    content: '⚡';
+    /* Emoji de raio */
+    animation: pulse 2s infinite;
+    /* Animação pulsante */
+}
+
+/* ANIMAÇÃO PULSANTE DO LOGO */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    /* Tamanho normal */
+    50% {
+        transform: scale(1.1);
+    }
+
+    /* 10% maior */
+}
+
+/* MENU DE NAVEGAÇÃO */
+/* REFERENCIADO NO HTML: <ul class="nav-menu"> */
+.nav-menu {
+    display: flex;
+    /* Layout horizontal */
+    list-style: none;
+    /* Remove marcadores da lista */
+    gap: var(--spacing-lg);
+    /* Espaço entre itens */
+}
+
+/* LINKS DE NAVEGAÇÃO */
+/* REFERENCIADO NO HTML: <a class="nav-link"> */
+.nav-link {
+    color: var(--text-secondary);
+    /* Cor padrão */
+    text-decoration: none;
+    /* Remove sublinhado */
+    font-weight: 500;
+    /* Peso médio */
+    position: relative;
+    /* Para efeito ::after */
+    transition: color var(--transition-base);
+    /* Transição de cor */
+}
+
+/* LINHA ANIMADA ABAIXO DOS LINKS */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    /* 5px abaixo do texto */
+    left: 0;
+    width: 0;
+    /* Inicia sem largura */
+    height: 2px;
+    /* Altura da linha */
+    background: var(--text-primary);
+    /* Cor da linha */
+    transition: width var(--transition-base);
+    /* Transição da largura */
+}
+
+/* ESTADO HOVER E ATIVO DOS LINKS */
+.nav-link:hover {
+    color: var(--text-primary);
+    /* Muda cor no hover */
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+    /* Linha se expande */
+}
+
+/* BOTÃO DO MENU MOBILE */
+/* REFERENCIADO NO HTML: <button class="mobile-menu-toggle"> */
+/* MODIFICADO NO JS: Display é controlado via media query e JavaScript */
+.mobile-menu-toggle {
+    display: none;
+    /* Escondido por padrão */
+    background: none;
+    /* Sem fundo */
+    border: none;
+    /* Sem borda */
+    color: var(--text-secondary);
+    /* Cor do ícone */
+    font-size: var(--font-size-xl);
+    /* Tamanho do ícone */
+    cursor: pointer;
+    /* Cursor de clique */
+}
+
+/* BOTÃO DE ALTERNÂNCIA DE TEMA */
+/* REFERENCIADO NO HTML: <button class="theme-toggle"> */
+/* MODIFICADO NO JS: Ícone e rotação são controlados via JavaScript */
+.theme-toggle {
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    border: none;
+    /* Sem borda */
+    color: var(--text-secondary);
+    /* Cor do ícone */
+    padding: var(--spacing-sm);
+    /* Espaçamento interno */
+    border-radius: 50%;
+    /* Formato circular */
+    cursor: pointer;
+    /* Cursor de clique */
+    transition: all var(--transition-base);
+    /* Transição suave */
+}
+
+.theme-toggle:hover {
+    background: var(--text-primary);
+    /* Muda fundo no hover */
+    color: white;
+    /* Muda cor do ícone */
+    transform: rotate(180deg);
+    /* Rotação */
+}
+
+/* ========== SEÇÃO HERO (PRINCIPAL) ========== */
+/* 
+REFERENCIADO NO HTML: <section class="hero"> e elementos filhos
+PARA ALTERAR: Modifique min-height para altura diferente, background para cores
+FUNCIONALIDADE: Seção de apresentação principal com layout de duas colunas
+*/
+
+/* CONTAINER PRINCIPAL DO HERO */
+/* REFERENCIADO NO HTML: <section class="hero" id="home"> */
+.hero {
+    min-height: 100vh;
+    /* Altura mínima de tela cheia */
+    display: flex;
+    /* Layout flexível */
+    align-items: center;
+    /* Centraliza verticalmente */
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    position: relative;
+    /* Para elementos absolutos filhos */
+    overflow: hidden;
+    /* Esconde overflow das animações */
+}
+
+/* EFEITO DE FUNDO ANIMADO */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+    /* Animação flutuante */
+}
+
+/* ANIMAÇÃO FLUTUANTE DO FUNDO */
+@keyframes backgroundFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.05);
+    }
+}
+
+/* LAYOUT DE CONTEÚDO DO HERO */
+/* REFERENCIADO NO HTML: <div class="hero-content"> */
+.hero-content {
+    position: relative;
+    /* Acima do fundo animado */
+    z-index: 2;
+    /* Camada superior */
+    display: grid;
+    /* Layout em grid */
+    grid-template-columns: 1fr 1fr;
+    /* Duas colunas iguais */
+    gap: var(--spacing-2xl);
+    /* Espaço entre colunas */
+    align-items: center;
+    /* Alinha verticalmente */
+}
+
+/* TEXTO DO HERO (LADO ESQUERDO) */
+/* REFERENCIADO NO HTML: <div class="hero-text"> */
+.hero-text h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    /* Tamanho responsivo */
+    font-weight: 700;
+    /* Peso bold */
+    margin-bottom: var(--spacing-md);
+    /* Espaço abaixo */
+    /* Efeito de texto gradiente */
+    background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
+    -webkit-background-clip: text;
+    /* Clip para Webkit */
+    -webkit-text-fill-color: transparent;
+    /* Texto transparente */
+    background-clip: text;
+    /* Padrão */
+    animation: slideInLeft 1s ease-out;
+    /* Animação de entrada */
+}
+
+.hero-text .subtitle {
+    font-size: var(--font-size-xl);
+    /* Tamanho grande */
+    color: var(--text-muted);
+    /* Cor esmaecida */
+    margin-bottom: var(--spacing-lg);
+    /* Espaço abaixo */
+    animation: slideInLeft 1s ease-out 0.2s both;
+    /* Animação com delay */
+}
+
+.hero-text .description {
+    font-size: var(--font-size-lg);
+    /* Tamanho médio-grande */
+    margin-bottom: var(--spacing-xl);
+    /* Espaço abaixo */
+    animation: slideInLeft 1s ease-out 0.4s both;
+    /* Animação com delay */
+}
+
+/* BOTÕES DE AÇÃO DO HERO */
+/* REFERENCIADO NO HTML: <div class="hero-actions"> */
+.hero-actions {
+    display: flex;
+    /* Layout horizontal */
+    gap: var(--spacing-md);
+    /* Espaço entre botões */
+    flex-wrap: wrap;
+    /* Quebra em linhas se necessário */
+    animation: slideInLeft 1s ease-out 0.6s both;
+    /* Animação com delay */
+}
+
+/* ANIMAÇÃO DE ENTRADA PELA ESQUERDA */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        /* Invisível */
+        transform: translateX(-50px);
+        /* 50px à esquerda */
+    }
+
+    to {
+        opacity: 1;
+        /* Visível */
+        transform: translateX(0);
+        /* Posição normal */
+    }
+}
+
+/* VISUAL DO HERO (LADO DIREITO) */
+/* REFERENCIADO NO HTML: <div class="hero-visual"> */
+.hero-visual {
+    position: relative;
+    animation: slideInRight 1s ease-out 0.3s both;
+    /* Animação com delay */
+}
+
+/* ANIMAÇÃO DE ENTRADA PELA DIREITA */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        /* Invisível */
+        transform: translateX(50px);
+        /* 50px à direita */
+    }
+
+    to {
+        opacity: 1;
+        /* Visível */
+        transform: translateX(0);
+        /* Posição normal */
+    }
+}
+
+/* ========== EDITOR DE CÓDIGO SIMULADO ========== */
+/* 
+REFERENCIADO NO HTML: <div class="code-editor"> e elementos filhos
+PARA ALTERAR: Modifique cores em background, altura em height
+FUNCIONALIDADE: Simula janela de editor de código com sintaxe colorida
+*/
+
+/* CONTAINER DO EDITOR */
+/* REFERENCIADO NO HTML: <div class="code-editor"> */
+.code-editor {
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    border-radius: var(--border-radius-lg);
+    /* Cantos arredondados */
+    padding: var(--spacing-lg);
+    /* Espaçamento interno */
+    box-shadow: var(--shadow-xl);
+    /* Sombra dramática */
+    position: relative;
+    /* Para barra colorida */
+    overflow: hidden;
+    /* Esconde overflow */
+}
+
+/* BARRA COLORIDA NO TOPO (SIMULA CONTROLS DO MACOS) */
+.code-editor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    /* Altura da barra */
+    background: linear-gradient(90deg, #ff5f56, #ffbd2e, #27ca3f);
+    /* Cores do macOS */
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+/* HEADER DO EDITOR (BOLINHAS) */
+/* REFERENCIADO NO HTML: <div class="code-editor-header"> */
+.code-editor-header {
+    display: flex;
+    /* Layout horizontal */
+    align-items: center;
+    /* Alinha verticalmente */
+    gap: var(--spacing-sm);
+    /* Espaço entre bolinhas */
+    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+    /* Margens */
+}
+
+/* BOLINHAS DO HEADER */
+/* REFERENCIADO NO HTML: <div class="code-editor-dots"> */
+.code-editor-dots {
+    width: 12px;
+    /* Largura */
+    height: 12px;
+    /* Altura */
+    border-radius: 50%;
+    /* Formato circular */
+    background: var(--text-muted);
+    /* Cor cinza */
+}
+
+/* CONTEÚDO DO CÓDIGO */
+/* REFERENCIADO NO HTML: <div class="code-content"> */
+.code-content {
+    font-family: var(--font-code);
+    /* Fonte monospace */
+    font-size: var(--font-size-sm);
+    /* Tamanho menor */
+    line-height: 1.8;
+    /* Altura da linha maior */
+}
+
+/* LINHAS DE CÓDIGO */
+/* REFERENCIADO NO HTML: <span class="code-line"> */
+.code-line {
+    display: block;
+    /* Cada linha em bloco */
+    padding: var(--spacing-xs) 0;
+    /* Espaçamento vertical */
+}
+
+/* CORES DA SINTAXE */
+/* REFERENCIADO NO HTML: <span class="code-keyword">, etc. */
+.code-keyword {
+    color: #ff79c6;
+}
+
+/* Palavras-chave - rosa */
+.code-string {
+    color: #f1fa8c;
+}
+
+/* Strings - amarelo */
+.code-function {
+    color: #50fa7b;
+}
+
+/* Funções - verde */
+.code-comment {
+    color: #6272a4;
+    font-style: italic;
+}
+
+/* Comentários - azul */
+
+/* ANIMAÇÃO DE DIGITAÇÃO */
+/* REFERENCIADO NO HTML: <span class="typing-animation"> */
+.typing-animation {
+    overflow: hidden;
+    /* Esconde texto */
+    border-right: 2px solid var(--text-primary);
+    /* Cursor piscante */
+    animation: typing 3s steps(40) infinite, blink 1s infinite;
+}
+
+/* ANIMAÇÃO DO TEXTO APARECENDO */
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+
+    /* Sem largura */
+    50% {
+        width: 100%;
+    }
+
+    /* Largura completa */
+    100% {
+        width: 0;
+    }
+
+    /* Volta ao início */
+}
+
+/* ANIMAÇÃO DO CURSOR PISCANDO */
+@keyframes blink {
+
+    0%,
+    50% {
+        border-color: var(--text-primary);
+    }
+
+    /* Visível */
+    51%,
+    100% {
+        border-color: transparent;
+    }
+
+    /* Invisível */
+}
+
+/* ========== ESTILOS GERAIS DAS SEÇÕES ========== */
+/* 
+REFERENCIADO NO HTML: <section class="section">
+PARA ALTERAR: Modifique padding para espaçamento diferente
+FUNCIONALIDADE: Estilos base para todas as seções do site
+*/
+
+/* SEÇÃO GENÉRICA */
+/* REFERENCIADO NO HTML: <section class="section"> */
+.section {
+    padding: var(--spacing-2xl) 0;
+    /* Espaçamento vertical grande */
+    position: relative;
+    /* Para elementos absolutos */
+}
+
+/* TÍTULO DAS SEÇÕES */
+/* REFERENCIADO NO HTML: <h2 class="section-title"> */
+.section-title {
+    text-align: center;
+    /* Centralizado */
+    font-size: var(--font-size-3xl);
+    /* Tamanho grande */
+    font-weight: 700;
+    /* Peso bold */
+    margin-bottom: var(--spacing-xl);
+    /* Espaço abaixo */
+    /* Efeito gradiente no texto */
+    background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* SUBTÍTULO DAS SEÇÕES */
+/* REFERENCIADO NO HTML: <p class="section-subtitle"> */
+.section-subtitle {
+    text-align: center;
+    /* Centralizado */
+    color: var(--text-muted);
+    /* Cor esmaecida */
+    font-size: var(--font-size-lg);
+    /* Tamanho grande */
+    margin-bottom: var(--spacing-2xl);
+    /* Espaço abaixo */
+    max-width: 600px;
+    /* Largura máxima */
+    margin-left: auto;
+    /* Centraliza horizontalmente */
+    margin-right: auto;
+    /* Centraliza horizontalmente */
+}
+
+/* ========== SEÇÃO SOBRE MIM ========== */
+/* 
+REFERENCIADO NO HTML: <section id="about"> e elementos filhos
+PARA ALTERAR: Modifique grid-template-columns para layout diferente
+FUNCIONALIDADE: Layout de duas colunas com texto e estatísticas
+*/
+
+/* CONTEÚDO DA SEÇÃO ABOUT */
+/* REFERENCIADO NO HTML: <div class="about-content"> */
+.about-content {
+    display: grid;
+    /* Layout em grid */
+    grid-template-columns: 1fr 1fr;
+    /* Duas colunas iguais */
+    gap: var(--spacing-2xl);
+    /* Espaço entre colunas */
+    align-items: center;
+    /* Alinha verticalmente */
+}
+
+/* TEXTO DA SEÇÃO ABOUT */
+/* REFERENCIADO NO HTML: <div class="about-text"> */
+.about-text {
+    font-size: var(--font-size-lg);
+    /* Tamanho grande */
+    line-height: 1.8;
+    /* Altura da linha */
+}
+
+.about-text p {
+    margin-bottom: var(--spacing-md);
+    /* Espaço entre parágrafos */
+}
+
+/* GRID DE HABILIDADES */
+/* REFERENCIADO NO HTML: <div class="skills-grid"> */
+.skills-grid {
+    display: grid;
+    /* Layout em grid */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    /* Colunas responsivas */
+    gap: var(--spacing-md);
+    /* Espaço entre items */
+    margin-top: var(--spacing-lg);
+    /* Espaço acima */
+}
+
+/* ITEM DE HABILIDADE */
+/* REFERENCIADO NO HTML: <div class="skill-item"> */
+.skill-item {
+    background: var(--bg-tertiary);
+    /* Fundo escuro */
+    padding: var(--spacing-md);
+    /* Espaçamento interno */
+    border-radius: var(--border-radius);
+    /* Cantos arredondados */
+    text-align: center;
+    /* Texto centralizado */
+    transition: all var(--transition-base);
+    /* Transição suave */
+    border: 1px solid transparent;
+    /* Borda transparente inicial */
+}
+
+.skill-item:hover {
+    transform: translateY(-5px);
+    /* Eleva no hover */
+    border-color: var(--text-primary);
+    /* Mostra borda colorida */
+    box-shadow: var(--shadow-lg);
+    /* Adiciona sombra */
+}
+
+/* ÍCONE DA HABILIDADE */
+/* REFERENCIADO NO HTML: <div class="skill-icon"> */
+.skill-icon {
+    font-size: var(--font-size-2xl);
+    /* Tamanho grande */
+    margin-bottom: var(--spacing-sm);
+    /* Espaço abaixo */
+    color: var(--text-primary);
+    /* Cor principal */
+}
+
+/* VISUAL DAS ESTATÍSTICAS */
+/* REFERENCIADO NO HTML: <div class="about-visual"> */
+.about-visual {
+    position: relative;
+}
+
+/* GRID DE ESTATÍSTICAS */
+/* REFERENCIADO NO HTML: <div class="stats-grid"> */
+.stats-grid {
+    display: grid;
+    /* Layout em grid */
+    grid-template-columns: repeat(2, 1fr);
+    /* Duas colunas */
+    gap: var(--spacing-md);
+    /* Espaço entre items */
+}
+
+/* ITEM DE ESTATÍSTICA */
+/* REFERENCIADO NO HTML: <div class="stat-
